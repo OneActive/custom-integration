@@ -8,10 +8,10 @@ import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * AccountTransactions
+ * CardTransaction
  */
 @Validated
-public class AccountTransactions {
+public class CardTransaction {
 
   @JsonProperty("txnDate")
   private Date txnDate = null;
@@ -43,11 +43,6 @@ public class AccountTransactions {
   @JsonProperty("referenceId")
   private String referenceId = null;
 
-  public AccountTransactions txnDate(Date txnDate) {
-    this.txnDate = txnDate;
-    return this;
-  }
-
   /**
    * Transaction Date
    * 
@@ -59,11 +54,6 @@ public class AccountTransactions {
 
   public void setTxnDate(Date txnDate) {
     this.txnDate = txnDate;
-  }
-
-  public AccountTransactions description(String description) {
-    this.description = description;
-    return this;
   }
 
   /**
@@ -79,11 +69,6 @@ public class AccountTransactions {
     this.description = description;
   }
 
-  public AccountTransactions category(String category) {
-    this.category = category;
-    return this;
-  }
-
   /**
    * Transaction category
    * 
@@ -95,11 +80,6 @@ public class AccountTransactions {
 
   public void setCategory(String category) {
     this.category = category;
-  }
-
-  public AccountTransactions amount(Double amount) {
-    this.amount = amount;
-    return this;
   }
 
   /**
@@ -115,11 +95,6 @@ public class AccountTransactions {
     this.amount = amount;
   }
 
-  public AccountTransactions currency(String currency) {
-    this.currency = currency;
-    return this;
-  }
-
   /**
    * Currency code at which the transaction is made
    * 
@@ -131,11 +106,6 @@ public class AccountTransactions {
 
   public void setCurrency(String currency) {
     this.currency = currency;
-  }
-
-  public AccountTransactions isDebit(Boolean isDebit) {
-    this.isDebit = isDebit;
-    return this;
   }
 
   /**
@@ -151,11 +121,6 @@ public class AccountTransactions {
     this.isDebit = isDebit;
   }
 
-  public AccountTransactions foreignTxnAmount(Double foreignTxnAmount) {
-    this.foreignTxnAmount = foreignTxnAmount;
-    return this;
-  }
-
   /**
    * Transaction amount in foreign currency
    * 
@@ -167,11 +132,6 @@ public class AccountTransactions {
 
   public void setForeignTxnAmount(Double foreignTxnAmount) {
     this.foreignTxnAmount = foreignTxnAmount;
-  }
-
-  public AccountTransactions foreignTxnCurrency(String foreignTxnCurrency) {
-    this.foreignTxnCurrency = foreignTxnCurrency;
-    return this;
   }
 
   /**
@@ -187,11 +147,6 @@ public class AccountTransactions {
     this.foreignTxnCurrency = foreignTxnCurrency;
   }
 
-  public AccountTransactions foreignTxnExchangeRate(Float foreignTxnExchangeRate) {
-    this.foreignTxnExchangeRate = foreignTxnExchangeRate;
-    return this;
-  }
-
   /**
    * Exchange rate from source currency to foreign currency
    * 
@@ -203,11 +158,6 @@ public class AccountTransactions {
 
   public void setForeignTxnExchangeRate(Float foreignTxnExchangeRate) {
     this.foreignTxnExchangeRate = foreignTxnExchangeRate;
-  }
-
-  public AccountTransactions referenceId(String referenceId) {
-    this.referenceId = referenceId;
-    return this;
   }
 
   /**
@@ -223,7 +173,6 @@ public class AccountTransactions {
     this.referenceId = referenceId;
   }
 
-
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -232,14 +181,14 @@ public class AccountTransactions {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AccountTransactions accountTransactions = (AccountTransactions) o;
-    return Objects.equals(this.txnDate, accountTransactions.txnDate) && Objects.equals(this.description, accountTransactions.description)
-        && Objects.equals(this.category, accountTransactions.category) && Objects.equals(this.amount, accountTransactions.amount)
-        && Objects.equals(this.currency, accountTransactions.currency) && Objects.equals(this.isDebit, accountTransactions.isDebit)
-        && Objects.equals(this.foreignTxnAmount, accountTransactions.foreignTxnAmount)
-        && Objects.equals(this.foreignTxnCurrency, accountTransactions.foreignTxnCurrency)
-        && Objects.equals(this.foreignTxnExchangeRate, accountTransactions.foreignTxnExchangeRate)
-        && Objects.equals(this.referenceId, accountTransactions.referenceId);
+    CardTransaction cardTransaction = (CardTransaction) o;
+    return Objects.equals(this.txnDate, cardTransaction.txnDate) && Objects.equals(this.description, cardTransaction.description)
+        && Objects.equals(this.category, cardTransaction.category) && Objects.equals(this.amount, cardTransaction.amount)
+        && Objects.equals(this.currency, cardTransaction.currency) && Objects.equals(this.isDebit, cardTransaction.isDebit)
+        && Objects.equals(this.foreignTxnAmount, cardTransaction.foreignTxnAmount)
+        && Objects.equals(this.foreignTxnCurrency, cardTransaction.foreignTxnCurrency)
+        && Objects.equals(this.foreignTxnExchangeRate, cardTransaction.foreignTxnExchangeRate)
+        && Objects.equals(this.referenceId, cardTransaction.referenceId);
   }
 
   @Override
@@ -251,7 +200,7 @@ public class AccountTransactions {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AccountTransactions {\n");
+    sb.append("class CardTransaction {\n");
 
     sb.append("    txnDate: ").append(toIndentedString(txnDate)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");

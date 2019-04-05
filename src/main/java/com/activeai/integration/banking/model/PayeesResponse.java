@@ -1,5 +1,6 @@
 package com.activeai.integration.banking.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.validation.Valid;
@@ -18,7 +19,7 @@ public class PayeesResponse {
   private Result result = null;
 
   @JsonProperty("cardDetail")
-  private Payees cardDetail = null;
+  private List<Payee> cardDetail = null;
 
   public PayeesResponse result(Result result) {
     this.result = result;
@@ -39,22 +40,17 @@ public class PayeesResponse {
     this.result = result;
   }
 
-  public PayeesResponse cardDetail(Payees cardDetail) {
-    this.cardDetail = cardDetail;
-    return this;
-  }
-
   /**
    * Get cardDetail
    * 
    * @return cardDetail
    **/
   @Valid
-  public Payees getCardDetail() {
+  public List<Payee> getCardDetail() {
     return cardDetail;
   }
 
-  public void setCardDetail(Payees cardDetail) {
+  public void setCardDetail(List<Payee> cardDetail) {
     this.cardDetail = cardDetail;
   }
 
