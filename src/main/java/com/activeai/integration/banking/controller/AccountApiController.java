@@ -79,7 +79,29 @@ public class AccountApiController {
     ResponseEntity<AccountTransactionsResponse> response = null;
     try {
       accountStatement =
-          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"accountTransactions\" : [{    \"foreignTxnCurrency\" : \"foreignTxnCurrency\",    \"amount\" : 6.027456183070403,    \"description\" : \"description\",    \"currency\" : \"currency\",    \"foreignTxnAmount\" : 1.4658129805029452,    \"isDebit\" : true,    \"category\" : \"category\",    \"foreignTxnExchangeRate\" : 5.962134,    \"txnDate\" : \"2019-03-20\",    \"referenceId\" : \"referenceId\"  }]}";
+          "{  \n" + "   \"result\":{  \n" + "      \"messageCode\":\"messageCode\",\n" + "      \"message\":\"message\",\n"
+              + "      \"status\":0\n" + "   },\n" + "   \"accountTransactions\":[  \n" + "      {  \n"
+              + "         \"foreignTxnCurrency\":\"foreignTxnCurrency\",\n" + "         \"amount\":6.027456183070403,\n"
+              + "         \"description\":\"description\",\n" + "         \"currency\":\"USD\",\n"
+              + "         \"foreignTxnAmount\":1.4658129805029452,\n" + "         \"isDebit\":true,\n"
+              + "         \"category\":\"category\",\n" + "         \"foreignTxnExchangeRate\":5.962134,\n"
+              + "         \"txnDate\":\"2019-01-23\",\n" + "         \"referenceId\":\"referenceId\"\n" + "      },\n" + "      {  \n"
+              + "         \"foreignTxnCurrency\":\"foreignTxnCurrency\",\n" + "         \"amount\":16.027456183070403,\n"
+              + "         \"description\":\"description\",\n" + "         \"currency\":\"USD\",\n"
+              + "         \"foreignTxnAmount\":3.4658129805029452,\n" + "         \"isDebit\":true,\n"
+              + "         \"category\":\"category\",\n" + "         \"foreignTxnExchangeRate\":5.962134,\n"
+              + "         \"txnDate\":\"2019-01-20\",\n" + "         \"referenceId\":\"referenceId\"\n" + "      },\n" + "      {  \n"
+              + "         \"foreignTxnCurrency\":\"foreignTxnCurrency\",\n" + "         \"amount\":61.027456183070403,\n"
+              + "         \"description\":\"description\",\n" + "         \"currency\":\"USD\",\n"
+              + "         \"foreignTxnAmount\":2.4658129805029452,\n" + "         \"isDebit\":true,\n"
+              + "         \"category\":\"category\",\n" + "         \"foreignTxnExchangeRate\":5.962134,\n"
+              + "         \"txnDate\":\"2019-02-20\",\n" + "         \"referenceId\":\"referenceId\"\n" + "      },\n" + "      {  \n"
+              + "         \"foreignTxnCurrency\":\"foreignTxnCurrency\",\n" + "         \"amount\":23.027456183070403,\n"
+              + "         \"description\":\"description\",\n" + "         \"currency\":\"USD\",\n"
+              + "         \"foreignTxnAmount\":13.4658129805029452,\n" + "         \"isDebit\":true,\n"
+              + "         \"category\":\"category\",\n" + "         \"foreignTxnExchangeRate\":5.962134,\n"
+              + "         \"txnDate\":\"2019-04-20\",\n" + "         \"referenceId\":\"referenceId\"\n" + "      }\n" + "\n" + "   ]\n"
+              + "}";
       response = new ResponseEntity<>(objectMapper.readValue(accountStatement, AccountTransactionsResponse.class), HttpStatus.OK);
     } catch (IOException e) {
       logger.error("Couldn't serialize response for content type application/json", e);
@@ -132,17 +154,17 @@ public class AccountApiController {
           "        \"displayAccountNumber\": \"123xxxx890\",\n" + 
           "        \"accountNumber\": \"1234567\",\n" + 
           "        \"accountId\": \"1234567\",\n" + 
-          "        \"branchId\": \"string\",\n" + 
-          "        \"branchName\": \"string\",\n" + 
+          "        \"branchId\": \"B001\",\n" +
+          "        \"branchName\": \"Bangalore ITPL\",\n" +
           "        \"status\": \"ACTIVE\",\n" + 
-          "        \"openingDate\": \"2019-03-22T07:28:51.879+0000\",\n" + 
-          "        \"lastStatementDate\": \"2019-03-22T07:28:51.879+0000\",\n" + 
-          "        \"lastStatementBalance\": 0.0,\n" + 
+          "        \"openingDate\": \"2019-03-22\",\n" +
+          "        \"lastStatementDate\": \"2019-03-22\",\n" +
+          "        \"lastStatementBalance\": 34879.0,\n" +
           "        \"balance\": {\n" + 
-          "            \"amount\": 0.0,\n" + 
-          "            \"availableBalance\": 0.0,\n" + 
+          "            \"amount\": 90000.0,\n" +
+          "            \"availableBalance\": 75675.0,\n" +
           "            \"currentBalance\": 20000.0,\n" + 
-          "            \"currencyCode\": \"USD\"\n" + 
+          "            \"currencyCode\": \"USD\"\n" +
           "        }\n" + 
           "    }, {\n" + 
           "        \"category\": \"ACCOUNT\",\n" + 
@@ -152,17 +174,17 @@ public class AccountApiController {
           "        \"displayAccountNumber\": \"123xxxx891\",\n" + 
           "        \"accountNumber\": \"1234568\",\n" + 
           "        \"accountId\": \"1234568\",\n" + 
-          "        \"branchId\": \"string\",\n" + 
-          "        \"branchName\": \"string\",\n" + 
+          "        \"branchId\": \"M001\",\n" +
+          "        \"branchName\": \"Chitradurga\",\n" +
           "        \"status\": \"ACTIVE\",\n" + 
-          "        \"openingDate\": \"2019-03-23T07:28:51.879+0000\",\n" + 
-          "        \"lastStatementDate\": \"2019-03-23T07:28:51.879+0000\",\n" + 
-          "        \"lastStatementBalance\": 0.0,\n" + 
+          "        \"openingDate\": \"2019-03-23\",\n" +
+          "        \"lastStatementDate\": \"2019-03-23\",\n" +
+          "        \"lastStatementBalance\": 6543.0,\n" +
           "        \"balance\": {\n" + 
-          "            \"amount\": 0.0,\n" + 
-          "            \"availableBalance\": 0.0,\n" + 
+          "            \"amount\": 654323.0,\n" +
+          "            \"availableBalance\": 23456.0,\n" +
           "            \"currentBalance\": 30000.0,\n" + 
-          "            \"currencyCode\": \"USD\"\n" + 
+          "            \"currencyCode\": \"USD\"\n" +
           "        }\n" + 
           "    }, {\n" + 
           "        \"category\": \"ACCOUNT\",\n" + 
@@ -172,17 +194,17 @@ public class AccountApiController {
           "        \"displayAccountNumber\": \"123xxxx892\",\n" + 
           "        \"accountNumber\": \"1234569\",\n" + 
           "        \"accountId\": \"1234569\",\n" + 
-          "        \"branchId\": \"string\",\n" + 
-          "        \"branchName\": \"string\",\n" + 
+          "        \"branchId\": \"C001\",\n" +
+          "        \"branchName\": \"California\",\n" +
           "        \"status\": \"ACTIVE\",\n" + 
-          "        \"openingDate\": \"2019-03-24T07:28:51.879+0000\",\n" + 
-          "        \"lastStatementDate\": \"2019-03-24T07:28:51.879+0000\",\n" + 
-          "        \"lastStatementBalance\": 0.0,\n" + 
+          "        \"openingDate\": \"2019-03-24\",\n" +
+          "        \"lastStatementDate\": \"2019-03-24\",\n" +
+          "        \"lastStatementBalance\": 3456.0,\n" +
           "        \"balance\": {\n" + 
-          "            \"amount\": 0.0,\n" + 
-          "            \"availableBalance\": 0.0,\n" + 
+          "            \"amount\": 234567.0,\n" +
+          "            \"availableBalance\": 65432.0,\n" +
           "            \"currentBalance\": 40000.0,\n" + 
-          "            \"currencyCode\": \"USD\"\n" + 
+          "            \"currencyCode\": \"USD\"\n" +
           "        }\n" + 
           "    }]\n" + 
           "}";

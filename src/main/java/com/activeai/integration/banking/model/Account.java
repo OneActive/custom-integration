@@ -118,10 +118,10 @@ public class Account {
   private StatusEnum status = null;
 
   @JsonProperty("openingDate")
-  private Date openingDate = null;
+  private String openingDate = null;
 
   @JsonProperty("lastStatementDate")
-  private Date lastStatementDate = null;
+  private String lastStatementDate = null;
 
   @JsonProperty("lastStatementBalance")
   private Double lastStatementBalance = null;
@@ -309,41 +309,19 @@ public class Account {
     this.status = status;
   }
 
-  public Account openingDate(Date openingDate) {
-    this.openingDate = openingDate;
-    return this;
-  }
-
-  /**
-   * Account opening date
-   * 
-   * @return openingDate
-   **/
-  @Valid
-  public Date getOpeningDate() {
+  public String getOpeningDate() {
     return openingDate;
   }
 
-  public void setOpeningDate(Date openingDate) {
+  public void setOpeningDate(String openingDate) {
     this.openingDate = openingDate;
   }
 
-  public Account lastStatementDate(Date lastStatementDate) {
-    this.lastStatementDate = lastStatementDate;
-    return this;
-  }
-
-  /**
-   * Last statement date
-   * 
-   * @return lastStatementDate
-   **/
-  @Valid
-  public Date getLastStatementDate() {
+  public String getLastStatementDate() {
     return lastStatementDate;
   }
 
-  public void setLastStatementDate(Date lastStatementDate) {
+  public void setLastStatementDate(String lastStatementDate) {
     this.lastStatementDate = lastStatementDate;
   }
 

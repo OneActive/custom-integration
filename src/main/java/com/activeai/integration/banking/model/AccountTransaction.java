@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AccountTransaction {
 
   @JsonProperty("txnDate")
-  private Date txnDate = null;
+  private String txnDate = null;
 
   @JsonProperty("description")
   private String description = null;
@@ -43,21 +43,16 @@ public class AccountTransaction {
   @JsonProperty("referenceId")
   private String referenceId = null;
 
-  public AccountTransaction txnDate(Date txnDate) {
-    this.txnDate = txnDate;
-    return this;
-  }
-
   /**
    * Transaction Date
    * 
    * @return txnDate
    **/
-  public Date getTxnDate() {
+  public String getTxnDate() {
     return txnDate;
   }
 
-  public void setTxnDate(Date txnDate) {
+  public void setTxnDate(String txnDate) {
     this.txnDate = txnDate;
   }
 
