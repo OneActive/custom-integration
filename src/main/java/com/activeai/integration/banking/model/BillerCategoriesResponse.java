@@ -11,10 +11,10 @@ import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * BillerCategoriesList
+ * BillerCategoriesResponse
  */
 @Validated
-public class BillerCategoriesList {
+public class BillerCategoriesResponse {
 
   @JsonProperty("result")
   private Result result = null;
@@ -22,11 +22,6 @@ public class BillerCategoriesList {
   @JsonProperty("billerCategories")
   @Valid
   private List<BillerCategory> billerCategories = null;
-
-  public BillerCategoriesList result(Result result) {
-    this.result = result;
-    return this;
-  }
 
   /**
    * Get result
@@ -42,12 +37,7 @@ public class BillerCategoriesList {
     this.result = result;
   }
 
-  public BillerCategoriesList billerCategories(List<BillerCategory> billerCategories) {
-    this.billerCategories = billerCategories;
-    return this;
-  }
-
-  public BillerCategoriesList addBillerCategoriesItem(BillerCategory billerCategoriesItem) {
+  public BillerCategoriesResponse addBillerCategoriesItem(BillerCategory billerCategoriesItem) {
     if (this.billerCategories == null) {
       this.billerCategories = new ArrayList<BillerCategory>();
     }
@@ -78,7 +68,7 @@ public class BillerCategoriesList {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BillerCategoriesList billerCategoriesList = (BillerCategoriesList) o;
+    BillerCategoriesResponse billerCategoriesList = (BillerCategoriesResponse) o;
     return Objects.equals(this.result, billerCategoriesList.result)
         && Objects.equals(this.billerCategories, billerCategoriesList.billerCategories);
   }
