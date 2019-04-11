@@ -1,10 +1,7 @@
 package com.activeai.integration.banking.model;
 
-import java.util.Date;
 import java.util.Objects;
-
 import org.springframework.validation.annotation.Validated;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -14,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CardTransaction {
 
   @JsonProperty("txnDate")
-  private Date txnDate = null;
+  private String txnDate = null;
 
   @JsonProperty("description")
   private String description = null;
@@ -43,16 +40,11 @@ public class CardTransaction {
   @JsonProperty("referenceId")
   private String referenceId = null;
 
-  /**
-   * Transaction Date
-   * 
-   * @return txnDate
-   **/
-  public Date getTxnDate() {
+  public String getTxnDate() {
     return txnDate;
   }
 
-  public void setTxnDate(Date txnDate) {
+  public void setTxnDate(String txnDate) {
     this.txnDate = txnDate;
   }
 

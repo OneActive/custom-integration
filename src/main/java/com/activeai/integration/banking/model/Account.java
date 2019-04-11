@@ -1,15 +1,11 @@
 package com.activeai.integration.banking.model;
 
-import java.util.Date;
 import java.util.Objects;
-
 import javax.validation.Valid;
-
+import com.activeai.integration.banking.constants.AccountStatus;
+import com.activeai.integration.banking.constants.AccountType;
 import org.springframework.validation.annotation.Validated;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Account
@@ -26,45 +22,40 @@ public class Account {
   @JsonProperty("product")
   private String product = null;
 
-  /**
-   * Type of account
-   */
-  public enum TypeEnum {
-    SAVINGS("SAVINGS"),
+  @JsonProperty("bankName")
+  private String bankName;
 
-    CHECKING("CHECKING"),
+  public Account accountName(String accountName) {
+    this.accountName = accountName;
+    return this;
+  }
 
-    CURRENT("CURRENT"),
+  @JsonProperty("accountName")
+  private String accountName;
 
-    LOAN("LOAN"),
+  public String getAccountName() {
+    return accountName;
+  }
 
-    DEPOSIT("DEPOSIT");
+  public void setAccountName(String accountName) {
+    this.accountName = accountName;
+  }
 
-    private String value;
+  public Account bankName(String bankName) {
+    this.bankName = bankName;
+    return this;
+  }
 
-    TypeEnum(String value) {
-      this.value = value;
-    }
+  public String getBankName() {
+    return bankName;
+  }
 
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static TypeEnum fromValue(String text) {
-      for (TypeEnum b : TypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
+  public void setBankName(String bankName) {
+    this.bankName = bankName;
   }
 
   @JsonProperty("type")
-  private TypeEnum type = null;
+  private AccountType type = null;
 
   @JsonProperty("displayAccountNumber")
   private String displayAccountNumber = null;
@@ -81,41 +72,8 @@ public class Account {
   @JsonProperty("branchName")
   private String branchName = null;
 
-  /**
-   * Account status dormant / active / closed
-   */
-  public enum StatusEnum {
-    ACTIVE("ACTIVE"),
-
-    INACTIVE("INACTIVE"),
-
-    CLOSED("CLOSED");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String text) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-
   @JsonProperty("status")
-  private StatusEnum status = null;
+  private AccountStatus status = null;
 
   @JsonProperty("openingDate")
   private String openingDate = null;
@@ -183,7 +141,7 @@ public class Account {
     this.product = product;
   }
 
-  public Account type(TypeEnum type) {
+  public Account type(AccountType type) {
     this.type = type;
     return this;
   }
@@ -193,11 +151,11 @@ public class Account {
    * 
    * @return type
    **/
-  public TypeEnum getType() {
+  public AccountType getType() {
     return type;
   }
 
-  public void setType(TypeEnum type) {
+  public void setType(AccountType type) {
     this.type = type;
   }
 
@@ -291,7 +249,7 @@ public class Account {
     this.branchName = branchName;
   }
 
-  public Account status(StatusEnum status) {
+  public Account status(AccountStatus status) {
     this.status = status;
     return this;
   }
@@ -301,11 +259,11 @@ public class Account {
    * 
    * @return status
    **/
-  public StatusEnum getStatus() {
+  public AccountStatus getStatus() {
     return status;
   }
 
-  public void setStatus(StatusEnum status) {
+  public void setStatus(AccountStatus status) {
     this.status = status;
   }
 
@@ -374,6 +332,8 @@ public class Account {
     Account account = (Account) o;
     return Objects.equals(this.category, account.category) && Objects.equals(this.productCode, account.productCode)
         && Objects.equals(this.product, account.product) && Objects.equals(this.type, account.type)
+        && Objects.equals(this.product, account.product) && Objects.equals(this.accountName, account.accountName)
+        && Objects.equals(this.product, account.product) && Objects.equals(this.bankName, account.bankName)
         && Objects.equals(this.displayAccountNumber, account.displayAccountNumber)
         && Objects.equals(this.accountNumber, account.accountNumber) && Objects.equals(this.accountId, account.accountId)
         && Objects.equals(this.branchId, account.branchId) && Objects.equals(this.branchName, account.branchName)
@@ -384,7 +344,7 @@ public class Account {
 
   @Override
   public int hashCode() {
-    return Objects.hash(category, productCode, product, type, displayAccountNumber, accountNumber, accountId, branchId, branchName, status,
+    return Objects.hash(category, productCode, product,accountName, bankName, type, displayAccountNumber, accountNumber, accountId, branchId, branchName, status,
         openingDate, lastStatementDate, lastStatementBalance, balance);
   }
 
@@ -396,6 +356,8 @@ public class Account {
     sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("    productCode: ").append(toIndentedString(productCode)).append("\n");
     sb.append("    product: ").append(toIndentedString(product)).append("\n");
+    sb.append("    accountName: ").append(toIndentedString(accountName)).append("\n");
+    sb.append("    bankName: ").append(toIndentedString(bankName)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    displayAccountNumber: ").append(toIndentedString(displayAccountNumber)).append("\n");
     sb.append("    accountNumber: ").append(toIndentedString(accountNumber)).append("\n");

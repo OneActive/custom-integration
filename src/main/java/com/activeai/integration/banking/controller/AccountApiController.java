@@ -148,14 +148,16 @@ public class AccountApiController {
           "    },\n" + 
           "    \"accounts\": [{\n" + 
           "        \"category\": \"ACCOUNT\",\n" + 
-          "        \"productCode\": \"string\",\n" + 
+          "        \"productCode\": \"string\",\n" +
+          "        \"bankName\": \"Wells Fargo\",\n" +
+          "        \"accountName\": \"Regular Savings\",\n" +
           "        \"product\": \"string\",\n" + 
           "        \"type\": \"SAVINGS\",\n" + 
           "        \"displayAccountNumber\": \"123xxxx890\",\n" + 
           "        \"accountNumber\": \"1234567\",\n" + 
           "        \"accountId\": \"1234567\",\n" + 
-          "        \"branchId\": \"B001\",\n" +
-          "        \"branchName\": \"Bangalore ITPL\",\n" +
+          "        \"branchId\": \"WF001\",\n" +
+          "        \"branchName\": \"Arlington\",\n" +
           "        \"status\": \"ACTIVE\",\n" + 
           "        \"openingDate\": \"2019-03-22\",\n" +
           "        \"lastStatementDate\": \"2019-03-22\",\n" +
@@ -168,14 +170,16 @@ public class AccountApiController {
           "        }\n" + 
           "    }, {\n" + 
           "        \"category\": \"ACCOUNT\",\n" + 
-          "        \"productCode\": \"string\",\n" + 
+          "        \"productCode\": \"string\",\n" +
+          "        \"bankName\": \"US Bancorp\",\n" +
+          "        \"accountName\": \"Easy Access\",\n" +
           "        \"product\": \"string\",\n" + 
           "        \"type\": \"SAVINGS\",\n" + 
           "        \"displayAccountNumber\": \"123xxxx891\",\n" + 
           "        \"accountNumber\": \"1234568\",\n" + 
           "        \"accountId\": \"1234568\",\n" + 
-          "        \"branchId\": \"M001\",\n" +
-          "        \"branchName\": \"Chitradurga\",\n" +
+          "        \"branchId\": \"USB001\",\n" +
+          "        \"branchName\": \"Marceline\",\n" +
           "        \"status\": \"ACTIVE\",\n" + 
           "        \"openingDate\": \"2019-03-23\",\n" +
           "        \"lastStatementDate\": \"2019-03-23\",\n" +
@@ -189,13 +193,15 @@ public class AccountApiController {
           "    }, {\n" + 
           "        \"category\": \"ACCOUNT\",\n" + 
           "        \"productCode\": \"string\",\n" + 
-          "        \"product\": \"string\",\n" + 
+          "        \"product\": \"string\",\n" +
+          "        \"bankName\": \"JPMorgan Chase\",\n" +
+          "        \"accountName\": \"SavingsMax\",\n" +
           "        \"type\": \"SAVINGS\",\n" + 
           "        \"displayAccountNumber\": \"123xxxx892\",\n" + 
           "        \"accountNumber\": \"1234569\",\n" + 
           "        \"accountId\": \"1234569\",\n" + 
-          "        \"branchId\": \"C001\",\n" +
-          "        \"branchName\": \"California\",\n" +
+          "        \"branchId\": \"JPMC001\",\n" +
+          "        \"branchName\": \"Manhattan\",\n" +
           "        \"status\": \"ACTIVE\",\n" + 
           "        \"openingDate\": \"2019-03-24\",\n" +
           "        \"lastStatementDate\": \"2019-03-24\",\n" +

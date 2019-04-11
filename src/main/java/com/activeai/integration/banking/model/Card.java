@@ -1,12 +1,11 @@
 package com.activeai.integration.banking.model;
 
-import java.util.Date;
 import java.util.Objects;
 
-import javax.validation.Valid;
-
+import com.activeai.integration.banking.constants.CardIssuer;
+import com.activeai.integration.banking.constants.CardStatus;
+import com.activeai.integration.banking.constants.CardType;
 import org.springframework.validation.annotation.Validated;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -26,41 +25,30 @@ public class Card {
   @JsonProperty("product")
   private String product = null;
 
-  /**
-   * Type of card
-   */
-  public enum TypeEnum {
-    CREDIT("CREDIT"),
+  @JsonProperty("bankName")
+  private String bankName;
 
-    DEBIT("DEBIT"),
+  @JsonProperty("accountName")
+  private String accountName;
 
-    FOREX("FOREX");
+  public String getBankName() {
+    return bankName;
+  }
 
-    private String value;
+  public void setBankName(String bankName) {
+    this.bankName = bankName;
+  }
 
-    TypeEnum(String value) {
-      this.value = value;
-    }
+  public String getAccountName() {
+    return accountName;
+  }
 
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static TypeEnum fromValue(String text) {
-      for (TypeEnum b : TypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
+  public void setAccountName(String accountName) {
+    this.accountName = accountName;
   }
 
   @JsonProperty("type")
-  private TypeEnum type = null;
+  private CardType type = null;
 
   @JsonProperty("displayAccountNumber")
   private String displayAccountNumber = null;
@@ -71,43 +59,8 @@ public class Card {
   @JsonProperty("accountId")
   private String accountId = null;
 
-  /**
-   * Card issues like visa, master card, amex, Diners
-   */
-  public enum CardIssuerEnum {
-    VISA("Visa"),
-
-    MASTER_CARD("Master Card"),
-
-    AMEX("AMEX"),
-
-    DINERS("Diners");
-
-    private String value;
-
-    CardIssuerEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static CardIssuerEnum fromValue(String text) {
-      for (CardIssuerEnum b : CardIssuerEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-
   @JsonProperty("cardIssuer")
-  private CardIssuerEnum cardIssuer = null;
+  private CardIssuer cardIssuer = null;
 
   @JsonProperty("branchId")
   private String branchId = null;
@@ -115,43 +68,8 @@ public class Card {
   @JsonProperty("branchName")
   private String branchName = null;
 
-  /**
-   * Account status dormant / active / closed / blocker
-   */
-  public enum StatusEnum {
-    ACTIVE("ACTIVE"),
-
-    INACTIVE("INACTIVE"),
-
-    CLOSED("CLOSED"),
-
-    BLOCKED("BLOCKED");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String text) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-
   @JsonProperty("status")
-  private StatusEnum status = null;
+  private CardStatus status = null;
 
   @JsonProperty("oversearCardActivated")
   private Boolean oversearCardActivated = null;
@@ -169,7 +87,7 @@ public class Card {
   private Double minimumPayment = null;
 
   @JsonProperty("paymentDueDate")
-  private Date paymentDueDate = null;
+  private String paymentDueDate = null;
 
   @JsonProperty("creditLimit")
   private Double creditLimit = null;
@@ -184,7 +102,7 @@ public class Card {
   private Double permanentCreditLimit = null;
 
   @JsonProperty("lastStatementDate")
-  private Date lastStatementDate = null;
+  private String lastStatementDate = null;
 
   @JsonProperty("lastStatementBalance")
   private Double lastStatementBalance = null;
@@ -243,7 +161,7 @@ public class Card {
     this.product = product;
   }
 
-  public Card type(TypeEnum type) {
+  public Card type(CardType type) {
     this.type = type;
     return this;
   }
@@ -253,11 +171,11 @@ public class Card {
    * 
    * @return type
    **/
-  public TypeEnum getType() {
+  public CardType getType() {
     return type;
   }
 
-  public void setType(TypeEnum type) {
+  public void setType(CardType type) {
     this.type = type;
   }
 
@@ -315,7 +233,7 @@ public class Card {
     this.accountId = accountId;
   }
 
-  public Card cardIssuer(CardIssuerEnum cardIssuer) {
+  public Card cardIssuer(CardIssuer cardIssuer) {
     this.cardIssuer = cardIssuer;
     return this;
   }
@@ -325,11 +243,11 @@ public class Card {
    * 
    * @return cardIssuer
    **/
-  public CardIssuerEnum getCardIssuer() {
+  public CardIssuer getCardIssuer() {
     return cardIssuer;
   }
 
-  public void setCardIssuer(CardIssuerEnum cardIssuer) {
+  public void setCardIssuer(CardIssuer cardIssuer) {
     this.cardIssuer = cardIssuer;
   }
 
@@ -369,7 +287,7 @@ public class Card {
     this.branchName = branchName;
   }
 
-  public Card status(StatusEnum status) {
+  public Card status(CardStatus status) {
     this.status = status;
     return this;
   }
@@ -379,11 +297,11 @@ public class Card {
    * 
    * @return status
    **/
-  public StatusEnum getStatus() {
+  public CardStatus getStatus() {
     return status;
   }
 
-  public void setStatus(StatusEnum status) {
+  public void setStatus(CardStatus status) {
     this.status = status;
   }
 
@@ -477,23 +395,16 @@ public class Card {
     this.minimumPayment = minimumPayment;
   }
 
-  public Card paymentDueDate(Date paymentDueDate) {
-    this.paymentDueDate = paymentDueDate;
-    return this;
-  }
-
-  /**
-   * Payment due date
-   * 
-   * @return paymentDueDate
-   **/
-  @Valid
-  public Date getPaymentDueDate() {
+  public String getPaymentDueDate() {
     return paymentDueDate;
   }
 
-  public void setPaymentDueDate(Date paymentDueDate) {
+  public void setPaymentDueDate(String paymentDueDate) {
     this.paymentDueDate = paymentDueDate;
+  }
+
+  public void setLastStatementDate(String lastStatementDate) {
+    this.lastStatementDate = lastStatementDate;
   }
 
   public Card creditLimit(Double creditLimit) {
@@ -568,25 +479,6 @@ public class Card {
     this.permanentCreditLimit = permanentCreditLimit;
   }
 
-  public Card lastStatementDate(Date lastStatementDate) {
-    this.lastStatementDate = lastStatementDate;
-    return this;
-  }
-
-  /**
-   * Last statement date
-   * 
-   * @return lastStatementDate
-   **/
-  @Valid
-  public Date getLastStatementDate() {
-    return lastStatementDate;
-  }
-
-  public void setLastStatementDate(Date lastStatementDate) {
-    this.lastStatementDate = lastStatementDate;
-  }
-
   public Card lastStatementBalance(Double lastStatementBalance) {
     this.lastStatementBalance = lastStatementBalance;
     return this;
@@ -616,6 +508,8 @@ public class Card {
     Card card = (Card) o;
     return Objects.equals(this.category, card.category) && Objects.equals(this.productCode, card.productCode)
         && Objects.equals(this.product, card.product) && Objects.equals(this.type, card.type)
+        && Objects.equals(this.product, card.product) && Objects.equals(this.accountName, card.accountName)
+        && Objects.equals(this.product, card.product) && Objects.equals(this.bankName, card.bankName)
         && Objects.equals(this.displayAccountNumber, card.displayAccountNumber) && Objects.equals(this.accountNumber, card.accountNumber)
         && Objects.equals(this.accountId, card.accountId) && Objects.equals(this.cardIssuer, card.cardIssuer)
         && Objects.equals(this.branchId, card.branchId) && Objects.equals(this.branchName, card.branchName)
@@ -632,7 +526,7 @@ public class Card {
 
   @Override
   public int hashCode() {
-    return Objects.hash(category, productCode, product, type, displayAccountNumber, accountNumber, accountId, cardIssuer, branchId,
+    return Objects.hash(category, productCode, product, accountName, bankName, type, displayAccountNumber, accountNumber, accountId, cardIssuer, branchId,
         branchName, status, oversearCardActivated, openingBalance, closingBalance, amountDue, minimumPayment, paymentDueDate, creditLimit,
         availableCreditLimit, temporaryCreditLimit, permanentCreditLimit, lastStatementDate, lastStatementBalance);
   }
@@ -645,6 +539,8 @@ public class Card {
     sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("    productCode: ").append(toIndentedString(productCode)).append("\n");
     sb.append("    product: ").append(toIndentedString(product)).append("\n");
+    sb.append("    AccountName: ").append(toIndentedString(accountName)).append("\n");
+    sb.append("    bankName: ").append(toIndentedString(bankName)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    displayAccountNumber: ").append(toIndentedString(displayAccountNumber)).append("\n");
     sb.append("    accountNumber: ").append(toIndentedString(accountNumber)).append("\n");

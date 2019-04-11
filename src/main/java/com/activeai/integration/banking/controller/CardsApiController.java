@@ -35,7 +35,41 @@ public class CardsApiController {
     ResponseEntity<CardsResponse> response = null;
     try {
       response = new ResponseEntity<>(objectMapper.readValue(
-          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"cards\" : []}",
+          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"cards\" : [\n"
+              + "{  \n" + "   \"branchId\":\"JPMC001\",\n" + "   \"product\":\"product\",\n" + "   \"closingBalance\":6.027456183070403,\n"
+              + "   \"branchName\":\"Manhattan\",\n" + "   \"bankName\" : \"JPMorgan Chase\",\n"
+              + "   \"accountName\" : \"Platinum Edge\",\n" + "   \"type\":\"CREDIT\",\n" + "   \"accountNumber\":\"1234567890\",\n"
+              + "   \"cardIssuer\":\"Visa\",\n" + "   \"amountDue\":1.4658129805029452,\n" + "   \"accountId\":\"5123456789012346\",\n"
+              + "   \"paymentDueDate\":\"2000-01-23\",\n" + "   \"lastStatementDate\":\"2000-01-23\",\n"
+              + "   \"productCode\":\"productCode\",\n" + "   \"lastStatementBalance\":3.616076749251911,\n"
+              + "   \"oversearCardActivated\":true,\n" + "   \"minimumPayment\":5.962133916683182,\n"
+              + "   \"creditLimit\":5.637376656633329,\n" + "   \"displayAccountNumber\":\"123xxxx890\",\n"
+              + "   \"permanentCreditLimit\":9.301444243932576,\n" + "   \"category\":\"category\",\n"
+              + "   \"openingBalance\":0.8008281904610115,\n" + "   \"availableCreditLimit\":2.3021358869347655,\n"
+              + "   \"temporaryCreditLimit\":7.061401241503109,\n" + "   \"status\":\"ACTIVE\"\n" + "},\n" + "{  \n"
+              + "   \"branchId\":\"USB001\",\n" + "   \"product\":\"product\",\n" + "   \"closingBalance\":6.027456183070403,\n"
+              + "   \"branchName\":\"Marceline\",\n" + "   \"bankName\" : \"US Bancorp\",\n"
+              + "   \"accountName\" : \"Titanium Times Card\",\n" + "   \"type\":\"CREDIT\",\n" + "   \"accountNumber\":\"1234567892\",\n"
+              + "   \"cardIssuer\":\"Visa\",\n" + "   \"amountDue\":1.4658129805029452,\n" + "   \"accountId\":\"5123456789012347\",\n"
+              + "   \"paymentDueDate\":\"2000-01-24\",\n" + "   \"lastStatementDate\":\"2000-01-24\",\n"
+              + "   \"productCode\":\"productCode\",\n" + "   \"lastStatementBalance\":3.616076749251911,\n"
+              + "   \"oversearCardActivated\":true,\n" + "   \"minimumPayment\":15.962133916683182,\n"
+              + "   \"creditLimit\":6.637376656633329,\n" + "   \"displayAccountNumber\":\"123xxxx892\",\n"
+              + "   \"permanentCreditLimit\":8.301444243932576,\n" + "   \"category\":\"category\",\n"
+              + "   \"openingBalance\":1.8008281904610115,\n" + "   \"availableCreditLimit\":3.3021358869347655,\n"
+              + "   \"temporaryCreditLimit\":5.061401241503109,\n" + "   \"status\":\"ACTIVE\"\n" + "},\n" + "{  \n"
+              + "   \"branchId\":\"M001\",\n" + "   \"product\":\"product\",\n" + "   \"closingBalance\":6.027456183070403,\n"
+              + "   \"branchName\":\"Arlington\",\n" + "   \"bankName\" : \"Wells Fargo\",\n"
+              + "   \"accountName\" : \"Domestic Signature Card\",\n" + "   \"type\":\"CREDIT\",\n"
+              + "   \"accountNumber\":\"1234567891\",\n" + "   \"cardIssuer\":\"Visa\",\n" + "   \"amountDue\":1.4658129805029452,\n"
+              + "   \"accountId\":\"5123456789012348\",\n" + "   \"paymentDueDate\":\"2000-01-25\",\n"
+              + "   \"lastStatementDate\":\"2000-01-25\",\n" + "   \"productCode\":\"productCode\",\n"
+              + "   \"lastStatementBalance\":3.616076749251911,\n" + "   \"oversearCardActivated\":false,\n"
+              + "   \"minimumPayment\":9.962133916683182,\n" + "   \"creditLimit\":4.637376656633329,\n"
+              + "   \"displayAccountNumber\":\"123xxxx891\",\n" + "   \"permanentCreditLimit\":9.301444243932576,\n"
+              + "   \"category\":\"category\",\n" + "   \"openingBalance\":2.80063881904610115,\n"
+              + "   \"availableCreditLimit\":4.3021358869347655,\n" + "   \"temporaryCreditLimit\":9.061401241503109,\n"
+              + "   \"status\":\"ACTIVE\"\n" + "}]}",
           CardsResponse.class), HttpStatus.OK);
     } catch (IOException e) {
       logger.error("Couldn't serialize response for content type application/json", e);
@@ -52,7 +86,18 @@ public class CardsApiController {
     ResponseEntity<CardDetailResponse> response = null;
     try {
       response = new ResponseEntity<>(objectMapper.readValue(
-          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"cardDetail\" : {    \"branchId\" : \"branchId\",    \"product\" : \"product\",    \"closingBalance\" : 6.027456183070403,    \"branchName\" : \"branchName\",    \"type\" : \"CREDIT\",    \"accountNumber\" : \"accountNumber\",    \"cardIssuer\" : \"Visa\",    \"amountDue\" : 1.4658129805029452,    \"accountId\" : \"accountId\",    \"paymentDueDate\" : \"2000-01-23T04:56:07.000+00:00\",    \"lastStatementDate\" : \"2000-01-23T04:56:07.000+00:00\",    \"productCode\" : \"productCode\",    \"lastStatementBalance\" : 3.616076749251911,    \"oversearCardActivated\" : true,    \"minimumPayment\" : 5.962133916683182,    \"creditLimit\" : 5.637376656633329,    \"displayAccountNumber\" : \"123xxxx890\",    \"permanentCreditLimit\" : 9.301444243932576,    \"category\" : \"category\",    \"openingBalance\" : 0.8008281904610115,    \"availableCreditLimit\" : 2.3021358869347655,    \"temporaryCreditLimit\" : 7.061401241503109,    \"status\" : \"ACTIVE\"  }}",
+          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"cardDetail\" : {  \n"
+              + "   \"branchId\":\"JPMC001\",\n" + "   \"product\":\"product\",\n" + "   \"closingBalance\":6.027456183070403,\n"
+              + "   \"branchName\":\"Manhattan\",\n" + "   \"bankName\" : \"JPMorgan Chase\",\n"
+              + "   \"accountName\" : \"Platinum Edge\",\n" + "   \"type\":\"CREDIT\",\n" + "   \"accountNumber\":\"1234567890\",\n"
+              + "   \"cardIssuer\":\"Visa\",\n" + "   \"amountDue\":1.4658129805029452,\n" + "   \"accountId\":\"5123456789012346\",\n"
+              + "   \"paymentDueDate\":\"2000-01-23\",\n" + "   \"lastStatementDate\":\"2000-01-23\",\n"
+              + "   \"productCode\":\"productCode\",\n" + "   \"lastStatementBalance\":3.616076749251911,\n"
+              + "   \"oversearCardActivated\":true,\n" + "   \"minimumPayment\":5.962133916683182,\n"
+              + "   \"creditLimit\":5.637376656633329,\n" + "   \"displayAccountNumber\":\"123xxxx890\",\n"
+              + "   \"permanentCreditLimit\":9.301444243932576,\n" + "   \"category\":\"category\",\n"
+              + "   \"openingBalance\":0.8008281904610115,\n" + "   \"availableCreditLimit\":2.3021358869347655,\n"
+              + "   \"temporaryCreditLimit\":7.061401241503109,\n" + "   \"status\":\"ACTIVE\"\n" + "}}",
           CardDetailResponse.class), HttpStatus.OK);
     } catch (IOException e) {
       logger.error("Couldn't serialize response for content type application/json", e);
