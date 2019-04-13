@@ -31,22 +31,6 @@ public class Card {
   @JsonProperty("accountName")
   private String accountName;
 
-  public String getBankName() {
-    return bankName;
-  }
-
-  public void setBankName(String bankName) {
-    this.bankName = bankName;
-  }
-
-  public String getAccountName() {
-    return accountName;
-  }
-
-  public void setAccountName(String accountName) {
-    this.accountName = accountName;
-  }
-
   @JsonProperty("type")
   private CardType type = null;
 
@@ -107,9 +91,53 @@ public class Card {
   @JsonProperty("lastStatementBalance")
   private Double lastStatementBalance = null;
 
-  public Card category(String category) {
-    this.category = category;
-    return this;
+  @JsonProperty("currencyCode")
+  private String currencyCode;
+
+  @JsonProperty("expiryDate")
+  private String expiryDate;
+
+  @JsonProperty("activationDate")
+  private String activationDate;
+
+  public String getExpiryDate() {
+    return expiryDate;
+  }
+
+  public void setExpiryDate(String expiryDate) {
+    this.expiryDate = expiryDate;
+  }
+
+  public String getActivationDate() {
+    return activationDate;
+  }
+
+  public void setActivationDate(String activationDate) {
+    this.activationDate = activationDate;
+  }
+
+  public String getCurrencyCode() {
+    return currencyCode;
+  }
+
+  public void setCurrencyCode(String currencyCode) {
+    this.currencyCode = currencyCode;
+  }
+
+  public String getBankName() {
+    return bankName;
+  }
+
+  public void setBankName(String bankName) {
+    this.bankName = bankName;
+  }
+
+  public String getAccountName() {
+    return accountName;
+  }
+
+  public void setAccountName(String accountName) {
+    this.accountName = accountName;
   }
 
   /**
@@ -143,11 +171,6 @@ public class Card {
     this.productCode = productCode;
   }
 
-  public Card product(String product) {
-    this.product = product;
-    return this;
-  }
-
   /**
    * Product name
    * 
@@ -159,11 +182,6 @@ public class Card {
 
   public void setProduct(String product) {
     this.product = product;
-  }
-
-  public Card type(CardType type) {
-    this.type = type;
-    return this;
   }
 
   /**
@@ -179,11 +197,6 @@ public class Card {
     this.type = type;
   }
 
-  public Card displayAccountNumber(String displayAccountNumber) {
-    this.displayAccountNumber = displayAccountNumber;
-    return this;
-  }
-
   /**
    * Display Account number (in masked form)
    * 
@@ -195,11 +208,6 @@ public class Card {
 
   public void setDisplayAccountNumber(String displayAccountNumber) {
     this.displayAccountNumber = displayAccountNumber;
-  }
-
-  public Card accountNumber(String accountNumber) {
-    this.accountNumber = accountNumber;
-    return this;
   }
 
   /**
@@ -215,11 +223,6 @@ public class Card {
     this.accountNumber = accountNumber;
   }
 
-  public Card accountId(String accountId) {
-    this.accountId = accountId;
-    return this;
-  }
-
   /**
    * Account Id for communication where in actual a/c no is not sent
    * 
@@ -231,11 +234,6 @@ public class Card {
 
   public void setAccountId(String accountId) {
     this.accountId = accountId;
-  }
-
-  public Card cardIssuer(CardIssuer cardIssuer) {
-    this.cardIssuer = cardIssuer;
-    return this;
   }
 
   /**
@@ -251,11 +249,6 @@ public class Card {
     this.cardIssuer = cardIssuer;
   }
 
-  public Card branchId(String branchId) {
-    this.branchId = branchId;
-    return this;
-  }
-
   /**
    * Branch ID
    * 
@@ -267,11 +260,6 @@ public class Card {
 
   public void setBranchId(String branchId) {
     this.branchId = branchId;
-  }
-
-  public Card branchName(String branchName) {
-    this.branchName = branchName;
-    return this;
   }
 
   /**
@@ -287,11 +275,6 @@ public class Card {
     this.branchName = branchName;
   }
 
-  public Card status(CardStatus status) {
-    this.status = status;
-    return this;
-  }
-
   /**
    * Account status dormant / active / closed / blocker
    * 
@@ -303,11 +286,6 @@ public class Card {
 
   public void setStatus(CardStatus status) {
     this.status = status;
-  }
-
-  public Card oversearCardActivated(Boolean oversearCardActivated) {
-    this.oversearCardActivated = oversearCardActivated;
-    return this;
   }
 
   /**
@@ -323,11 +301,6 @@ public class Card {
     this.oversearCardActivated = oversearCardActivated;
   }
 
-  public Card openingBalance(Double openingBalance) {
-    this.openingBalance = openingBalance;
-    return this;
-  }
-
   /**
    * Opening balance
    * 
@@ -339,11 +312,6 @@ public class Card {
 
   public void setOpeningBalance(Double openingBalance) {
     this.openingBalance = openingBalance;
-  }
-
-  public Card closingBalance(Double closingBalance) {
-    this.closingBalance = closingBalance;
-    return this;
   }
 
   /**
@@ -359,11 +327,6 @@ public class Card {
     this.closingBalance = closingBalance;
   }
 
-  public Card amountDue(Double amountDue) {
-    this.amountDue = amountDue;
-    return this;
-  }
-
   /**
    * Amount Due
    * 
@@ -375,11 +338,6 @@ public class Card {
 
   public void setAmountDue(Double amountDue) {
     this.amountDue = amountDue;
-  }
-
-  public Card minimumPayment(Double minimumPayment) {
-    this.minimumPayment = minimumPayment;
-    return this;
   }
 
   /**

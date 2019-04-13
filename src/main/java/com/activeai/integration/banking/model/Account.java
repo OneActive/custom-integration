@@ -25,34 +25,8 @@ public class Account {
   @JsonProperty("bankName")
   private String bankName;
 
-  public Account accountName(String accountName) {
-    this.accountName = accountName;
-    return this;
-  }
-
   @JsonProperty("accountName")
   private String accountName;
-
-  public String getAccountName() {
-    return accountName;
-  }
-
-  public void setAccountName(String accountName) {
-    this.accountName = accountName;
-  }
-
-  public Account bankName(String bankName) {
-    this.bankName = bankName;
-    return this;
-  }
-
-  public String getBankName() {
-    return bankName;
-  }
-
-  public void setBankName(String bankName) {
-    this.bankName = bankName;
-  }
 
   @JsonProperty("type")
   private AccountType type = null;
@@ -87,9 +61,20 @@ public class Account {
   @JsonProperty("balance")
   private AccountBalance balance = null;
 
-  public Account category(String category) {
-    this.category = category;
-    return this;
+  public String getAccountName() {
+    return accountName;
+  }
+
+  public void setAccountName(String accountName) {
+    this.accountName = accountName;
+  }
+
+  public String getBankName() {
+    return bankName;
+  }
+
+  public void setBankName(String bankName) {
+    this.bankName = bankName;
   }
 
   /**
@@ -105,11 +90,6 @@ public class Account {
     this.category = category;
   }
 
-  public Account productCode(String productCode) {
-    this.productCode = productCode;
-    return this;
-  }
-
   /**
    * Product code
    * 
@@ -121,11 +101,6 @@ public class Account {
 
   public void setProductCode(String productCode) {
     this.productCode = productCode;
-  }
-
-  public Account product(String product) {
-    this.product = product;
-    return this;
   }
 
   /**
@@ -140,12 +115,6 @@ public class Account {
   public void setProduct(String product) {
     this.product = product;
   }
-
-  public Account type(AccountType type) {
-    this.type = type;
-    return this;
-  }
-
   /**
    * Type of account
    * 
@@ -157,11 +126,6 @@ public class Account {
 
   public void setType(AccountType type) {
     this.type = type;
-  }
-
-  public Account displayAccountNumber(String displayAccountNumber) {
-    this.displayAccountNumber = displayAccountNumber;
-    return this;
   }
 
   /**
@@ -177,11 +141,6 @@ public class Account {
     this.displayAccountNumber = displayAccountNumber;
   }
 
-  public Account accountNumber(String accountNumber) {
-    this.accountNumber = accountNumber;
-    return this;
-  }
-
   /**
    * Display Account number (in masked form)
    * 
@@ -193,11 +152,6 @@ public class Account {
 
   public void setAccountNumber(String accountNumber) {
     this.accountNumber = accountNumber;
-  }
-
-  public Account accountId(String accountId) {
-    this.accountId = accountId;
-    return this;
   }
 
   /**
@@ -213,11 +167,6 @@ public class Account {
     this.accountId = accountId;
   }
 
-  public Account branchId(String branchId) {
-    this.branchId = branchId;
-    return this;
-  }
-
   /**
    * Branch ID
    * 
@@ -231,11 +180,6 @@ public class Account {
     this.branchId = branchId;
   }
 
-  public Account branchName(String branchName) {
-    this.branchName = branchName;
-    return this;
-  }
-
   /**
    * Branch Name
    * 
@@ -247,11 +191,6 @@ public class Account {
 
   public void setBranchName(String branchName) {
     this.branchName = branchName;
-  }
-
-  public Account status(AccountStatus status) {
-    this.status = status;
-    return this;
   }
 
   /**
@@ -283,11 +222,6 @@ public class Account {
     this.lastStatementDate = lastStatementDate;
   }
 
-  public Account lastStatementBalance(Double lastStatementBalance) {
-    this.lastStatementBalance = lastStatementBalance;
-    return this;
-  }
-
   /**
    * last statement balance
    * 
@@ -299,11 +233,6 @@ public class Account {
 
   public void setLastStatementBalance(Double lastStatementBalance) {
     this.lastStatementBalance = lastStatementBalance;
-  }
-
-  public Account balance(AccountBalance balance) {
-    this.balance = balance;
-    return this;
   }
 
   /**
