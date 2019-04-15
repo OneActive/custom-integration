@@ -129,7 +129,6 @@
 				<configuration>
 					<warSourceDirectory>${basedir}/web</warSourceDirectory>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<!-- <packagingExcludes>WEB-INF/lib/activemq*.jar</packagingExcludes> -->
 					<archive>
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
