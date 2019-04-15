@@ -77,6 +77,7 @@ public class CardsApiController {
       logger.error("Couldn't serialize response for content type application/json", e);
       response = new ResponseEntity<CardsResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    logger.info("Card Response : " + response);
     return response;
   }
 
@@ -127,7 +128,7 @@ public class CardsApiController {
           "            \"foreignTxnCurrency\": \"foreignTxnCurrency\",\n" + 
           "            \"amount\": 1000,\n" + 
           "            \"description\": \"description\",\n" + 
-          "            \"currency\": \"currency\",\n" + 
+          "            \"currency\": \"USD\",\n" +
           "            \"foreignTxnAmount\": 1.465812,\n" + 
           "            \"isDebit\": true,\n" + 
           "            \"category\": \"category\",\n" + 
@@ -139,7 +140,7 @@ public class CardsApiController {
           "            \"foreignTxnCurrency\": \"foreignTxnCurrency\",\n" + 
           "            \"amount\": 2000,\n" + 
           "            \"description\": \"description\",\n" + 
-          "            \"currency\": \"currency\",\n" + 
+          "            \"currency\": \"USD\",\n" +
           "            \"foreignTxnAmount\": 1.465812,\n" + 
           "            \"isDebit\": true,\n" + 
           "            \"category\": \"category\",\n" + 
@@ -151,7 +152,7 @@ public class CardsApiController {
           "            \"foreignTxnCurrency\": \"foreignTxnCurrency\",\n" + 
           "            \"amount\": 3000,\n" + 
           "            \"description\": \"description\",\n" + 
-          "            \"currency\": \"currency\",\n" + 
+          "            \"currency\": \"USD\",\n" +
           "            \"foreignTxnAmount\": 1.4658129805029452,\n" + 
           "            \"isDebit\": true,\n" + 
           "            \"category\": \"category\",\n" + 
@@ -163,7 +164,7 @@ public class CardsApiController {
           "            \"foreignTxnCurrency\": \"foreignTxnCurrency\",\n" + 
           "            \"amount\": 4000,\n" + 
           "            \"description\": \"description\",\n" + 
-          "            \"currency\": \"currency\",\n" + 
+          "            \"currency\": \"USD\",\n" +
           "            \"foreignTxnAmount\": 1.4658129805029452,\n" + 
           "            \"isDebit\": true,\n" + 
           "            \"category\": \"category\",\n" + 
@@ -175,7 +176,7 @@ public class CardsApiController {
           "            \"foreignTxnCurrency\": \"foreignTxnCurrency\",\n" + 
           "            \"amount\": 5000,\n" + 
           "            \"description\": \"description\",\n" + 
-          "            \"currency\": \"currency\",\n" + 
+          "            \"currency\": \"USD\",\n" +
           "            \"foreignTxnAmount\": 1.4658129805029452,\n" + 
           "            \"isDebit\": true,\n" + 
           "            \"category\": \"category\",\n" + 
@@ -191,6 +192,7 @@ public class CardsApiController {
       logger.error("Couldn't serialize response for content type application/json", e);
       response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    logger.info("Card Transactions Response : " + response);
     return response;
   }
 

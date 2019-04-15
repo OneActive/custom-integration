@@ -107,29 +107,48 @@ public class AccountApiController {
       logger.error("Couldn't serialize response for content type application/json", e);
       response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    logger.info("Response : " + response);
+    logger.info("Statement Response : " + response);
     return response;
   }
 
   @RequestMapping(value = "/{customerId}/accounts/{accountId}/transactions", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<AccountTransactionsResponse> getAccountTransactions(
       @PathVariable(name = "customerId", required = true) Integer customerId,
-      @PathVariable(name = "accountId", required = true) Integer accountId,
-      @NotNull @Valid @DateTimeFormat(iso = ISO.DATE) @RequestParam(value = "fromDate", required = true) LocalDate fromDate,
-      @NotNull @Valid @DateTimeFormat(iso = ISO.DATE) @RequestParam(value = "toDate", required = true) LocalDate toDate,
-      @NotNull @Valid @RequestParam(value = "pageSize", required = true) Integer pageSize) {
+      @PathVariable(name = "accountId", required = true) Integer accountId) {
     logger.info("Entering getAccountTransactions");
     String transactions = null;
     ResponseEntity<AccountTransactionsResponse> response = null;
     try {
       transactions =
-          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"accountTransactions\" : {    \"foreignTxnCurrency\" : \"foreignTxnCurrency\",    \"amount\" : 6.027456183070403,    \"description\" : \"description\",    \"currency\" : \"currency\",    \"foreignTxnAmount\" : 1.4658129805029452,    \"isDebit\" : true,    \"category\" : \"category\",    \"foreignTxnExchangeRate\" : 5.962134,    \"txnDate\" : \"2019-03-20\",    \"referenceId\" : \"referenceId\"  }}";
+          "{  \n" + "   \"result\":{  \n" + "      \"messageCode\":\"messageCode\",\n" + "      \"message\":\"message\",\n"
+              + "      \"status\":0\n" + "   },\n" + "   \"accountTransactions\":[  \n" + "      {  \n"
+              + "         \"foreignTxnCurrency\":\"foreignTxnCurrency\",\n" + "         \"amount\":6.027456183070403,\n"
+              + "         \"description\":\"description\",\n" + "         \"currency\":\"USD\",\n"
+              + "         \"foreignTxnAmount\":1.4658129805029452,\n" + "         \"isDebit\":true,\n"
+              + "         \"category\":\"category\",\n" + "         \"foreignTxnExchangeRate\":5.962134,\n"
+              + "         \"txnDate\":\"2019-01-23\",\n" + "         \"referenceId\":\"referenceId\"\n" + "      },\n" + "      {  \n"
+              + "         \"foreignTxnCurrency\":\"foreignTxnCurrency\",\n" + "         \"amount\":16.027456183070403,\n"
+              + "         \"description\":\"description\",\n" + "         \"currency\":\"USD\",\n"
+              + "         \"foreignTxnAmount\":3.4658129805029452,\n" + "         \"isDebit\":true,\n"
+              + "         \"category\":\"category\",\n" + "         \"foreignTxnExchangeRate\":5.962134,\n"
+              + "         \"txnDate\":\"2019-01-20\",\n" + "         \"referenceId\":\"referenceId\"\n" + "      },\n" + "      {  \n"
+              + "         \"foreignTxnCurrency\":\"foreignTxnCurrency\",\n" + "         \"amount\":61.027456183070403,\n"
+              + "         \"description\":\"description\",\n" + "         \"currency\":\"USD\",\n"
+              + "         \"foreignTxnAmount\":2.4658129805029452,\n" + "         \"isDebit\":true,\n"
+              + "         \"category\":\"category\",\n" + "         \"foreignTxnExchangeRate\":5.962134,\n"
+              + "         \"txnDate\":\"2019-02-20\",\n" + "         \"referenceId\":\"referenceId\"\n" + "      },\n" + "      {  \n"
+              + "         \"foreignTxnCurrency\":\"foreignTxnCurrency\",\n" + "         \"amount\":23.027456183070403,\n"
+              + "         \"description\":\"description\",\n" + "         \"currency\":\"USD\",\n"
+              + "         \"foreignTxnAmount\":13.4658129805029452,\n" + "         \"isDebit\":true,\n"
+              + "         \"category\":\"category\",\n" + "         \"foreignTxnExchangeRate\":5.962134,\n"
+              + "         \"txnDate\":\"2019-04-20\",\n" + "         \"referenceId\":\"referenceId\"\n" + "      }\n" + "\n" + "   ]\n"
+              + "}";
       response = new ResponseEntity<>(objectMapper.readValue(transactions, AccountTransactionsResponse.class), HttpStatus.OK);
     } catch (IOException e) {
       logger.error("Couldn't serialize response for content type application/json", e);
       response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    logger.info("Response : " + response);
+    logger.info("Cards Response : " + response);
     return response;
   }
 
@@ -219,7 +238,7 @@ public class AccountApiController {
       logger.error("Couldn't serialize response for content type application/json", e);
       response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    logger.info("Response : " + response);
+    logger.info("Accounts Response : " + response);
     return response;
   }
 
