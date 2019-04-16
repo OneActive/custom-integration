@@ -1,9 +1,0 @@
-<routes xmlns="http://camel.apache.org/schema/spring">
-    <route id="direct:banking.integration.handle.transactions">
-        <from uri="direct:banking.integration.handle.transactions"/>
-        <recipientList>
-            <simple>${bean:propertyUtil.getPropertyForBot(${headers.botId},${body.getAccountCategory}_TRANSACTION_ROUTE_URI)}
-            </simple>
-        </recipientList>
-    </route>
-</routes>
