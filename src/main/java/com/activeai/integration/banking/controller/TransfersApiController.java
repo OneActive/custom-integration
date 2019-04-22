@@ -37,35 +37,35 @@ public class TransfersApiController {
       response = new ResponseEntity<>(objectMapper.readValue(
           "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"payeeDetails\" : [\n"
               + "\t\t{\n" + "\t\t\t\"payeeId\": \"91301y053851317\",\n" + "\t\t\t\"payeeName\": \"Ajay\",\n"
-              + "\t\t\t\"payeeNickName\": \"Ajay\",\n" + "\t\t\t\"payeeType\": \"EXTERNAL\",\n"
+              + "\t\t\t\"payeeNickName\": \"Ajay\",\n" + "\t\t\t\"payeeType\": \"EXTERNAL_DOMESTIC\",\n"
               + "\t\t\t\"payeeAccountNo\": \"1234y6213\",\n" + "\t\t\t\"payeeMaskedAccountNo\" : \"12xxx6213\",\n"
               + "\t\t\t\"payeeAccountId\": \"913010y53851317\",\n" + "\t\t\t\"currency\": \"USD\",\n" + "\t\t\t\"status\": \"ACTIVE\",\n"
               + "\t\t\t\"payeeBank\":\"BankVic\",\n" + "\t\t\t\"ifscCode\" : \"BVIC0000004\",\n" + "\t\t\t\"payeeBankBranch\":\"String\",\n"
               + "\t\t\t\"payeeBankIFSC\":\"String\",\n" + "\t\t\t\"payeeBankSWIFT\":\"String\"\n" + "\t\t},\n" + "\t\t{\n"
               + "\t\t\t\"payeeId\": \"233010y53850098\",\n" + "\t\t\t\"payeeName\": \"Alia\",\n" + "\t\t\t\"payeeNickName\": \"Alia\",\n"
-              + "\t\t\t\"payeeType\": \"EXTERNAL\",\n" + "\t\t\t\"payeeAccountNo\": \"1234y6214\",\n"
+              + "\t\t\t\"payeeType\": \"EXTERNAL_DOMESTIC\",\n" + "\t\t\t\"payeeAccountNo\": \"1234y6214\",\n"
               + "\t\t\t\"payeeMaskedAccountNo\" : \"12xxx6214\",\n" + "\t\t\t\"payeeAccountId\": \"233010y53850098\",\n"
               + "\t\t\t\"currency\": \"USD\",\n" + "\t\t\t\"status\": \"ACTIVE\",\n" + "\t\t\t\"payeeBank\":\"BankViD\",\n"
               + "\t\t\t\"ifscCode\" : \"BVID0000003\",\n" + "\t\t\t\"payeeBankBranch\":\"String\",\n"
               + "\t\t\t\"payeeBankIFSC\":\"String\",\n" + "\t\t\t\"payeeBankSWIFT\":\"String\"\n" + "\t\t},\n" + "\t\t{\n"
               + "\t\t\t\"payeeId\": \"3021547y9663221\",\n" + "\t\t\t\"payeeName\": \"Ajit\",\n" + "\t\t\t\"payeeNickName\": \"Ajit\",\n"
-              + "\t\t\t\"payeeType\": \"INTERNAL\",\n" + "\t\t\t\"payeeAccountNo\": \"123y56215\",\n"
+              + "\t\t\t\"payeeType\": \"INTERNAL_DOMESTIC\",\n" + "\t\t\t\"payeeAccountNo\": \"123y56215\",\n"
               + "\t\t\t\"payeeMaskedAccountNo\" : \"12xxx6215\",\n" + "\t\t\t\"payeeAccountId\": \"30215y789663221\",\n"
               + "\t\t\t\"currency\": \"USD\",\n" + "\t\t\t\"status\": \"ACTIVE\",\n" + "\t\t\t\"payeeBank\":\"BankViD\",\n"
               + "\t\t\t\"payeeBankBranch\":\"String\",\n" + "\t\t\t\"payeeBankIFSC\":\"String\",\n"
               + "\t\t\t\"payeeBankSWIFT\":\"String\"\n" + "\t\t},\n" + "\t\t{\n" + "\t\t\t\"payeeId\": \"302154y89663121\",\n"
-              + "\t\t\t\"payeeName\": \"Amit\",\n" + "\t\t\t\"payeeNickName\": \"Amit\",\n" + "\t\t\t\"payeeType\": \"INTERNAL\",\n"
+              + "\t\t\t\"payeeName\": \"Amit\",\n" + "\t\t\t\"payeeNickName\": \"Amit\",\n" + "\t\t\t\"payeeType\": \"INTERNAL_DOMESTIC\",\n"
               + "\t\t\t\"payeeAccountNo\": \"1234y6216\",\n" + "\t\t\t\"payeeMaskedAccountNo\" : \"12xxx6216\",\n"
               + "\t\t\t\"payeeAccountId\": \"302154789y63121\",\n" + "\t\t\t\"currency\": \"USD\",\n" + "\t\t\t\"status\": \"ACTIVE\",\n"
               + "\t\t\t\"payeeBank\":\"BankViD\",\n" + "\t\t\t\"payeeBankBranch\":\"String\",\n" + "\t\t\t\"payeeBankIFSC\":\"String\",\n"
               + "\t\t\t\"payeeBankSWIFT\":\"String\"\n" + "\t\t},\n" + "\t\t{\n" + "\t\t\t\"payeeId\": \"30215478y663122\",\n"
               + "\t\t\t\"payeeName\": \"Elan Kumaran\",\n" + "\t\t\t\"payeeNickName\": \"Elan Kumaran\",\n"
-              + "\t\t\t\"payeeType\": \"INTERNAL\",\n" + "\t\t\t\"payeeAccountNo\": \"123y56217\",\n"
+              + "\t\t\t\"payeeType\": \"INTERNAL_DOMESTIC\",\n" + "\t\t\t\"payeeAccountNo\": \"123y56217\",\n"
               + "\t\t\t\"payeeMaskedAccountNo\" : \"12xxx6217\",\n" + "\t\t\t\"payeeAccountId\": \"30215478y663122\",\n"
               + "\t\t\t\"currency\": \"USD\",\n" + "\t\t\t\"status\": \"ACTIVE\",\n" + "\t\t\t\"payeeBankBranch\":\"String\",\n"
               + "\t\t\t\"payeeBank\":\"BankViD\",\n" + "\t\t\t\"payeeBankIFSC\":\"String\",\n" + "\t\t\t\"payeeBankSWIFT\":\"String\"\n"
               + "\t\t},\n" + "\t\t{\n" + "\t\t\t\"payeeId\": \"30215478y663123\",\n" + "\t\t\t\"payeeName\": \"Elan Cheziyan\",\n"
-              + "\t\t\t\"payeeNickName\": \"Elan Cheziyan\",\n" + "\t\t\t\"payeeType\": \"INTERNAL\",\n"
+              + "\t\t\t\"payeeNickName\": \"Elan Cheziyan\",\n" + "\t\t\t\"payeeType\": \"INTERNAL_DOMESTIC\",\n"
               + "\t\t\t\"payeeAccountNo\": \"1234y6218\",\n" + "\t\t\t\"payeeMaskedAccountNo\" : \"12xxx6220\",\n"
               + "\t\t\t\"payeeAccountId\": \"302154789y63123\",\n" + "\t\t\t\"currency\": \"USD\",\n" + "\t\t\t\"status\": \"ACTIVE\",\n"
               + "\t\t\t\"payeeBankBranch\":\"String\",\n" + "\t\t\t\"payeeBankIFSC\":\"String\",\n"
@@ -84,8 +84,7 @@ public class TransfersApiController {
       @RequestParam(value = "fromAccountId", required = true) Integer fromAccountId,
       @RequestParam(value = "toAccountId", required = true) Integer toAccountId,
       @RequestParam(value = "amount", required = true) BigDecimal amount,
-      @RequestParam(value = "currency", required = true) String currency,
-      @RequestParam(value = "remarks", required = true) String remarks) {
+      @RequestParam(value = "currency", required = true) String currency){
     ResponseEntity<TransferInititateResponse> response = null;
     try {
       response = new ResponseEntity<>(objectMapper.readValue(

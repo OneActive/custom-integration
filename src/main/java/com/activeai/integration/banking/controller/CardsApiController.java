@@ -47,9 +47,10 @@ public class CardsApiController {
               + "   \"permanentCreditLimit\":9.301444243932576,\n" + "   \"category\":\"CREDIT_CARD\",\n"
               + "   \"openingBalance\":0.8008281904610115,\n" + "   \"availableCreditLimit\":2.3021358869347655,\n"
               + "   \"temporaryCreditLimit\":7.061401241503109,\n" + "   \"status\":\"ACTIVE\",\n" + "   \"currencyCode\":\"USD\",\n"
-              + "   \"expiryDate\":\"2020-12-20\",\n" + "   \"activationDate\":\"1998-12-20\"\n" + "\n" + "},\n" + "{  \n"
-              + "   \"branchId\":\"USB001\",\n" + "   \"product\":\"product\",\n" + "   \"closingBalance\":6.027456183070403,\n"
-              + "   \"branchName\":\"Marceline\",\n" + "   \"bankName\" : \"US Bancorp\",\n" + "   \"accountName\" : \"Titanium Times\",\n"
+              + "   \"expiryDate\":\"2020-12-20\",\n" + "   \"activationDate\":\"1998-12-20\",\n"
+              + "   \"branchAddress\" : \"Manhattan, USA \"\n" + "\n" + "},\n" + "{  \n" + "   \"branchId\":\"USB001\",\n"
+              + "   \"product\":\"product\",\n" + "   \"closingBalance\":6.027456183070403,\n" + "   \"branchName\":\"Marceline\",\n"
+              + "   \"bankName\" : \"US Bancorp\",\n" + "   \"accountName\" : \"Titanium Times\",\n"
               + "   \"accountNumber\":\"1234567892\",\n" + "   \"cardIssuer\":\"Visa\",\n" + "   \"amountDue\":1.4658129805029452,\n"
               + "   \"accountId\":\"5123456789012347\",\n" + "   \"paymentDueDate\":\"2000-01-24\",\n"
               + "   \"lastStatementDate\":\"2000-01-24\",\n" + "   \"productCode\":\"productCode\",\n"
@@ -59,19 +60,20 @@ public class CardsApiController {
               + "   \"category\":\"CREDIT_CARD\",\n" + "   \"openingBalance\":1.8008281904610115,\n"
               + "   \"availableCreditLimit\":3.3021358869347655,\n" + "   \"temporaryCreditLimit\":5.061401241503109,\n"
               + "   \"status\":\"ACTIVE\",\n" + "   \"currencyCode\":\"USD\",\n" + "   \"expiryDate\":\"2020-12-20\",\n"
-              + "   \"activationDate\":\"1998-12-20\"\n" + "\n" + "},\n" + "{  \n" + "   \"branchId\":\"M001\",\n"
-              + "   \"product\":\"product\",\n" + "   \"closingBalance\":6.027456183070403,\n" + "   \"branchName\":\"Arlington\",\n"
-              + "   \"bankName\" : \"Wells Fargo\",\n" + "   \"accountName\" : \"Domestic Signature\",\n"
-              + "   \"accountNumber\":\"1234567891\",\n" + "   \"cardIssuer\":\"Visa\",\n" + "   \"amountDue\":1.4658129805029452,\n"
-              + "   \"accountId\":\"5123456789012348\",\n" + "   \"paymentDueDate\":\"2000-01-25\",\n"
-              + "   \"lastStatementDate\":\"2000-01-25\",\n" + "   \"productCode\":\"productCode\",\n"
-              + "   \"lastStatementBalance\":3.616076749251911,\n" + "   \"oversearCardActivated\":false,\n"
-              + "   \"minimumPayment\":9.962133916683182,\n" + "   \"creditLimit\":4.637376656633329,\n"
-              + "   \"displayAccountNumber\":\"123xxxx891\",\n" + "   \"permanentCreditLimit\":9.301444243932576,\n"
-              + "   \"category\":\"CREDIT_CARD\",\n" + "   \"openingBalance\":2.80063881904610115,\n"
-              + "   \"availableCreditLimit\":4.3021358869347655,\n" + "   \"temporaryCreditLimit\":9.061401241503109,\n"
-              + "   \"status\":\"ACTIVE\",\n" + "   \"currencyCode\":\"USD\",\n" + "   \"expiryDate\":\"2020-12-20\",\n"
-              + "   \"activationDate\":\"1998-12-20\"\n" + "\n" + "}]}",
+              + "   \"activationDate\":\"1998-12-20\",\n" + "   \"branchAddress\" : \"Marceline, USA \"\n" + "\n" + "},\n" + "{  \n"
+              + "   \"branchId\":\"M001\",\n" + "   \"product\":\"product\",\n" + "   \"closingBalance\":6.027456183070403,\n"
+              + "   \"branchName\":\"Arlington\",\n" + "   \"bankName\" : \"Wells Fargo\",\n"
+              + "   \"accountName\" : \"Domestic Signature\",\n" + "   \"accountNumber\":\"1234567891\",\n"
+              + "   \"cardIssuer\":\"Visa\",\n" + "   \"amountDue\":1.4658129805029452,\n" + "   \"accountId\":\"5123456789012348\",\n"
+              + "   \"paymentDueDate\":\"2000-01-25\",\n" + "   \"lastStatementDate\":\"2000-01-25\",\n"
+              + "   \"productCode\":\"productCode\",\n" + "   \"lastStatementBalance\":3.616076749251911,\n"
+              + "   \"oversearCardActivated\":false,\n" + "   \"minimumPayment\":9.962133916683182,\n"
+              + "   \"creditLimit\":4.637376656633329,\n" + "   \"displayAccountNumber\":\"123xxxx891\",\n"
+              + "   \"permanentCreditLimit\":9.301444243932576,\n" + "   \"category\":\"CREDIT_CARD\",\n"
+              + "   \"openingBalance\":2.80063881904610115,\n" + "   \"availableCreditLimit\":4.3021358869347655,\n"
+              + "   \"temporaryCreditLimit\":9.061401241503109,\n" + "   \"status\":\"ACTIVE\",\n" + "   \"currencyCode\":\"USD\",\n"
+              + "   \"expiryDate\":\"2020-12-20\",\n" + "   \"activationDate\":\"1998-12-20\",\n"
+              + "   \"branchAddress\" : \"Arlington, USA \"\n" + "}]}",
           CardsResponse.class), HttpStatus.OK);
     } catch (IOException e) {
       logger.error("Couldn't serialize response for content type application/json", e);
@@ -101,7 +103,8 @@ public class CardsApiController {
               + "   \"permanentCreditLimit\":9.301444243932576,\n" + "   \"category\":\"CREDIT_CARD\",\n"
               + "   \"openingBalance\":0.8008281904610115,\n" + "   \"availableCreditLimit\":2.3021358869347655,\n"
               + "   \"temporaryCreditLimit\":7.061401241503109,\n" + "   \"status\":\"ACTIVE\",\n" + "   \"currencyCode\":\"USD\",\n"
-              + "   \"expiryDate\":\"2020-12-20\",\n" + "   \"activationDate\":\"1998-12-20\"\n" + "\n" + "}}",
+              + "   \"expiryDate\":\"2020-12-20\",\n" + "   \"activationDate\":\"1998-12-20\",\n"
+              + "   \"branchAddress\" : \"Manhattan, USA \"\n" + "\n" + "}}",
           CardDetailResponse.class), HttpStatus.OK);
     } catch (IOException e) {
       logger.error("Couldn't serialize response for content type application/json", e);

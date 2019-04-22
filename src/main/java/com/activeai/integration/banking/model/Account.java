@@ -61,6 +61,17 @@ public class Account {
   @JsonProperty("balance")
   private AccountBalance balance = null;
 
+  @JsonProperty("branchAddress")
+  private String branchAddress;
+
+  public String getBranchAddress() {
+    return branchAddress;
+  }
+
+  public void setBranchAddress(String branchAddress) {
+    this.branchAddress = branchAddress;
+  }
+
   public String getAccountName() {
     return accountName;
   }

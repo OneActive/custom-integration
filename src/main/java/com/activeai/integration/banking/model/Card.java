@@ -100,6 +100,25 @@ public class Card {
   @JsonProperty("activationDate")
   private String activationDate;
 
+  @JsonProperty("branchAddress")
+  private String branchAddress;
+
+  public String getBranchAddress() {
+    return branchAddress;
+  }
+
+  public void setBranchAddress(String branchAddress) {
+    this.branchAddress = branchAddress;
+  }
+
+  public Boolean getOversearCardActivated() {
+    return oversearCardActivated;
+  }
+
+  public String getLastStatementDate() {
+    return lastStatementDate;
+  }
+
   public String getExpiryDate() {
     return expiryDate;
   }

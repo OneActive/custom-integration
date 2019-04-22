@@ -186,7 +186,8 @@ public class AccountApiController {
           "            \"availableBalance\": 75675.0,\n" +
           "            \"currentBalance\": 20000.0,\n" + 
           "            \"currencyCode\": \"USD\"\n" +
-          "        }\n" + 
+          "        },\n" +
+          "        \"branchAddress\": \"Arlington, USA \"\n" +
           "    }, {\n" + 
           "        \"category\": \"ACCOUNT\",\n" + 
           "        \"productCode\": \"string\",\n" +
@@ -208,7 +209,8 @@ public class AccountApiController {
           "            \"availableBalance\": 23456.0,\n" +
           "            \"currentBalance\": 30000.0,\n" + 
           "            \"currencyCode\": \"USD\"\n" +
-          "        }\n" + 
+          "        },\n" +
+          "        \"branchAddress\": \"Marceline, USA \"\n" +
           "    }, {\n" + 
           "        \"category\": \"ACCOUNT\",\n" + 
           "        \"productCode\": \"string\",\n" + 
@@ -230,7 +232,8 @@ public class AccountApiController {
           "            \"availableBalance\": 65432.0,\n" +
           "            \"currentBalance\": 40000.0,\n" + 
           "            \"currencyCode\": \"USD\"\n" +
-          "        }\n" + 
+          "        },\n" +
+          "        \"branchAddress\": \"Manhattan, USA \"\n" +
           "    }]\n" + 
           "}";
       response = new ResponseEntity<>(objectMapper.readValue(accounts, AccountsResponse.class), HttpStatus.OK);

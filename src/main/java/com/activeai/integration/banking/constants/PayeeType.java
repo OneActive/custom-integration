@@ -8,9 +8,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * account status - active, inactive
  */
 public enum PayeeType {
-  INTERNAL("INTERNAL"),
+  INTERNAL_DOMESTIC("INTERNAL_DOMESTIC"),
 
-  EXTERNAL("EXTERNAL"),
+  EXTERNAL_DOMESTIC("EXTERNAL_DOMESTIC"),
 
   WALLET("WALLET");
 
