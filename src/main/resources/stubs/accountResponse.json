@@ -1,0 +1,129 @@
+{
+  "result": {
+    "status": 0,
+    "message": "string",
+    "messageCode": "string"
+  },
+  "accounts": [
+    {
+      "category": "ACCOUNT",
+      "productCode": "string",
+      "bankName": "Wells Fargo",
+      "accountName": "Regular Savings",
+      "product": "string",
+      "type": "SAVINGS",
+      "displayAccountNumber": "123xxxx4567",
+      "accountNumber": "1234567",
+      "accountId": "1234567",
+      "branchId": "WF001",
+      "branchName": "Arlington",
+      "status": "ACTIVE",
+      "openingDate": "2019-03-22",
+      "lastStatementDate": "2019-03-22",
+      "lastStatementBalance": 34879,
+      "balance": {
+        "amount": 90000,
+        "availableBalance": 75675,
+        "currentBalance": 20000,
+        "currencyCode": "USD"
+      },
+      "branchAddress": "Arlington, USA "
+    },
+    {
+      "category": "ACCOUNT",
+      "productCode": "string",
+      "bankName": "US Bancorp",
+      "accountName": "Easy Access",
+      "product": "string",
+      "type": "SAVINGS",
+      "displayAccountNumber": "123xxxx4568",
+      "accountNumber": "1234568",
+      "accountId": "1234568",
+      "branchId": "USB001",
+      "branchName": "Marceline",
+      "status": "ACTIVE",
+      "openingDate": "2019-03-23",
+      "lastStatementDate": "2019-03-23",
+      "lastStatementBalance": 6543,
+      "balance": {
+        "amount": 654323,
+        "availableBalance": 23456,
+        "currentBalance": 30000,
+        "currencyCode": "USD"
+      },
+      "branchAddress": "Marceline, USA "
+    },
+    {
+      "category": "ACCOUNT",
+      "productCode": "string",
+      "product": "string",
+      "bankName": "JPMorgan Chase",
+      "accountName": "SavingsMax",
+      "type": "SAVINGS",
+      "displayAccountNumber": "123xxxx4569",
+      "accountNumber": "1234569",
+      "accountId": "1234569",
+      "branchId": "JPMC001",
+      "branchName": "Manhattan",
+      "status": "ACTIVE",
+      "openingDate": "2019-03-24",
+      "lastStatementDate": "2019-03-24",
+      "lastStatementBalance": 3456,
+      "balance": {
+        "amount": 234567,
+        "availableBalance": 65432,
+        "currentBalance": 40000,
+        "currencyCode": "USD"
+      },
+      "branchAddress": "Manhattan, USA "
+    },
+    {
+      "category": "ACCOUNT",
+      "productCode": "string",
+      "bankName": "US Bancorp",
+      "accountName": "Easy Access",
+      "product": "string",
+      "type": "SAVINGS",
+      "displayAccountNumber": "123xxxx4570",
+      "accountNumber": "1234570",
+      "accountId": "1234570",
+      "branchId": "USB002",
+      "branchName": "Marceline",
+      "status": "ACTIVE",
+      "openingDate": "2019-03-23",
+      "lastStatementDate": "2019-03-23",
+      "lastStatementBalance": 234556,
+      "balance": {
+        "amount": 987654,
+        "availableBalance": 786043,
+        "currentBalance": 985654,
+        "currencyCode": "USD"
+      },
+      "branchAddress": "Marceline, USA "
+    },
+    {
+      "category": "ACCOUNT",
+      "productCode": "string",
+      "product": "string",
+      "bankName": "JPMorgan Chase",
+      "accountName": "SavingsMax",
+      "type": "SAVINGS",
+      "displayAccountNumber": "123xxxx4671",
+      "accountNumber": "1234671",
+      "accountId": "1234671",
+      "branchId": "JPMC002",
+      "branchName": "Manhattan",
+      "status": "ACTIVE",
+      "openingDate": "2019-03-24",
+      "lastStatementDate": "2019-03-24",
+      "lastStatementBalance": 3456,
+      "balance": {
+        "amount": 2342567,
+        "availableBalance": 328574,
+        "currentBalance": 2142567,
+        "currencyCode": "USD"
+      },
+      "branchAddress": "Manhattan, USA "
+    }
+  ]
+}

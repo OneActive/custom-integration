@@ -309,6 +309,7 @@ public class Account {
     sb.append("    lastStatementDate: ").append(toIndentedString(lastStatementDate)).append("\n");
     sb.append("    lastStatementBalance: ").append(toIndentedString(lastStatementBalance)).append("\n");
     sb.append("    balance: ").append(toIndentedString(balance)).append("\n");
+    sb.append("    branchAddress: ").append(toIndentedString(branchAddress)).append("\n");
     sb.append("}");
     return sb.toString();
   }
