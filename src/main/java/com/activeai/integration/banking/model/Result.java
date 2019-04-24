@@ -14,6 +14,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Validated
 public class Result {
 
+  /**
+   * 0 means success and other than 0 all are failure's
+   */
   @JsonProperty("status")
   private Integer status = null;
 
