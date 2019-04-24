@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.activeai.integration.banking.model.BillerCategoriesResponse;
 import com.activeai.integration.banking.model.BillerResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Api(value = "BillPayment Related APIs", description = "Shows API Documentation Regards Billpayment APIs")
 @RestController
 public class BillPaymentApiController {
 

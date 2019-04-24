@@ -3,6 +3,8 @@ package com.activeai.integration.banking.controller;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import com.activeai.integration.banking.model.CardTransactionsResponse;
 import com.activeai.integration.banking.model.CardsResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Api(value = "Cards Related APIs", description = "Shows API Documentation Regards Cards APIs")
 @RestController
 public class CardsApiController {
 
@@ -29,6 +32,7 @@ public class CardsApiController {
   private static final Logger logger = LoggerFactory.getLogger(CardsApiController.class);
 
   // TODO : Populate stub card list
+  @ApiOperation(value = "Returns list of cards based on customer ID")
   @RequestMapping(value = "/{customerId}/cards", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardsResponse> getCards(@PathVariable(value = "customerId", required = true) Integer customerId) {
     logger.info("Entering getCards");
@@ -108,6 +112,7 @@ public class CardsApiController {
   }
 
 
+  @ApiOperation(value = "Returns selected card details")
   @RequestMapping(value = "/{customerId}/cards/{cardId}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardDetailResponse> getCardDetail(@PathVariable(value = "customerId", required = true) Integer customerId,
       @PathVariable(value = "cardId", required = true) Integer cardId) {
@@ -137,6 +142,7 @@ public class CardsApiController {
     return response;
   }
 
+  @ApiOperation(value = "Returns selected card transaction history")
   @RequestMapping(value = "/{customerId}/cards/{cardId}/transactions", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardTransactionsResponse> getCardTransactions(
       @PathVariable(value = "customerId", required = true) Integer customerId,
@@ -223,6 +229,7 @@ public class CardsApiController {
     return response;
   }
 
+  @ApiOperation("Return selected card blocking status selected card")
   @RequestMapping(value = "/{customerId}/cards/{cardId}/block", produces = {"application/json"}, consumes = {"application/json"},
       method = RequestMethod.PUT)
   public ResponseEntity<CardDetailResponse> blockCard(@PathVariable(name = "customerId", required = true) Integer customerId,

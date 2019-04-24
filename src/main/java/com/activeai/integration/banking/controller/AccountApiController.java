@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import com.activeai.integration.banking.model.AccountTransactionsResponse;
 import com.activeai.integration.banking.model.AccountsResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Api(value = "Accounts Related APIs", description = "Shows API Documentation Regards Accounts APIs")
 @RestController
 public class AccountApiController {
 
@@ -33,6 +36,7 @@ public class AccountApiController {
   @Autowired
   private ObjectMapper objectMapper;
 
+  @ApiOperation(value = "Returns selected account balance")
   @RequestMapping(value = "/{customerId}/accounts/{accountId}/balance", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<AccountBalanceResponse> getAccountBalance(@PathVariable(name = "customerId", required = true) Integer customerId,
       @PathVariable(name = "accountId", required = true) Integer accountId) {
@@ -51,6 +55,7 @@ public class AccountApiController {
     return response;
   }
 
+  @ApiOperation(value = "Returns selected account details")
   @RequestMapping(value = "/{customerId}/accounts/{accountId}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<AccountDetailResponse> getAccountDetail(@PathVariable(name = "customerId", required = true) Integer customerId,
       @PathVariable(name = "accountId", required = true) Integer accountId) {
@@ -70,6 +75,7 @@ public class AccountApiController {
   }
 
 
+  @ApiOperation(value = "Returns selected Account statement")
   @RequestMapping(value = "/{customerId}/accounts/{accountId}/statement", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<AccountTransactionsResponse> getAccountStatement(
       @PathVariable(name = "customerId", required = true) Integer customerId,
@@ -111,6 +117,7 @@ public class AccountApiController {
     return response;
   }
 
+  @ApiOperation(value = "Returns selected account transaction history")
   @RequestMapping(value = "/{customerId}/accounts/{accountId}/transactions", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<AccountTransactionsResponse> getAccountTransactions(
       @PathVariable(name = "customerId", required = true) Integer customerId,
@@ -152,6 +159,7 @@ public class AccountApiController {
     return response;
   }
 
+  @ApiOperation(value = "Returns list of accounts based on customer ID")
   @RequestMapping(value = "/{customerId}/accounts", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<AccountsResponse> getAccounts(@PathVariable(name = "customerId", required = true) Integer customerId) {
     logger.info("Entering getAccounts");

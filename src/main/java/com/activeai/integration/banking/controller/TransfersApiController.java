@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import com.activeai.integration.banking.model.TransferConfirmResponse;
 import com.activeai.integration.banking.model.TransferInititateResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Api(value = "Fund Transfer Related APIs", description = "Shows API Documentation Regards Fund Transfer APIs")
 @RestController
 public class TransfersApiController {
 
