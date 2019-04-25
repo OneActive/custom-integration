@@ -12,7 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Api(value = "Login Related APIs", description = "Shows API Documentation Regards Logins APIs")
 @RestController
@@ -27,7 +30,10 @@ public class LoginApiController {
   public ResponseEntity<LoginResponse> login(@RequestBody final UserLoginRequest userLoginRequest) {
     ResponseEntity<LoginResponse> response = null;
     try {
-      if(userLoginRequest.getUserID().equalsIgnoreCase("raman") && userLoginRequest.getPassword().equalsIgnoreCase("ram@123")){
+      Map<String,String> auth = new HashMap<>();
+      auth.put("stuart","stuart@123");
+      auth.put("michel","mic@123");
+      if(userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))){
         response = new ResponseEntity<>(objectMapper
             .readValue("{  \"result\" : {    \"messageCode\" : \"200\",    \"message\" : \"Login Successful\",    \"status\" : 0  }}",
                 LoginResponse.class), HttpStatus.OK);
