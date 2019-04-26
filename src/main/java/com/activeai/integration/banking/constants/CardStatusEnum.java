@@ -4,20 +4,20 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Card issues like visa, master card, amex, Diners
+ * Account status dormant / active / closed / blocker
  */
-public enum CardIssuer {
-  VISA("Visa"),
+public enum CardStatusEnum {
+  ACTIVE("ACTIVE"),
 
-  MASTER_CARD("Master Card"),
+  INACTIVE("INACTIVE"),
 
-  AMEX("AMEX"),
+  CLOSED("CLOSED"),
 
-  DINERS("Diners");
+  BLOCKED("BLOCKED");
 
   private String value;
 
-  CardIssuer(String value) {
+  CardStatusEnum(String value) {
     this.value = value;
   }
 
@@ -28,8 +28,8 @@ public enum CardIssuer {
   }
 
   @JsonCreator
-  public static CardIssuer fromValue(String text) {
-    for (CardIssuer b : CardIssuer.values()) {
+  public static CardStatusEnum fromValue(String text) {
+    for (CardStatusEnum b : CardStatusEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }

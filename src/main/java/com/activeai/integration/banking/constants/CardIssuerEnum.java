@@ -3,19 +3,21 @@ package com.activeai.integration.banking.constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-
 /**
- * account status - active, inactive
+ * Card issues like visa, master card, amex, Diners
  */
+public enum CardIssuerEnum {
+  VISA("Visa"),
 
-public enum PayeeStatus {
-  ACTIVE("ACTIVE"),
+  MASTER_CARD("Master Card"),
 
-  INACTIVE("INACTIVE");
+  AMEX("AMEX"),
+
+  DINERS("Diners");
 
   private String value;
 
-  PayeeStatus(String value) {
+  CardIssuerEnum(String value) {
     this.value = value;
   }
 
@@ -26,8 +28,8 @@ public enum PayeeStatus {
   }
 
   @JsonCreator
-  public static PayeeStatus fromValue(String text) {
-    for (PayeeStatus b : PayeeStatus.values()) {
+  public static CardIssuerEnum fromValue(String text) {
+    for (CardIssuerEnum b : CardIssuerEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }

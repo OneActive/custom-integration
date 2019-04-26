@@ -4,22 +4,19 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Type of account
+ * Account status dormant / active / closed
  */
-public enum AccountType {
-  SAVINGS("SAVINGS"),
 
-  CHECKING("CHECKING"),
+public enum AccountStatusEnum {
+  ACTIVE("ACTIVE"),
 
-  CURRENT("CURRENT"),
+  INACTIVE("INACTIVE"),
 
-  LOAN("LOAN"),
-
-  DEPOSIT("DEPOSIT");
+  CLOSED("CLOSED");
 
   private String value;
 
-  AccountType(String value) {
+  AccountStatusEnum(String value) {
     this.value = value;
   }
 
@@ -30,8 +27,8 @@ public enum AccountType {
   }
 
   @JsonCreator
-  public static AccountType fromValue(String text) {
-    for (AccountType b : AccountType.values()) {
+  public static AccountStatusEnum fromValue(String text) {
+    for (AccountStatusEnum b : AccountStatusEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }

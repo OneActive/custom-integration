@@ -4,19 +4,18 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Account status dormant / active / closed
+ * Type of card
  */
+public enum CardTypeEnum {
+  CREDIT("CREDIT"),
 
-public enum AccountStatus {
-  ACTIVE("ACTIVE"),
+  DEBIT("DEBIT"),
 
-  INACTIVE("INACTIVE"),
-
-  CLOSED("CLOSED");
+  FOREX("FOREX");
 
   private String value;
 
-  AccountStatus(String value) {
+  CardTypeEnum(String value) {
     this.value = value;
   }
 
@@ -27,8 +26,8 @@ public enum AccountStatus {
   }
 
   @JsonCreator
-  public static AccountStatus fromValue(String text) {
-    for (AccountStatus b : AccountStatus.values()) {
+  public static CardTypeEnum fromValue(String text) {
+    for (CardTypeEnum b : CardTypeEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }

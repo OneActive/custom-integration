@@ -1,17 +1,14 @@
 package com.activeai.integration.banking.model;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 import javax.validation.Valid;
 
-import com.activeai.integration.banking.constants.PayeeStatus;
-import com.activeai.integration.banking.constants.PayeeType;
+import com.activeai.integration.banking.constants.PayeeStatusEnum;
+import com.activeai.integration.banking.constants.PayeeTypeEnum;
 import org.springframework.validation.annotation.Validated;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Payee
@@ -53,10 +50,10 @@ public class Payee {
   private String currency = null;
 
   @JsonProperty("status")
-  private PayeeStatus status = null;
+  private PayeeStatusEnum status = null;
 
   @JsonProperty("payeeType")
-  private PayeeType payeeType = null;
+  private PayeeTypeEnum payeeType = null;
 
   public String getPayeeId() {
     return payeeId;
@@ -211,11 +208,11 @@ public class Payee {
    * 
    * @return status
    **/
-  public PayeeStatus getStatus() {
+  public PayeeStatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(PayeeStatus status) {
+  public void setStatus(PayeeStatusEnum status) {
     this.status = status;
   }
 
@@ -224,11 +221,11 @@ public class Payee {
    * 
    * @return payeeType
    **/
-  public PayeeType getPayeeType() {
+  public PayeeTypeEnum getPayeeType() {
     return payeeType;
   }
 
-  public void setPayeeType(PayeeType payeeType) {
+  public void setPayeeType(PayeeTypeEnum payeeType) {
     this.payeeType = payeeType;
   }
 

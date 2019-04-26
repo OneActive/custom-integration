@@ -21,11 +21,6 @@ public class AccountsResponse {
   @JsonProperty("accounts")
   private List<Account> accounts;
 
-  public AccountsResponse result(Result result) {
-    this.result = result;
-    return this;
-  }
-
   /**
    * Get result
    * 

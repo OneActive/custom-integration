@@ -7,16 +7,15 @@ import com.fasterxml.jackson.annotation.JsonValue;
 /**
  * account status - active, inactive
  */
-public enum PayeeType {
-  INTERNAL_DOMESTIC("INTERNAL_DOMESTIC"),
 
-  EXTERNAL_DOMESTIC("EXTERNAL_DOMESTIC"),
+public enum PayeeStatusEnum {
+  ACTIVE("ACTIVE"),
 
-  WALLET("WALLET");
+  INACTIVE("INACTIVE");
 
   private String value;
 
-  PayeeType(String value) {
+  PayeeStatusEnum(String value) {
     this.value = value;
   }
 
@@ -27,8 +26,8 @@ public enum PayeeType {
   }
 
   @JsonCreator
-  public static PayeeType fromValue(String text) {
-    for (PayeeType b : PayeeType.values()) {
+  public static PayeeStatusEnum fromValue(String text) {
+    for (PayeeStatusEnum b : PayeeStatusEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }

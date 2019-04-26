@@ -3,19 +3,20 @@ package com.activeai.integration.banking.constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+
 /**
- * Type of card
+ * account status - active, inactive
  */
-public enum CardType {
-  CREDIT("CREDIT"),
+public enum PayeeTypeEnum {
+  INTERNAL_DOMESTIC("INTERNAL_DOMESTIC"),
 
-  DEBIT("DEBIT"),
+  EXTERNAL_DOMESTIC("EXTERNAL_DOMESTIC"),
 
-  FOREX("FOREX");
+  WALLET("WALLET");
 
   private String value;
 
-  CardType(String value) {
+  PayeeTypeEnum(String value) {
     this.value = value;
   }
 
@@ -26,8 +27,8 @@ public enum CardType {
   }
 
   @JsonCreator
-  public static CardType fromValue(String text) {
-    for (CardType b : CardType.values()) {
+  public static PayeeTypeEnum fromValue(String text) {
+    for (PayeeTypeEnum b : PayeeTypeEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }

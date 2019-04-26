@@ -39,11 +39,6 @@ public class AccountBalanceResponse {
     this.result = result;
   }
 
-  public AccountBalanceResponse accountBalance(AccountBalance accountBalance) {
-    this.accountBalance = accountBalance;
-    return this;
-  }
-
   /**
    * Get accountBalance
    * 

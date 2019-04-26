@@ -1,0 +1,16 @@
+{
+  "result": {
+    "status": 0,
+    "message": "Account Balance are fetched successfully",
+    "messageCode": "200"
+  },
+  "accountBalance":{
+    "accountId": "1234567",
+    "amount": 1343.53,
+    "availableBalance": 1343.53,
+    "currentBalance": 1343.53,
+    "monthlyAverageBalance": 450.53,
+    "currencyCode": "USD"
+  }
+
+}

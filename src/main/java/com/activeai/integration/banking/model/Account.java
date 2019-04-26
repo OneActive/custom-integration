@@ -2,8 +2,8 @@ package com.activeai.integration.banking.model;
 
 import java.util.Objects;
 import javax.validation.Valid;
-import com.activeai.integration.banking.constants.AccountStatus;
-import com.activeai.integration.banking.constants.AccountType;
+import com.activeai.integration.banking.constants.AccountStatusEnum;
+import com.activeai.integration.banking.constants.AccountTypeEnum;
 import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -29,7 +29,7 @@ public class Account {
   private String accountName;
 
   @JsonProperty("type")
-  private AccountType type = null;
+  private AccountTypeEnum type = null;
 
   @JsonProperty("displayAccountNumber")
   private String displayAccountNumber = null;
@@ -47,7 +47,7 @@ public class Account {
   private String branchName = null;
 
   @JsonProperty("status")
-  private AccountStatus status = null;
+  private AccountStatusEnum status = null;
 
   @JsonProperty("openingDate")
   private String openingDate = null;
@@ -131,11 +131,11 @@ public class Account {
    * 
    * @return type
    **/
-  public AccountType getType() {
+  public AccountTypeEnum getType() {
     return type;
   }
 
-  public void setType(AccountType type) {
+  public void setType(AccountTypeEnum type) {
     this.type = type;
   }
 
@@ -209,11 +209,11 @@ public class Account {
    * 
    * @return status
    **/
-  public AccountStatus getStatus() {
+  public AccountStatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(AccountStatus status) {
+  public void setStatus(AccountStatusEnum status) {
     this.status = status;
   }
 

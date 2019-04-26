@@ -2,13 +2,11 @@ package com.activeai.integration.banking.model;
 
 import java.util.Objects;
 
-import com.activeai.integration.banking.constants.CardIssuer;
-import com.activeai.integration.banking.constants.CardStatus;
-import com.activeai.integration.banking.constants.CardType;
+import com.activeai.integration.banking.constants.CardIssuerEnum;
+import com.activeai.integration.banking.constants.CardStatusEnum;
+import com.activeai.integration.banking.constants.CardTypeEnum;
 import org.springframework.validation.annotation.Validated;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Card
@@ -32,7 +30,7 @@ public class Card {
   private String accountName;
 
   @JsonProperty("type")
-  private CardType type = null;
+  private CardTypeEnum type = null;
 
   @JsonProperty("displayAccountNumber")
   private String displayAccountNumber = null;
@@ -44,7 +42,7 @@ public class Card {
   private String accountId = null;
 
   @JsonProperty("cardIssuer")
-  private CardIssuer cardIssuer = null;
+  private CardIssuerEnum cardIssuer = null;
 
   @JsonProperty("branchId")
   private String branchId = null;
@@ -53,7 +51,7 @@ public class Card {
   private String branchName = null;
 
   @JsonProperty("status")
-  private CardStatus status = null;
+  private CardStatusEnum status = null;
 
   @JsonProperty("oversearCardActivated")
   private Boolean oversearCardActivated = null;
@@ -208,11 +206,11 @@ public class Card {
    * 
    * @return type
    **/
-  public CardType getType() {
+  public CardTypeEnum getType() {
     return type;
   }
 
-  public void setType(CardType type) {
+  public void setType(CardTypeEnum type) {
     this.type = type;
   }
 
@@ -260,11 +258,11 @@ public class Card {
    * 
    * @return cardIssuer
    **/
-  public CardIssuer getCardIssuer() {
+  public CardIssuerEnum getCardIssuer() {
     return cardIssuer;
   }
 
-  public void setCardIssuer(CardIssuer cardIssuer) {
+  public void setCardIssuer(CardIssuerEnum cardIssuer) {
     this.cardIssuer = cardIssuer;
   }
 
@@ -299,11 +297,11 @@ public class Card {
    * 
    * @return status
    **/
-  public CardStatus getStatus() {
+  public CardStatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(CardStatus status) {
+  public void setStatus(CardStatusEnum status) {
     this.status = status;
   }
 
