@@ -1,0 +1,14 @@
+{
+  "result": {
+    "status": 0,
+    "message": "Account details are fetched successfully",
+    "messageCode": "200"
+  },
+  "accountDetail":{
+    "accountId": "1234567",
+    "ifscCode": "WEFA0000001",
+    "branchName": "Outer Ring Road",
+    "branchAddress": "Arlington, USA ",
+    "accountHolderName" : "michel"
+  }
+}

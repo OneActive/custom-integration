@@ -1,6 +1,6 @@
 package com.activeai.integration.banking.controller;
 
-import com.activeai.integration.banking.model.request.UserLoginRequest;
+import com.activeai.integration.banking.domain.request.UserLoginRequest;
 import com.activeai.integration.banking.model.LoginResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

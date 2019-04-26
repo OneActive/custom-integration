@@ -1,11 +1,10 @@
 package com.activeai.integration.banking.controller;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 
 import javax.validation.Valid;
 
-import com.activeai.integration.banking.model.request.FundTransferRequest;
+import com.activeai.integration.banking.domain.request.FundTransferRequest;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

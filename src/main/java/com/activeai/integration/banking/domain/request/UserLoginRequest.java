@@ -1,4 +1,4 @@
-package com.activeai.integration.banking.model.request;
+package com.activeai.integration.banking.domain.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotNull;

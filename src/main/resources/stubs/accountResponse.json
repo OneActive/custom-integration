@@ -1,8 +1,8 @@
 {
   "result": {
     "status": 0,
-    "message": "string",
-    "messageCode": "string"
+    "message": "Accounts are fetched successfully",
+    "messageCode": "200"
   },
   "accounts": [
     {
@@ -16,7 +16,6 @@
       "accountNumber": "1234567",
       "accountId": "1234567",
       "branchId": "WF001",
-      "branchName": "Arlington",
       "status": "ACTIVE",
       "openingDate": "2019-03-22",
       "lastStatementDate": "2019-03-22",
@@ -26,8 +25,7 @@
         "availableBalance": 75675,
         "currentBalance": 20000,
         "currencyCode": "USD"
-      },
-      "branchAddress": "Arlington, USA "
+      }
     },
     {
       "category": "ACCOUNT",
@@ -40,7 +38,6 @@
       "accountNumber": "1234568",
       "accountId": "1234568",
       "branchId": "USB001",
-      "branchName": "Marceline",
       "status": "ACTIVE",
       "openingDate": "2019-03-23",
       "lastStatementDate": "2019-03-23",
@@ -50,8 +47,7 @@
         "availableBalance": 23456,
         "currentBalance": 30000,
         "currencyCode": "USD"
-      },
-      "branchAddress": "Marceline, USA "
+      }
     },
     {
       "category": "ACCOUNT",
@@ -64,7 +60,6 @@
       "accountNumber": "1234569",
       "accountId": "1234569",
       "branchId": "JPMC001",
-      "branchName": "Manhattan",
       "status": "ACTIVE",
       "openingDate": "2019-03-24",
       "lastStatementDate": "2019-03-24",
@@ -74,8 +69,7 @@
         "availableBalance": 65432,
         "currentBalance": 40000,
         "currencyCode": "USD"
-      },
-      "branchAddress": "Manhattan, USA "
+      }
     },
     {
       "category": "ACCOUNT",

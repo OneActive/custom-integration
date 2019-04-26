@@ -1,0 +1,14 @@
+{
+  "result": {
+    "status": 0,
+    "message": "Account details are fetched successfully",
+    "messageCode": "200"
+  },
+  "accountDetail":{
+    "accountId": "1234568",
+    "ifscCode": "USBP0000001",
+    "branchName": "Marceline",
+    "branchAddress": "Marceline, USA",
+    "accountHolderName" : "michel"
+  }
+}

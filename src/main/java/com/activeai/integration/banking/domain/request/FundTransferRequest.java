@@ -1,4 +1,4 @@
-package com.activeai.integration.banking.model.request;
+package com.activeai.integration.banking.domain.request;
 
 import java.util.List;
 
