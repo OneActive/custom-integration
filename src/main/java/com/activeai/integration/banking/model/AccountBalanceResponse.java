@@ -17,8 +17,8 @@ public class AccountBalanceResponse {
   @JsonProperty("result")
   private Result result = null;
 
-  @JsonProperty("accountBalance")
-  private AccountBalance accountBalance = null;
+  @JsonProperty("accountSelected")
+  private Account accountSelected = null;
 
   public AccountBalanceResponse result(Result result) {
     this.result = result;
@@ -39,20 +39,13 @@ public class AccountBalanceResponse {
     this.result = result;
   }
 
-  /**
-   * Get accountBalance
-   * 
-   * @return accountBalance
-   **/
-  @Valid
-  public AccountBalance getAccountBalance() {
-    return accountBalance;
+  public Account getAccountSelected() {
+    return accountSelected;
   }
 
-  public void setAccountBalance(AccountBalance accountBalance) {
-    this.accountBalance = accountBalance;
+  public void setAccountSelected(Account accountSelected) {
+    this.accountSelected = accountSelected;
   }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -64,12 +57,12 @@ public class AccountBalanceResponse {
     }
     AccountBalanceResponse accountBalanceResponse = (AccountBalanceResponse) o;
     return Objects.equals(this.result, accountBalanceResponse.result)
-        && Objects.equals(this.accountBalance, accountBalanceResponse.accountBalance);
+        && Objects.equals(this.accountSelected, accountBalanceResponse.accountSelected);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(result, accountBalance);
+    return Objects.hash(result, accountSelected);
   }
 
   @Override
@@ -78,7 +71,7 @@ public class AccountBalanceResponse {
     sb.append("class AccountBalanceResponse {\n");
 
     sb.append("    result: ").append(toIndentedString(result)).append("\n");
-    sb.append("    accountBalance: ").append(toIndentedString(accountBalance)).append("\n");
+    sb.append("    accountSelected: ").append(toIndentedString(accountSelected)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -35,7 +35,7 @@ public class AccountApiController {
   @RequestMapping(value = "/{customerId}/accounts/{accountId}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<AccountDetailResponse> getAccountDetail(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
-    ApplicationLogger.logInfo("Entering getAccountDetail API");
+    ApplicationLogger.logInfo("Entering getAccountDetails API");
     return accountsService.getAccountDetailsResponseEntity(customerId, accountId);
   }
 

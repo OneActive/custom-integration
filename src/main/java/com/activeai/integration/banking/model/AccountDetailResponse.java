@@ -17,8 +17,8 @@ public class AccountDetailResponse {
   @JsonProperty("result")
   private Result result = null;
 
-  @JsonProperty("accountDetail")
-  private Account accountDetail = null;
+  @JsonProperty("accountDetails")
+  private Account accountDetails = null;
 
   public AccountDetailResponse result(Result result) {
     this.result = result;
@@ -40,22 +40,22 @@ public class AccountDetailResponse {
   }
 
   public AccountDetailResponse accountDetail(Account accountDetail) {
-    this.accountDetail = accountDetail;
+    this.accountDetails = accountDetail;
     return this;
   }
 
   /**
-   * Get accountDetail
+   * Get accountDetails
    * 
-   * @return accountDetail
+   * @return accountDetails
    **/
   @Valid
-  public Account getAccountDetail() {
-    return accountDetail;
+  public Account getAccountDetails() {
+    return accountDetails;
   }
 
-  public void setAccountDetail(Account accountDetail) {
-    this.accountDetail = accountDetail;
+  public void setAccountDetails(Account accountDetails) {
+    this.accountDetails = accountDetails;
   }
 
   @Override
@@ -68,12 +68,12 @@ public class AccountDetailResponse {
     }
     AccountDetailResponse accountDetailResponse = (AccountDetailResponse) o;
     return Objects.equals(this.result, accountDetailResponse.result)
-        && Objects.equals(this.accountDetail, accountDetailResponse.accountDetail);
+        && Objects.equals(this.accountDetails, accountDetailResponse.accountDetails);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(result, accountDetail);
+    return Objects.hash(result, accountDetails);
   }
 
   @Override
@@ -82,7 +82,7 @@ public class AccountDetailResponse {
     sb.append("class AccountDetailResponse {\n");
 
     sb.append("    result: ").append(toIndentedString(result)).append("\n");
-    sb.append("    accountDetail: ").append(toIndentedString(accountDetail)).append("\n");
+    sb.append("    accountDetails: ").append(toIndentedString(accountDetails)).append("\n");
     sb.append("}");
     return sb.toString();
   }

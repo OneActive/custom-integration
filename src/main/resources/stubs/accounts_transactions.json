@@ -1,8 +1,8 @@
 {
   "result":{
-    "messageCode":"messageCode",
-    "message":"message",
-    "status":0
+    "messageCode":"OK",
+    "message":"Transactions for selected accounts fetched successfully",
+    "status":200
   },
   "accountTransactions":[
     {

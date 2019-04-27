@@ -1,11 +1,11 @@
 {
   "result": {
-    "status": 0,
+    "status": 200,
     "message": "Account details are fetched successfully",
-    "messageCode": "200"
+    "messageCode": "OK"
   },
-  "accountDetail":{
-    "accountId": "1234570",
+  "accountDetails":{
+    "accountId": "1234571",
     "ifscCode": "JPMR0000001",
     "branchName": "Manhattan",
     "branchAddress": "Manhattan, USA ",

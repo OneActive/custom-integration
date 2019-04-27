@@ -15,12 +15,25 @@ public class FetchAPIUrl {
   @Autowired
   private Environment env;
 
+  /**
+   * Remove the return statement and form your URL accordingly with Parameter to Hit in Services
+   * @param propertyValue
+   * @param customerId
+   * @return
+   */
   public String getAPIUrl(String propertyValue, String customerId) {
     return StringUtils.isNotEmpty(env.getProperty(MessageFormat.format(APIDoublePropertyPattern, customerId, propertyValue))) ?
         env.getProperty(MessageFormat.format(APIDoublePropertyPattern, customerId, propertyValue)) :
         env.getProperty(propertyValue);
   }
 
+  /**
+   * Remove the return statement and form your URL accordingly with Parameter to Hit in Services
+   * @param propertyValue
+   * @param customerId
+   * @param accountId
+   * @return
+   */
   public String getAPIUrl(String propertyValue, String customerId, String accountId) {
     return StringUtils.isNotEmpty(env.getProperty(MessageFormat.format(APITriplePropertyPattern, customerId, propertyValue))) ?
         env.getProperty(MessageFormat.format(APITriplePropertyPattern, customerId, propertyValue)) :

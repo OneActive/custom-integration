@@ -1,8 +1,8 @@
 {
   "result": {
-    "status": 0,
+    "status": 200,
     "message": "Accounts are fetched successfully",
-    "messageCode": "200"
+    "messageCode": "OK"
   },
   "accounts": [
     {
@@ -28,7 +28,8 @@
         "monthlyAverageBalance": 0.0,
         "currencyCode": "String"
       },
-      "branchAddress": "String"
+      "branchAddress": "String",
+      "ifscCode":"String"
     },
     {
       "category": "ACCOUNT",
@@ -53,7 +54,8 @@
         "monthlyAverageBalance": 0.0,
         "currencyCode": "String"
       },
-      "branchAddress": "String"
+      "branchAddress": "String",
+      "ifscCode":"String"
     },
     {
       "category": "ACCOUNT",
@@ -78,7 +80,8 @@
         "monthlyAverageBalance": 0.0,
         "currencyCode": "String"
       },
-      "branchAddress": "String"
+      "branchAddress": "String",
+      "ifscCode":"String"
     },
     {
       "category": "ACCOUNT",
@@ -103,7 +106,8 @@
         "monthlyAverageBalance": 0.0,
         "currencyCode": "String"
       },
-      "branchAddress": "String"
+      "branchAddress": "String",
+      "ifscCode":"String"
     },
     {
       "category": "ACCOUNT",
@@ -112,9 +116,9 @@
       "bankName": "JPMorgan Chase",
       "accountName": "SavingsMax",
       "type": "SAVINGS",
-      "displayAccountNumber": "123xxxx4671",
-      "accountNumber": "1234671",
-      "accountId": "1234671",
+      "displayAccountNumber": "123xxxx4571",
+      "accountNumber": "1234571",
+      "accountId": "1234571",
       "branchId": "JPMC002",
       "branchName": "String",
       "status": "ACTIVE",
@@ -128,7 +132,8 @@
         "monthlyAverageBalance": 0.0,
         "currencyCode": "String"
       },
-      "branchAddress": "String"
+      "branchAddress": "String",
+      "ifscCode":"String"
     }
   ]
 }

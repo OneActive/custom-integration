@@ -92,7 +92,7 @@ public class AccountsService {
 
   /**
    * Fetches Account Balance for selected Account
-   *
+   * You should map balance inside AccountSelected object along with accountId which is required
    * @param customerId,accountId
    * @return ResponseEntity of type AccountBalanceResponse
    */

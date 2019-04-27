@@ -64,6 +64,17 @@ public class Account {
   @JsonProperty("branchAddress")
   private String branchAddress;
 
+  @JsonProperty("ifscCode")
+  private String ifscCode;
+
+  public String getIfscCode() {
+    return ifscCode;
+  }
+
+  public void setIfscCode(String ifscCode) {
+    this.ifscCode = ifscCode;
+  }
+
   public String getBranchAddress() {
     return branchAddress;
   }
