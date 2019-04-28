@@ -1,30 +1,21 @@
 package com.activeai.integration.banking.services;
 
-import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.request.UserLoginRequest;
 import com.activeai.integration.banking.mapper.AccountsResponseMapper;
-import com.activeai.integration.banking.model.AccountTransactionsResponse;
 import com.activeai.integration.banking.model.LoginResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.FetchAPIUrl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-@Component("loginService")
+@Service("loginService")
 public class LoginService {
 
   @Autowired private AccountsResponseMapper accountsResponseMapper;

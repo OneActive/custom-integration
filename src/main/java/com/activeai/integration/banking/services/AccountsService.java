@@ -17,7 +17,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -26,7 +26,7 @@ import java.util.Objects;
  * This Class methods helps to get account related information using http
  * you can extend this and override methods to handle for other's like soap
  */
-@Component("accountsService")
+@Service("accountsService")
 public class AccountsService {
 
   @Autowired private AccountsResponseMapper accountsResponseMapper;
