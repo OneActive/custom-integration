@@ -1,16 +1,11 @@
 package com.activeai.integration.banking.model;
 
-import java.util.ArrayList;
+import com.activeai.integration.banking.constants.CustomerTitleEnum;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
-
-import javax.validation.Valid;
-
-import org.springframework.validation.annotation.Validated;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * CustomerProfile
@@ -33,43 +28,8 @@ public class CustomerProfile {
   @JsonProperty("middleName")
   private String middleName = null;
 
-  /**
-   * Tile
-   */
-  public enum TitleEnum {
-    MR_("Mr."),
-
-    MRS_("Mrs."),
-
-    MS_("Ms."),
-
-    MISS_("Miss.");
-
-    private String value;
-
-    TitleEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static TitleEnum fromValue(String text) {
-      for (TitleEnum b : TitleEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-
   @JsonProperty("title")
-  private TitleEnum title = null;
+  private CustomerTitleEnum title = null;
 
   @JsonProperty("address")
   private Address address = null;
@@ -78,14 +38,9 @@ public class CustomerProfile {
   @Valid
   private List<Phone> phone = null;
 
-  public CustomerProfile custId(Integer custId) {
-    this.custId = custId;
-    return this;
-  }
-
   /**
    * Customer ID example = "80975412"
-   * 
+   *
    * @return custId
    **/
   public Integer getCustId() {
@@ -96,14 +51,9 @@ public class CustomerProfile {
     this.custId = custId;
   }
 
-  public CustomerProfile custSegment(String custSegment) {
-    this.custSegment = custSegment;
-    return this;
-  }
-
   /**
    * segment id / code of customer
-   * 
+   *
    * @return custSegment
    **/
   public String getCustSegment() {
@@ -114,14 +64,9 @@ public class CustomerProfile {
     this.custSegment = custSegment;
   }
 
-  public CustomerProfile firstName(String firstName) {
-    this.firstName = firstName;
-    return this;
-  }
-
   /**
    * First name of customer
-   * 
+   *
    * @return firstName
    **/
   public String getFirstName() {
@@ -132,14 +77,9 @@ public class CustomerProfile {
     this.firstName = firstName;
   }
 
-  public CustomerProfile lastName(String lastName) {
-    this.lastName = lastName;
-    return this;
-  }
-
   /**
    * Last name of customer
-   * 
+   *
    * @return lastName
    **/
   public String getLastName() {
@@ -150,14 +90,9 @@ public class CustomerProfile {
     this.lastName = lastName;
   }
 
-  public CustomerProfile middleName(String middleName) {
-    this.middleName = middleName;
-    return this;
-  }
-
   /**
    * Middle name of customer
-   * 
+   *
    * @return middleName
    **/
   public String getMiddleName() {
@@ -168,21 +103,16 @@ public class CustomerProfile {
     this.middleName = middleName;
   }
 
-  public CustomerProfile title(TitleEnum title) {
-    this.title = title;
-    return this;
-  }
-
   /**
    * Tile
-   * 
+   *
    * @return title
    **/
-  public TitleEnum getTitle() {
+  public CustomerTitleEnum getTitle() {
     return title;
   }
 
-  public void setTitle(TitleEnum title) {
+  public void setTitle(CustomerTitleEnum title) {
     this.title = title;
   }
 
@@ -193,11 +123,10 @@ public class CustomerProfile {
 
   /**
    * Get address
-   * 
+   *
    * @return address
    **/
-  @Valid
-  public Address getAddress() {
+  @Valid public Address getAddress() {
     return address;
   }
 
@@ -205,26 +134,12 @@ public class CustomerProfile {
     this.address = address;
   }
 
-  public CustomerProfile phone(List<Phone> phone) {
-    this.phone = phone;
-    return this;
-  }
-
-  public CustomerProfile addPhoneItem(Phone phoneItem) {
-    if (this.phone == null) {
-      this.phone = new ArrayList<Phone>();
-    }
-    this.phone.add(phoneItem);
-    return this;
-  }
-
   /**
    * Get phone
-   * 
+   *
    * @return phone
    **/
-  @Valid
-  public List<Phone> getPhone() {
+  @Valid public List<Phone> getPhone() {
     return phone;
   }
 
@@ -232,8 +147,7 @@ public class CustomerProfile {
     this.phone = phone;
   }
 
-  @Override
-  public boolean equals(java.lang.Object o) {
+  @Override public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -241,19 +155,17 @@ public class CustomerProfile {
       return false;
     }
     CustomerProfile customerProfile = (CustomerProfile) o;
-    return Objects.equals(this.custId, customerProfile.custId) && Objects.equals(this.custSegment, customerProfile.custSegment)
-        && Objects.equals(this.firstName, customerProfile.firstName) && Objects.equals(this.lastName, customerProfile.lastName)
-        && Objects.equals(this.middleName, customerProfile.middleName) && Objects.equals(this.title, customerProfile.title)
-        && Objects.equals(this.address, customerProfile.address) && Objects.equals(this.phone, customerProfile.phone);
+    return Objects.equals(this.custId, customerProfile.custId) && Objects.equals(this.custSegment, customerProfile.custSegment) && Objects
+        .equals(this.firstName, customerProfile.firstName) && Objects.equals(this.lastName, customerProfile.lastName) && Objects
+        .equals(this.middleName, customerProfile.middleName) && Objects.equals(this.title, customerProfile.title) && Objects
+        .equals(this.address, customerProfile.address) && Objects.equals(this.phone, customerProfile.phone);
   }
 
-  @Override
-  public int hashCode() {
+  @Override public int hashCode() {
     return Objects.hash(custId, custSegment, firstName, lastName, middleName, title, address, phone);
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CustomerProfile {\n");
 

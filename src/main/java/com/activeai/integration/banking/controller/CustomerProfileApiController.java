@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.activeai.integration.banking.model.CustomerProfileResponse;
+import com.activeai.integration.banking.domain.response.CustomerProfileResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Api(value = "Customer Profile Related APIs", description = "Shows API Documentation Regards Customer Profile APIs")

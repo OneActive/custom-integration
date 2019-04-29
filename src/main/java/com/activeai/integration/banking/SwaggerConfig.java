@@ -24,7 +24,7 @@ public class SwaggerConfig {
 
   public ApiInfo metaInfo() {
     ApiInfo apiInfo =
-        new ApiInfo("API Documentation Regards Integration", "Here you can integrate your api", "1.0.0", "terms and conditions",
+        new ApiInfo("API Documentation Regards Integration", "Here you can test your integrated api", "1.0.0", "terms and conditions",
             new Contact("Active.ai", "https://active.ai/", "active@active.ai"), "Apache License Version 2.0",
             "https://www.apache.org/license.html");
     return apiInfo;

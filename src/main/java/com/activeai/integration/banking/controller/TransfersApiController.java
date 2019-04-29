@@ -14,8 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.activeai.integration.banking.model.PayeesResponse;
-import com.activeai.integration.banking.model.TransferConfirmResponse;
-import com.activeai.integration.banking.model.TransferInititateResponse;
+import com.activeai.integration.banking.domain.response.TransferConfirmResponse;
+import com.activeai.integration.banking.domain.response.TransferInititateResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Api(value = "Fund Transfer Related APIs", description = "Shows API Documentation Regards Fund Transfer APIs")

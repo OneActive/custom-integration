@@ -1,7 +1,5 @@
 package com.activeai.integration.banking.mapper;
 
-import com.activeai.integration.banking.model.AccountsResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component("accountsResponseMapper")

@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.activeai.integration.banking.model.CardDetailResponse;
+import com.activeai.integration.banking.domain.response.CardDetailResponse;
 import com.activeai.integration.banking.model.CardLimitResponse;
-import com.activeai.integration.banking.model.CardTransactionsResponse;
+import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
 import com.activeai.integration.banking.model.CardsResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

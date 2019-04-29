@@ -1,26 +1,28 @@
-package com.activeai.integration.banking.model;
+package com.activeai.integration.banking.domain.response;
 
 import java.util.Objects;
 
 import javax.validation.Valid;
 
+import com.activeai.integration.banking.model.Account;
+import com.activeai.integration.banking.model.Result;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * AccountBalanceResponse
+ * AccountDetailResponse
  */
 @Validated
-public class AccountBalanceResponse {
+public class AccountDetailResponse {
 
   @JsonProperty("result")
   private Result result = null;
 
-  @JsonProperty("accountSelected")
-  private Account accountSelected = null;
+  @JsonProperty("accountDetails")
+  private Account accountDetails = null;
 
-  public AccountBalanceResponse result(Result result) {
+  public AccountDetailResponse result(Result result) {
     this.result = result;
     return this;
   }
@@ -39,12 +41,23 @@ public class AccountBalanceResponse {
     this.result = result;
   }
 
-  public Account getAccountSelected() {
-    return accountSelected;
+  public AccountDetailResponse accountDetail(Account accountDetail) {
+    this.accountDetails = accountDetail;
+    return this;
   }
 
-  public void setAccountSelected(Account accountSelected) {
-    this.accountSelected = accountSelected;
+  /**
+   * Get accountDetails
+   * 
+   * @return accountDetails
+   **/
+  @Valid
+  public Account getAccountDetails() {
+    return accountDetails;
+  }
+
+  public void setAccountDetails(Account accountDetails) {
+    this.accountDetails = accountDetails;
   }
 
   @Override
@@ -55,23 +68,23 @@ public class AccountBalanceResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AccountBalanceResponse accountBalanceResponse = (AccountBalanceResponse) o;
-    return Objects.equals(this.result, accountBalanceResponse.result)
-        && Objects.equals(this.accountSelected, accountBalanceResponse.accountSelected);
+    AccountDetailResponse accountDetailResponse = (AccountDetailResponse) o;
+    return Objects.equals(this.result, accountDetailResponse.result)
+        && Objects.equals(this.accountDetails, accountDetailResponse.accountDetails);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(result, accountSelected);
+    return Objects.hash(result, accountDetails);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AccountBalanceResponse {\n");
+    sb.append("class AccountDetailResponse {\n");
 
     sb.append("    result: ").append(toIndentedString(result)).append("\n");
-    sb.append("    accountSelected: ").append(toIndentedString(accountSelected)).append("\n");
+    sb.append("    accountDetails: ").append(toIndentedString(accountDetails)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -1,26 +1,29 @@
-package com.activeai.integration.banking.model;
+package com.activeai.integration.banking.domain.response;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.validation.Valid;
 
+import com.activeai.integration.banking.model.AccountTransaction;
+import com.activeai.integration.banking.model.Result;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 /**
- * CustomerProfileResponse
+ * AccountTransactionsResponse
  */
 @Validated
-public class CustomerProfileResponse {
-
+public class AccountTransactionsResponse {
   @JsonProperty("result")
   private Result result = null;
 
-  @JsonProperty("customerProfile")
-  private CustomerProfile customerProfile = null;
+  @JsonProperty("accountTransactions")
+  private List<AccountTransaction> accountTransactions;
 
-  public CustomerProfileResponse result(Result result) {
+  public AccountTransactionsResponse result(Result result) {
     this.result = result;
     return this;
   }
@@ -39,24 +42,20 @@ public class CustomerProfileResponse {
     this.result = result;
   }
 
-  public CustomerProfileResponse customerProfile(CustomerProfile customerProfile) {
-    this.customerProfile = customerProfile;
-    return this;
-  }
-
   /**
-   * Get customerProfile
+   * Get accountTransactions
    * 
-   * @return customerProfile
+   * @return accountTransactions
    **/
   @Valid
-  public CustomerProfile getCustomerProfile() {
-    return customerProfile;
+  public List<AccountTransaction> getAccountTransactions() {
+    return accountTransactions;
   }
 
-  public void setCustomerProfile(CustomerProfile customerProfile) {
-    this.customerProfile = customerProfile;
+  public void setAccountTransactions(List<AccountTransaction> accountTransactions) {
+    this.accountTransactions = accountTransactions;
   }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -66,23 +65,23 @@ public class CustomerProfileResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CustomerProfileResponse customerProfileResponse = (CustomerProfileResponse) o;
-    return Objects.equals(this.result, customerProfileResponse.result)
-        && Objects.equals(this.customerProfile, customerProfileResponse.customerProfile);
+    AccountTransactionsResponse accountTransactionsResponse = (AccountTransactionsResponse) o;
+    return Objects.equals(this.result, accountTransactionsResponse.result)
+        && Objects.equals(this.accountTransactions, accountTransactionsResponse.accountTransactions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(result, customerProfile);
+    return Objects.hash(result, accountTransactions);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CustomerProfileResponse {\n");
+    sb.append("class AccountTransactionsResponse {\n");
 
     sb.append("    result: ").append(toIndentedString(result)).append("\n");
-    sb.append("    customerProfile: ").append(toIndentedString(customerProfile)).append("\n");
+    sb.append("    accountTransactions: ").append(toIndentedString(accountTransactions)).append("\n");
     sb.append("}");
     return sb.toString();
   }

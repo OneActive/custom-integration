@@ -1,9 +1,9 @@
 package com.activeai.integration.banking.controller;
 
-import com.activeai.integration.banking.model.AccountBalanceResponse;
-import com.activeai.integration.banking.model.AccountDetailResponse;
-import com.activeai.integration.banking.model.AccountTransactionsResponse;
-import com.activeai.integration.banking.model.AccountsResponse;
+import com.activeai.integration.banking.domain.response.AccountBalanceResponse;
+import com.activeai.integration.banking.domain.response.AccountDetailResponse;
+import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
+import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.services.AccountsService;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
