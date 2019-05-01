@@ -41,4 +41,13 @@ public class FetchAPIUrl {
             env.getProperty(MessageFormat.format(APIDoublePropertyPattern, accountId, propertyValue)) :
             env.getProperty(propertyValue);
   }
+
+  /**
+   * Remove the return statement and form your URL accordingly with Parameter to Hit in Services
+   * @param propertyValue
+   * @return
+   */
+  public String getAPIUrl(String propertyValue) {
+    return env.getProperty(propertyValue);
+  }
 }

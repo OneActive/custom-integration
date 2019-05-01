@@ -3,6 +3,7 @@ package com.activeai.integration.banking.controller;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 
+import com.activeai.integration.banking.services.CardsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -28,229 +29,50 @@ public class CardsApiController {
 
   @Autowired
   private ObjectMapper objectMapper;
+  @Autowired
+  private CardsService cardsService;
 
   private static final Logger logger = LoggerFactory.getLogger(CardsApiController.class);
 
   // TODO : Populate stub card list
   @ApiOperation(value = "Returns list of cards based on customer ID")
   @RequestMapping(value = "/{customerId}/cards", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<CardsResponse> getCards(@PathVariable(value = "customerId", required = true) Integer customerId) {
+  public ResponseEntity<CardsResponse> getCards(@PathVariable(value = "customerId", required = true) String customerId) {
     logger.info("Entering getCards");
-    ResponseEntity<CardsResponse> response = null;
-    try {
-      response = new ResponseEntity<>(objectMapper.readValue(
-          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"cards\" : [\n"
-              + "{\n" + "   \"branchId\":\"JPMC001\",\n" + "   \"product\":\"product\",\n" + "   \"closingBalance\":6.027456183070403,\n"
-              + "   \"branchName\":\"Manhattan\",\n" + "   \"bankName\" : \"JPMorgan Chase\",\n"
-              + "   \"accountName\" : \"Platinum Edge\",\n" + "   \"accountNumber\":\"1234567890\",\n" + "   \"cardIssuer\":\"Visa\",\n"
-              + "   \"amountDue\":1.4658129805029452,\n" + "   \"accountId\":\"5123456789012346\",\n"
-              + "   \"paymentDueDate\":\"2000-01-23\",\n" + "   \"lastStatementDate\":\"2000-01-23\",\n"
-              + "   \"productCode\":\"productCode\",\n" + "   \"lastStatementBalance\":3.616076749251911,\n"
-              + "   \"oversearCardActivated\":true,\n" + "   \"minimumPayment\":5.962133916683182,\n"
-              + "   \"creditLimit\":5.637376656633329,\n" + "   \"displayAccountNumber\":\"123xxxx7890\",\n"
-              + "   \"permanentCreditLimit\":9.301444243932576,\n" + "   \"category\":\"CREDIT_CARD\",\n"
-              + "   \"openingBalance\":0.8008281904610115,\n" + "   \"availableCreditLimit\":2.3021358869347655,\n"
-              + "   \"temporaryCreditLimit\":7.061401241503109,\n" + "   \"status\":\"ACTIVE\",\n" + "   \"currencyCode\":\"USD\",\n"
-              + "   \"expiryDate\":\"2020-12-20\",\n" + "   \"activationDate\":\"1998-12-20\",\n"
-              + "   \"branchAddress\" : \"Manhattan, USA \"\n" + "\n" + "},\n" + "{\n" + "   \"branchId\":\"USB001\",\n"
-              + "   \"product\":\"product\",\n" + "   \"closingBalance\":6.027456183070403,\n" + "   \"branchName\":\"Marceline\",\n"
-              + "   \"bankName\" : \"US Bancorp\",\n" + "   \"accountName\" : \"Titanium Times\",\n"
-              + "   \"accountNumber\":\"1234567892\",\n" + "   \"cardIssuer\":\"Visa\",\n" + "   \"amountDue\":1.4658129805029452,\n"
-              + "   \"accountId\":\"5123456789012347\",\n" + "   \"paymentDueDate\":\"2000-01-24\",\n"
-              + "   \"lastStatementDate\":\"2000-01-24\",\n" + "   \"productCode\":\"productCode\",\n"
-              + "   \"lastStatementBalance\":3.616076749251911,\n" + "   \"oversearCardActivated\":true,\n"
-              + "   \"minimumPayment\":15.962133916683182,\n" + "   \"creditLimit\":6.637376656633329,\n"
-              + "   \"displayAccountNumber\":\"123xxxx7892\",\n" + "   \"permanentCreditLimit\":8.301444243932576,\n"
-              + "   \"category\":\"CREDIT_CARD\",\n" + "   \"openingBalance\":1.8008281904610115,\n"
-              + "   \"availableCreditLimit\":3.3021358869347655,\n" + "   \"temporaryCreditLimit\":5.061401241503109,\n"
-              + "   \"status\":\"ACTIVE\",\n" + "   \"currencyCode\":\"USD\",\n" + "   \"expiryDate\":\"2020-12-20\",\n"
-              + "   \"activationDate\":\"1998-12-20\",\n" + "   \"branchAddress\" : \"Marceline, USA \"\n" + "\n" + "},\n" + "{\n"
-              + "   \"branchId\":\"M001\",\n" + "   \"product\":\"product\",\n" + "   \"closingBalance\":6.027456183070403,\n"
-              + "   \"branchName\":\"Arlington\",\n" + "   \"bankName\" : \"Wells Fargo\",\n"
-              + "   \"accountName\" : \"Domestic Signature\",\n" + "   \"accountNumber\":\"1234567891\",\n"
-              + "   \"cardIssuer\":\"Visa\",\n" + "   \"amountDue\":1.4658129805029452,\n" + "   \"accountId\":\"5123456789012348\",\n"
-              + "   \"paymentDueDate\":\"2000-01-25\",\n" + "   \"lastStatementDate\":\"2000-01-25\",\n"
-              + "   \"productCode\":\"productCode\",\n" + "   \"lastStatementBalance\":3.616076749251911,\n"
-              + "   \"oversearCardActivated\":false,\n" + "   \"minimumPayment\":9.962133916683182,\n"
-              + "   \"creditLimit\":4.637376656633329,\n" + "   \"displayAccountNumber\":\"123xxxx7891\",\n"
-              + "   \"permanentCreditLimit\":9.301444243932576,\n" + "   \"category\":\"CREDIT_CARD\",\n"
-              + "   \"openingBalance\":2.80063881904610115,\n" + "   \"availableCreditLimit\":4.3021358869347655,\n"
-              + "   \"temporaryCreditLimit\":9.061401241503109,\n" + "   \"status\":\"ACTIVE\",\n" + "   \"currencyCode\":\"USD\",\n"
-              + "   \"expiryDate\":\"2020-12-20\",\n" + "   \"activationDate\":\"1998-12-20\",\n"
-              + "   \"branchAddress\" : \"Arlington, USA \"\n" + "},\n" + "{\n" + "   \"branchId\":\"M002\",\n"
-              + "   \"product\":\"product\",\n" + "   \"closingBalance\":4.027456183070403,\n" + "   \"branchName\":\"Arlington\",\n"
-              + "   \"bankName\" : \"Wells Fargo\",\n" + "   \"accountName\" : \"Domestic Signature\",\n"
-              + "   \"accountNumber\":\"1234567893\",\n" + "   \"cardIssuer\":\"Visa\",\n" + "   \"amountDue\":2.4658129805029452,\n"
-              + "   \"accountId\":\"5123456789012349\",\n" + "   \"paymentDueDate\":\"2000-01-26\",\n"
-              + "   \"lastStatementDate\":\"2000-01-26\",\n" + "   \"productCode\":\"productCode\",\n"
-              + "   \"lastStatementBalance\":7.616076749251911,\n" + "   \"oversearCardActivated\":false,\n"
-              + "   \"minimumPayment\":9.962133916683182,\n" + "   \"creditLimit\":4.637376656633329,\n"
-              + "   \"displayAccountNumber\":\"123xxxx7893\",\n" + "   \"permanentCreditLimit\":8.301444243932576,\n"
-              + "   \"category\":\"CREDIT_CARD\",\n" + "   \"openingBalance\":1.80063881904610115,\n"
-              + "   \"availableCreditLimit\":3.3021358869347655,\n" + "   \"temporaryCreditLimit\":3.061401241503109,\n"
-              + "   \"status\":\"ACTIVE\",\n" + "   \"currencyCode\":\"USD\",\n" + "   \"expiryDate\":\"2025-12-20\",\n"
-              + "   \"activationDate\":\"2000-12-20\",\n" + "   \"branchAddress\" : \"Arlington, USA \"\n" + "},\n" + "{\n"
-              + "   \"branchId\":\"USB002\",\n" + "   \"product\":\"product\",\n" + "   \"closingBalance\":5.027456183070403,\n"
-              + "   \"branchName\":\"Marceline\",\n" + "   \"bankName\" : \"US Bancorp\",\n" + "   \"accountName\" : \"Titanium Times\",\n"
-              + "   \"accountNumber\":\"1234567894\",\n" + "   \"cardIssuer\":\"Visa\",\n" + "   \"amountDue\":1.4658129805029452,\n"
-              + "   \"accountId\":\"5123456789012350\",\n" + "   \"paymentDueDate\":\"2000-01-24\",\n"
-              + "   \"lastStatementDate\":\"2000-01-24\",\n" + "   \"productCode\":\"productCode\",\n"
-              + "   \"lastStatementBalance\":3.616076749251911,\n" + "   \"oversearCardActivated\":true,\n"
-              + "   \"minimumPayment\":15.962133916683182,\n" + "   \"creditLimit\":6.637376656633329,\n"
-              + "   \"displayAccountNumber\":\"123xxxx7894\",\n" + "   \"permanentCreditLimit\":8.301444243932576,\n"
-              + "   \"category\":\"CREDIT_CARD\",\n" + "   \"openingBalance\":1.8008281904610115,\n"
-              + "   \"availableCreditLimit\":3.3021358869347655,\n" + "   \"temporaryCreditLimit\":5.061401241503109,\n"
-              + "   \"status\":\"ACTIVE\",\n" + "   \"currencyCode\":\"USD\",\n" + "   \"expiryDate\":\"2020-12-20\",\n"
-              + "   \"activationDate\":\"1998-12-20\",\n" + "   \"branchAddress\" : \"Marceline, USA \"\n" + "\n" + "}]}",
-          CardsResponse.class), HttpStatus.OK);
-    } catch (IOException e) {
-      logger.error("Couldn't serialize response for content type application/json", e);
-      response = new ResponseEntity<CardsResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    logger.info("Card Response : " + response);
-    return response;
+    return cardsService.getCardsResponseEntity(customerId);
   }
 
 
   @ApiOperation(value = "Returns selected card details")
   @RequestMapping(value = "/{customerId}/cards/{cardId}", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<CardDetailResponse> getCardDetail(@PathVariable(value = "customerId", required = true) Integer customerId,
-      @PathVariable(value = "cardId", required = true) Integer cardId) {
-    logger.info("Entering getPayeeDetails");
-    ResponseEntity<CardDetailResponse> response = null;
-    try {
-      response = new ResponseEntity<>(objectMapper.readValue(
-          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"cardDetail\" : {  \n"
-              + "   \"branchId\":\"JPMC001\",\n" + "   \"product\":\"product\",\n" + "   \"closingBalance\":6.027456183070403,\n"
-              + "   \"branchName\":\"Manhattan\",\n" + "   \"bankName\" : \"JPMorgan Chase\",\n"
-              + "   \"accountName\" : \"Platinum Edge\",\n" + "   \"accountNumber\":\"1234567890\",\n" + "   \"cardIssuer\":\"Visa\",\n"
-              + "   \"amountDue\":1.4658129805029452,\n" + "   \"accountId\":\"5123456789012346\",\n"
-              + "   \"paymentDueDate\":\"2000-01-23\",\n" + "   \"lastStatementDate\":\"2000-01-23\",\n"
-              + "   \"productCode\":\"productCode\",\n" + "   \"lastStatementBalance\":3.616076749251911,\n"
-              + "   \"oversearCardActivated\":true,\n" + "   \"minimumPayment\":5.962133916683182,\n"
-              + "   \"creditLimit\":5.637376656633329,\n" + "   \"displayAccountNumber\":\"123xxxx890\",\n"
-              + "   \"permanentCreditLimit\":9.301444243932576,\n" + "   \"category\":\"CREDIT_CARD\",\n"
-              + "   \"openingBalance\":0.8008281904610115,\n" + "   \"availableCreditLimit\":2.3021358869347655,\n"
-              + "   \"temporaryCreditLimit\":7.061401241503109,\n" + "   \"status\":\"ACTIVE\",\n" + "   \"currencyCode\":\"USD\",\n"
-              + "   \"expiryDate\":\"2020-12-20\",\n" + "   \"activationDate\":\"1998-12-20\",\n"
-              + "   \"branchAddress\" : \"Manhattan, USA \"\n" + "\n" + "}}",
-          CardDetailResponse.class), HttpStatus.OK);
-    } catch (IOException e) {
-      logger.error("Couldn't serialize response for content type application/json", e);
-      response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return response;
+  public ResponseEntity<CardDetailResponse> getCardDetail(@PathVariable(value = "customerId", required = true) String customerId,
+      @PathVariable(value = "cardId", required = true) String cardId) {
+    logger.info("Entering getCardDetails");
+    return cardsService.getCardDetailsResponseEntity(customerId,cardId);
   }
 
   @ApiOperation(value = "Returns selected card transaction history")
   @RequestMapping(value = "/{customerId}/cards/{cardId}/transactions", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardTransactionsResponse> getCardTransactions(
-      @PathVariable(value = "customerId", required = true) Integer customerId,
-      @PathVariable(value = "cardId", required = true) Integer cardId) {
+      @PathVariable(value = "customerId", required = true) String customerId,
+      @PathVariable(value = "cardId", required = true) String cardId) {
     logger.info("Entering getCardTransactions");
-    ResponseEntity<CardTransactionsResponse> response = null;
-    String cardTransactions = null;
-    try {
-      cardTransactions = "{\n" + 
-          "    \"result\": {\n" + 
-          "        \"messageCode\": \"messageCode\",\n" + 
-          "        \"message\": \"message\",\n" + 
-          "        \"status\": 0\n" + 
-          "    },\n" + 
-          "    \"cardTransactions\": [{\n" + 
-          "            \"foreignTxnCurrency\": \"foreignTxnCurrency\",\n" + 
-          "            \"amount\": 1000,\n" + 
-          "            \"description\": \"description\",\n" + 
-          "            \"currency\": \"USD\",\n" +
-          "            \"foreignTxnAmount\": 1.465812,\n" + 
-          "            \"isDebit\": true,\n" + 
-          "            \"category\": \"category\",\n" + 
-          "            \"foreignTxnExchangeRate\": 5.962134,\n" + 
-          "            \"txnDate\": \"2019-04-03\",\n" + 
-          "            \"referenceId\": \"referenceId\"\n" + 
-          "        },\n" + 
-          "        {\n" + 
-          "            \"foreignTxnCurrency\": \"foreignTxnCurrency\",\n" + 
-          "            \"amount\": 2000,\n" + 
-          "            \"description\": \"description\",\n" + 
-          "            \"currency\": \"USD\",\n" +
-          "            \"foreignTxnAmount\": 1.465812,\n" + 
-          "            \"isDebit\": true,\n" + 
-          "            \"category\": \"category\",\n" + 
-          "            \"foreignTxnExchangeRate\": 5.962134,\n" + 
-          "            \"txnDate\": \"2019-04-02\",\n" + 
-          "            \"referenceId\": \"referenceId\"\n" + 
-          "        },\n" + 
-          "        {\n" + 
-          "            \"foreignTxnCurrency\": \"foreignTxnCurrency\",\n" + 
-          "            \"amount\": 3000,\n" + 
-          "            \"description\": \"description\",\n" + 
-          "            \"currency\": \"USD\",\n" +
-          "            \"foreignTxnAmount\": 1.4658129805029452,\n" + 
-          "            \"isDebit\": true,\n" + 
-          "            \"category\": \"category\",\n" + 
-          "            \"foreignTxnExchangeRate\": 5.962134,\n" + 
-          "            \"txnDate\": \"2019-04-01\",\n" + 
-          "            \"referenceId\": \"referenceId\"\n" + 
-          "        },\n" + 
-          "        {\n" + 
-          "            \"foreignTxnCurrency\": \"foreignTxnCurrency\",\n" + 
-          "            \"amount\": 4000,\n" + 
-          "            \"description\": \"description\",\n" + 
-          "            \"currency\": \"USD\",\n" +
-          "            \"foreignTxnAmount\": 1.4658129805029452,\n" + 
-          "            \"isDebit\": true,\n" + 
-          "            \"category\": \"category\",\n" + 
-          "            \"foreignTxnExchangeRate\": 5.962134,\n" + 
-          "            \"txnDate\": \"2019-03-31\",\n" + 
-          "            \"referenceId\": \"referenceId\"\n" + 
-          "        },\n" + 
-          "        {\n" + 
-          "            \"foreignTxnCurrency\": \"foreignTxnCurrency\",\n" + 
-          "            \"amount\": 5000,\n" + 
-          "            \"description\": \"description\",\n" + 
-          "            \"currency\": \"USD\",\n" +
-          "            \"foreignTxnAmount\": 1.4658129805029452,\n" + 
-          "            \"isDebit\": true,\n" + 
-          "            \"category\": \"category\",\n" + 
-          "            \"foreignTxnExchangeRate\": 5.962134,\n" + 
-          "            \"txnDate\": \"2019-03-30\",\n" + 
-          "            \"referenceId\": \"referenceId\"\n" + 
-          "        }\n" + 
-          "    ]\n" + 
-          "}";
-          
-      response = new ResponseEntity<>(objectMapper.readValue(cardTransactions, CardTransactionsResponse.class), HttpStatus.OK);
-    } catch (IOException e) {
-      logger.error("Couldn't serialize response for content type application/json", e);
-      response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    logger.info("Card Transactions Response : " + response);
-    return response;
+    return cardsService.getAccountTransactionsResponseEntity(customerId,cardId);
   }
 
   @ApiOperation("Return selected card blocking status selected card")
   @RequestMapping(value = "/{customerId}/cards/{cardId}/block", produces = {"application/json"}, consumes = {"application/json"},
       method = RequestMethod.PUT)
-  public ResponseEntity<CardDetailResponse> blockCard(@PathVariable(name = "customerId", required = true) Integer customerId,
-      @PathVariable(name = "cardId", required = true) Integer cardId,
+  public ResponseEntity<CardDetailResponse> blockCard(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "cardId", required = true) String cardId,
       @RequestParam(value = "blockMode", required = true) String blockMode) {
-    ResponseEntity<CardDetailResponse> response = null;
-    try {
-      response = new ResponseEntity<>(objectMapper.readValue(
-          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"cardDetail\" : {    \"branchId\" : \"branchId\",    \"product\" : \"product\",    \"closingBalance\" : 6.027456183070403,    \"branchName\" : \"branchName\",    \"type\" : \"CREDIT\",    \"accountNumber\" : \"accountNumber\",    \"cardIssuer\" : \"Visa\",    \"amountDue\" : 1.4658129805029452,    \"accountId\" : \"accountId\",    \"paymentDueDate\" : \"2000-01-23T04:56:07.000+00:00\",    \"lastStatementDate\" : \"2000-01-23T04:56:07.000+00:00\",    \"productCode\" : \"productCode\",    \"lastStatementBalance\" : 3.616076749251911,    \"oversearCardActivated\" : true,    \"minimumPayment\" : 5.962133916683182,    \"creditLimit\" : 5.637376656633329,    \"displayAccountNumber\" : \"123xxxx890\",    \"permanentCreditLimit\" : 9.301444243932576,    \"category\" : \"category\",    \"openingBalance\" : 0.8008281904610115,    \"availableCreditLimit\" : 2.3021358869347655,    \"temporaryCreditLimit\" : 7.061401241503109,    \"status\" : \"ACTIVE\"  }}",
-          CardDetailResponse.class), HttpStatus.OK);
-    } catch (IOException e) {
-      logger.error("Couldn't serialize response for content type application/json", e);
-      response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return response;
+    return cardsService.getBlockCardDetailsResponseEntity(customerId,blockMode);
   }
 
   @RequestMapping(value = "/{customerId}/cards/{cardId}/overseasUse", produces = {"application/json"}, consumes = {"multipart/form-data"},
       method = RequestMethod.PUT)
-  public ResponseEntity<CardDetailResponse> updateOverseasUsage(@PathVariable(value = "customerId", required = true) Integer customerId,
-      @PathVariable(value = "cardId", required = true) Integer cardId,
+  public ResponseEntity<CardDetailResponse> updateOverseasUsage(@PathVariable(value = "customerId", required = true) String customerId,
+      @PathVariable(value = "cardId", required = true) String cardId,
       @RequestParam(value = "activationMode", required = true) String activationMode) {
     ResponseEntity<CardDetailResponse> response = null;
     try {
@@ -267,8 +89,8 @@ public class CardsApiController {
 
   @RequestMapping(value = "/{customerId}/cards/{cardId}/limitUpdate", produces = {"application/json"}, consumes = {"multipart/form-data"},
       method = RequestMethod.PUT)
-  public ResponseEntity<CardDetailResponse> limitUpdate(@PathVariable(value = "customerId", required = true) Integer customerId,
-      @PathVariable(value = "cardId", required = true) Integer cardId,
+  public ResponseEntity<CardDetailResponse> limitUpdate(@PathVariable(value = "customerId", required = true) String customerId,
+      @PathVariable(value = "cardId", required = true) String cardId,
       @RequestParam(value = "limitUpdateType", required = true) String limitUpdateType,
       @RequestParam(value = "amount", required = true) Double amount, @RequestParam(value = "reason", required = true) String reason,
       @RequestParam(value = "fromDate", required = false) OffsetDateTime fromDate,
@@ -286,8 +108,8 @@ public class CardsApiController {
   }
 
   @RequestMapping(value = "/{customerId}/cards/{cardId}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<CardLimitResponse> getCardLimits(@PathVariable(value = "customerId", required = true) Integer customerId,
-      @PathVariable(value = "cardId", required = true) Integer cardId) {
+  public ResponseEntity<CardLimitResponse> getCardLimits(@PathVariable(value = "customerId", required = true) String customerId,
+      @PathVariable(value = "cardId", required = true) String cardId) {
     ResponseEntity<CardLimitResponse> response = null;
     try {
       response = new ResponseEntity<>(objectMapper.readValue(
@@ -302,8 +124,8 @@ public class CardsApiController {
 
   @RequestMapping(value = "/{customerId}/cards/{cardId}/resetPin", produces = {"application/json"}, consumes = {"multipart/form-data"},
       method = RequestMethod.PUT)
-  public ResponseEntity<CardDetailResponse> resetPin(@PathVariable(value = "customerId", required = true) Integer customerId,
-      @PathVariable(value = "cardId", required = true) Integer cardId, @RequestParam(value = "resetType", required = true) String resetType,
+  public ResponseEntity<CardDetailResponse> resetPin(@PathVariable(value = "customerId", required = true) String customerId,
+      @PathVariable(value = "cardId", required = true) String cardId, @RequestParam(value = "resetType", required = true) String resetType,
       @RequestParam(value = "newPin", required = true) String newPin) {
     ResponseEntity<CardDetailResponse> response = null;
     try {
@@ -320,8 +142,8 @@ public class CardsApiController {
 
   @RequestMapping(value = "/{customerId}/cards/{cardId}/payment", produces = {"application/json"}, consumes = {"multipart/form-data"},
       method = RequestMethod.PUT)
-  public ResponseEntity<Void> cardPayment(@PathVariable(name = "customerId", required = true) Integer customerId,
-      @PathVariable(name = "cardId", required = true) Integer cardId, @RequestParam(value = "amount", required = true) Double amount,
+  public ResponseEntity<Void> cardPayment(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "cardId", required = true) String cardId, @RequestParam(value = "amount", required = true) Double amount,
       @RequestParam(value = "date", required = true) OffsetDateTime date,
       @RequestParam(value = "currency", required = true) String currency,
       @RequestParam(value = "remarks", required = true) String remarks) {

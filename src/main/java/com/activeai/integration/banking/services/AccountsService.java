@@ -1,7 +1,7 @@
 package com.activeai.integration.banking.services;
 
 import com.activeai.integration.banking.constants.PropertyConstants;
-import com.activeai.integration.banking.mapper.AccountsResponseMapper;
+import com.activeai.integration.banking.mapper.response.AccountsResponseMapper;
 import com.activeai.integration.banking.domain.response.AccountBalanceResponse;
 import com.activeai.integration.banking.domain.response.AccountDetailResponse;
 import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
@@ -45,9 +45,9 @@ public class AccountsService {
           Unirest.get(fetchAPIUrl.getAPIUrl(PropertyConstants.ACCOUNTS_API_URL, customerId)).header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Account Response Body Before Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Accounts Response Body Before Transformation :" + response.getBody());
         String accountsResponseString = accountsResponseMapper.getManipulatedAccountsResponse(response.getBody());
-        ApplicationLogger.logInfo("Account Response Body After Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Accounts Response Body After Transformation :" + response.getBody());
         accountsResponse = objectMapper.readValue(accountsResponseString, AccountsResponse.class);
       }
       return new ResponseEntity<>(accountsResponse, HttpStatus.valueOf(response.getStatus()));

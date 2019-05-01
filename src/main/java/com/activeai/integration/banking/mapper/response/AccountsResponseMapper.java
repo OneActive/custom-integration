@@ -1,4 +1,4 @@
-package com.activeai.integration.banking.mapper;
+package com.activeai.integration.banking.mapper.response;
 
 import org.springframework.stereotype.Component;
 

@@ -14,7 +14,7 @@ import java.util.Objects;
 public class CustomerProfile {
 
   @JsonProperty("custId")
-  private Integer custId = null;
+  private String custId = null;
 
   @JsonProperty("custSegment")
   private String custSegment = null;
@@ -43,11 +43,11 @@ public class CustomerProfile {
    *
    * @return custId
    **/
-  public Integer getCustId() {
+  public String getCustId() {
     return custId;
   }
 
-  public void setCustId(Integer custId) {
+  public void setCustId(String custId) {
     this.custId = custId;
   }
 

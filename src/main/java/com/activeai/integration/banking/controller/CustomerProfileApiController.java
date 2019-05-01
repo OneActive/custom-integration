@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.activeai.integration.banking.services.CustomerProfileService;
+import com.activeai.integration.banking.utils.ApplicationLogger;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,24 +25,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 public class CustomerProfileApiController {
 
-  private static final Logger logger = LoggerFactory.getLogger(CustomerProfileApiController.class);
-
   @Autowired
   private ObjectMapper objectMapper;
+  @Autowired
+  private CustomerProfileService customerProfileService;
 
-  @RequestMapping(value = "/customers/profile/{custId}", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<CustomerProfileResponse> getCustomerProfile(@PathVariable("custId") String custId) {
-    String customerProfileResponse = null;
-    ResponseEntity<CustomerProfileResponse> response = null;
-    try {
-      customerProfileResponse =
-          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"customerProfile\" : {    \"firstName\" : \"firstName\",    \"lastName\" : \"lastName\",    \"address\" : {      \"country\" : \"country\",      \"province\" : \"province\",      \"city\" : \"city\",      \"addressType\" : \"PRIMARY\",      \"countryCode\" : \"countryCode\",      \"addressLine1\" : \"addressLine1\",      \"addressLine2\" : \"addressLine2\",      \"addressLine3\" : \"addressLine3\",      \"state\" : \"state\"    },    \"custSegment\" : \"\",    \"phone\" : [ {      \"phoneType\" : \"PRIMARY\",      \"phoneCountryCode\" : \"+65\",      \"phoneNo\" : 9876543    }, {      \"phoneType\" : \"PRIMARY\",      \"phoneCountryCode\" : \"+65\",      \"phoneNo\" : 9876543    } ],    \"custId\" : 80975412,    \"middleName\" : \"middleName\",    \"title\" : \"Mr.\"  }}";
-      response = new ResponseEntity<>(objectMapper.readValue(customerProfileResponse, CustomerProfileResponse.class), HttpStatus.OK);
-    } catch (IOException e) {
-      logger.error("Couldn't serialize response for content type application/json", e);
-      response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return response;
+  @RequestMapping(value = "/customers/profile/{customerId}", produces = {"application/json"}, method = RequestMethod.GET)
+  public ResponseEntity<CustomerProfileResponse> getCustomerProfile(@PathVariable("customerId") String customerId) {
+    return customerProfileService.getCustomerProfileResponseEntity(customerId);
   }
 
   @RequestMapping(value = "/customers/profile/{custId}/email", produces = {"application/json"}, consumes = {"multipart/form-data"},
@@ -54,7 +46,7 @@ public class CustomerProfileApiController {
             "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"customerProfile\" : {    \"firstName\" : \"firstName\",    \"lastName\" : \"lastName\",    \"address\" : {      \"country\" : \"country\",      \"province\" : \"province\",      \"city\" : \"city\",      \"addressType\" : \"PRIMARY\",      \"countryCode\" : \"countryCode\",      \"addressLine1\" : \"addressLine1\",      \"addressLine2\" : \"addressLine2\",      \"addressLine3\" : \"addressLine3\",      \"state\" : \"state\"    },    \"custSegment\" : \"\",    \"phone\" : [ {      \"phoneType\" : \"PRIMARY\",      \"phoneCountryCode\" : \"+65\",      \"phoneNo\" : 9876543    }, {      \"phoneType\" : \"PRIMARY\",      \"phoneCountryCode\" : \"+65\",      \"phoneNo\" : 9876543    } ],    \"custId\" : 80975412,    \"middleName\" : \"middleName\",    \"title\" : \"Mr.\"  }}",
             CustomerProfileResponse.class), HttpStatus.OK);
       } catch (IOException e) {
-        logger.error("Couldn't serialize response for content type application/json", e);
+        ApplicationLogger.logError("Couldn't serialize response for content type application/json", e);
         return new ResponseEntity<CustomerProfileResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }
@@ -75,7 +67,7 @@ public class CustomerProfileApiController {
             "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"customerProfile\" : {    \"firstName\" : \"firstName\",    \"lastName\" : \"lastName\",    \"address\" : {      \"country\" : \"country\",      \"province\" : \"province\",      \"city\" : \"city\",      \"addressType\" : \"PRIMARY\",      \"countryCode\" : \"countryCode\",      \"addressLine1\" : \"addressLine1\",      \"addressLine2\" : \"addressLine2\",      \"addressLine3\" : \"addressLine3\",      \"state\" : \"state\"    },    \"custSegment\" : \"\",    \"phone\" : [ {      \"phoneType\" : \"PRIMARY\",      \"phoneCountryCode\" : \"+65\",      \"phoneNo\" : 9876543210    }, {      \"phoneType\" : \"PRIMARY\",      \"phoneCountryCode\" : \"+65\",      \"phoneNo\" : 9876543210    } ],    \"custId\" : 80975412,    \"middleName\" : \"middleName\",    \"title\" : \"Mr.\"  }}",
             CustomerProfileResponse.class), HttpStatus.OK);
       } catch (IOException e) {
-        logger.error("Couldn't serialize response for content type application/json", e);
+        ApplicationLogger.logError("Couldn't serialize response for content type application/json", e);
         return new ResponseEntity<CustomerProfileResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }
