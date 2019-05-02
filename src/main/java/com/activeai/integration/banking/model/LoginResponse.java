@@ -10,6 +10,14 @@ public class LoginResponse{
   @JsonProperty("customerProfile")
   private CustomerProfile customerProfile;
 
+  public CustomerProfile getCustomerProfile() {
+    return customerProfile;
+  }
+
+  public void setCustomerProfile(CustomerProfile customerProfile) {
+    this.customerProfile = customerProfile;
+  }
+
   public Result getResult() {
     return result;
   }
