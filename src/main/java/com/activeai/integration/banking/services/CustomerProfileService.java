@@ -4,7 +4,7 @@ import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.response.CustomerProfileResponse;
 import com.activeai.integration.banking.mapper.response.CustomerProfileResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
-import com.activeai.integration.banking.utils.propertyUtil;
+import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -23,7 +23,7 @@ import java.util.Objects;
 public class CustomerProfileService {
 
   @Autowired private ObjectMapper objectMapper;
-  @Autowired private propertyUtil propertyUtil;
+  @Autowired private PropertyUtil propertyUtil;
   @Autowired private CustomerProfileResponseMapper customerProfileResponseMapper;
 
   public ResponseEntity<CustomerProfileResponse> getCustomerProfileResponseEntity(String customerId) {

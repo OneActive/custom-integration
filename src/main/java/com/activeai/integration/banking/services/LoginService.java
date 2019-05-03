@@ -6,7 +6,7 @@ import com.activeai.integration.banking.mapper.request.LoginRequestMapper;
 import com.activeai.integration.banking.mapper.response.LoginResponseMapper;
 import com.activeai.integration.banking.model.LoginResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
-import com.activeai.integration.banking.utils.propertyUtil;
+import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -29,7 +29,7 @@ public class LoginService {
   @Autowired private LoginResponseMapper loginResponseMapper;
   @Autowired private LoginRequestMapper loginRequestMapper;
   @Autowired private ObjectMapper objectMapper;
-  @Autowired private propertyUtil propertyUtil;
+  @Autowired private PropertyUtil propertyUtil;
 
   /**
    * Customise this based on your Use case

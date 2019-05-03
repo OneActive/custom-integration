@@ -7,7 +7,7 @@ import com.activeai.integration.banking.domain.response.AccountDetailResponse;
 import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
 import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
-import com.activeai.integration.banking.utils.propertyUtil;
+import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -31,7 +31,7 @@ public class AccountsService {
 
   @Autowired private AccountsResponseMapper accountsResponseMapper;
   @Autowired private ObjectMapper objectMapper;
-  @Autowired private propertyUtil propertyUtil;
+  @Autowired private PropertyUtil propertyUtil;
 
   /**
    * Fetches list of Accounts

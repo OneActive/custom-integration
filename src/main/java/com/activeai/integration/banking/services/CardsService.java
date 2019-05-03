@@ -6,7 +6,7 @@ import com.activeai.integration.banking.domain.response.CardTransactionsResponse
 import com.activeai.integration.banking.mapper.response.CardsResponseMapper;
 import com.activeai.integration.banking.model.CardsResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
-import com.activeai.integration.banking.utils.propertyUtil;
+import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -26,7 +26,7 @@ public class CardsService {
 
   @Autowired private CardsResponseMapper cardsResponseMapper;
   @Autowired private ObjectMapper objectMapper;
-  @Autowired private propertyUtil propertyUtil;
+  @Autowired private PropertyUtil propertyUtil;
 
   /**
    * Fetches list of Cards

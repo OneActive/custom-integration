@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.text.MessageFormat;
 
 @Component("propertyUtil")
-public class propertyUtil {
+public class PropertyUtil {
 
   public static final String APIDoublePropertyPattern = "{0}_{1}";
   @Autowired
