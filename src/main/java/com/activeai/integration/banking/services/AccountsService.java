@@ -7,7 +7,7 @@ import com.activeai.integration.banking.domain.response.AccountDetailResponse;
 import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
 import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
-import com.activeai.integration.banking.utils.FetchAPIUrl;
+import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -31,7 +31,7 @@ public class AccountsService {
 
   @Autowired private AccountsResponseMapper accountsResponseMapper;
   @Autowired private ObjectMapper objectMapper;
-  @Autowired private FetchAPIUrl fetchAPIUrl;
+  @Autowired private PropertyUtil propertyUtil;
 
   /**
    * Fetches list of Accounts
@@ -42,7 +42,7 @@ public class AccountsService {
     AccountsResponse accountsResponse = null;
     try {
       HttpResponse<String> response =
-          Unirest.get(fetchAPIUrl.getAPIUrl(PropertyConstants.ACCOUNTS_API_URL, customerId)).header("cache-control", "no-cache").asString();
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNTS_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
         ApplicationLogger.logInfo("Accounts Response Body Before Transformation :" + response.getBody());
@@ -70,7 +70,7 @@ public class AccountsService {
   public ResponseEntity<AccountDetailResponse> getAccountDetailsResponseEntity(String customerId, String accountId) {
     AccountDetailResponse accountsResponse = null;
     try {
-      HttpResponse<String> response = Unirest.get(fetchAPIUrl.getAPIUrl(PropertyConstants.ACCOUNT_DETAILS_API, customerId, accountId))
+      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNT_DETAILS_API_END_POINT, customerId, accountId))
           .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
@@ -99,7 +99,7 @@ public class AccountsService {
   public ResponseEntity<AccountBalanceResponse> getAccountBalanceResponseEntity(String customerId, String accountId) {
     AccountBalanceResponse accountBalanceResponse = null;
     try {
-      HttpResponse<String> response = Unirest.get(fetchAPIUrl.getAPIUrl(PropertyConstants.ACCOUNT_BALANCE_API, customerId, accountId))
+      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNT_BALANCE_API_END_POINT, customerId, accountId))
           .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
@@ -129,7 +129,7 @@ public class AccountsService {
     AccountTransactionsResponse accountTransactionsResponse = null;
     try {
       HttpResponse<String> response =
-          Unirest.get(fetchAPIUrl.getAPIUrl(PropertyConstants.ACCOUNT_TRANSACTIONS_HISTORY_API, customerId, accountId))
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNT_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))
               .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {

@@ -55,7 +55,7 @@ public class BillPaymentApiController {
     return response;
   }
 
-  @ApiOperation(value = "Returns list of Registered Billers based on customer ID")
+  @ApiOperation(value = "Returns list of Registered Billers based on customerapplication.properties ID")
   @RequestMapping(value = "/{customerId}/billers", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<BillerResponse> getRegisteredBillerListForCustomer(@RequestParam(value = "categoryId", required = false) Integer categoryId,@PathVariable(name = "customerId", required = true) String customerId) {
     ApplicationLogger.logInfo("Entering getRegisteredBillers API");

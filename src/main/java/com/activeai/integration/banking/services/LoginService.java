@@ -6,7 +6,7 @@ import com.activeai.integration.banking.mapper.request.LoginRequestMapper;
 import com.activeai.integration.banking.mapper.response.LoginResponseMapper;
 import com.activeai.integration.banking.model.LoginResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
-import com.activeai.integration.banking.utils.FetchAPIUrl;
+import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -29,7 +29,7 @@ public class LoginService {
   @Autowired private LoginResponseMapper loginResponseMapper;
   @Autowired private LoginRequestMapper loginRequestMapper;
   @Autowired private ObjectMapper objectMapper;
-  @Autowired private FetchAPIUrl fetchAPIUrl;
+  @Autowired private PropertyUtil propertyUtil;
 
   /**
    * Customise this based on your Use case
@@ -46,7 +46,7 @@ public class LoginService {
       if (userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))) {
         try {
           HttpResponse<String> response =
-              Unirest.post(fetchAPIUrl.getAPIUrl(PropertyConstants.INTEGRATION_LOGIN_ROUTE_URI)).header("Content-Type", "application/json")
+              Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,null,null)).header("Content-Type", "application/json")
                   .body(loginRequestMapper.getLoginRequestBody(userLoginRequest)).asString();
           ApplicationLogger
               .logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());

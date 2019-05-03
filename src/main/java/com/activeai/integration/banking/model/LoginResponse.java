@@ -2,20 +2,67 @@ package com.activeai.integration.banking.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
+
 public class LoginResponse{
 
   @JsonProperty("result")
   private Result result = null;
 
-  @JsonProperty("customerProfile")
-  private CustomerProfile customerProfile;
+  @NotNull
+  @JsonProperty("customerId")
+  private String customerId;
 
-  public CustomerProfile getCustomerProfile() {
-    return customerProfile;
+  @JsonProperty("customerName")
+  private String customerName;
+
+  @JsonProperty("mobileNumber")
+  private String mobileNumber;
+
+  @JsonProperty("emailId")
+  private String emailId;
+
+  @JsonProperty("address")
+  private String address;
+
+  public String getEmailId() {
+    return emailId;
   }
 
-  public void setCustomerProfile(CustomerProfile customerProfile) {
-    this.customerProfile = customerProfile;
+  public void setEmailId(String emailId) {
+    this.emailId = emailId;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public String getMobileNumber() {
+    return mobileNumber;
+  }
+
+  public void setMobileNumber(String mobileNumber) {
+    this.mobileNumber = mobileNumber;
+  }
+
+  public String getCustomerName() {
+    return customerName;
+  }
+
+  public void setCustomerName(String customerName) {
+    this.customerName = customerName;
+  }
+
+  public String getCustomerId() {
+    return customerId;
+  }
+
+  public void setCustomerId(String customerId) {
+    this.customerId = customerId;
   }
 
   public Result getResult() {

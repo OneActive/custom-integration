@@ -6,7 +6,7 @@ import com.activeai.integration.banking.domain.response.CardTransactionsResponse
 import com.activeai.integration.banking.mapper.response.CardsResponseMapper;
 import com.activeai.integration.banking.model.CardsResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
-import com.activeai.integration.banking.utils.FetchAPIUrl;
+import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -26,7 +26,7 @@ public class CardsService {
 
   @Autowired private CardsResponseMapper cardsResponseMapper;
   @Autowired private ObjectMapper objectMapper;
-  @Autowired private FetchAPIUrl fetchAPIUrl;
+  @Autowired private PropertyUtil propertyUtil;
 
   /**
    * Fetches list of Cards
@@ -37,7 +37,7 @@ public class CardsService {
     CardsResponse cardsResponse = null;
     try {
       HttpResponse<String> response =
-          Unirest.get(fetchAPIUrl.getAPIUrl(PropertyConstants.CARDS_API_URL, customerId)).header("cache-control", "no-cache").asString();
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CARDS_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
         ApplicationLogger.logInfo("Cards Response Body Before Transformation :" + response.getBody());
@@ -65,7 +65,35 @@ public class CardsService {
     CardDetailResponse cardDetailResponse = null;
     try {
       HttpResponse<String> response =
-          Unirest.get(fetchAPIUrl.getAPIUrl(PropertyConstants.CARDS_DETAILS_API_URL, customerId)).header("cache-control", "no-cache").asString();
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CARD_DETAILS_API_END_POINT, customerId, cardId)).header("cache-control", "no-cache").asString();
+      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
+        ApplicationLogger.logInfo("Card Details Response Body Before Transformation :" + response.getBody());
+        String cardDetailsResponseString = cardsResponseMapper.getManipulatedCardDetailsResponse(response.getBody());
+        ApplicationLogger.logInfo("Card Details Response Body After Transformation :" + response.getBody());
+        cardDetailResponse = objectMapper.readValue(cardDetailsResponseString, CardDetailResponse.class);
+      }
+      return new ResponseEntity<>(cardDetailResponse, HttpStatus.valueOf(response.getStatus()));
+    } catch (UnirestException e) {
+      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+    } catch (IOException e) {
+      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+    } catch (Exception e) {
+      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+    }
+    return new ResponseEntity<>(cardDetailResponse, HttpStatus.EXPECTATION_FAILED);
+  }
+
+  /**
+   * Fetches Card Details for selected card
+   * @param customerId,cardId
+   * @return ResponseEntity of type CardDetailResponse
+   */
+  public ResponseEntity<CardDetailResponse> getCardBalanceResponseEntity(String customerId,String cardId) {
+    CardDetailResponse cardDetailResponse = null;
+    try {
+      HttpResponse<String> response =
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CARD_DETAILS_API_END_POINT, customerId, cardId)).header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
         ApplicationLogger.logInfo("Card Details Response Body Before Transformation :" + response.getBody());
@@ -94,7 +122,7 @@ public class CardsService {
     CardTransactionsResponse cardTransactionsResponse = null;
     try {
       HttpResponse<String> response =
-          Unirest.get(fetchAPIUrl.getAPIUrl(PropertyConstants.CARDS_TRANSACTIONS_HISTORY_API, customerId, accountId))
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CARDS_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))
               .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
@@ -124,7 +152,7 @@ public class CardsService {
     CardDetailResponse cardDetailResponse = null;
     try {
       HttpResponse<String> response =
-          Unirest.get(fetchAPIUrl.getAPIUrl(PropertyConstants.BLOCK_TCARD_DETAILS_API, customerId, accountId))
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.BLOCK_CARD_DETAILS_API_END_POINT, customerId, accountId))
               .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {

@@ -4,7 +4,7 @@ import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.mapper.response.BillPaymentResponseMapper;
 import com.activeai.integration.banking.model.BillerResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
-import com.activeai.integration.banking.utils.FetchAPIUrl;
+import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -26,7 +26,7 @@ public class BillPaymentService {
             billpaymentResponseMapper;
 
     @Autowired
-    private FetchAPIUrl fetchAPIUrl;
+    private PropertyUtil propertyUtil;
 
     @Autowired private ObjectMapper objectMapper;
 
@@ -40,7 +40,7 @@ public class BillPaymentService {
         BillerResponse billerResponse = null;
         try {
             HttpResponse<String> response =
-                    Unirest.get(fetchAPIUrl.getAPIUrl(PropertyConstants.REGISTERED_BILLERS_API_ENDPOINT, customerId)).header("cache-control", "no-cache").asString();
+                    Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.REGISTERED_BILLERS_API_ENDPOINT, customerId,null)).header("cache-control", "no-cache").asString();
             ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
             if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
                 ApplicationLogger.logInfo("Registered Billers Response Body Before Transformation :" + response.getBody());
