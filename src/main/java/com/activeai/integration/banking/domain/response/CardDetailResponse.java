@@ -19,13 +19,8 @@ public class CardDetailResponse {
   @JsonProperty("result")
   private Result result = null;
 
-  @JsonProperty("cardDetail")
-  private Card cardDetail = null;
-
-  public CardDetailResponse result(Result result) {
-    this.result = result;
-    return this;
-  }
+  @JsonProperty("cardDetails")
+  private Card cardDetails = null;
 
   /**
    * Get result
@@ -41,23 +36,18 @@ public class CardDetailResponse {
     this.result = result;
   }
 
-  public CardDetailResponse cardDetail(Card cardDetail) {
-    this.cardDetail = cardDetail;
-    return this;
-  }
-
   /**
-   * Get cardDetail
+   * Get cardDetails
    * 
-   * @return cardDetail
+   * @return cardDetails
    **/
   @Valid
-  public Card getCardDetail() {
-    return cardDetail;
+  public Card getCardDetails() {
+    return cardDetails;
   }
 
-  public void setCardDetail(Card cardDetail) {
-    this.cardDetail = cardDetail;
+  public void setCardDetails(Card cardDetails) {
+    this.cardDetails = cardDetails;
   }
 
   @Override
@@ -69,12 +59,12 @@ public class CardDetailResponse {
       return false;
     }
     CardDetailResponse cardDetailResponse = (CardDetailResponse) o;
-    return Objects.equals(this.result, cardDetailResponse.result) && Objects.equals(this.cardDetail, cardDetailResponse.cardDetail);
+    return Objects.equals(this.result, cardDetailResponse.result) && Objects.equals(this.cardDetails, cardDetailResponse.cardDetails);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(result, cardDetail);
+    return Objects.hash(result, cardDetails);
   }
 
   @Override
@@ -83,7 +73,7 @@ public class CardDetailResponse {
     sb.append("class CardDetailResponse {\n");
 
     sb.append("    result: ").append(toIndentedString(result)).append("\n");
-    sb.append("    cardDetail: ").append(toIndentedString(cardDetail)).append("\n");
+    sb.append("    cardDetails: ").append(toIndentedString(cardDetails)).append("\n");
     sb.append("}");
     return sb.toString();
   }

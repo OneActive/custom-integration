@@ -13,8 +13,8 @@ import java.util.Objects;
 @Validated
 public class CustomerProfile {
 
-  @JsonProperty("custId")
-  private String custId = null;
+  @JsonProperty("customerId")
+  private String customerId = null;
 
   @JsonProperty("custSegment")
   private String custSegment = null;
@@ -41,14 +41,14 @@ public class CustomerProfile {
   /**
    * Customer ID example = "80975412"
    *
-   * @return custId
+   * @return customerId
    **/
-  public String getCustId() {
-    return custId;
+  public String getCustomerId() {
+    return customerId;
   }
 
-  public void setCustId(String custId) {
-    this.custId = custId;
+  public void setCustomerId(String customerId) {
+    this.customerId = customerId;
   }
 
   /**
@@ -155,21 +155,21 @@ public class CustomerProfile {
       return false;
     }
     CustomerProfile customerProfile = (CustomerProfile) o;
-    return Objects.equals(this.custId, customerProfile.custId) && Objects.equals(this.custSegment, customerProfile.custSegment) && Objects
+    return Objects.equals(this.customerId, customerProfile.customerId) && Objects.equals(this.custSegment, customerProfile.custSegment) && Objects
         .equals(this.firstName, customerProfile.firstName) && Objects.equals(this.lastName, customerProfile.lastName) && Objects
         .equals(this.middleName, customerProfile.middleName) && Objects.equals(this.title, customerProfile.title) && Objects
         .equals(this.address, customerProfile.address) && Objects.equals(this.phone, customerProfile.phone);
   }
 
   @Override public int hashCode() {
-    return Objects.hash(custId, custSegment, firstName, lastName, middleName, title, address, phone);
+    return Objects.hash(customerId, custSegment, firstName, lastName, middleName, title, address, phone);
   }
 
   @Override public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CustomerProfile {\n");
 
-    sb.append("    custId: ").append(toIndentedString(custId)).append("\n");
+    sb.append("    custId: ").append(toIndentedString(customerId)).append("\n");
     sb.append("    custSegment: ").append(toIndentedString(custSegment)).append("\n");
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");

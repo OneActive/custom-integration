@@ -4,7 +4,7 @@ import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.response.CustomerProfileResponse;
 import com.activeai.integration.banking.mapper.response.CustomerProfileResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
-import com.activeai.integration.banking.utils.FetchAPIUrl;
+import com.activeai.integration.banking.utils.propertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -23,14 +23,14 @@ import java.util.Objects;
 public class CustomerProfileService {
 
   @Autowired private ObjectMapper objectMapper;
-  @Autowired private FetchAPIUrl fetchAPIUrl;
+  @Autowired private propertyUtil propertyUtil;
   @Autowired private CustomerProfileResponseMapper customerProfileResponseMapper;
 
   public ResponseEntity<CustomerProfileResponse> getCustomerProfileResponseEntity(String customerId) {
     CustomerProfileResponse customerProfileResponse = null;
     try {
       HttpResponse<String> response =
-          Unirest.get(fetchAPIUrl.getAPIUrl(PropertyConstants.INTEGRATION_CUSTOMER_PROFILE_ROUTE_URI, customerId)).header("cache-control", "no-cache").asString();
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CUSTOMER_PROFILE_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
         ApplicationLogger.logInfo("Customer Profile Response Body Before Transformation :" + response.getBody());
