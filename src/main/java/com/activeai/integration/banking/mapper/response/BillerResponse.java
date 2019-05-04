@@ -1,4 +1,4 @@
-package com.activeai.integration.banking.model;
+package com.activeai.integration.banking.mapper.response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.Objects;
 
 import javax.validation.Valid;
 
+import com.activeai.integration.banking.model.Biller;
+import com.activeai.integration.banking.model.Result;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,34 +1,33 @@
-package com.activeai.integration.banking.model;
+package com.activeai.integration.banking.mapper.response;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
+import com.activeai.integration.banking.model.Payee;
+import com.activeai.integration.banking.model.Result;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Response
+ * PayeesResponse
  */
 @Validated
-public class Response {
+public class PayeesResponse {
 
   @JsonProperty("result")
   private Result result = null;
 
-  public Response result(Result result) {
-    this.result = result;
-    return this;
-  }
+  @JsonProperty("payeeDetails")
+  private List<Payee> payeeDetails = null;
 
   /**
    * Get result
    * 
    * @return result
    **/
-  @NotNull
   @Valid
   public Result getResult() {
     return result;
@@ -36,6 +35,20 @@ public class Response {
 
   public void setResult(Result result) {
     this.result = result;
+  }
+
+  /**
+   * Get payeeDetails
+   * 
+   * @return payeeDetails
+   **/
+  @Valid
+  public List<Payee> getPayeeDetails() {
+    return payeeDetails;
+  }
+
+  public void setPayeeDetails(List<Payee> payeeDetails) {
+    this.payeeDetails = payeeDetails;
   }
 
   @Override
@@ -46,21 +59,22 @@ public class Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Response response = (Response) o;
-    return Objects.equals(this.result, response.result);
+    PayeesResponse payeesResponse = (PayeesResponse) o;
+    return Objects.equals(this.result, payeesResponse.result) && Objects.equals(this.payeeDetails, payeesResponse.payeeDetails);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(result);
+    return Objects.hash(result, payeeDetails);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Response {\n");
+    sb.append("class PayeesResponse {\n");
 
     sb.append("    result: ").append(toIndentedString(result)).append("\n");
+    sb.append("    payeeDetails: ").append(toIndentedString(payeeDetails)).append("\n");
     sb.append("}");
     return sb.toString();
   }

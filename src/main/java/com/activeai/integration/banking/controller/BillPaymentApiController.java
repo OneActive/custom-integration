@@ -1,14 +1,12 @@
 package com.activeai.integration.banking.controller;
 
 import com.activeai.integration.banking.domain.response.BillerCategoriesResponse;
-import com.activeai.integration.banking.model.BillerResponse;
+import com.activeai.integration.banking.mapper.response.BillerResponse;
 import com.activeai.integration.banking.services.BillPaymentService;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,9 +1,11 @@
-package com.activeai.integration.banking.model;
+package com.activeai.integration.banking.mapper.response;
 
 import java.util.Objects;
 
 import javax.validation.Valid;
 
+import com.activeai.integration.banking.model.CardLimit;
+import com.activeai.integration.banking.model.Result;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,7 +1,7 @@
 package com.activeai.integration.banking.controller;
 
 import com.activeai.integration.banking.domain.request.UserLoginRequest;
-import com.activeai.integration.banking.model.LoginResponse;
+import com.activeai.integration.banking.mapper.response.LoginResponse;
 import com.activeai.integration.banking.services.LoginService;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;

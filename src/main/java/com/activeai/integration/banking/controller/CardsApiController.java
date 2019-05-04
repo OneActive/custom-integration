@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.activeai.integration.banking.domain.response.CardDetailResponse;
-import com.activeai.integration.banking.model.CardLimitResponse;
+import com.activeai.integration.banking.mapper.response.CardLimitResponse;
 import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
-import com.activeai.integration.banking.model.CardsResponse;
+import com.activeai.integration.banking.mapper.response.CardsResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Api(value = "Cards Related APIs", description = "Shows API Documentation Regards Cards APIs")

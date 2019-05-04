@@ -1,5 +1,6 @@
-package com.activeai.integration.banking.model;
+package com.activeai.integration.banking.mapper.response;
 
+import com.activeai.integration.banking.model.Result;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotNull;

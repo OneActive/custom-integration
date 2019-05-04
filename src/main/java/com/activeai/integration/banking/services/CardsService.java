@@ -4,7 +4,7 @@ import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.response.CardDetailResponse;
 import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
 import com.activeai.integration.banking.mapper.response.CardsResponseMapper;
-import com.activeai.integration.banking.model.CardsResponse;
+import com.activeai.integration.banking.mapper.response.CardsResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;

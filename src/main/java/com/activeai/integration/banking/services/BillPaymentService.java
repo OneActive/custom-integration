@@ -2,7 +2,7 @@ package com.activeai.integration.banking.services;
 
 import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.mapper.response.BillPaymentResponseMapper;
-import com.activeai.integration.banking.model.BillerResponse;
+import com.activeai.integration.banking.mapper.response.BillerResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
