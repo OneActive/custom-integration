@@ -1,25 +1,17 @@
 package com.activeai.integration.banking.controller;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.activeai.integration.banking.domain.response.CustomerProfileResponse;
 import com.activeai.integration.banking.services.CustomerProfileService;
 import com.activeai.integration.banking.utils.ApplicationLogger;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.activeai.integration.banking.domain.response.CustomerProfileResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @Api(value = "Customer Profile Related APIs", description = "Shows API Documentation Regards Customer Profile APIs")
 @RestController
@@ -32,6 +24,7 @@ public class CustomerProfileApiController {
 
   @RequestMapping(value = "/customers/profile/{customerId}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CustomerProfileResponse> getCustomerProfile(@PathVariable("customerId") String customerId) {
+    ApplicationLogger.logInfo("Entering CustomerProfile Controller");
     return customerProfileService.getCustomerProfileResponseEntity(customerId);
   }
 

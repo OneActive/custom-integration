@@ -1,4 +1,4 @@
-package com.activeai.integration.banking.mapper.response;
+package com.activeai.integration.banking.domain.response;
 
 import com.activeai.integration.banking.model.Result;
 import com.fasterxml.jackson.annotation.JsonProperty;

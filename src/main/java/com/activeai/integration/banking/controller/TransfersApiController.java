@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.activeai.integration.banking.mapper.response.PayeesResponse;
+import com.activeai.integration.banking.domain.response.PayeesResponse;
 import com.activeai.integration.banking.domain.response.TransferConfirmResponse;
 import com.activeai.integration.banking.domain.response.TransferInititateResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;

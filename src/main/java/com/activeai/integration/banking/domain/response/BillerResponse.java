@@ -1,4 +1,4 @@
-package com.activeai.integration.banking.mapper.response;
+package com.activeai.integration.banking.domain.response;
 
 import java.util.ArrayList;
 import java.util.List;

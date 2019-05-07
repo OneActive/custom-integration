@@ -1,7 +1,7 @@
 package com.activeai.integration.banking.controller;
 
 import com.activeai.integration.banking.domain.response.BillerCategoriesResponse;
-import com.activeai.integration.banking.mapper.response.BillerResponse;
+import com.activeai.integration.banking.domain.response.BillerResponse;
 import com.activeai.integration.banking.services.BillPaymentService;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -2,6 +2,7 @@ package com.activeai.integration.banking.model;
 
 import java.util.Objects;
 
+import com.activeai.integration.banking.constants.PhoneTypeEnum;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -20,46 +21,9 @@ public class Phone {
   @JsonProperty("phoneCountryCode")
   private String phoneCountryCode = null;
 
-  /**
-   * Type of Phone number i.e. work/home/office
-   */
-  public enum PhoneTypeEnum {
-    PRIMARY("PRIMARY"),
-
-    OFFICE("OFFICE"),
-
-    HOME("HOME");
-
-    private String value;
-
-    PhoneTypeEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static PhoneTypeEnum fromValue(String text) {
-      for (PhoneTypeEnum b : PhoneTypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
 
   @JsonProperty("phoneType")
   private PhoneTypeEnum phoneType = null;
-
-  public Phone phoneNo(Long phoneNo) {
-    this.phoneNo = phoneNo;
-    return this;
-  }
 
   /**
    * Phone number without country code
@@ -74,11 +38,6 @@ public class Phone {
     this.phoneNo = phoneNo;
   }
 
-  public Phone phoneCountryCode(String phoneCountryCode) {
-    this.phoneCountryCode = phoneCountryCode;
-    return this;
-  }
-
   /**
    * country code prefixed with +
    * 
@@ -90,11 +49,6 @@ public class Phone {
 
   public void setPhoneCountryCode(String phoneCountryCode) {
     this.phoneCountryCode = phoneCountryCode;
-  }
-
-  public Phone phoneType(PhoneTypeEnum phoneType) {
-    this.phoneType = phoneType;
-    return this;
   }
 
   /**

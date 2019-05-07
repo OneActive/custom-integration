@@ -53,8 +53,8 @@ public class Card {
   @JsonProperty("status")
   private CardStatusEnum status = null;
 
-  @JsonProperty("oversearCardActivated")
-  private Boolean oversearCardActivated = null;
+  @JsonProperty("overseasCardActivated")
+  private Boolean overseasCardActivated = null;
 
   @JsonProperty("openingBalance")
   private Double openingBalance = null;
@@ -109,8 +109,8 @@ public class Card {
     this.branchAddress = branchAddress;
   }
 
-  public Boolean getOversearCardActivated() {
-    return oversearCardActivated;
+  public Boolean getOverseasCardActivated() {
+    return overseasCardActivated;
   }
 
   public String getLastStatementDate() {
@@ -308,14 +308,14 @@ public class Card {
   /**
    * Is card activated for overseas use
    * 
-   * @return oversearCardActivated
+   * @return overseasCardActivated
    **/
   public Boolean isOversearCardActivated() {
-    return oversearCardActivated;
+    return overseasCardActivated;
   }
 
-  public void setOversearCardActivated(Boolean oversearCardActivated) {
-    this.oversearCardActivated = oversearCardActivated;
+  public void setOverseasCardActivated(Boolean overseasCardActivated) {
+    this.overseasCardActivated = overseasCardActivated;
   }
 
   /**
@@ -488,7 +488,7 @@ public class Card {
         && Objects.equals(this.displayAccountNumber, card.displayAccountNumber) && Objects.equals(this.accountNumber, card.accountNumber)
         && Objects.equals(this.accountId, card.accountId) && Objects.equals(this.cardIssuer, card.cardIssuer)
         && Objects.equals(this.branchId, card.branchId) && Objects.equals(this.branchName, card.branchName)
-        && Objects.equals(this.status, card.status) && Objects.equals(this.oversearCardActivated, card.oversearCardActivated)
+        && Objects.equals(this.status, card.status) && Objects.equals(this.overseasCardActivated, card.overseasCardActivated)
         && Objects.equals(this.openingBalance, card.openingBalance) && Objects.equals(this.closingBalance, card.closingBalance)
         && Objects.equals(this.amountDue, card.amountDue) && Objects.equals(this.minimumPayment, card.minimumPayment)
         && Objects.equals(this.paymentDueDate, card.paymentDueDate) && Objects.equals(this.creditLimit, card.creditLimit)
@@ -502,7 +502,7 @@ public class Card {
   @Override
   public int hashCode() {
     return Objects.hash(category, productCode, product, accountName, bankName, type, displayAccountNumber, accountNumber, accountId, cardIssuer, branchId,
-        branchName, status, oversearCardActivated, openingBalance, closingBalance, amountDue, minimumPayment, paymentDueDate, creditLimit,
+        branchName, status, overseasCardActivated, openingBalance, closingBalance, amountDue, minimumPayment, paymentDueDate, creditLimit,
         availableCreditLimit, temporaryCreditLimit, permanentCreditLimit, lastStatementDate, lastStatementBalance);
   }
 
@@ -524,7 +524,7 @@ public class Card {
     sb.append("    branchId: ").append(toIndentedString(branchId)).append("\n");
     sb.append("    branchName: ").append(toIndentedString(branchName)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    oversearCardActivated: ").append(toIndentedString(oversearCardActivated)).append("\n");
+    sb.append("    overseasCardActivated: ").append(toIndentedString(overseasCardActivated)).append("\n");
     sb.append("    openingBalance: ").append(toIndentedString(openingBalance)).append("\n");
     sb.append("    closingBalance: ").append(toIndentedString(closingBalance)).append("\n");
     sb.append("    amountDue: ").append(toIndentedString(amountDue)).append("\n");

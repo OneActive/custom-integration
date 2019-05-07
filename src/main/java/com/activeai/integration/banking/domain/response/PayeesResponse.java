@@ -1,32 +1,27 @@
-package com.activeai.integration.banking.mapper.response;
+package com.activeai.integration.banking.domain.response;
 
 import java.util.List;
 import java.util.Objects;
 
 import javax.validation.Valid;
 
-import com.activeai.integration.banking.model.Card;
+import com.activeai.integration.banking.model.Payee;
 import com.activeai.integration.banking.model.Result;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * CardsResponse
+ * PayeesResponse
  */
 @Validated
-public class CardsResponse {
+public class PayeesResponse {
 
   @JsonProperty("result")
   private Result result = null;
 
-  @JsonProperty("cards")
-  private List<Card> cards = null;
-
-  public CardsResponse result(Result result) {
-    this.result = result;
-    return this;
-  }
+  @JsonProperty("payeeDetails")
+  private List<Payee> payeeDetails = null;
 
   /**
    * Get result
@@ -43,19 +38,18 @@ public class CardsResponse {
   }
 
   /**
-   * Get cards
+   * Get payeeDetails
    * 
-   * @return cards
+   * @return payeeDetails
    **/
   @Valid
-  public List<Card> getCards() {
-    return cards;
+  public List<Payee> getPayeeDetails() {
+    return payeeDetails;
   }
 
-  public void setCards(List<Card> cards) {
-    this.cards = cards;
+  public void setPayeeDetails(List<Payee> payeeDetails) {
+    this.payeeDetails = payeeDetails;
   }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -65,22 +59,22 @@ public class CardsResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CardsResponse cardsResponse = (CardsResponse) o;
-    return Objects.equals(this.result, cardsResponse.result) && Objects.equals(this.cards, cardsResponse.cards);
+    PayeesResponse payeesResponse = (PayeesResponse) o;
+    return Objects.equals(this.result, payeesResponse.result) && Objects.equals(this.payeeDetails, payeesResponse.payeeDetails);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(result, cards);
+    return Objects.hash(result, payeeDetails);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CardsResponse {\n");
+    sb.append("class PayeesResponse {\n");
 
     sb.append("    result: ").append(toIndentedString(result)).append("\n");
-    sb.append("    cards: ").append(toIndentedString(cards)).append("\n");
+    sb.append("    payeeDetails: ").append(toIndentedString(payeeDetails)).append("\n");
     sb.append("}");
     return sb.toString();
   }

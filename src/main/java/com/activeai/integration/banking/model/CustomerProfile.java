@@ -38,6 +38,18 @@ public class CustomerProfile {
   @Valid
   private List<Phone> phone = null;
 
+  @JsonProperty("email")
+  @Valid
+  private List<Email> email;
+
+  public List<Email> getEmail() {
+    return email;
+  }
+
+  public void setEmail(List<Email> email) {
+    this.email = email;
+  }
+
   /**
    * Customer ID example = "80975412"
    *
