@@ -1,12 +1,10 @@
 package com.activeai.integration.banking.model;
 
-import java.util.Objects;
-
+import com.activeai.integration.banking.constants.AddressTypeEnum;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.validation.annotation.Validated;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Objects;
 
 /**
  * Address
@@ -22,39 +20,6 @@ public class Address {
 
   @JsonProperty("addressLine3")
   private String addressLine3 = null;
-
-  /**
-   * Address type like primary, work, office, etc.
-   */
-  public enum AddressTypeEnum {
-    PRIMARY("PRIMARY"),
-
-    OFFICE("OFFICE"),
-
-    WORK("WORK");
-
-    private String value;
-
-    AddressTypeEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static AddressTypeEnum fromValue(String text) {
-      for (AddressTypeEnum b : AddressTypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
 
   @JsonProperty("addressType")
   private AddressTypeEnum addressType = null;

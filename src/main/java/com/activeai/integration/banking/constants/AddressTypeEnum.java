@@ -1,20 +1,20 @@
 package com.activeai.integration.banking.constants;
 
+import com.activeai.integration.banking.model.Address;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Type of EMAIL ID i.e. PRIMARY/SECONDARY
+ * Address type like primary, office, other etc.
  */
-public enum EmailTypeEnum {
-
+public enum AddressTypeEnum {
   PRIMARY("PRIMARY"),
 
   OFFICE("OFFICE");
 
   private String value;
 
-  EmailTypeEnum(String value) {
+  AddressTypeEnum(String value) {
     this.value = value;
   }
 
@@ -25,13 +25,12 @@ public enum EmailTypeEnum {
   }
 
   @JsonCreator
-  public static EmailTypeEnum fromValue(String text) {
-    for (EmailTypeEnum b : EmailTypeEnum.values()) {
+  public static AddressTypeEnum fromValue(String text) {
+    for (AddressTypeEnum b : AddressTypeEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }
     }
     return null;
   }
-
 }

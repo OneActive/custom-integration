@@ -16,9 +16,6 @@ public class CustomerProfile {
   @JsonProperty("customerId")
   private String customerId = null;
 
-  @JsonProperty("custSegment")
-  private String custSegment = null;
-
   @JsonProperty("firstName")
   private String firstName = null;
 
@@ -32,7 +29,7 @@ public class CustomerProfile {
   private CustomerTitleEnum title = null;
 
   @JsonProperty("address")
-  private Address address = null;
+  private List<Address> address = null;
 
   @JsonProperty("phone")
   @Valid
@@ -41,6 +38,85 @@ public class CustomerProfile {
   @JsonProperty("email")
   @Valid
   private List<Email> email;
+
+  private Integer age;
+
+  @JsonProperty("gender")
+  private String gender;
+
+  public String getGender() {
+    return gender;
+  }
+
+  public void setGender(String gender) {
+    this.gender = gender;
+  }
+
+  /**
+   * Date of Birth of customer
+   */
+  @JsonProperty("DOB")
+  private String DOB;
+
+  @JsonProperty("updatedDate")
+  private String updatedDate;
+
+  @JsonProperty("updatedBy")
+  private String updatedBy;
+
+  @JsonProperty("createdDate")
+  private String createdDate;
+
+  @JsonProperty("createdBy")
+  private String createdBy;
+
+  public Integer getAge() {
+    return age;
+  }
+
+  public void setAge(Integer age) {
+    this.age = age;
+  }
+
+  public String getDOB() {
+    return DOB;
+  }
+
+  public void setDOB(String DOB) {
+    this.DOB = DOB;
+  }
+
+  public String getUpdatedDate() {
+    return updatedDate;
+  }
+
+  public void setUpdatedDate(String updatedDate) {
+    this.updatedDate = updatedDate;
+  }
+
+  public String getUpdatedBy() {
+    return updatedBy;
+  }
+
+  public void setUpdatedBy(String updatedBy) {
+    this.updatedBy = updatedBy;
+  }
+
+  public String getCreatedDate() {
+    return createdDate;
+  }
+
+  public void setCreatedDate(String createdDate) {
+    this.createdDate = createdDate;
+  }
+
+  public String getCreatedBy() {
+    return createdBy;
+  }
+
+  public void setCreatedBy(String createdBy) {
+    this.createdBy = createdBy;
+  }
 
   public List<Email> getEmail() {
     return email;
@@ -61,19 +137,6 @@ public class CustomerProfile {
 
   public void setCustomerId(String customerId) {
     this.customerId = customerId;
-  }
-
-  /**
-   * segment id / code of customer
-   *
-   * @return custSegment
-   **/
-  public String getCustSegment() {
-    return custSegment;
-  }
-
-  public void setCustSegment(String custSegment) {
-    this.custSegment = custSegment;
   }
 
   /**
@@ -128,21 +191,16 @@ public class CustomerProfile {
     this.title = title;
   }
 
-  public CustomerProfile address(Address address) {
-    this.address = address;
-    return this;
-  }
-
   /**
    * Get address
    *
    * @return address
    **/
-  @Valid public Address getAddress() {
+  @Valid public List<Address> getAddress() {
     return address;
   }
 
-  public void setAddress(Address address) {
+  public void setAddress(List<Address> address) {
     this.address = address;
   }
 
@@ -167,14 +225,14 @@ public class CustomerProfile {
       return false;
     }
     CustomerProfile customerProfile = (CustomerProfile) o;
-    return Objects.equals(this.customerId, customerProfile.customerId) && Objects.equals(this.custSegment, customerProfile.custSegment) && Objects
+    return Objects.equals(this.customerId, customerProfile.customerId) && Objects
         .equals(this.firstName, customerProfile.firstName) && Objects.equals(this.lastName, customerProfile.lastName) && Objects
         .equals(this.middleName, customerProfile.middleName) && Objects.equals(this.title, customerProfile.title) && Objects
         .equals(this.address, customerProfile.address) && Objects.equals(this.phone, customerProfile.phone);
   }
 
   @Override public int hashCode() {
-    return Objects.hash(customerId, custSegment, firstName, lastName, middleName, title, address, phone);
+    return Objects.hash(customerId, firstName, lastName, middleName, title, address, phone);
   }
 
   @Override public String toString() {
@@ -182,7 +240,6 @@ public class CustomerProfile {
     sb.append("class CustomerProfile {\n");
 
     sb.append("    custId: ").append(toIndentedString(customerId)).append("\n");
-    sb.append("    custSegment: ").append(toIndentedString(custSegment)).append("\n");
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
     sb.append("    middleName: ").append(toIndentedString(middleName)).append("\n");
