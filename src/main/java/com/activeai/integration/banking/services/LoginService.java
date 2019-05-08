@@ -46,7 +46,8 @@ public class LoginService {
       if (userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))) {
         try {
           HttpResponse<String> response =
-              Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,null,null)).header("Content-Type", "application/json")
+              Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,null,null))
+                  .header("Content-Type", "application/json")
                   .body(loginRequestMapper.getLoginRequestBody(userLoginRequest)).asString();
           ApplicationLogger
               .logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());

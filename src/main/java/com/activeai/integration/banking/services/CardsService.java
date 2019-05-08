@@ -93,7 +93,7 @@ public class CardsService {
     CardDetailResponse cardDetailResponse = null;
     try {
       HttpResponse<String> response =
-          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CARD_DETAILS_API_END_POINT, customerId, cardId)).header("cache-control", "no-cache").asString();
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CARD_BALANCE_API_END_POINT, customerId, cardId)).header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
         ApplicationLogger.logInfo("Card Details Response Body Before Transformation :" + response.getBody());
