@@ -42,7 +42,7 @@ public class LoginService {
     try {
       Map<String, String> auth = new HashMap<>();
       LoginResponse loginResponse = null;
-      auth.put("michael", "mic@123");
+      auth.put("stuart", "stuart@123");
       if (userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))) {
         try {
           HttpResponse<String> response =
@@ -65,11 +65,13 @@ public class LoginService {
         } catch (Exception e) {
           ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
         }
-        return new ResponseEntity<>(loginResponse, HttpStatus.EXPECTATION_FAILED);
+        return new ResponseEntity<>(objectMapper.readValue(
+            "{  \"result\" : {    \"messageCode\" : \"EXPECTATION_FAILED\",    \"message\" : \"Expectation Failed Please Contact administrator\",    \"status\" : 417  }}",
+            LoginResponse.class), HttpStatus.OK);
       } else {
         return new ResponseEntity<>(objectMapper.readValue(
-            "{  \"result\" : {    \"messageCode\" : \"FAILURE\",    \"message\" : \"UserId or password is wrong!\",    \"status\" : 401  }}",
-            LoginResponse.class), HttpStatus.UNAUTHORIZED);
+            "{  \"result\" : {    \"messageCode\" : \"UNAUTHORIZED\",    \"message\" : \"UserId or password is wrong!\",    \"status\" : 401  }}",
+            LoginResponse.class), HttpStatus.OK);
       }
     } catch (IOException e) {
       ApplicationLogger.logInfo("Couldn't serialize response for content type application/json", e);
