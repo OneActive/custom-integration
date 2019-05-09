@@ -1,70 +1,21 @@
 package com.activeai.integration.banking.domain.response;
 
 import com.activeai.integration.banking.model.Result;
+import com.activeai.integration.banking.model.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
-public class LoginResponse{
+public class LoginResponse {
 
   @JsonProperty("result")
   private Result result = null;
 
-  @NotNull
-  @JsonProperty("customerId")
-  private String customerId;
+  @JsonProperty("user")
+  private User user;
 
-  @JsonProperty("customerName")
-  private String customerName;
-
-  @JsonProperty("mobileNumber")
-  private String mobileNumber;
-
-  @JsonProperty("emailId")
-  private String emailId;
-
-  @JsonProperty("address")
-  private String address;
-
-  public String getEmailId() {
-    return emailId;
-  }
-
-  public void setEmailId(String emailId) {
-    this.emailId = emailId;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getMobileNumber() {
-    return mobileNumber;
-  }
-
-  public void setMobileNumber(String mobileNumber) {
-    this.mobileNumber = mobileNumber;
-  }
-
-  public String getCustomerName() {
-    return customerName;
-  }
-
-  public void setCustomerName(String customerName) {
-    this.customerName = customerName;
-  }
-
-  public String getCustomerId() {
-    return customerId;
-  }
-
-  public void setCustomerId(String customerId) {
-    this.customerId = customerId;
-  }
+  @JsonProperty("customerSegments")
+  private List<String> customerSegments;
 
   public Result getResult() {
     return result;
@@ -72,5 +23,30 @@ public class LoginResponse{
 
   public void setResult(Result result) {
     this.result = result;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public List<String> getCustomerSegments() {
+    return customerSegments;
+  }
+
+  public void setCustomerSegments(List<String> customerSegments) {
+    this.customerSegments = customerSegments;
+  }
+
+  @Override public String toString() {
+    final StringBuffer sb = new StringBuffer("LoginResponse{");
+    sb.append("result=").append(result);
+    sb.append(", user=").append(user);
+    sb.append(", customerSegments=").append(customerSegments);
+    sb.append('}');
+    return sb.toString();
   }
 }

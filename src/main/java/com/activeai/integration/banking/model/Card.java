@@ -101,6 +101,28 @@ public class Card {
   @JsonProperty("branchAddress")
   private String branchAddress;
 
+  @JsonProperty("outStandingAmount")
+  private Double outStandingAmount;
+
+  @JsonProperty("cardHolderName")
+  private String cardHolderName;
+
+  public String getCardHolderName() {
+    return cardHolderName;
+  }
+
+  public void setCardHolderName(String cardHolderName) {
+    this.cardHolderName = cardHolderName;
+  }
+
+  public Double getOutStandingAmount() {
+    return outStandingAmount;
+  }
+
+  public void setOutStandingAmount(Double outStandingAmount) {
+    this.outStandingAmount = outStandingAmount;
+  }
+
   public String getBranchAddress() {
     return branchAddress;
   }
