@@ -13,4 +13,13 @@ public class BillPaymentResponseMapper {
     public static String getManipulatedRegisteredBillerResponse(String apiResponseBody) {
         return apiResponseBody;
     }
+
+    /**
+     * In this method you can change the obtained string accordingly to the BillDueAmountResponse
+     * @param apiResponseBody
+     * @return String of BillDueAmountResponse
+     */
+    public static String getManipulatedBillerDetailsResponse(String apiResponseBody) {
+        return apiResponseBody;
+    }
 }
