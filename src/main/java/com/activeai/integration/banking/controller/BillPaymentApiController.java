@@ -57,24 +57,24 @@ public class BillPaymentApiController {
 
   @ApiOperation(value = "Returns list of Registered Billers based on customerId")
   @RequestMapping(value = "/{customerId}/billers", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<BillerResponse> getRegisteredBillerListForCustomer(@RequestParam(value = "categoryId", required = false) Integer categoryId,@PathVariable(name = "customerId", required = true) String customerId) {
+  public ResponseEntity<BillerResponse> getRegisteredBillerListForCustomer(@PathVariable(name = "customerId", required = true) String customerId) {
     ApplicationLogger.logInfo("Entering getRegisteredBillers API");
     return billpaymentService.getRegisteredBillerResponseEntity(customerId);
   }
 
   @ApiOperation(value = "Returns Biller Details of Biller based on customerId")
   @RequestMapping(value = "/{customerId}/billers/{billerId}", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<BillerResponse> getBillerDetialsofBiller(@RequestParam(value = "categoryId", required = false) Integer categoryId,@PathVariable(name = "customerId", required = true) String customerId,@PathVariable(name = "billerId", required = true) String billerId) {
+  public ResponseEntity<BillerResponse> getBillerDetialsofBiller(@PathVariable(name = "customerId", required = true) String customerId,@PathVariable(name = "billerId", required = true) String billerId) {
     ApplicationLogger.logInfo("Entering getBillerDetails API");
     return billpaymentService.getBillerDetailsResponseEntity(customerId,billerId);
   }
 
-  /*@ApiOperation(value = "Returns Confirmation of Bill Payment")
+  @ApiOperation(value = "Returns Confirmation of Bill Payment")
   @RequestMapping(value = "/{customerId}/bill/payment/confirm", produces = {"application/json"}, consumes = {"application/json"},
           method = RequestMethod.POST)
   public ResponseEntity<BillPaymentConfirmResponse> confirmBillPayment(@PathVariable(value = "customerId", required = true) String customerId,
                                                                        @RequestBody final BillPaymentRequest billPaymentRequest) {
     ApplicationLogger.logInfo("Entering getBillPaymentConfirm API");
     return billpaymentService.getBillPaymentResponseEntity(billPaymentRequest);
-  }*/
+  }
 }

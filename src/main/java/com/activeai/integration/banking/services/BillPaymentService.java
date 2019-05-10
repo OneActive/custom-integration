@@ -84,17 +84,17 @@ public class BillPaymentService {
         return new ResponseEntity<>(billerDetailsResponse, HttpStatus.EXPECTATION_FAILED);
     }
 
-   /* public ResponseEntity<BillPaymentConfirmResponse> getBillPaymentResponseEntity(BillPaymentRequest billPaymentRequest) {
-        BillerResponse billPaymentConfirmResponse = null;
+    public ResponseEntity<BillPaymentConfirmResponse> getBillPaymentResponseEntity(BillPaymentRequest billPaymentRequest) {
+        BillPaymentConfirmResponse billPaymentConfirmResponse = null;
         try {
             HttpResponse<String> response =
-                    Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.BILL_PAYMENT_CONFIRM_API_ENDPOINT, billPaymentRequest,null )).header("cache-control", "no-cache").asString();
+                    Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.BILL_PAYMENT_CONFIRM_API_ENDPOINT, billPaymentRequest.getCustomerId(),billPaymentRequest.getBillerDetails().getBillerId() )).header("cache-control", "no-cache").asString();
             ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
             if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
                 ApplicationLogger.logInfo("Bill Payment Confirm Response Body Before Transformation :" + response.getBody());
-                String billPaymentConfirmResponseString = billpaymentResponseMapper.getManipulatedBillerDetailsResponse(response.getBody());
+                String billPaymentConfirmResponseString = billpaymentResponseMapper.getManipulatedBillPaymentConfirmResponse(response.getBody());
                 ApplicationLogger.logInfo("Bill Payment Confirm Response Body After Transformation :" + response.getBody());
-                billPaymentConfirmResponse = objectMapper.readValue(billPaymentConfirmResponseString, BillerResponse.class);
+                billPaymentConfirmResponse = objectMapper.readValue(billPaymentConfirmResponseString, BillPaymentConfirmResponse.class);
             }
             return new ResponseEntity<>(billPaymentConfirmResponse, HttpStatus.valueOf(response.getStatus()));
         } catch (UnirestException e) {
@@ -105,5 +105,5 @@ public class BillPaymentService {
             ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
         }
         return new ResponseEntity<>(billPaymentConfirmResponse, HttpStatus.OK);
-    }*/
+    }
 }

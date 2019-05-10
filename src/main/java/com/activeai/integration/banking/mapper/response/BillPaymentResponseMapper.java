@@ -22,4 +22,12 @@ public class BillPaymentResponseMapper {
     public static String getManipulatedBillerDetailsResponse(String apiResponseBody) {
         return apiResponseBody;
     }
+
+    /**
+     * In this method you can change the obtained string accordingly to the BillPaymentConfirmResponse
+     * @param apiResponseBody
+     * @return String of BillPaymentConfirmResponse
+     */
+    public String getManipulatedBillPaymentConfirmResponse(String apiResponseBody  ) {
+    return apiResponseBody;}
 }
