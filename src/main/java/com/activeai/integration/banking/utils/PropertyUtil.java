@@ -1,5 +1,8 @@
 package com.activeai.integration.banking.utils;
 
+import com.activeai.integration.banking.domain.request.FundTransferRequest;
+import com.activeai.integration.banking.domain.request.PayeesRequest;
+import com.activeai.integration.banking.model.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -24,6 +27,22 @@ public class PropertyUtil {
   public String getAPIUrl(String propertyValue, String customerId, String accountId) {
     return StringUtils.isNotEmpty(env.getProperty(MessageFormat.format(APIDoublePropertyPattern, accountId, propertyValue))) ?
         env.getProperty(MessageFormat.format(APIDoublePropertyPattern, accountId, propertyValue)) :
-            env.getProperty( propertyValue);
+        env.getProperty(propertyValue);
+  }
+
+  public String getAPIUrl(String propertyValue, PayeesRequest payeesRequest) {
+    return env.getProperty(propertyValue);
+  }
+
+  public String getAPIUrl(String propertyValue, FundTransferRequest fundTransferRequest) {
+    return env.getProperty(propertyValue);
+  }
+
+  public Result frameErrorResponse(String errorDescription, String errorCode, Integer statusCode){
+    Result result = new Result();
+    result.setStatus(statusCode);
+    result.setMessage(errorDescription);
+    result.setMessageCode(errorCode);
+    return result;
   }
 }

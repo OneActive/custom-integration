@@ -1,14 +1,15 @@
 package com.activeai.integration.banking.domain.request;
 
+import com.activeai.integration.banking.constants.PayeeTypeEnum;
+import com.activeai.integration.banking.model.Phone;
+import com.activeai.integration.banking.model.User;
+
 import java.util.List;
 
-public class FundTransferRequest {
+public class FundTransferRequest extends User {
 
   /** IMPS, RTGS, NEFT. */
   private String type;
-
-  /** Beneficiary of type own, third-party or inter-bank. */
-  private String beneficiaryType;
 
   /**
    * source account to debit from
@@ -29,8 +30,8 @@ public class FundTransferRequest {
   /** transaction remarks if any. */
   private String remarks;
 
-  /** The payee type. */
-  private String payeeType;
+  /** payeeType INTERNAL_DOMESTIC, WALLET or EXTERNAL_DOMESTIC. */
+  private PayeeTypeEnum payeeType;
 
   /** The payee IFSC code. */
   private String payeeIFSCCode;
@@ -54,7 +55,7 @@ public class FundTransferRequest {
   /**
    * In case of Quick transfer, the mobile number to which amount will be credited
    */
-  private String payeeMobileNumber;
+  private Phone payeeMobileNumber;
 
   /**
    * In case of Quick transfer, the emailId to which amount will be credited
@@ -67,14 +68,6 @@ public class FundTransferRequest {
 
   public void setType(String type) {
     this.type = type;
-  }
-
-  public String getBeneficiaryType() {
-    return beneficiaryType;
-  }
-
-  public void setBeneficiaryType(String beneficiaryType) {
-    this.beneficiaryType = beneficiaryType;
   }
 
   public String getSourceAccountId() {
@@ -117,11 +110,11 @@ public class FundTransferRequest {
     this.remarks = remarks;
   }
 
-  public String getPayeeType() {
+  public PayeeTypeEnum getPayeeType() {
     return payeeType;
   }
 
-  public void setPayeeType(String payeeType) {
+  public void setPayeeType(PayeeTypeEnum payeeType) {
     this.payeeType = payeeType;
   }
 
@@ -165,11 +158,11 @@ public class FundTransferRequest {
     this.payeeAccountNumber = payeeAccountNumber;
   }
 
-  public String getPayeeMobileNumber() {
+  public Phone getPayeeMobileNumber() {
     return payeeMobileNumber;
   }
 
-  public void setPayeeMobileNumber(String payeeMobileNumber) {
+  public void setPayeeMobileNumber(Phone payeeMobileNumber) {
     this.payeeMobileNumber = payeeMobileNumber;
   }
 
@@ -179,5 +172,25 @@ public class FundTransferRequest {
 
   public void setPayeeEmailId(String payeeEmailId) {
     this.payeeEmailId = payeeEmailId;
+  }
+
+  @Override public String toString() {
+    final StringBuffer sb = new StringBuffer("FundTransferRequest{");
+    sb.append("type='").append(type).append('\'');
+    sb.append(", sourceAccountId='").append(sourceAccountId).append('\'');
+    sb.append(", amount='").append(amount).append('\'');
+    sb.append(", purpose='").append(purpose).append('\'');
+    sb.append(", payeeId='").append(payeeId).append('\'');
+    sb.append(", remarks='").append(remarks).append('\'');
+    sb.append(", payeeType='").append(payeeType).append('\'');
+    sb.append(", payeeIFSCCode='").append(payeeIFSCCode).append('\'');
+    sb.append(", payeeBankId='").append(payeeBankId).append('\'');
+    sb.append(", payeeBranchId='").append(payeeBranchId).append('\'');
+    sb.append(", payeeAccountId='").append(payeeAccountId).append('\'');
+    sb.append(", payeeAccountNumber='").append(payeeAccountNumber).append('\'');
+    sb.append(", payeeMobileNumber='").append(payeeMobileNumber).append('\'');
+    sb.append(", payeeEmailId='").append(payeeEmailId).append('\'');
+    sb.append('}');
+    return sb.toString();
   }
 }

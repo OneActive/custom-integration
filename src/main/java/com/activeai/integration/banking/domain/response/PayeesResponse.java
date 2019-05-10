@@ -20,8 +20,8 @@ public class PayeesResponse {
   @JsonProperty("result")
   private Result result = null;
 
-  @JsonProperty("payeeDetails")
-  private List<Payee> payeeDetails = null;
+  @JsonProperty("payees")
+  private List<Payee> payees = null;
 
   /**
    * Get result
@@ -38,17 +38,17 @@ public class PayeesResponse {
   }
 
   /**
-   * Get payeeDetails
+   * Get payees
    * 
-   * @return payeeDetails
+   * @return payees
    **/
   @Valid
-  public List<Payee> getPayeeDetails() {
-    return payeeDetails;
+  public List<Payee> getPayees() {
+    return payees;
   }
 
-  public void setPayeeDetails(List<Payee> payeeDetails) {
-    this.payeeDetails = payeeDetails;
+  public void setPayees(List<Payee> payees) {
+    this.payees = payees;
   }
 
   @Override
@@ -60,12 +60,12 @@ public class PayeesResponse {
       return false;
     }
     PayeesResponse payeesResponse = (PayeesResponse) o;
-    return Objects.equals(this.result, payeesResponse.result) && Objects.equals(this.payeeDetails, payeesResponse.payeeDetails);
+    return Objects.equals(this.result, payeesResponse.result) && Objects.equals(this.payees, payeesResponse.payees);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(result, payeeDetails);
+    return Objects.hash(result, payees);
   }
 
   @Override
@@ -74,7 +74,7 @@ public class PayeesResponse {
     sb.append("class PayeesResponse {\n");
 
     sb.append("    result: ").append(toIndentedString(result)).append("\n");
-    sb.append("    payeeDetails: ").append(toIndentedString(payeeDetails)).append("\n");
+    sb.append("    payees: ").append(toIndentedString(payees)).append("\n");
     sb.append("}");
     return sb.toString();
   }

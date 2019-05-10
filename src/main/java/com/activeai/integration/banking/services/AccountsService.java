@@ -1,5 +1,6 @@
 package com.activeai.integration.banking.services;
 
+import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.mapper.response.AccountsResponseMapper;
 import com.activeai.integration.banking.domain.response.AccountBalanceResponse;
@@ -39,7 +40,7 @@ public class AccountsService {
    * @return ResponseEntity of type AccountsResponse
    */
   public ResponseEntity<AccountsResponse> getAccountsResponseEntity(String customerId) {
-    AccountsResponse accountsResponse = null;
+    AccountsResponse accountsResponse = new AccountsResponse();
     try {
       HttpResponse<String> response =
           Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNTS_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
@@ -50,7 +51,7 @@ public class AccountsService {
         ApplicationLogger.logInfo("Accounts Response Body After Transformation :" + response.getBody());
         accountsResponse = objectMapper.readValue(accountsResponseString, AccountsResponse.class);
       }
-      return new ResponseEntity<>(accountsResponse, HttpStatus.valueOf(response.getStatus()));
+      return ResponseEntity.ok(accountsResponse);
     } catch (UnirestException e) {
       ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
     } catch (IOException e) {
@@ -58,7 +59,8 @@ public class AccountsService {
     } catch (Exception e) {
       ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
     }
-    return new ResponseEntity<>(accountsResponse, HttpStatus.EXPECTATION_FAILED);
+    accountsResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(accountsResponse);
   }
 
   /**
@@ -68,7 +70,7 @@ public class AccountsService {
    * @return ResponseEntity of type AccountDetailResponse
    */
   public ResponseEntity<AccountDetailResponse> getAccountDetailsResponseEntity(String customerId, String accountId) {
-    AccountDetailResponse accountsResponse = null;
+    AccountDetailResponse accountDetailsResponse = new AccountDetailResponse();
     try {
       HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNT_DETAILS_API_END_POINT, customerId, accountId))
           .header("cache-control", "no-cache").asString();
@@ -77,9 +79,9 @@ public class AccountsService {
         ApplicationLogger.logInfo("Account Details Response Body Before Transformation :" + response.getBody());
         String accountDetailResponseString = accountsResponseMapper.getManipulatedAccountDetailsResponse(response.getBody());
         ApplicationLogger.logInfo("Account Details Response Body After Transformation :" + response.getBody());
-        accountsResponse = objectMapper.readValue(accountDetailResponseString, AccountDetailResponse.class);
+        accountDetailsResponse = objectMapper.readValue(accountDetailResponseString, AccountDetailResponse.class);
       }
-      return new ResponseEntity<>(accountsResponse, HttpStatus.valueOf(response.getStatus()));
+      return ResponseEntity.ok(accountDetailsResponse);
     } catch (UnirestException e) {
       ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
     } catch (IOException e) {
@@ -87,7 +89,8 @@ public class AccountsService {
     } catch (Exception e) {
       ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
     }
-    return new ResponseEntity<>(accountsResponse, HttpStatus.EXPECTATION_FAILED);
+    accountDetailsResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(accountDetailsResponse);
   }
 
   /**
@@ -97,7 +100,7 @@ public class AccountsService {
    * @return ResponseEntity of type AccountBalanceResponse
    */
   public ResponseEntity<AccountBalanceResponse> getAccountBalanceResponseEntity(String customerId, String accountId) {
-    AccountBalanceResponse accountBalanceResponse = null;
+    AccountBalanceResponse accountBalanceResponse = new AccountBalanceResponse();
     try {
       HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNT_BALANCE_API_END_POINT, customerId, accountId))
           .header("cache-control", "no-cache").asString();
@@ -108,7 +111,7 @@ public class AccountsService {
         ApplicationLogger.logInfo("Account Balance Response Body After Transformation :" + response.getBody());
         accountBalanceResponse = objectMapper.readValue(accountDetailResponseString, AccountBalanceResponse.class);
       }
-      return new ResponseEntity<>(accountBalanceResponse, HttpStatus.valueOf(response.getStatus()));
+      return ResponseEntity.ok(accountBalanceResponse);
     } catch (UnirestException e) {
       ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
     } catch (IOException e) {
@@ -116,7 +119,8 @@ public class AccountsService {
     } catch (Exception e) {
       ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
     }
-    return new ResponseEntity<>(accountBalanceResponse, HttpStatus.EXPECTATION_FAILED);
+    accountBalanceResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(accountBalanceResponse);
   }
 
   /**
@@ -126,7 +130,7 @@ public class AccountsService {
    * @return ResponseEntity of type AccountTransactionsResponse
    */
   public ResponseEntity<AccountTransactionsResponse> getAccountTransactionsResponseEntity(String customerId, String accountId) {
-    AccountTransactionsResponse accountTransactionsResponse = null;
+    AccountTransactionsResponse accountTransactionsResponse = new AccountTransactionsResponse();
     try {
       HttpResponse<String> response =
           Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNT_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))
@@ -138,7 +142,7 @@ public class AccountsService {
         ApplicationLogger.logInfo("Account Transactions Response Body After Transformation :" + response.getBody());
         accountTransactionsResponse = objectMapper.readValue(accountTransactionsResponseString, AccountTransactionsResponse.class);
       }
-      return new ResponseEntity<>(accountTransactionsResponse, HttpStatus.valueOf(response.getStatus()));
+      return ResponseEntity.ok(accountTransactionsResponse);
     } catch (UnirestException e) {
       ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
     } catch (IOException e) {
@@ -146,7 +150,8 @@ public class AccountsService {
     } catch (Exception e) {
       ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
     }
-    return new ResponseEntity<>(accountTransactionsResponse, HttpStatus.EXPECTATION_FAILED);
+    accountTransactionsResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(accountTransactionsResponse);
   }
 
 }

@@ -2,26 +2,16 @@ package com.activeai.integration.banking.constants;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.common.annotations.Beta;
 
+public enum StatusEnum {
 
-/**
- * account status - active, inactive
- */
-public enum PayeeTypeEnum {
-  INTERNAL_DOMESTIC("INTERNAL_DOMESTIC"),
-
-  EXTERNAL_DOMESTIC("EXTERNAL_DOMESTIC"),
-
-  /**
-   * will support soon
-   */
-  @Beta
-  WALLET("WALLET");
+  SUCCESS("SUCCESS"),
+  FAILURE("FAILURE"),
+  PENDING("PENDING");
 
   private String value;
 
-  PayeeTypeEnum(String value) {
+  StatusEnum(String value) {
     this.value = value;
   }
 
@@ -32,8 +22,8 @@ public enum PayeeTypeEnum {
   }
 
   @JsonCreator
-  public static PayeeTypeEnum fromValue(String text) {
-    for (PayeeTypeEnum b : PayeeTypeEnum.values()) {
+  public static StatusEnum fromValue(String text) {
+    for (StatusEnum b : StatusEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }

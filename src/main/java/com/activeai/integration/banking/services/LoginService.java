@@ -1,10 +1,11 @@
 package com.activeai.integration.banking.services;
 
+import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.request.UserLoginRequest;
+import com.activeai.integration.banking.domain.response.LoginResponse;
 import com.activeai.integration.banking.mapper.request.LoginRequestMapper;
 import com.activeai.integration.banking.mapper.response.LoginResponseMapper;
-import com.activeai.integration.banking.domain.response.LoginResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,7 +42,7 @@ public class LoginService {
     ResponseEntity<LoginResponse> loginResponseEntity = null;
     try {
       Map<String, String> auth = new HashMap<>();
-      LoginResponse loginResponse = null;
+      LoginResponse loginResponse = new LoginResponse();
       auth.put("stuart", "stuart@123");
       if (userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))) {
         try {
@@ -57,7 +58,7 @@ public class LoginService {
             ApplicationLogger.logInfo("Login Response Body After Transformation :" + response.getBody());
             loginResponse = objectMapper.readValue(cardsResponseString, LoginResponse.class);
           }
-          return new ResponseEntity<>(loginResponse, HttpStatus.valueOf(response.getStatus()));
+          return ResponseEntity.ok(loginResponse);
         } catch (UnirestException e) {
           ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
         } catch (IOException e) {
@@ -69,9 +70,8 @@ public class LoginService {
             "{  \"result\" : {    \"messageCode\" : \"EXPECTATION_FAILED\",    \"message\" : \"Expectation Failed Please Contact administrator\",    \"status\" : 417  }}",
             LoginResponse.class), HttpStatus.OK);
       } else {
-        return new ResponseEntity<>(objectMapper.readValue(
-            "{  \"result\" : {    \"messageCode\" : \"UNAUTHORIZED\",    \"message\" : \"UserId or password is wrong!\",    \"status\" : 401  }}",
-            LoginResponse.class), HttpStatus.OK);
+        loginResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.WRONG_USERNAME_OR_PASSWORD,"UNAUTHORISED",401));
+        return ResponseEntity.ok(loginResponse);
       }
     } catch (IOException e) {
       ApplicationLogger.logInfo("Couldn't serialize response for content type application/json", e);

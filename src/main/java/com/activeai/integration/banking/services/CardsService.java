@@ -1,5 +1,6 @@
 package com.activeai.integration.banking.services;
 
+import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.response.CardDetailResponse;
 import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
@@ -34,7 +35,7 @@ public class CardsService {
    * @return ResponseEntity of type AccountsResponse
    */
   public ResponseEntity<CardsResponse> getCardsResponseEntity(String customerId) {
-    CardsResponse cardsResponse = null;
+    CardsResponse cardsResponse = new CardsResponse();
     try {
       HttpResponse<String> response =
           Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CARDS_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
@@ -53,7 +54,8 @@ public class CardsService {
     } catch (Exception e) {
       ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
     }
-    return new ResponseEntity<>(cardsResponse, HttpStatus.EXPECTATION_FAILED);
+    cardsResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(cardsResponse);
   }
 
   /**
@@ -73,7 +75,7 @@ public class CardsService {
         ApplicationLogger.logInfo("Card Details Response Body After Transformation :" + response.getBody());
         cardDetailResponse = objectMapper.readValue(cardDetailsResponseString, CardDetailResponse.class);
       }
-      return new ResponseEntity<>(cardDetailResponse, HttpStatus.valueOf(response.getStatus()));
+      return ResponseEntity.ok(cardDetailResponse);
     } catch (UnirestException e) {
       ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
     } catch (IOException e) {
@@ -81,7 +83,8 @@ public class CardsService {
     } catch (Exception e) {
       ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
     }
-    return new ResponseEntity<>(cardDetailResponse, HttpStatus.EXPECTATION_FAILED);
+    cardDetailResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(cardDetailResponse);
   }
 
   /**
@@ -101,7 +104,7 @@ public class CardsService {
         ApplicationLogger.logInfo("Card Details Response Body After Transformation :" + response.getBody());
         cardDetailResponse = objectMapper.readValue(cardDetailsResponseString, CardDetailResponse.class);
       }
-      return new ResponseEntity<>(cardDetailResponse, HttpStatus.valueOf(response.getStatus()));
+      return ResponseEntity.ok(cardDetailResponse);
     } catch (UnirestException e) {
       ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
     } catch (IOException e) {
@@ -109,7 +112,8 @@ public class CardsService {
     } catch (Exception e) {
       ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
     }
-    return new ResponseEntity<>(cardDetailResponse, HttpStatus.EXPECTATION_FAILED);
+    cardDetailResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(cardDetailResponse);
   }
 
   /**
@@ -131,7 +135,7 @@ public class CardsService {
         ApplicationLogger.logInfo("Card Transactions Response Body After Transformation :" + response.getBody());
         cardTransactionsResponse = objectMapper.readValue(accountTransactionsResponseString, CardTransactionsResponse.class);
       }
-      return new ResponseEntity<>(cardTransactionsResponse, HttpStatus.valueOf(response.getStatus()));
+      return ResponseEntity.ok(cardTransactionsResponse);
     } catch (UnirestException e) {
       ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
     } catch (IOException e) {
@@ -139,7 +143,8 @@ public class CardsService {
     } catch (Exception e) {
       ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
     }
-    return new ResponseEntity<>(cardTransactionsResponse, HttpStatus.EXPECTATION_FAILED);
+    cardTransactionsResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(cardTransactionsResponse);
   }
 
   /**
@@ -149,7 +154,7 @@ public class CardsService {
    * @return ResponseEntity of type AccountTransactionsResponse
    */
   public ResponseEntity<CardDetailResponse> getBlockCardDetailsResponseEntity(String customerId, String accountId) {
-    CardDetailResponse cardDetailResponse = null;
+    CardDetailResponse cardDetailResponse = new CardDetailResponse();
     try {
       HttpResponse<String> response =
           Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.BLOCK_CARD_DETAILS_API_END_POINT, customerId, accountId))
@@ -161,7 +166,7 @@ public class CardsService {
         ApplicationLogger.logInfo("Card Transactions Response Body After Transformation :" + response.getBody());
         cardDetailResponse = objectMapper.readValue(accountTransactionsResponseString, CardDetailResponse.class);
       }
-      return new ResponseEntity<>(cardDetailResponse, HttpStatus.valueOf(response.getStatus()));
+      return ResponseEntity.ok(cardDetailResponse);
     } catch (UnirestException e) {
       ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
     } catch (IOException e) {
@@ -169,7 +174,8 @@ public class CardsService {
     } catch (Exception e) {
       ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
     }
-    return new ResponseEntity<>(cardDetailResponse, HttpStatus.EXPECTATION_FAILED);
+    cardDetailResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(cardDetailResponse);
   }
 
 }
