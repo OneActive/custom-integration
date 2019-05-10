@@ -1,7 +1,7 @@
 package com.activeai.integration.banking.controller;
 
 import com.activeai.integration.banking.domain.request.BillPaymentRequest;
-import com.activeai.integration.banking.domain.response.BillPaymentConfirmResponse;
+import com.activeai.integration.banking.domain.response.BillPaymentResponse;
 import com.activeai.integration.banking.domain.response.BillerCategoriesResponse;
 import com.activeai.integration.banking.domain.response.BillerResponse;
 import com.activeai.integration.banking.services.BillPaymentService;
@@ -72,7 +72,7 @@ public class BillPaymentApiController {
   @ApiOperation(value = "Returns Confirmation of Bill Payment")
   @RequestMapping(value = "/{customerId}/bill/payment/confirm", produces = {"application/json"}, consumes = {"application/json"},
           method = RequestMethod.POST)
-  public ResponseEntity<BillPaymentConfirmResponse> confirmBillPayment(@PathVariable(value = "customerId", required = true) String customerId,
+  public ResponseEntity<BillPaymentResponse> confirmBillPayment(@PathVariable(value = "customerId", required = true) String customerId,
                                                                        @RequestBody final BillPaymentRequest billPaymentRequest) {
     ApplicationLogger.logInfo("Entering getBillPaymentConfirm API");
     return billpaymentService.getBillPaymentResponseEntity(billPaymentRequest);

@@ -24,10 +24,10 @@ public class BillPaymentResponseMapper {
     }
 
     /**
-     * In this method you can change the obtained string accordingly to the BillPaymentConfirmResponse
+     * In this method you can change the obtained string accordingly to the BillPaymentResponse
      * @param apiResponseBody
-     * @return String of BillPaymentConfirmResponse
+     * @return String of BillPaymentResponse
      */
-    public String getManipulatedBillPaymentConfirmResponse(String apiResponseBody  ) {
+    public String getManipulatedBillPaymentResponse(String apiResponseBody  ) {
     return apiResponseBody;}
 }

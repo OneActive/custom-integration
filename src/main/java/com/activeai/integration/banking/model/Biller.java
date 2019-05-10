@@ -59,6 +59,16 @@ public class Biller {
   @JsonProperty("lastStatementBalance")
   private Double lastStatementBalance;
 
+  @JsonProperty("billerType")
+  private String billerType;
+
+  @JsonProperty("billerPresence")
+  private String billerPresence;
+
+  @JsonProperty("paymentAllowedPostdueDate")
+  private String paymentAllowedPostdueDate;
+
+
   public Double getLastStatementBalance() {
     return lastStatementBalance;
   }
@@ -256,6 +266,30 @@ public class Biller {
   }
 
 
+  public String getBillerType() {
+    return billerType;
+  }
+
+  public void setBillerType(String billerType) {
+    this.billerType = billerType;
+  }
+
+  public String getBillerPresence() {
+    return billerPresence;
+  }
+
+  public void setBillerPresence(String billerPresence) {
+    this.billerPresence = billerPresence;
+  }
+
+  public String getPaymentAllowedPostdueDate() {
+    return paymentAllowedPostdueDate;
+  }
+
+  public void setPaymentAllowedPostdueDate(String paymentAllowedPostdueDate) {
+    this.paymentAllowedPostdueDate = paymentAllowedPostdueDate;
+  }
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -286,12 +320,16 @@ public class Biller {
     sb.append("    dueAmount: ").append(toIndentedString(dueAmount)).append("\n");
     sb.append("    userIdentityInputs: ").append(toIndentedString(userIdentityInputs)).append("\n");
     sb.append("    allowPartialPay: ").append(toIndentedString(partialPayment)).append("\n");
-    sb.append("    allowPartialPay: ").append(toIndentedString(authenticators)).append("\n");
-    sb.append("    allowPartialPay: ").append(toIndentedString(billDueDate)).append("\n");
-    sb.append("    allowPartialPay: ").append(toIndentedString(billDate)).append("\n");
-    sb.append("    allowPartialPay: ").append(toIndentedString(billNumber)).append("\n");
-    sb.append("    allowPartialPay: ").append(toIndentedString(fillers)).append("\n");
+    sb.append("    authenticators: ").append(toIndentedString(authenticators)).append("\n");
+    sb.append("    billDueDate: ").append(toIndentedString(billDueDate)).append("\n");
+    sb.append("    billDate: ").append(toIndentedString(billDate)).append("\n");
+    sb.append("    billNumber: ").append(toIndentedString(billNumber)).append("\n");
+    sb.append("    fillers: ").append(toIndentedString(fillers)).append("\n");
     sb.append("    lastStatementBalance: ").append(toIndentedString(lastStatementBalance)).append("\n");
+    sb.append("    billerType: ").append(toIndentedString(billerType)).append("\n");
+    sb.append("    billerPresence: ").append(toIndentedString(billerPresence)).append("\n");
+    sb.append("    paymentAllowedPostdueDate: ").append(toIndentedString(paymentAllowedPostdueDate)).append("\n");
+
     sb.append("}");
     return sb.toString();
   }
