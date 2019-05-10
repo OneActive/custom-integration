@@ -2,7 +2,7 @@ package com.activeai.integration.banking.services;
 
 import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.request.BillPaymentRequest;
-import com.activeai.integration.banking.domain.response.BillPaymentConfirmResponse;
+import com.activeai.integration.banking.domain.response.BillPaymentResponse;
 import com.activeai.integration.banking.mapper.response.BillPaymentResponseMapper;
 import com.activeai.integration.banking.domain.response.BillerResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
@@ -84,19 +84,19 @@ public class BillPaymentService {
         return new ResponseEntity<>(billerDetailsResponse, HttpStatus.EXPECTATION_FAILED);
     }
 
-   /* public ResponseEntity<BillPaymentConfirmResponse> getBillPaymentResponseEntity(BillPaymentRequest billPaymentRequest) {
-        BillerResponse billPaymentConfirmResponse = null;
+    public ResponseEntity<BillPaymentResponse> getBillPaymentResponseEntity(BillPaymentRequest billPaymentRequest) {
+        BillPaymentResponse billPaymentResponse = null;
         try {
             HttpResponse<String> response =
-                    Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.BILL_PAYMENT_CONFIRM_API_ENDPOINT, billPaymentRequest,null )).header("cache-control", "no-cache").asString();
+                    Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.BILL_PAYMENT_API_ENDPOINT, billPaymentRequest.getCustomerId(), billPaymentRequest.getBillerDetails().getBillerId() )).header("cache-control", "no-cache").asString();
             ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
             if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
                 ApplicationLogger.logInfo("Bill Payment Confirm Response Body Before Transformation :" + response.getBody());
-                String billPaymentConfirmResponseString = billpaymentResponseMapper.getManipulatedBillerDetailsResponse(response.getBody());
+                String billPaymentResponseString = billpaymentResponseMapper.getManipulatedBillPaymentResponse(response.getBody());
                 ApplicationLogger.logInfo("Bill Payment Confirm Response Body After Transformation :" + response.getBody());
-                billPaymentConfirmResponse = objectMapper.readValue(billPaymentConfirmResponseString, BillerResponse.class);
+                billPaymentResponse = objectMapper.readValue(billPaymentResponseString, BillPaymentResponse.class);
             }
-            return new ResponseEntity<>(billPaymentConfirmResponse, HttpStatus.valueOf(response.getStatus()));
+            return new ResponseEntity<>(billPaymentResponse, HttpStatus.valueOf(response.getStatus()));
         } catch (UnirestException e) {
             ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
         } catch (IOException e) {
@@ -104,6 +104,6 @@ public class BillPaymentService {
         } catch (Exception e) {
             ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
         }
-        return new ResponseEntity<>(billPaymentConfirmResponse, HttpStatus.OK);
-    }*/
+        return new ResponseEntity<>(billPaymentResponse, HttpStatus.OK);
+    }
 }
