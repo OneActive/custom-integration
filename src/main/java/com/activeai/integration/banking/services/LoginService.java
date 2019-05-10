@@ -47,7 +47,7 @@ public class LoginService {
       if (userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))) {
         try {
           HttpResponse<String> response =
-              Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,null,null))
+              Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,userLoginRequest.getUserID(),null))
                   .header("Content-Type", "application/json")
                   .body(loginRequestMapper.getLoginRequestBody(userLoginRequest)).asString();
           ApplicationLogger
@@ -67,7 +67,7 @@ public class LoginService {
           ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
         }
         return new ResponseEntity<>(objectMapper.readValue(
-            "{  \"result\" : {    \"messageCode\" : \"EXPECTATION_FAILED\",    \"message\" : \"Expectation Failed Please Contact administrator\",    \"status\" : 417  }}",
+            "{  \"result\" : {    \"messageCode\" : \"EXPECTATION_FAILED\",    \"message\" : \"Application is Down!, Please Contact administrator\",    \"status\" : 417  }}",
             LoginResponse.class), HttpStatus.OK);
       } else {
         loginResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.WRONG_USERNAME_OR_PASSWORD,"UNAUTHORISED",401));
