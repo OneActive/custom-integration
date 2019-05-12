@@ -34,7 +34,7 @@ public class LoginService {
 
   /**
    * Customise this based on your Use case
-   *
+   * In first phase if you have customer profile separate API call inside this and map response accordingly here
    * @param userLoginRequest
    * @return
    */
@@ -55,6 +55,9 @@ public class LoginService {
           if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
             ApplicationLogger.logInfo("Login Response Body Before Transformation :" + response.getBody());
             String cardsResponseString = loginResponseMapper.getManipulatedLoginResponse(response.getBody());
+
+            //Here you can call customer profile API and merge the response to login
+
             ApplicationLogger.logInfo("Login Response Body After Transformation :" + response.getBody());
             loginResponse = objectMapper.readValue(cardsResponseString, LoginResponse.class);
           }
