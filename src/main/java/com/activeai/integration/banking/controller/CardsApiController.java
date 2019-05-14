@@ -34,7 +34,6 @@ public class CardsApiController {
 
   private static final Logger logger = LoggerFactory.getLogger(CardsApiController.class);
 
-  // TODO : Populate stub card list
   @ApiOperation(value = "Returns list of cards based on customer ID")
   @RequestMapping(value = "/{customerId}/cards", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardsResponse> getCards(@PathVariable(value = "customerId", required = true) String customerId) {

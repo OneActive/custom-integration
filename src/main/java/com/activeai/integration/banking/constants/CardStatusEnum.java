@@ -7,18 +7,33 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Account status dormant / active / closed / blocker
  */
 public enum CardStatusEnum {
+  /** Issued. */
+  ISSUED("ISSUED"),
+  /** Not Issued. */
+  NOT_ISSUED("NOT_ISSUED"),
+  /** The active. */
   ACTIVE("ACTIVE"),
-
-  INACTIVE("INACTIVE"),
-
+  /** The Blocked. */
+  BLOCKED_TEMPORARY("BLOCKED_TEMPORARY"),
+  /** The Hot. */
+  BLOCKED_PERMANENT("BLOCKED_PERMANENT"),
+  /** The Expired. */
+  EXPIRED("EXPIRED"),
+  /** The Cancelled. */
+  CANCELLED("CANCELLED"),
+  /** Closed */
   CLOSED("CLOSED"),
-
-  BLOCKED("BLOCKED");
+  /** Unkown. */
+  UNKNOWN("UNKNOWN");
 
   private String value;
 
   CardStatusEnum(String value) {
     this.value = value;
+  }
+
+  CardStatusEnum() {
+
   }
 
   @Override

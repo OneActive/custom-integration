@@ -9,9 +9,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum CardTypeEnum {
   CREDIT("CREDIT"),
 
-  DEBIT("DEBIT"),
-
-  FOREX("FOREX");
+  DEBIT("DEBIT");
 
   private String value;
 
