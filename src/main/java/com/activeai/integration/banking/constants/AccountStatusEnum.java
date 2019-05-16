@@ -8,11 +8,22 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 
 public enum AccountStatusEnum {
+  /** The new account. */
+  NEW_ACCOUNT("NEW_ACCOUNT"),
+  /** The active. */
   ACTIVE("ACTIVE"),
-
-  INACTIVE("INACTIVE"),
-
-  CLOSED("CLOSED");
+  /** The closed. */
+  CLOSED("CLOSED"),
+  /** The dormant. */
+  DORMANT("CLOSED"),
+  /** The no debit. */
+  NO_DEBIT("NO_DEBIT"),
+  /** The no credit. */
+  NO_CREDIT("NO_CREDIT"),
+  /** The unknown. */
+  UNKNOWN("UNKNOWN"),
+  /** The open. */
+  OPEN("OPEN");
 
   private String value;
 

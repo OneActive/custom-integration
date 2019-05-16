@@ -34,7 +34,7 @@ public class LoginService {
 
   /**
    * Customise this based on your Use case
-   *
+   * In first phase if you have customer profile separate API call inside this and map response accordingly here
    * @param userLoginRequest
    * @return
    */
@@ -47,7 +47,7 @@ public class LoginService {
       if (userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))) {
         try {
           HttpResponse<String> response =
-              Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,null,null))
+              Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,userLoginRequest.getUserID(),null))
                   .header("Content-Type", "application/json")
                   .body(loginRequestMapper.getLoginRequestBody(userLoginRequest)).asString();
           ApplicationLogger
@@ -55,6 +55,9 @@ public class LoginService {
           if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
             ApplicationLogger.logInfo("Login Response Body Before Transformation :" + response.getBody());
             String cardsResponseString = loginResponseMapper.getManipulatedLoginResponse(response.getBody());
+
+            //Here you can call customer profile API and merge the response to login
+
             ApplicationLogger.logInfo("Login Response Body After Transformation :" + response.getBody());
             loginResponse = objectMapper.readValue(cardsResponseString, LoginResponse.class);
           }
@@ -67,7 +70,7 @@ public class LoginService {
           ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
         }
         return new ResponseEntity<>(objectMapper.readValue(
-            "{  \"result\" : {    \"messageCode\" : \"EXPECTATION_FAILED\",    \"message\" : \"Expectation Failed Please Contact administrator\",    \"status\" : 417  }}",
+            "{  \"result\" : {    \"messageCode\" : \"EXPECTATION_FAILED\",    \"message\" : \"Application is Down!, Please Contact administrator\",    \"status\" : 417  }}",
             LoginResponse.class), HttpStatus.OK);
       } else {
         loginResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.WRONG_USERNAME_OR_PASSWORD,"UNAUTHORISED",401));

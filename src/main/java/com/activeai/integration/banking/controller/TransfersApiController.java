@@ -25,7 +25,7 @@ public class TransfersApiController {
   @Autowired
   private TransferService transferService;
 
-  @RequestMapping(value = "/{customerId}/transfer/payees", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/transfer/payees", produces = {"application/json"}, consumes = {"application/json"}, method = RequestMethod.POST)
   public ResponseEntity<PayeesResponse> getPayeesList(@Valid @RequestBody final PayeesRequest payeeRequest,@PathVariable(value = "customerId", required = true) Integer customerId) {
     return transferService.getPayeesResponseEntity(payeeRequest);
   }

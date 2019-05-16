@@ -10,7 +10,9 @@ public enum CustomerTitleEnum {
 
   MS_("Ms."),
 
-  MISS_("Miss.");
+  MISS_("Miss."),
+
+  DR_("Dr.");
 
   private String value;
 

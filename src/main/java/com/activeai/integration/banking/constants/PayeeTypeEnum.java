@@ -13,11 +13,7 @@ public enum PayeeTypeEnum {
 
   EXTERNAL_DOMESTIC("EXTERNAL_DOMESTIC"),
 
-  /**
-   * will support soon
-   */
-  @Beta
-  WALLET("WALLET");
+  SELF("SELF");
 
   private String value;
 

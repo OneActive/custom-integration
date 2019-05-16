@@ -4,6 +4,7 @@ import com.activeai.integration.banking.domain.response.CustomerProfileResponse;
 import com.activeai.integration.banking.services.CustomerProfileService;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.annotations.Beta;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+@Beta
 @Api(value = "Customer Profile Related APIs", description = "Shows API Documentation Regards Customer Profile APIs")
 @RestController
 public class CustomerProfileApiController {
