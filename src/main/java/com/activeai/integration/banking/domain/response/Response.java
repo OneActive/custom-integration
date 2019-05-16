@@ -5,6 +5,7 @@ import java.util.Objects;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import com.activeai.integration.banking.constants.StatusEnum;
 import com.activeai.integration.banking.model.Result;
 import org.springframework.validation.annotation.Validated;
 
@@ -19,18 +20,12 @@ public class Response {
   @JsonProperty("result")
   private Result result = null;
 
-  public Response result(Result result) {
-    this.result = result;
-    return this;
-  }
+  @JsonProperty("referenceId")
+  private String referenceId;
 
-  /**
-   * Get result
-   * 
-   * @return result
-   **/
-  @NotNull
-  @Valid
+  @JsonProperty("status")
+  private StatusEnum status;
+
   public Result getResult() {
     return result;
   }
@@ -39,41 +34,31 @@ public class Response {
     this.result = result;
   }
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Response response = (Response) o;
-    return Objects.equals(this.result, response.result);
+  public String getReferenceId() {
+    return referenceId;
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(result);
+  public void setReferenceId(String referenceId) {
+    this.referenceId = referenceId;
   }
+
+  public StatusEnum getStatus() {
+    return status;
+  }
+
+  public void setStatus(StatusEnum status) {
+    this.status = status;
+  }
+
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Response {\n");
-
-    sb.append("    result: ").append(toIndentedString(result)).append("\n");
-    sb.append("}");
+    final StringBuilder sb = new StringBuilder("Response{");
+    sb.append("result=").append(result);
+    sb.append(", referenceId='").append(referenceId).append('\'');
+    sb.append(", status=").append(status);
+    sb.append('}');
     return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
   }
 }
 

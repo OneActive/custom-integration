@@ -107,6 +107,7 @@ public class Card {
   @JsonProperty("cardHolderName")
   private String cardHolderName;
 
+
   public String getCardHolderName() {
     return cardHolderName;
   }
@@ -557,7 +558,6 @@ public class Card {
     sb.append("    temporaryCreditLimit: ").append(toIndentedString(temporaryCreditLimit)).append("\n");
     sb.append("    permanentCreditLimit: ").append(toIndentedString(permanentCreditLimit)).append("\n");
     sb.append("    lastStatementDate: ").append(toIndentedString(lastStatementDate)).append("\n");
-    sb.append("    lastStatementBalance: ").append(toIndentedString(lastStatementBalance)).append("\n");
     sb.append("}");
     return sb.toString();
   }

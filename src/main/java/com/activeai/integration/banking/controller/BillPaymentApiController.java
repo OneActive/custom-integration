@@ -62,7 +62,7 @@ public class BillPaymentApiController {
     return billpaymentService.getRegisteredBillerResponseEntity(customerId);
   }
 
-  @ApiOperation(value = "Returns Biller Details of Biller based on customerId")
+  @ApiOperation(value = "Returns Biller Details of Biller based on billerId")
   @RequestMapping(value = "/{customerId}/billers/{billerId}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<BillerResponse> getBillerDetialsofBiller(@PathVariable(name = "customerId", required = true) String customerId,@PathVariable(name = "billerId", required = true) String billerId) {
     ApplicationLogger.logInfo("Entering getBillerDetails API");

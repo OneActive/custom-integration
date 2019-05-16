@@ -3,6 +3,9 @@ package com.activeai.integration.banking.controller;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 
+import com.activeai.integration.banking.domain.request.ActivationCardRequest;
+import com.activeai.integration.banking.domain.request.BlockCardRequest;
+import com.activeai.integration.banking.domain.response.*;
 import com.activeai.integration.banking.services.CardsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,16 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.activeai.integration.banking.domain.response.CardDetailResponse;
-import com.activeai.integration.banking.domain.response.CardLimitResponse;
-import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
-import com.activeai.integration.banking.domain.response.CardsResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Api(value = "Cards Related APIs", description = "Shows API Documentation Regards Cards APIs")
@@ -60,13 +55,25 @@ public class CardsApiController {
     return cardsService.getAccountTransactionsResponseEntity(customerId,cardId);
   }
 
-  @ApiOperation("Return selected card blocking status selected card")
+  @ApiOperation("Return selected card blocking status")
   @RequestMapping(value = "/{customerId}/cards/{cardId}/block", produces = {"application/json"}, consumes = {"application/json"},
-      method = RequestMethod.PUT)
-  public ResponseEntity<CardDetailResponse> blockCard(@PathVariable(name = "customerId", required = true) String customerId,
-      @PathVariable(name = "cardId", required = true) String cardId,
-      @RequestParam(value = "blockMode", required = true) String blockMode) {
-    return cardsService.getBlockCardDetailsResponseEntity(customerId,blockMode);
+          method = RequestMethod.POST)
+  public ResponseEntity<BlockCardResponse> blockCard(@PathVariable(name = "customerId", required = true) String customerId,
+                                                     @PathVariable(name = "cardId", required = true) String cardId,
+                                                     @RequestBody  BlockCardRequest blockCardRequest) {
+    logger.info("Entering Blocking Card API");
+    return cardsService.getBlockCardResponseEntity(blockCardRequest);
+  }
+
+
+  @ApiOperation("Return selected card activating status")
+  @RequestMapping(value = "/{customerId}/cards/{cardId}/activation", produces = {"application/json"}, consumes = {"application/json"},
+          method = RequestMethod.POST)
+  public ResponseEntity<ActivationCardResponse> activateCard(@PathVariable(name = "customerId", required = true) String customerId,
+                                                             @PathVariable(name = "cardId", required = true) String cardId,
+                                                             @RequestBody ActivationCardRequest activationCardRequest) {
+    logger.info("Entering Activating Card API ");
+    return cardsService.getActivationCardResponseEntity(activationCardRequest);
   }
 
   @RequestMapping(value = "/{customerId}/cards/{cardId}/overseasUse", produces = {"application/json"}, consumes = {"multipart/form-data"},
