@@ -545,7 +545,7 @@ public class Card {
     sb.append("    cardIssuer: ").append(toIndentedString(cardIssuer)).append("\n");
     sb.append("    branchId: ").append(toIndentedString(branchId)).append("\n");
     sb.append("    branchName: ").append(toIndentedString(branchName)).append("\n");
-    sb.append("    status: ").append(toIndentedString(cardStatus)).append("\n");
+    sb.append("    cardStatus: ").append(toIndentedString(cardStatus)).append("\n");
     sb.append("    overseasCardActivated: ").append(toIndentedString(overseasCardActivated)).append("\n");
     sb.append("    openingBalance: ").append(toIndentedString(openingBalance)).append("\n");
     sb.append("    closingBalance: ").append(toIndentedString(closingBalance)).append("\n");
