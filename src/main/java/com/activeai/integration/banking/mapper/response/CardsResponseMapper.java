@@ -32,12 +32,5 @@ public class CardsResponseMapper {
     return apiResponseBody;
   }
 
-  /**
-   * In this method you can change the obtained string accordingly to the CardDetailsResponse wrt blockCard
-   * @param apiResponseBody
-   * @return String of CardDetailsResponse
-   */
-  public String getManipulatedBlockCardDetailsResponse(String apiResponseBody) {
-    return apiResponseBody;
-  }
+
 }

@@ -37,7 +37,7 @@ public class TransferService {
        * But you need to fetch all payees for each accounts where user added as beneficiary
        */
       HttpResponse<String> response =
-          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.PAYEES_API_END_POINT, payeeRequest))
+          Unirest.get(propertyUtil.getAPIUrlForPayees(PropertyConstants.PAYEES_API_END_POINT, payeeRequest))
               .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
@@ -62,7 +62,7 @@ public class TransferService {
     FundTransferResponse fundTransferResponse = new FundTransferResponse();
     try {
       HttpResponse<String> response =
-          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.TRANSFER_CONFIRM_API_END_POINT, fundTransferRequest.getCustomerId(), fundTransferRequest.getSourceAccountId()))
+          Unirest.get(propertyUtil.getAPIUrlForFundTransfer(PropertyConstants.TRANSFER_CONFIRM_API_END_POINT, fundTransferRequest))
               .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
