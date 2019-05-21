@@ -50,8 +50,8 @@ public class Card {
   @JsonProperty("branchName")
   private String branchName = null;
 
-  @JsonProperty("status")
-  private CardStatusEnum status = null;
+  @JsonProperty("cardStatus")
+  private CardStatusEnum cardStatus = null;
 
   @JsonProperty("overseasCardActivated")
   private Boolean overseasCardActivated = null;
@@ -319,12 +319,12 @@ public class Card {
    * 
    * @return status
    **/
-  public CardStatusEnum getStatus() {
-    return status;
+  public CardStatusEnum getCardStatus() {
+    return cardStatus;
   }
 
-  public void setStatus(CardStatusEnum status) {
-    this.status = status;
+  public void setCardStatus(CardStatusEnum cardStatus) {
+    this.cardStatus = cardStatus;
   }
 
   /**
@@ -510,7 +510,7 @@ public class Card {
         && Objects.equals(this.displayAccountNumber, card.displayAccountNumber) && Objects.equals(this.accountNumber, card.accountNumber)
         && Objects.equals(this.accountId, card.accountId) && Objects.equals(this.cardIssuer, card.cardIssuer)
         && Objects.equals(this.branchId, card.branchId) && Objects.equals(this.branchName, card.branchName)
-        && Objects.equals(this.status, card.status) && Objects.equals(this.overseasCardActivated, card.overseasCardActivated)
+        && Objects.equals(this.cardStatus, card.cardStatus) && Objects.equals(this.overseasCardActivated, card.overseasCardActivated)
         && Objects.equals(this.openingBalance, card.openingBalance) && Objects.equals(this.closingBalance, card.closingBalance)
         && Objects.equals(this.amountDue, card.amountDue) && Objects.equals(this.minimumPayment, card.minimumPayment)
         && Objects.equals(this.paymentDueDate, card.paymentDueDate) && Objects.equals(this.creditLimit, card.creditLimit)
@@ -524,7 +524,7 @@ public class Card {
   @Override
   public int hashCode() {
     return Objects.hash(category, productCode, product, accountName, bankName, type, displayAccountNumber, accountNumber, accountId, cardIssuer, branchId,
-        branchName, status, overseasCardActivated, openingBalance, closingBalance, amountDue, minimumPayment, paymentDueDate, creditLimit,
+        branchName, cardStatus, overseasCardActivated, openingBalance, closingBalance, amountDue, minimumPayment, paymentDueDate, creditLimit,
         availableCreditLimit, temporaryCreditLimit, permanentCreditLimit, lastStatementDate, lastStatementBalance);
   }
 
@@ -545,7 +545,7 @@ public class Card {
     sb.append("    cardIssuer: ").append(toIndentedString(cardIssuer)).append("\n");
     sb.append("    branchId: ").append(toIndentedString(branchId)).append("\n");
     sb.append("    branchName: ").append(toIndentedString(branchName)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    status: ").append(toIndentedString(cardStatus)).append("\n");
     sb.append("    overseasCardActivated: ").append(toIndentedString(overseasCardActivated)).append("\n");
     sb.append("    openingBalance: ").append(toIndentedString(openingBalance)).append("\n");
     sb.append("    closingBalance: ").append(toIndentedString(closingBalance)).append("\n");
