@@ -47,13 +47,13 @@ public class CardsService {
     CardsResponse cardsResponse = new CardsResponse();
     try {
       HttpResponse<String> response =
-          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CARDS_API_END_POINT, customerId, null)).header("cache-control", "no-cache")
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARDS_API_END_POINT, customerId, null)).header("cache-control", "no-cache")
               .asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Cards Response Body Before Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Credit Cards Response Body Before Transformation :" + response.getBody());
         String cardsResponseString = cardsResponseMapper.getManipulatedCardsResponse(response.getBody());
-        ApplicationLogger.logInfo("Cards Response Body After Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Credit Cards Response Body After Transformation :" + response.getBody());
         cardsResponse = objectMapper.readValue(cardsResponseString, CardsResponse.class);
       }
       return new ResponseEntity<>(cardsResponse, HttpStatus.valueOf(response.getStatus()));
@@ -77,13 +77,13 @@ public class CardsService {
   public ResponseEntity<CardDetailResponse> getCardDetailsResponseEntity(String customerId, String cardId) {
     CardDetailResponse cardDetailResponse = null;
     try {
-      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CARD_DETAILS_API_END_POINT, customerId, cardId))
+      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARD_DETAILS_API_END_POINT, customerId, cardId))
           .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Card Details Response Body Before Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Credit Card Details Response Body Before Transformation :" + response.getBody());
         String cardDetailsResponseString = cardsResponseMapper.getManipulatedCardDetailsResponse(response.getBody());
-        ApplicationLogger.logInfo("Card Details Response Body After Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Credit Card Details Response Body After Transformation :" + response.getBody());
         cardDetailResponse = objectMapper.readValue(cardDetailsResponseString, CardDetailResponse.class);
       }
       return ResponseEntity.ok(cardDetailResponse);
@@ -107,7 +107,7 @@ public class CardsService {
   public ResponseEntity<CardDetailResponse> getCardBalanceResponseEntity(String customerId, String cardId) {
     CardDetailResponse cardDetailResponse = null;
     try {
-      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CARD_BALANCE_API_END_POINT, customerId, cardId))
+      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARD_BALANCE_API_END_POINT, customerId, cardId))
           .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
@@ -138,13 +138,13 @@ public class CardsService {
     CardTransactionsResponse cardTransactionsResponse = null;
     try {
       HttpResponse<String> response =
-          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CARDS_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARDS_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))
               .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Card Transactions Response Body Before Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Credit Card Transactions Response Body Before Transformation :" + response.getBody());
         String accountTransactionsResponseString = cardsResponseMapper.getManipulatedCardTransactionsResponse(response.getBody());
-        ApplicationLogger.logInfo("Card Transactions Response Body After Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Credit Card Transactions Response Body After Transformation :" + response.getBody());
         cardTransactionsResponse = objectMapper.readValue(accountTransactionsResponseString, CardTransactionsResponse.class);
       }
       return ResponseEntity.ok(cardTransactionsResponse);
