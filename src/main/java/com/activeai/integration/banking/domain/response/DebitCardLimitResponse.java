@@ -11,8 +11,8 @@ public class DebitCardLimitResponse {
   @JsonProperty("result")
   private Result result = null;
 
-  @JsonProperty("cards")
-  private List<Card> cards = null;
+  @JsonProperty("card")
+  private List<Card> card = null;
 
   public Result getResult() {
     return result;
@@ -22,18 +22,18 @@ public class DebitCardLimitResponse {
     this.result = result;
   }
 
-  public List<Card> getCards() {
-    return cards;
+  public List<Card> getCard() {
+    return card;
   }
 
-  public void setCards(List<Card> cards) {
-    this.cards = cards;
+  public void setCard(List<Card> card) {
+    this.card = card;
   }
 
   @Override public String toString() {
     final StringBuilder sb = new StringBuilder("DebitCardLimitResponse{");
     sb.append("result=").append(result);
-    sb.append(", cards=").append(cards);
+    sb.append(", card=").append(card);
     sb.append('}');
     return sb.toString();
   }

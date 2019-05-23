@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 
-@Api(value = "Cards Related APIs", description = "Shows API Documentation Regards Cards APIs")
-@RestController
+@Api(value = "Cards Related APIs", description = "Shows API Documentation Regards Cards APIs") @RestController
 public class CardsApiController {
 
   @Autowired private ObjectMapper objectMapper;
@@ -37,20 +36,20 @@ public class CardsApiController {
   }
 
   @ApiOperation(value = "Returns selected card details")
-  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardId}", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardDetailResponse> getCreditCardDetails(@PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardId", required = true) String cardId) {
+      @PathVariable(value = "cardNumber", required = true) String cardNumber) {
     logger.info("Entering getCreditCardDetails");
-    return cardsService.getCardDetailsResponseEntity(customerId, cardId);
+    return cardsService.getCardDetailsResponseEntity(customerId, cardNumber);
   }
 
   @ApiOperation(value = "Returns selected card transaction history")
-  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardId}/transactions", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<CardTransactionsResponse> getCreditCardTransactions(
+  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/transactions", produces = {
+      "application/json"}, method = RequestMethod.GET) public ResponseEntity<CardTransactionsResponse> getCreditCardTransactions(
       @PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardId", required = true) String cardId) {
+      @PathVariable(value = "cardNumber", required = true) String cardNumber) {
     logger.info("Entering getCreditCardTransactions");
-    return cardsService.getAccountTransactionsResponseEntity(customerId, cardId);
+    return cardsService.getAccountTransactionsResponseEntity(customerId, cardNumber);
   }
 
   @ApiOperation(value = "Returns Debit Card Limit")
@@ -62,19 +61,19 @@ public class CardsApiController {
   }
 
   @ApiOperation(value = "Returns Confirmation of Debit Card Limit")
-  @RequestMapping(value = "/{customerId}/debitcards/limit/confirm", produces = {"application/json"}, consumes = {"application/json"},
-      method = RequestMethod.POST)
-  public ResponseEntity<DebitCardLimitResponse> confirmDebitCardLimit(@PathVariable(value = "customerId", required = true) String customerId,
+  @RequestMapping(value = "/{customerId}/debitcards/limit/confirm", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.POST) public ResponseEntity<DebitCardLimitResponse> confirmDebitCardLimit(
+      @PathVariable(value = "customerId", required = true) String customerId,
       @RequestBody final DebitCardLimitRequest debitCardLimitRequest) {
     ApplicationLogger.logInfo("Entering getBillPaymentConfirm API");
     return debitCardService.getDebitLimitConfirmResponseEntity(debitCardLimitRequest);
   }
 
 
-  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardId}/overseasUse", produces = {"application/json"}, consumes = {
-      "multipart/form-data"}, method = RequestMethod.PUT)
-  public ResponseEntity<CardDetailResponse> updateCreditCardOverseasUsage(@PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardId", required = true) String cardId,
+  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/overseasUse", produces = {"application/json"}, consumes = {
+      "multipart/form-data"}, method = RequestMethod.PUT) public ResponseEntity<CardDetailResponse> updateCreditCardOverseasUsage(
+      @PathVariable(value = "customerId", required = true) String customerId,
+      @PathVariable(value = "cardNumber", required = true) String cardNumber,
       @RequestParam(value = "activationMode", required = true) String activationMode) {
     ResponseEntity<CardDetailResponse> response = null;
     try {
@@ -89,10 +88,10 @@ public class CardsApiController {
     return response;
   }
 
-  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardId}/limitUpdate", produces = {"application/json"}, consumes = {
+  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/limitUpdate", produces = {"application/json"}, consumes = {
       "multipart/form-data"}, method = RequestMethod.PUT)
   public ResponseEntity<CardDetailResponse> creditCardlimitUpdate(@PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardId", required = true) String cardId,
+      @PathVariable(value = "cardNumber", required = true) String cardNumber,
       @RequestParam(value = "limitUpdateType", required = true) String limitUpdateType,
       @RequestParam(value = "amount", required = true) Double amount, @RequestParam(value = "reason", required = true) String reason,
       @RequestParam(value = "fromDate", required = false) OffsetDateTime fromDate,
@@ -109,10 +108,13 @@ public class CardsApiController {
     return response;
   }
 
-  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardId}/resetPin", produces = {"application/json"}, consumes = {
+
+
+  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/resetPin", produces = {"application/json"}, consumes = {
       "multipart/form-data"}, method = RequestMethod.PUT)
   public ResponseEntity<CardDetailResponse> resetCreditCardPin(@PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardId", required = true) String cardId, @RequestParam(value = "resetType", required = true) String resetType,
+      @PathVariable(value = "cardNumber", required = true) String cardNumber,
+      @RequestParam(value = "resetType", required = true) String resetType,
       @RequestParam(value = "newPin", required = true) String newPin) {
     ResponseEntity<CardDetailResponse> response = null;
     try {
@@ -127,10 +129,10 @@ public class CardsApiController {
     return response;
   }
 
-  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardId}/payment", produces = {"application/json"}, consumes = {
+  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/payment", produces = {"application/json"}, consumes = {
       "multipart/form-data"}, method = RequestMethod.PUT)
   public ResponseEntity<Void> cardPayment(@PathVariable(name = "customerId", required = true) String customerId,
-      @PathVariable(name = "cardId", required = true) String cardId, @RequestParam(value = "amount", required = true) Double amount,
+      @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestParam(value = "amount", required = true) Double amount,
       @RequestParam(value = "date", required = true) OffsetDateTime date,
       @RequestParam(value = "currency", required = true) String currency,
       @RequestParam(value = "remarks", required = true) String remarks) {

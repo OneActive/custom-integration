@@ -31,14 +31,14 @@ public class DebitCardService {
   /**
    * Fetches Card Details for selected card
    *
-   * @param customerId,cardId
+   * @param customerId,cardNumber
    * @return ResponseEntity of type DebitCardLimitResponse
    */
-  public ResponseEntity<DebitCardLimitResponse> getDebitCardLimitResponseEntity(String customerId, String cardId) {
+  public ResponseEntity<DebitCardLimitResponse> getDebitCardLimitResponseEntity(String customerId, String cardNumber) {
     DebitCardLimitResponse debitCardLimitResponse = null;
     try {
       HttpResponse<String> response =
-          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.DEBIT_CARD_LIMIT_API_END_POINT, customerId, cardId))
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.DEBIT_CARD_LIMIT_API_END_POINT, customerId, cardNumber))
               .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
@@ -64,7 +64,7 @@ public class DebitCardService {
     try {
       HttpResponse<String> response = Unirest.get(propertyUtil
           .getAPIUrl(PropertyConstants.DEBIT_CARD_LIMIT_CONFIRM_API_ENDPOINT, debitCardLimitRequest.getCustomerId(),
-              debitCardLimitRequest.getBillerDetails().getBillerId())).header("cache-control", "no-cache").asString();
+              debitCardLimitRequest.getCardDetails().getCardNumber())).header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
         ApplicationLogger.logInfo("Debit Card Limit Confirm Response Body Before Transformation :" + response.getBody());
