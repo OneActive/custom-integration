@@ -1,10 +1,11 @@
 package com.activeai.integration.banking.controller;
 
-import com.activeai.integration.banking.domain.response.CardDetailResponse;
-import com.activeai.integration.banking.domain.response.CardLimitResponse;
-import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
-import com.activeai.integration.banking.domain.response.CardsResponse;
+import com.activeai.integration.banking.domain.request.BillPaymentRequest;
+import com.activeai.integration.banking.domain.request.DebitCardLimitRequest;
+import com.activeai.integration.banking.domain.response.*;
 import com.activeai.integration.banking.services.CardsService;
+import com.activeai.integration.banking.services.DebitCardService;
+import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,11 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.OffsetDateTime;
@@ -30,6 +27,7 @@ public class CardsApiController {
   @Autowired private CardsService cardsService;
 
   private static final Logger logger = LoggerFactory.getLogger(CardsApiController.class);
+  @Autowired private DebitCardService debitCardService;
 
   @ApiOperation(value = "Returns list of credit cards based on customer ID")
   @RequestMapping(value = "/{customerId}/cards/creditcards", produces = {"application/json"}, method = RequestMethod.GET)
@@ -53,6 +51,23 @@ public class CardsApiController {
       @PathVariable(value = "cardId", required = true) String cardId) {
     logger.info("Entering getCreditCardTransactions");
     return cardsService.getAccountTransactionsResponseEntity(customerId, cardId);
+  }
+
+  @ApiOperation(value = "Returns Debit Card Limit")
+  @RequestMapping(value = "/{customerId}/debitcards/{cardId}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
+  public ResponseEntity<DebitCardLimitResponse> getDebitCardLimits(@PathVariable(value = "customerId", required = true) String customerId,
+      @PathVariable(value = "cardId", required = true) String cardId) {
+    logger.info("Entering getDebitLimitResponse");
+    return debitCardService.getDebitCardLimitResponseEntity(customerId, cardId);
+  }
+
+  @ApiOperation(value = "Returns Confirmation of Debit Card Limit")
+  @RequestMapping(value = "/{customerId}/debitcards/limit/confirm", produces = {"application/json"}, consumes = {"application/json"},
+      method = RequestMethod.POST)
+  public ResponseEntity<DebitCardLimitResponse> confirmDebitCardLimit(@PathVariable(value = "customerId", required = true) String customerId,
+      @RequestBody final DebitCardLimitRequest debitCardLimitRequest) {
+    ApplicationLogger.logInfo("Entering getBillPaymentConfirm API");
+    return debitCardService.getDebitLimitConfirmResponseEntity(debitCardLimitRequest);
   }
 
 
@@ -90,21 +105,6 @@ public class CardsApiController {
     } catch (IOException e) {
       logger.error("Couldn't serialize response for content type application/json", e);
       response = new ResponseEntity<CardDetailResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return response;
-  }
-
-  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardId}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<CardLimitResponse> getCreditCardLimits(@PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardId", required = true) String cardId) {
-    ResponseEntity<CardLimitResponse> response = null;
-    try {
-      response = new ResponseEntity<>(objectMapper.readValue(
-          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"cardDetail\" : {    \"overseasMonthlyLimit\" : 8.097541212E7,    \"dailyLimit\" : 8.097541212E7,    \"overseasDailyLimit\" : 8.097541212E7  }}",
-          CardLimitResponse.class), HttpStatus.OK);
-    } catch (IOException e) {
-      logger.error("Couldn't serialize response for content type application/json", e);
-      response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return response;
   }
