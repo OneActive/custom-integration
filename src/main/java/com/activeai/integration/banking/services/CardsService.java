@@ -71,13 +71,13 @@ public class CardsService {
   /**
    * Fetches Card Details for selected card
    *
-   * @param customerId,cardId
+   * @param customerId,cardNumber
    * @return ResponseEntity of type CardDetailResponse
    */
-  public ResponseEntity<CardDetailResponse> getCardDetailsResponseEntity(String customerId, String cardId) {
+  public ResponseEntity<CardDetailResponse> getCardDetailsResponseEntity(String customerId, String cardNumber) {
     CardDetailResponse cardDetailResponse = null;
     try {
-      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARD_DETAILS_API_END_POINT, customerId, cardId))
+      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARD_DETAILS_API_END_POINT, customerId, cardNumber))
           .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
@@ -101,13 +101,13 @@ public class CardsService {
   /**
    * Fetches Card Details for selected card
    *
-   * @param customerId,cardId
+   * @param customerId,cardNumber
    * @return ResponseEntity of type CardDetailResponse
    */
-  public ResponseEntity<CardDetailResponse> getCardBalanceResponseEntity(String customerId, String cardId) {
+  public ResponseEntity<CardDetailResponse> getCardBalanceResponseEntity(String customerId, String cardNumber) {
     CardDetailResponse cardDetailResponse = null;
     try {
-      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARD_BALANCE_API_END_POINT, customerId, cardId))
+      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARD_BALANCE_API_END_POINT, customerId, cardNumber))
           .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
