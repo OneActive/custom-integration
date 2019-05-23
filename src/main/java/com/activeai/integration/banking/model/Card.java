@@ -32,8 +32,8 @@ public class Card {
   @JsonProperty("displayAccountNumber")
   private String displayAccountNumber = null;
 
-  @JsonProperty("accountNumber")
-  private String accountNumber = null;
+  @JsonProperty("cardNumber")
+  private String cardNumber = null;
 
   @JsonProperty("accountId")
   private String accountId = null;
@@ -238,12 +238,12 @@ public class Card {
    * 
    * @return accountNumber
    **/
-  public String getAccountNumber() {
-    return accountNumber;
+  public String getCardNumber() {
+    return cardNumber;
   }
 
-  public void setAccountNumber(String accountNumber) {
-    this.accountNumber = accountNumber;
+  public void setCardNumber(String cardNumber) {
+    this.cardNumber = cardNumber;
   }
 
   /**
@@ -491,7 +491,7 @@ public class Card {
         && Objects.equals(this.product, card.product) && Objects.equals(this.cardType, card.cardType)
         && Objects.equals(this.product, card.product) && Objects.equals(this.accountName, card.accountName)
         && Objects.equals(this.product, card.product) && Objects.equals(this.bankName, card.bankName)
-        && Objects.equals(this.displayAccountNumber, card.displayAccountNumber) && Objects.equals(this.accountNumber, card.accountNumber)
+        && Objects.equals(this.displayAccountNumber, card.displayAccountNumber) && Objects.equals(this.cardNumber, card.cardNumber)
         && Objects.equals(this.accountId, card.accountId) && Objects.equals(this.cardIssuer, card.cardIssuer)
         && Objects.equals(this.branchId, card.branchId) && Objects.equals(this.branchName, card.branchName)
         && Objects.equals(this.cardStatus, card.cardStatus) && Objects.equals(this.overseasCardActivated, card.overseasCardActivated)
@@ -507,7 +507,7 @@ public class Card {
 
   @Override
   public int hashCode() {
-    return Objects.hash(productCode, product, accountName, bankName, cardType, displayAccountNumber, accountNumber, accountId, cardIssuer, branchId,
+    return Objects.hash(productCode, product, accountName, bankName, cardType, displayAccountNumber, cardNumber, accountId, cardIssuer, branchId,
         branchName, cardStatus, overseasCardActivated, openingBalance, closingBalance, amountDue, minimumPayment, paymentDueDate, creditLimit,
         availableCreditLimit, temporaryCreditLimit, permanentCreditLimit, lastStatementDate, lastStatementBalance);
   }
@@ -523,7 +523,7 @@ public class Card {
     sb.append("    bankName: ").append(toIndentedString(bankName)).append("\n");
     sb.append("    cardType: ").append(toIndentedString(cardType)).append("\n");
     sb.append("    displayAccountNumber: ").append(toIndentedString(displayAccountNumber)).append("\n");
-    sb.append("    accountNumber: ").append(toIndentedString(accountNumber)).append("\n");
+    sb.append("    accountNumber: ").append(toIndentedString(cardNumber)).append("\n");
     sb.append("    accountId: ").append(toIndentedString(accountId)).append("\n");
     sb.append("    cardIssuer: ").append(toIndentedString(cardIssuer)).append("\n");
     sb.append("    branchId: ").append(toIndentedString(branchId)).append("\n");
