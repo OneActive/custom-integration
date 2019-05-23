@@ -11,11 +11,33 @@ public enum AccountTypeEnum {
 
   CHECKING("CHECKING"),
 
-  CURRENT("CURRENT"),
-
   LOAN("LOAN"),
 
-  DEPOSIT("DEPOSIT");
+  DEPOSIT("DEPOSIT"),
+
+  /** The investment. */
+  INVESTMENT("INVESTMENT"),
+
+  /** The bill. */
+  BILL("BILL"),
+
+  /** The tax. */
+  TAX("TAX"),
+
+  /** The insurance. */
+  INSURANCE("INSURANCE"),
+
+  /** The reward. */
+  REWARD("REWARD"),
+
+  /** The miles. */
+  MILES("MILES"),
+
+  /** The over draft. */
+  OVER_DRAFT("OVER_DRAFT"),
+
+  /** The unknown. */
+  UNKNOWN("");
 
   private String value;
 

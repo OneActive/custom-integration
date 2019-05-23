@@ -14,9 +14,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Validated
 public class Card {
 
-  @JsonProperty("category")
-  private String category = null;
-
   @JsonProperty("productCode")
   private String productCode = null;
 
@@ -29,8 +26,8 @@ public class Card {
   @JsonProperty("accountName")
   private String accountName;
 
-  @JsonProperty("type")
-  private CardTypeEnum type = null;
+  @JsonProperty("cardType")
+  private CardTypeEnum cardType = null;
 
   @JsonProperty("displayAccountNumber")
   private String displayAccountNumber = null;
@@ -179,19 +176,6 @@ public class Card {
     this.accountName = accountName;
   }
 
-  /**
-   * category like CARD
-   * 
-   * @return category
-   **/
-  public String getCategory() {
-    return category;
-  }
-
-  public void setCategory(String category) {
-    this.category = category;
-  }
-
   public Card productCode(String productCode) {
     this.productCode = productCode;
     return this;
@@ -226,14 +210,14 @@ public class Card {
   /**
    * Type of card
    * 
-   * @return type
+   * @return cardType
    **/
-  public CardTypeEnum getType() {
-    return type;
+  public CardTypeEnum getCardType() {
+    return cardType;
   }
 
-  public void setType(CardTypeEnum type) {
-    this.type = type;
+  public void setCardType(CardTypeEnum cardType) {
+    this.cardType = cardType;
   }
 
   /**
@@ -503,8 +487,8 @@ public class Card {
       return false;
     }
     Card card = (Card) o;
-    return Objects.equals(this.category, card.category) && Objects.equals(this.productCode, card.productCode)
-        && Objects.equals(this.product, card.product) && Objects.equals(this.type, card.type)
+    return Objects.equals(this.productCode, card.productCode)
+        && Objects.equals(this.product, card.product) && Objects.equals(this.cardType, card.cardType)
         && Objects.equals(this.product, card.product) && Objects.equals(this.accountName, card.accountName)
         && Objects.equals(this.product, card.product) && Objects.equals(this.bankName, card.bankName)
         && Objects.equals(this.displayAccountNumber, card.displayAccountNumber) && Objects.equals(this.accountNumber, card.accountNumber)
@@ -523,7 +507,7 @@ public class Card {
 
   @Override
   public int hashCode() {
-    return Objects.hash(category, productCode, product, accountName, bankName, type, displayAccountNumber, accountNumber, accountId, cardIssuer, branchId,
+    return Objects.hash(productCode, product, accountName, bankName, cardType, displayAccountNumber, accountNumber, accountId, cardIssuer, branchId,
         branchName, cardStatus, overseasCardActivated, openingBalance, closingBalance, amountDue, minimumPayment, paymentDueDate, creditLimit,
         availableCreditLimit, temporaryCreditLimit, permanentCreditLimit, lastStatementDate, lastStatementBalance);
   }
@@ -533,12 +517,11 @@ public class Card {
     StringBuilder sb = new StringBuilder();
     sb.append("class Card {\n");
 
-    sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("    productCode: ").append(toIndentedString(productCode)).append("\n");
     sb.append("    product: ").append(toIndentedString(product)).append("\n");
     sb.append("    AccountName: ").append(toIndentedString(accountName)).append("\n");
     sb.append("    bankName: ").append(toIndentedString(bankName)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    cardType: ").append(toIndentedString(cardType)).append("\n");
     sb.append("    displayAccountNumber: ").append(toIndentedString(displayAccountNumber)).append("\n");
     sb.append("    accountNumber: ").append(toIndentedString(accountNumber)).append("\n");
     sb.append("    accountId: ").append(toIndentedString(accountId)).append("\n");
