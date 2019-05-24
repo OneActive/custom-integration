@@ -29,8 +29,8 @@ public class Card {
   @JsonProperty("cardType")
   private CardTypeEnum cardType = null;
 
-  @JsonProperty("displayAccountNumber")
-  private String displayAccountNumber = null;
+  @JsonProperty("displayCardNumber")
+  private String displayCardNumber = null;
 
   @JsonProperty("cardNumber")
   private String cardNumber = null;
@@ -73,6 +73,9 @@ public class Card {
 
   @JsonProperty("availableCreditLimit")
   private Double availableCreditLimit = null;
+
+ @JsonProperty("availableCash")
+  private Double availableCash=null;
 
   @JsonProperty("temporaryCreditLimit")
   private Double temporaryCreditLimit = null;
@@ -223,20 +226,20 @@ public class Card {
   /**
    * Display Account number (in masked form)
    * 
-   * @return displayAccountNumber
+   * @return displayCardNumber
    **/
-  public String getDisplayAccountNumber() {
-    return displayAccountNumber;
+  public String getDisplayCardNumber() {
+    return displayCardNumber;
   }
 
-  public void setDisplayAccountNumber(String displayAccountNumber) {
-    this.displayAccountNumber = displayAccountNumber;
+  public void setDisplayCardNumber(String displayCardNumber) {
+    this.displayCardNumber = displayCardNumber;
   }
 
   /**
    * Display Account number
    * 
-   * @return accountNumber
+   * @return CardNumber
    **/
   public String getCardNumber() {
     return cardNumber;
@@ -477,9 +480,16 @@ public class Card {
   public void setLastStatementBalance(Double lastStatementBalance) {
     this.lastStatementBalance = lastStatementBalance;
   }
+  /**
+   * available cash
+   *
+   * @return availableCash
+   **/
+  public Double getAvailableCash() { return availableCash; }
 
+  public void setAvailableCash(Double availableCash) { this.availableCash = availableCash; }
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -491,7 +501,7 @@ public class Card {
         && Objects.equals(this.product, card.product) && Objects.equals(this.cardType, card.cardType)
         && Objects.equals(this.product, card.product) && Objects.equals(this.accountName, card.accountName)
         && Objects.equals(this.product, card.product) && Objects.equals(this.bankName, card.bankName)
-        && Objects.equals(this.displayAccountNumber, card.displayAccountNumber) && Objects.equals(this.cardNumber, card.cardNumber)
+        && Objects.equals(this.displayCardNumber, card.displayCardNumber) && Objects.equals(this.cardNumber, card.cardNumber)
         && Objects.equals(this.accountId, card.accountId) && Objects.equals(this.cardIssuer, card.cardIssuer)
         && Objects.equals(this.branchId, card.branchId) && Objects.equals(this.branchName, card.branchName)
         && Objects.equals(this.cardStatus, card.cardStatus) && Objects.equals(this.overseasCardActivated, card.overseasCardActivated)
@@ -507,7 +517,7 @@ public class Card {
 
   @Override
   public int hashCode() {
-    return Objects.hash(productCode, product, accountName, bankName, cardType, displayAccountNumber, cardNumber, accountId, cardIssuer, branchId,
+    return Objects.hash(productCode, product, accountName, bankName, cardType, displayCardNumber, cardNumber, accountId, cardIssuer, branchId,
         branchName, cardStatus, overseasCardActivated, openingBalance, closingBalance, amountDue, minimumPayment, paymentDueDate, creditLimit,
         availableCreditLimit, temporaryCreditLimit, permanentCreditLimit, lastStatementDate, lastStatementBalance);
   }
@@ -522,8 +532,8 @@ public class Card {
     sb.append("    AccountName: ").append(toIndentedString(accountName)).append("\n");
     sb.append("    bankName: ").append(toIndentedString(bankName)).append("\n");
     sb.append("    cardType: ").append(toIndentedString(cardType)).append("\n");
-    sb.append("    displayAccountNumber: ").append(toIndentedString(displayAccountNumber)).append("\n");
-    sb.append("    accountNumber: ").append(toIndentedString(cardNumber)).append("\n");
+    sb.append("    displayCardNumber: ").append(toIndentedString(displayCardNumber)).append("\n");
+    sb.append("    cardNumber: ").append(toIndentedString(cardNumber)).append("\n");
     sb.append("    accountId: ").append(toIndentedString(accountId)).append("\n");
     sb.append("    cardIssuer: ").append(toIndentedString(cardIssuer)).append("\n");
     sb.append("    branchId: ").append(toIndentedString(branchId)).append("\n");
