@@ -221,67 +221,6 @@ public class CardsService {
   }
 
   /**
-   * Fetches Debit Card Details for selected card
-   *
-   * @param customerId,cardNumber
-   * @return ResponseEntity of type CardDetailResponse
-   */
-  public ResponseEntity<CardDetailResponse> getDebitCardBalanceResponseEntity(String customerId, String cardNumber) {
-    CardDetailResponse cardDetailResponse = null;
-    try {
-      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.DEBIT_CARD_BALANCE_API_END_POINT, customerId, cardNumber))
-              .header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Card Details Response Body Before Transformation :" + response.getBody());
-        String cardDetailsResponseString = cardsResponseMapper.getManipulatedCardDetailsResponse(response.getBody());
-        ApplicationLogger.logInfo("Card Details Response Body After Transformation :" + response.getBody());
-        cardDetailResponse = objectMapper.readValue(cardDetailsResponseString, CardDetailResponse.class);
-      }
-      return ResponseEntity.ok(cardDetailResponse);
-    } catch (UnirestException e) {
-      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
-    } catch (IOException e) {
-      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
-    } catch (Exception e) {
-      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
-    }
-    cardDetailResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
-    return ResponseEntity.ok(cardDetailResponse);
-  }
-
-  /**
-   * Fetches Debit Card Transactions for selected Card
-   *
-   * @param customerId,accountId
-   * @return ResponseEntity of type CardTransactionsResponse
-   */
-  public ResponseEntity<CardTransactionsResponse> getDebitAccountTransactionsResponseEntity(String customerId, String accountId) {
-    CardTransactionsResponse cardTransactionsResponse = null;
-    try {
-      HttpResponse<String> response =
-              Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.DEBIT_CARD_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))
-                      .header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Credit Card Transactions Response Body Before Transformation :" + response.getBody());
-        String accountTransactionsResponseString = cardsResponseMapper.getManipulatedCardTransactionsResponse(response.getBody());
-        ApplicationLogger.logInfo("Credit Card Transactions Response Body After Transformation :" + response.getBody());
-        cardTransactionsResponse = objectMapper.readValue(accountTransactionsResponseString, CardTransactionsResponse.class);
-      }
-      return ResponseEntity.ok(cardTransactionsResponse);
-    } catch (UnirestException e) {
-      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
-    } catch (IOException e) {
-      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
-    } catch (Exception e) {
-      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
-    }
-    cardTransactionsResponse
-            .setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
-    return ResponseEntity.ok(cardTransactionsResponse);
-  }
-  /**
    * Fetches Block  Card Response
    *
    * @return ResponseEntity of type Block Card Response
