@@ -2,6 +2,8 @@ package com.activeai.integration.banking.model;
 
 import java.util.Objects;
 import javax.validation.Valid;
+
+import com.activeai.integration.banking.constants.AccountProductEnum;
 import com.activeai.integration.banking.constants.AccountStatusEnum;
 import com.activeai.integration.banking.constants.AccountTypeEnum;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +19,7 @@ public class Account {
   private String productCode = null;
 
   @JsonProperty("product")
-  private String product = null;
+  private AccountProductEnum product = null;
 
   @JsonProperty("bankName")
   private String bankName;
@@ -114,13 +116,14 @@ public class Account {
    * 
    * @return product
    **/
-  public String getProduct() {
+  public AccountProductEnum getProduct() {
     return product;
   }
 
-  public void setProduct(String product) {
+  public void setProduct(AccountProductEnum product) {
     this.product = product;
   }
+
   /**
    * Type of account
    * 
