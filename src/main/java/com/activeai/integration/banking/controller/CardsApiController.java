@@ -152,16 +152,6 @@ public class CardsApiController {
     return cardsService.getDebitCardDetailsResponseEntity(customerId, cardNumber);
   }
 
-  @ApiOperation(value = "Returns selected debit card transaction history")
-  @RequestMapping(value = "/{customerId}/cards/debitcards/{cardNumber}/transactions", produces = {
-      "application/json"}, method = RequestMethod.GET) public ResponseEntity<CardTransactionsResponse> getDebitCardTransactions(
-      @PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardNumber", required = true) String cardNumber) {
-    logger.info("Entering getDebitCardTransactions");
-    return cardsService.getDebitAccountTransactionsResponseEntity(customerId, cardNumber);
-  }
-
-
   @RequestMapping(value = "/{customerId}/cards/debitcards/{cardNumber}/overseasUse", produces = {"application/json"}, consumes = {
       "multipart/form-data"}, method = RequestMethod.PUT) public ResponseEntity<CardDetailResponse> updateDebitCardOverseasUsage(
       @PathVariable(value = "customerId", required = true) String customerId,
