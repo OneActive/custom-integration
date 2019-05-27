@@ -38,12 +38,12 @@ public class CardsService {
   @Autowired private ActivationCardResponseMapper activationCardResponseMapper;
 
   /**
-   * Fetches list of Cards
+   * Fetches list of Credit Cards
    *
    * @param customerId
    * @return ResponseEntity of type AccountsResponse
    */
-  public ResponseEntity<CardsResponse> getCardsResponseEntity(String customerId) {
+  public ResponseEntity<CardsResponse> getCreditCardsResponseEntity(String customerId) {
     CardsResponse cardsResponse = new CardsResponse();
     try {
       HttpResponse<String> response =
@@ -69,12 +69,12 @@ public class CardsService {
   }
 
   /**
-   * Fetches Card Details for selected card
+   * Fetches Credit Card Details for selected card
    *
    * @param customerId,cardNumber
    * @return ResponseEntity of type CardDetailResponse
    */
-  public ResponseEntity<CardDetailResponse> getCardDetailsResponseEntity(String customerId, String cardNumber) {
+  public ResponseEntity<CardDetailResponse> getCreditCardDetailsResponseEntity(String customerId, String cardNumber) {
     CardDetailResponse cardDetailResponse = null;
     try {
       HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARD_DETAILS_API_END_POINT, customerId, cardNumber))
@@ -99,12 +99,12 @@ public class CardsService {
   }
 
   /**
-   * Fetches Card Details for selected card
+   * Fetches Credit Card Details for selected card
    *
    * @param customerId,cardNumber
    * @return ResponseEntity of type CardDetailResponse
    */
-  public ResponseEntity<CardDetailResponse> getCardBalanceResponseEntity(String customerId, String cardNumber) {
+  public ResponseEntity<CardDetailResponse> getCreditCardBalanceResponseEntity(String customerId, String cardNumber) {
     CardDetailResponse cardDetailResponse = null;
     try {
       HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARD_BALANCE_API_END_POINT, customerId, cardNumber))
@@ -129,16 +129,16 @@ public class CardsService {
   }
 
   /**
-   * Fetches Card Transactions for selected Card
+   * Fetches Credit Card Transactions for selected Card
    *
    * @param customerId,accountId
    * @return ResponseEntity of type CardTransactionsResponse
    */
-  public ResponseEntity<CardTransactionsResponse> getAccountTransactionsResponseEntity(String customerId, String accountId) {
+  public ResponseEntity<CardTransactionsResponse> getCreditAccountTransactionsResponseEntity(String customerId, String accountId) {
     CardTransactionsResponse cardTransactionsResponse = null;
     try {
       HttpResponse<String> response =
-          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARDS_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARD_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))
               .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
@@ -159,9 +159,69 @@ public class CardsService {
         .setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(cardTransactionsResponse);
   }
+  /**
+   * Fetches list of DEBIT Cards
+   *
+   * @param customerId
+   * @return ResponseEntity of type AccountsResponse
+   */
+  public ResponseEntity<CardsResponse> getDebitCardsResponseEntity(String customerId) {
+    CardsResponse cardsResponse = new CardsResponse();
+    try {
+      HttpResponse<String> response =
+              Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.DEBIT_CARDS_API_END_POINT, customerId, null)).header("cache-control", "no-cache")
+                      .asString();
+      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
+        ApplicationLogger.logInfo("Credit Cards Response Body Before Transformation :" + response.getBody());
+        String cardsResponseString = cardsResponseMapper.getManipulatedCardsResponse(response.getBody());
+        ApplicationLogger.logInfo("Credit Cards Response Body After Transformation :" + response.getBody());
+        cardsResponse = objectMapper.readValue(cardsResponseString, CardsResponse.class);
+      }
+      return new ResponseEntity<>(cardsResponse, HttpStatus.valueOf(response.getStatus()));
+    } catch (UnirestException e) {
+      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+    } catch (IOException e) {
+      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+    } catch (Exception e) {
+      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+    }
+    cardsResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(cardsResponse);
+  }
 
   /**
-   * Fetches Block Card Response
+   * Fetches Debit Card Details for selected card
+   *
+   * @param customerId,cardNumber
+   * @return ResponseEntity of type CardDetailResponse
+   */
+  public ResponseEntity<CardDetailResponse> getDebitCardDetailsResponseEntity(String customerId, String cardNumber) {
+    CardDetailResponse cardDetailResponse = null;
+    try {
+      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.DEBIT_CARD_DETAILS_API_END_POINT, customerId, cardNumber))
+              .header("cache-control", "no-cache").asString();
+      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
+        ApplicationLogger.logInfo("Credit Card Details Response Body Before Transformation :" + response.getBody());
+        String cardDetailsResponseString = cardsResponseMapper.getManipulatedCardDetailsResponse(response.getBody());
+        ApplicationLogger.logInfo("Credit Card Details Response Body After Transformation :" + response.getBody());
+        cardDetailResponse = objectMapper.readValue(cardDetailsResponseString, CardDetailResponse.class);
+      }
+      return ResponseEntity.ok(cardDetailResponse);
+    } catch (UnirestException e) {
+      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+    } catch (IOException e) {
+      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+    } catch (Exception e) {
+      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+    }
+    cardDetailResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(cardDetailResponse);
+  }
+
+  /**
+   * Fetches Block  Card Response
    *
    * @return ResponseEntity of type Block Card Response
    */

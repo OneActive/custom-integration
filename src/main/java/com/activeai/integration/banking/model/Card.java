@@ -30,8 +30,8 @@ public class Card {
   @JsonProperty("cardType")
   private CardTypeEnum cardType = null;
 
-  @JsonProperty("displayAccountNumber")
-  private String displayAccountNumber = null;
+  @JsonProperty("displayCardNumber")
+  private String displayCardNumber = null;
 
   @JsonProperty("cardNumber")
   private String cardNumber = null;
@@ -74,6 +74,9 @@ public class Card {
 
   @JsonProperty("availableCreditLimit")
   private Double availableCreditLimit = null;
+
+ @JsonProperty("availableCash")
+  private Double availableCash=null;
 
   @JsonProperty("temporaryCreditLimit")
   private Double temporaryCreditLimit = null;
@@ -217,7 +220,7 @@ public class Card {
 
   /**
    * Product code
-   * 
+   *
    * @return productCode
    **/
   public String getProductCode() {
@@ -230,7 +233,7 @@ public class Card {
 
   /**
    * Product name
-   * 
+   *
    * @return product
    **/
   public String getProduct() {
@@ -243,7 +246,7 @@ public class Card {
 
   /**
    * Type of card
-   * 
+   *
    * @return cardType
    **/
   public CardTypeEnum getCardType() {
@@ -256,21 +259,21 @@ public class Card {
 
   /**
    * Display Account number (in masked form)
-   * 
-   * @return displayAccountNumber
+   *
+   * @return displayCardNumber
    **/
-  public String getDisplayAccountNumber() {
-    return displayAccountNumber;
+  public String getDisplayCardNumber() {
+    return displayCardNumber;
   }
 
-  public void setDisplayAccountNumber(String displayAccountNumber) {
-    this.displayAccountNumber = displayAccountNumber;
+  public void setDisplayCardNumber(String displayCardNumber) {
+    this.displayCardNumber = displayCardNumber;
   }
 
   /**
    * Display Account number
-   * 
-   * @return accountNumber
+   *
+   * @return CardNumber
    **/
   public String getCardNumber() {
     return cardNumber;
@@ -282,7 +285,7 @@ public class Card {
 
   /**
    * Account Id for communication where in actual a/c no is not sent
-   * 
+   *
    * @return accountId
    **/
   public String getAccountId() {
@@ -295,7 +298,7 @@ public class Card {
 
   /**
    * Card issues like visa, master card, amex, Diners
-   * 
+   *
    * @return cardIssuer
    **/
   public CardIssuerEnum getCardIssuer() {
@@ -308,7 +311,7 @@ public class Card {
 
   /**
    * Branch ID
-   * 
+   *
    * @return branchId
    **/
   public String getBranchId() {
@@ -321,7 +324,7 @@ public class Card {
 
   /**
    * Branch Name
-   * 
+   *
    * @return branchName
    **/
   public String getBranchName() {
@@ -334,7 +337,7 @@ public class Card {
 
   /**
    * Account status dormant / active / closed / blocker
-   * 
+   *
    * @return status
    **/
   public CardStatusEnum getCardStatus() {
@@ -347,7 +350,7 @@ public class Card {
 
   /**
    * Is card activated for overseas use
-   * 
+   *
    * @return overseasCardActivated
    **/
   public Boolean isOversearCardActivated() {
@@ -360,7 +363,7 @@ public class Card {
 
   /**
    * Opening balance
-   * 
+   *
    * @return openingBalance
    **/
   public Double getOpeningBalance() {
@@ -373,7 +376,7 @@ public class Card {
 
   /**
    * Closing balance
-   * 
+   *
    * @return closingBalance
    **/
   public Double getClosingBalance() {
@@ -386,7 +389,7 @@ public class Card {
 
   /**
    * Amount Due
-   * 
+   *
    * @return amountDue
    **/
   public Double getAmountDue() {
@@ -399,7 +402,7 @@ public class Card {
 
   /**
    * Minimum payment
-   * 
+   *
    * @return minimumPayment
    **/
   public Double getMinimumPayment() {
@@ -429,7 +432,7 @@ public class Card {
 
   /**
    * Credit limit
-   * 
+   *
    * @return creditLimit
    **/
   public Double getCreditLimit() {
@@ -447,7 +450,7 @@ public class Card {
 
   /**
    * Available Credit limit
-   * 
+   *
    * @return availableCreditLimit
    **/
   public Double getAvailableCreditLimit() {
@@ -465,7 +468,7 @@ public class Card {
 
   /**
    * Temporary Credit limit
-   * 
+   *
    * @return temporaryCreditLimit
    **/
   public Double getTemporaryCreditLimit() {
@@ -483,7 +486,7 @@ public class Card {
 
   /**
    * Permanent Credit limit
-   * 
+   *
    * @return permanentCreditLimit
    **/
   public Double getPermanentCreditLimit() {
@@ -501,7 +504,7 @@ public class Card {
 
   /**
    * last statement balance
-   * 
+   *
    * @return lastStatementBalance
    **/
   public Double getLastStatementBalance() {
@@ -511,7 +514,12 @@ public class Card {
   public void setLastStatementBalance(Double lastStatementBalance) {
     this.lastStatementBalance = lastStatementBalance;
   }
-
+  /**
+   * available cash
+   *
+   * @return availableCash
+   **/
+  public Double getAvailableCash() { return availableCash; }
 
   /**
    * cardName
@@ -659,10 +667,10 @@ public class Card {
   }
 
 
-
+  public void setAvailableCash(Double availableCash) { this.availableCash = availableCash; }
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -674,7 +682,7 @@ public class Card {
         && Objects.equals(this.product, card.product) && Objects.equals(this.cardType, card.cardType)
         && Objects.equals(this.product, card.product) && Objects.equals(this.accountName, card.accountName)
         && Objects.equals(this.product, card.product) && Objects.equals(this.bankName, card.bankName)
-        && Objects.equals(this.displayAccountNumber, card.displayAccountNumber) && Objects.equals(this.cardNumber, card.cardNumber)
+        && Objects.equals(this.displayCardNumber, card.displayCardNumber) && Objects.equals(this.cardNumber, card.cardNumber)
         && Objects.equals(this.accountId, card.accountId) && Objects.equals(this.cardIssuer, card.cardIssuer)
         && Objects.equals(this.branchId, card.branchId) && Objects.equals(this.branchName, card.branchName)
         && Objects.equals(this.cardStatus, card.cardStatus) && Objects.equals(this.overseasCardActivated, card.overseasCardActivated)
@@ -690,10 +698,11 @@ public class Card {
 
   @Override
   public int hashCode() {
-    return Objects.hash(productCode, product, accountName, bankName, cardType, displayAccountNumber, cardNumber, accountId, cardIssuer, branchId,
+    return Objects.hash(productCode, product, accountName, bankName, cardType, displayCardNumber, cardNumber, accountId, cardIssuer, branchId,
         branchName, cardStatus, overseasCardActivated, openingBalance, closingBalance, amountDue, minimumPayment, paymentDueDate, creditLimit,
         availableCreditLimit, temporaryCreditLimit, permanentCreditLimit, lastStatementDate, lastStatementBalance);
   }
+
 
   @Override public String toString() {
     final StringBuilder sb = new StringBuilder("Card{");
@@ -702,7 +711,7 @@ public class Card {
     sb.append(", bankName='").append(bankName).append('\'');
     sb.append(", accountName='").append(accountName).append('\'');
     sb.append(", cardType=").append(cardType);
-    sb.append(", displayAccountNumber='").append(displayAccountNumber).append('\'');
+    sb.append(", displayCardNumber='").append(displayCardNumber).append('\'');
     sb.append(", cardNumber='").append(cardNumber).append('\'');
     sb.append(", accountId='").append(accountId).append('\'');
     sb.append(", cardIssuer=").append(cardIssuer);
@@ -740,16 +749,6 @@ public class Card {
     sb.append(", isInternationalEnabled=").append(isInternationalEnabled);
     sb.append('}');
     return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
   }
 }
 
