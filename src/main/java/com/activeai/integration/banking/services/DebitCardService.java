@@ -2,10 +2,9 @@ package com.activeai.integration.banking.services;
 
 import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
-import com.activeai.integration.banking.domain.request.BillPaymentRequest;
-import com.activeai.integration.banking.domain.request.DebitCardLimitRequest;
-import com.activeai.integration.banking.domain.response.BillPaymentResponse;
+import com.activeai.integration.banking.domain.request.DebitCardLimitConfirmRequest;
 import com.activeai.integration.banking.domain.response.DebitCardLimitResponse;
+import com.activeai.integration.banking.domain.response.DebitCardLimitConfirmResponse;
 import com.activeai.integration.banking.mapper.response.DebitCardResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
@@ -18,10 +17,12 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Objects;
 
+@Service("debitCardService")
 public class DebitCardService {
 
   @Autowired private PropertyUtil propertyUtil;
@@ -59,20 +60,20 @@ public class DebitCardService {
     return ResponseEntity.ok(debitCardLimitResponse);
   }
 
-  public ResponseEntity<DebitCardLimitResponse> getDebitLimitConfirmResponseEntity(DebitCardLimitRequest debitCardLimitRequest) {
-    DebitCardLimitResponse debitCardLimitResponse = null;
+  public ResponseEntity<DebitCardLimitConfirmResponse> getDebitLimitConfirmResponseEntity(DebitCardLimitConfirmRequest debitCardLimitConfirmRequest) {
+    DebitCardLimitConfirmResponse debitCardLimitConfirmResponse = null;
     try {
       HttpResponse<String> response = Unirest.get(propertyUtil
-          .getAPIUrl(PropertyConstants.DEBIT_CARD_LIMIT_CONFIRM_API_ENDPOINT, debitCardLimitRequest.getCustomerId(),
-              debitCardLimitRequest.getCardDetails().getCardNumber())).header("cache-control", "no-cache").asString();
+          .getAPIUrl(PropertyConstants.DEBIT_CARD_LIMIT_CONFIRM_API_ENDPOINT, debitCardLimitConfirmRequest.getCustomerId(),
+              debitCardLimitConfirmRequest.getCardDetails().getCardNumber())).header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
         ApplicationLogger.logInfo("Debit Card Limit Confirm Response Body Before Transformation :" + response.getBody());
         String debitCardLimitConfirmResponseString = debitCardResponseMapper.getManipulatedDebitCardLimitConfirmResponse(response.getBody());
         ApplicationLogger.logInfo("Debit Card Limit Confirm Response Body After Transformation :" + response.getBody());
-        debitCardLimitResponse = objectMapper.readValue(debitCardLimitConfirmResponseString, DebitCardLimitResponse.class);
+        debitCardLimitConfirmResponse = objectMapper.readValue(debitCardLimitConfirmResponseString, DebitCardLimitConfirmResponse.class);
       }
-      return new ResponseEntity<>(debitCardLimitResponse, HttpStatus.valueOf(response.getStatus()));
+      return new ResponseEntity<>(debitCardLimitConfirmResponse, HttpStatus.valueOf(response.getStatus()));
     } catch (UnirestException e) {
       ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
     } catch (IOException e) {
@@ -80,7 +81,7 @@ public class DebitCardService {
     } catch (Exception e) {
       ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
     }
-    return new ResponseEntity<>(debitCardLimitResponse, HttpStatus.OK);
+    return new ResponseEntity<>(debitCardLimitConfirmResponse, HttpStatus.OK);
   }
 
 }

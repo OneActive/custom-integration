@@ -11,6 +11,7 @@ public class DebitCardLimitResponse {
   @JsonProperty("result")
   private Result result = null;
 
+
   @JsonProperty("card")
   private List<Card> card = null;
 

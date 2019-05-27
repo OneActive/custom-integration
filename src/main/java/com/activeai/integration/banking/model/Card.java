@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.activeai.integration.banking.constants.CardIssuerEnum;
 import com.activeai.integration.banking.constants.CardStatusEnum;
 import com.activeai.integration.banking.constants.CardTypeEnum;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -104,15 +105,38 @@ public class Card {
   @JsonProperty("cardHolderName")
   private String cardHolderName;
 
-  @JsonProperty("debitCardNumber")
-  private String debitCardNumber;
+  @JsonProperty("cardName")
+  private String cardName = null;
 
-  @JsonProperty("posLimit")
-  private String posLimit;
+  @JsonProperty("productType")
+  private String productType = null;
 
-  @JsonProperty("atmLimit")
-  private String atmLimit;
+  @JsonProperty("maxDomesticATMLimit")
+  private String maxDomesticATMLimit = null;
 
+  @JsonProperty("maxDomesticPOSLimit")
+  private String maxDomesticPOSLimit = null;
+
+  @JsonProperty("domesticATMLimit")
+  private String domesticATMLimit = null;
+
+  @JsonProperty("domesticPOSLimit")
+  private String domesticPOSLimit = null;
+
+  @JsonProperty("maxInternationalATMLimit")
+  private String maxInternationalATMLimit;
+
+  @JsonProperty("maxInternationalPOSLimit")
+  private String maxInternationalPOSLimit;
+
+  @JsonProperty("internationalATMLimit")
+  private String internationalATMLimit;
+
+  @JsonProperty("internationalPOSLimit")
+  private String internationalPOSLimit;
+
+  @JsonProperty("isInternationalEnabled")
+  private boolean isInternationalEnabled;
 
   public String getCardHolderName() {
     return cardHolderName;
@@ -488,44 +512,154 @@ public class Card {
     this.lastStatementBalance = lastStatementBalance;
   }
 
+
   /**
-   * Debit Card Number
+   * cardName
    *
-   * @return Debit Card Number
+   * @return cardName
    **/
-  public String getDebitCardNumber() {
-    return debitCardNumber;
+  public String getCardName() {
+    return cardName;
   }
 
-  public void setDebitCardNumber(String debitCardNumber) {
-    this.debitCardNumber = debitCardNumber;
-  }
-
-  /*
-   *POS Limit
-   *
-   * @return PosLIMIT
-   **/
-  public String getPosLimit() {
-    return posLimit;
-  }
-
-  public void setPosLimit(String posLimit) {
-    this.posLimit = posLimit;
+  public void setCardName(String cardName) {
+    this.cardName = cardName;
   }
 
   /**
-   * ATM Limit
+   * productType
    *
-   * @return ATM Limit
+   * @return productType
    **/
-  public String getAtmLimit() {
-    return atmLimit;
+  public String getProductType() {
+    return productType;
   }
 
-  public void setAtmLimit(String atmLimit) {
-    this.atmLimit = atmLimit;
+  public void setProductType(String productType) {
+    this.productType = productType;
   }
+
+  /**
+   * maxDomesticATMLimit
+   *
+   * @return maxDomesticATMLimit
+   **/
+  public String getMaxDomesticATMLimit() {
+    return maxDomesticATMLimit;
+  }
+
+  public void setMaxDomesticATMLimit(String maxDomesticATMLimit) {
+    this.maxDomesticATMLimit = maxDomesticATMLimit;
+  }
+
+  /**
+   * maxDomesticPOSLimit
+   *
+   * @return maxDomesticPOSLimit
+   **/
+  public String getMaxDomesticPOSLimit() {
+    return maxDomesticPOSLimit;
+  }
+
+  public void setMaxDomesticPOSLimit(String maxDomesticPOSLimit) {
+    this.maxDomesticPOSLimit = maxDomesticPOSLimit;
+  }
+
+  /**
+   * domesticATMLimit
+   *
+   * @return domesticATMLimit
+   **/
+  public String getDomesticATMLimit() {
+    return domesticATMLimit;
+  }
+
+  public void setDomesticATMLimit(String domesticATMLimit) {
+    this.domesticATMLimit = domesticATMLimit;
+  }
+
+  /**
+   * domesticPOSLimit
+   *
+   * @return domesticPOSLimit
+   **/
+  public String getDomesticPOSLimit() {
+    return domesticPOSLimit;
+  }
+
+  public void setDomesticPOSLimit(String domesticPOSLimit) {
+    this.domesticPOSLimit = domesticPOSLimit;
+  }
+
+  /**
+   * maxInternationalATMLimit
+   *
+   * @return maxInternationalATMLimit
+   **/
+  public String getMaxInternationalATMLimit() {
+    return maxInternationalATMLimit;
+  }
+
+  public void setMaxInternationalATMLimit(String maxInternationalATMLimit) {
+    this.maxInternationalATMLimit = maxInternationalATMLimit;
+  }
+
+  /**
+   * maxInternationalPOSLimit
+   *
+   * @return maxInternationalPOSLimit
+   **/
+  public String getMaxInternationalPOSLimit() {
+    return maxInternationalPOSLimit;
+  }
+
+  public void setMaxInternationalPOSLimit(String maxInternationalPOSLimit) {
+    this.maxInternationalPOSLimit = maxInternationalPOSLimit;
+  }
+
+  /**
+   * internationalATMLimit
+   *
+   * @return internationalATMLimit
+   **/
+  public String getInternationalATMLimit() {
+    return internationalATMLimit;
+  }
+
+  public void setInternationalATMLimit(String internationalATMLimit) {
+    this.internationalATMLimit = internationalATMLimit;
+  }
+
+  /**
+   * internationalPOSLimit
+   *
+   * @return internationalPOSLimit
+   **/
+  public String getInternationalPOSLimit() {
+    return internationalPOSLimit;
+  }
+
+  public void setInternationalPOSLimit(String internationalPOSLimit) {
+    this.internationalPOSLimit = internationalPOSLimit;
+  }
+
+
+  /**
+   * internationalEnabled
+   *
+   * @return internationalEnabled
+   **/
+
+  public boolean isInternationalEnabled() {
+    return isInternationalEnabled;
+  }
+
+  public void setInternationalEnabled(boolean internationalEnabled) {
+    isInternationalEnabled = internationalEnabled;
+  }
+
+
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -561,39 +695,50 @@ public class Card {
         availableCreditLimit, temporaryCreditLimit, permanentCreditLimit, lastStatementDate, lastStatementBalance);
   }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Card {\n");
-
-    sb.append("    productCode: ").append(toIndentedString(productCode)).append("\n");
-    sb.append("    product: ").append(toIndentedString(product)).append("\n");
-    sb.append("    AccountName: ").append(toIndentedString(accountName)).append("\n");
-    sb.append("    bankName: ").append(toIndentedString(bankName)).append("\n");
-    sb.append("    cardType: ").append(toIndentedString(cardType)).append("\n");
-    sb.append("    displayAccountNumber: ").append(toIndentedString(displayAccountNumber)).append("\n");
-    sb.append("    accountNumber: ").append(toIndentedString(cardNumber)).append("\n");
-    sb.append("    accountId: ").append(toIndentedString(accountId)).append("\n");
-    sb.append("    cardIssuer: ").append(toIndentedString(cardIssuer)).append("\n");
-    sb.append("    branchId: ").append(toIndentedString(branchId)).append("\n");
-    sb.append("    branchName: ").append(toIndentedString(branchName)).append("\n");
-    sb.append("    cardStatus: ").append(toIndentedString(cardStatus)).append("\n");
-    sb.append("    overseasCardActivated: ").append(toIndentedString(overseasCardActivated)).append("\n");
-    sb.append("    openingBalance: ").append(toIndentedString(openingBalance)).append("\n");
-    sb.append("    closingBalance: ").append(toIndentedString(closingBalance)).append("\n");
-    sb.append("    amountDue: ").append(toIndentedString(amountDue)).append("\n");
-    sb.append("    minimumPayment: ").append(toIndentedString(minimumPayment)).append("\n");
-    sb.append("    paymentDueDate: ").append(toIndentedString(paymentDueDate)).append("\n");
-    sb.append("    creditLimit: ").append(toIndentedString(creditLimit)).append("\n");
-    sb.append("    availableCreditLimit: ").append(toIndentedString(availableCreditLimit)).append("\n");
-    sb.append("    temporaryCreditLimit: ").append(toIndentedString(temporaryCreditLimit)).append("\n");
-    sb.append("    permanentCreditLimit: ").append(toIndentedString(permanentCreditLimit)).append("\n");
-    sb.append("    lastStatementDate: ").append(toIndentedString(lastStatementDate)).append("\n");
-    sb.append("    lastStatementBalance: ").append(toIndentedString(lastStatementBalance)).append("\n");
-    sb.append("    debitCardNumber: ").append(toIndentedString(debitCardNumber)).append("\n");
-    sb.append("    posLimit: ").append(toIndentedString(posLimit)).append("\n");
-    sb.append("    atmLimit: ").append(toIndentedString(atmLimit)).append("\n");
-    sb.append("}");
+  @Override public String toString() {
+    final StringBuilder sb = new StringBuilder("Card{");
+    sb.append("productCode='").append(productCode).append('\'');
+    sb.append(", product='").append(product).append('\'');
+    sb.append(", bankName='").append(bankName).append('\'');
+    sb.append(", accountName='").append(accountName).append('\'');
+    sb.append(", cardType=").append(cardType);
+    sb.append(", displayAccountNumber='").append(displayAccountNumber).append('\'');
+    sb.append(", cardNumber='").append(cardNumber).append('\'');
+    sb.append(", accountId='").append(accountId).append('\'');
+    sb.append(", cardIssuer=").append(cardIssuer);
+    sb.append(", branchId='").append(branchId).append('\'');
+    sb.append(", branchName='").append(branchName).append('\'');
+    sb.append(", cardStatus=").append(cardStatus);
+    sb.append(", overseasCardActivated=").append(overseasCardActivated);
+    sb.append(", openingBalance=").append(openingBalance);
+    sb.append(", closingBalance=").append(closingBalance);
+    sb.append(", amountDue=").append(amountDue);
+    sb.append(", minimumPayment=").append(minimumPayment);
+    sb.append(", paymentDueDate='").append(paymentDueDate).append('\'');
+    sb.append(", creditLimit=").append(creditLimit);
+    sb.append(", availableCreditLimit=").append(availableCreditLimit);
+    sb.append(", temporaryCreditLimit=").append(temporaryCreditLimit);
+    sb.append(", permanentCreditLimit=").append(permanentCreditLimit);
+    sb.append(", lastStatementDate='").append(lastStatementDate).append('\'');
+    sb.append(", lastStatementBalance=").append(lastStatementBalance);
+    sb.append(", currencyCode='").append(currencyCode).append('\'');
+    sb.append(", expiryDate='").append(expiryDate).append('\'');
+    sb.append(", activationDate='").append(activationDate).append('\'');
+    sb.append(", branchAddress='").append(branchAddress).append('\'');
+    sb.append(", outStandingAmount=").append(outStandingAmount);
+    sb.append(", cardHolderName='").append(cardHolderName).append('\'');
+    sb.append(", cardName='").append(cardName).append('\'');
+    sb.append(", productType='").append(productType).append('\'');
+    sb.append(", maxDomesticATMLimit='").append(maxDomesticATMLimit).append('\'');
+    sb.append(", maxDomesticPOSLimit='").append(maxDomesticPOSLimit).append('\'');
+    sb.append(", domesticATMLimit='").append(domesticATMLimit).append('\'');
+    sb.append(", domesticPOSLimit='").append(domesticPOSLimit).append('\'');
+    sb.append(", maxInternationalATMLimit='").append(maxInternationalATMLimit).append('\'');
+    sb.append(", maxInternationalPOSLimit='").append(maxInternationalPOSLimit).append('\'');
+    sb.append(", internationalATMLimit='").append(internationalATMLimit).append('\'');
+    sb.append(", internationalPOSLimit='").append(internationalPOSLimit).append('\'');
+    sb.append(", isInternationalEnabled=").append(isInternationalEnabled);
+    sb.append('}');
     return sb.toString();
   }
 

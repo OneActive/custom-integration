@@ -1,7 +1,6 @@
 package com.activeai.integration.banking.controller;
 
-import com.activeai.integration.banking.domain.request.BillPaymentRequest;
-import com.activeai.integration.banking.domain.request.DebitCardLimitRequest;
+import com.activeai.integration.banking.domain.request.DebitCardLimitConfirmRequest;
 import com.activeai.integration.banking.domain.response.*;
 import com.activeai.integration.banking.services.CardsService;
 import com.activeai.integration.banking.services.DebitCardService;
@@ -24,9 +23,9 @@ public class CardsApiController {
 
   @Autowired private ObjectMapper objectMapper;
   @Autowired private CardsService cardsService;
+  @Autowired private DebitCardService debitCardService;
 
   private static final Logger logger = LoggerFactory.getLogger(CardsApiController.class);
-  @Autowired private DebitCardService debitCardService;
 
   @ApiOperation(value = "Returns list of credit cards based on customer ID")
   @RequestMapping(value = "/{customerId}/cards/creditcards", produces = {"application/json"}, method = RequestMethod.GET)
@@ -62,11 +61,11 @@ public class CardsApiController {
 
   @ApiOperation(value = "Returns Confirmation of Debit Card Limit")
   @RequestMapping(value = "/{customerId}/debitcards/limit/confirm", produces = {"application/json"}, consumes = {
-      "application/json"}, method = RequestMethod.POST) public ResponseEntity<DebitCardLimitResponse> confirmDebitCardLimit(
+      "application/json"}, method = RequestMethod.POST) public ResponseEntity<DebitCardLimitConfirmResponse> confirmDebitCardLimit(
       @PathVariable(value = "customerId", required = true) String customerId,
-      @RequestBody final DebitCardLimitRequest debitCardLimitRequest) {
-    ApplicationLogger.logInfo("Entering getBillPaymentConfirm API");
-    return debitCardService.getDebitLimitConfirmResponseEntity(debitCardLimitRequest);
+      @RequestBody final DebitCardLimitConfirmRequest debitCardLimitConfirmRequest) {
+    ApplicationLogger.logInfo("Entering getDebitCardLimitConfirm API");
+    return debitCardService.getDebitLimitConfirmResponseEntity(debitCardLimitConfirmRequest);
   }
 
 
