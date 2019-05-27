@@ -5,7 +5,6 @@ import java.util.Objects;
 import com.activeai.integration.banking.constants.CardIssuerEnum;
 import com.activeai.integration.banking.constants.CardStatusEnum;
 import com.activeai.integration.banking.constants.CardTypeEnum;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
