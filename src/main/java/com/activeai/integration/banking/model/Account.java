@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import com.activeai.integration.banking.constants.AccountProductEnum;
 import com.activeai.integration.banking.constants.AccountStatusEnum;
 import com.activeai.integration.banking.constants.AccountTypeEnum;
+import com.fasterxml.jackson.databind.annotation.JacksonStdImpl;
 import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

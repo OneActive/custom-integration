@@ -1,12 +1,10 @@
 package com.activeai.integration.banking.services;
 
+import com.activeai.integration.banking.constants.AccountTypeEnum;
 import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
+import com.activeai.integration.banking.domain.response.*;
 import com.activeai.integration.banking.mapper.response.AccountsResponseMapper;
-import com.activeai.integration.banking.domain.response.AccountBalanceResponse;
-import com.activeai.integration.banking.domain.response.AccountDetailResponse;
-import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
-import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,11 +14,11 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Objects;
 
 /**
@@ -39,16 +37,16 @@ public class AccountsService {
    * @param customerId
    * @return ResponseEntity of type AccountsResponse
    */
-  public ResponseEntity<AccountsResponse> getAccountsResponseEntity(String customerId) {
+  public ResponseEntity<AccountsResponse> getCasaAccountsResponseEntity(String customerId) {
     AccountsResponse accountsResponse = new AccountsResponse();
     try {
       HttpResponse<String> response =
-          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNTS_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNT_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
+      ApplicationLogger.logInfo("Casa API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Accounts Response Body Before Transformation :" + response.getBody());
+        ApplicationLogger.logInfo(" Casa Response Body Before Transformation :" + response.getBody());
         String accountsResponseString = accountsResponseMapper.getManipulatedAccountsResponse(response.getBody());
-        ApplicationLogger.logInfo("Accounts Response Body After Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Casa Response Body After Transformation :" + response.getBody());
         accountsResponse = objectMapper.readValue(accountsResponseString, AccountsResponse.class);
       }
       return ResponseEntity.ok(accountsResponse);
@@ -62,7 +60,30 @@ public class AccountsService {
     accountsResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(accountsResponse);
   }
-
+  public ResponseEntity<DepositAccountsResponse> getDepositAccountsResponseEntity(String customerId) {
+    DepositAccountsResponse depositAccountsResponse = new DepositAccountsResponse();
+    try {
+      HttpResponse<String> response =
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.DEPOSIT_API_END_POINT, customerId, null)).header("cache-control", "no-cache")
+              .asString();
+      ApplicationLogger.logInfo("Deposit API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
+        ApplicationLogger.logInfo(" Deposit Response Body Before Transformation :" + response.getBody());
+        String accountsResponseString = accountsResponseMapper.getManipulatedAccountsResponse(response.getBody());
+        ApplicationLogger.logInfo(" Deposit Response Body After Transformation :" + response.getBody());
+        depositAccountsResponse = objectMapper.readValue(accountsResponseString, DepositAccountsResponse.class);
+      }
+      return ResponseEntity.ok(depositAccountsResponse);
+    } catch (UnirestException e) {
+      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+    } catch (IOException e) {
+      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+    } catch (Exception e) {
+      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+    }
+    depositAccountsResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(depositAccountsResponse);
+  }
   /**
    * Fetches Account Details for selected Account
    *
