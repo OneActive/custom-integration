@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(value = "Login Related APIs", description = "Shows API Documentation Regards Logins APIs")
+@Api(value = "Login and Customer Profile Related APIs", description = "Shows API Documentation Regards Logins and Customer Profile APIs")
 @RestController
 public class LoginApiController {
 

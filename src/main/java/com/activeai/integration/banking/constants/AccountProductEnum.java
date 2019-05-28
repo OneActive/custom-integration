@@ -3,20 +3,13 @@ package com.activeai.integration.banking.constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum CustomerTitleEnum {
-  MR_("Mr."),
+public enum AccountProductEnum {
 
-  MRS_("Mrs."),
-
-  MS_("Ms."),
-
-  MISS_("Miss."),
-
-  DR_("Dr.");
+  FIXED_DEPOSIT("Fixed Deposit");
 
   private String value;
 
-  CustomerTitleEnum(String value) {
+  AccountProductEnum(String value) {
     this.value = value;
   }
 
@@ -27,12 +20,13 @@ public enum CustomerTitleEnum {
   }
 
   @JsonCreator
-  public static CustomerTitleEnum fromValue(String text) {
-    for (CustomerTitleEnum b : CustomerTitleEnum.values()) {
+  public static AccountProductEnum fromValue(String text) {
+    for (AccountProductEnum b : AccountProductEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }
     }
     return null;
   }
+
 }

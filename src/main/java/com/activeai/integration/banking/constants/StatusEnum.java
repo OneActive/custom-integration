@@ -3,7 +3,7 @@ package com.activeai.integration.banking.constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum StatusEnum {
+public enum  StatusEnum {
 
   SUCCESS("SUCCESS"),
   FAILURE("FAILURE"),

@@ -68,7 +68,6 @@ public class Biller {
   @JsonProperty("paymentAllowedPostdueDate")
   private String paymentAllowedPostdueDate;
 
-
   public Double getLastStatementBalance() {
     return lastStatementBalance;
   }
