@@ -224,4 +224,22 @@ public class DepositAccount extends Account {
     this.maturityAmount = maturityAmount;
 
   }
+
+  @Override public String toString() {
+    final StringBuilder sb = new StringBuilder("DepositAccount{");
+    sb.append("maturityDate='").append(maturityDate).append('\'');
+    sb.append(", maturityAmount=").append(maturityAmount);
+    sb.append(", maturityInstruction='").append(maturityInstruction).append('\'');
+    sb.append(", initialPrincipalAmount=").append(initialPrincipalAmount);
+    sb.append(", interestRate='").append(interestRate).append('\'');
+    sb.append(", tenorTerm=").append(tenorTerm);
+    sb.append(", tenorPeriod='").append(tenorPeriod).append('\'');
+    sb.append(", totalInterestAmountEarned=").append(totalInterestAmountEarned);
+    sb.append(", lastRenewalDate='").append(lastRenewalDate).append('\'');
+    sb.append(", earlyWithdrawalFee=").append(earlyWithdrawalFee);
+    sb.append(", earlyWithdrawalAmount=").append(earlyWithdrawalAmount);
+    sb.append(", depositName='").append(depositName).append('\'');
+    sb.append('}');
+    return sb.toString();
+  }
 }
