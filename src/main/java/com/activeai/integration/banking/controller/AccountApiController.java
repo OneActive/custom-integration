@@ -5,6 +5,7 @@ import com.activeai.integration.banking.domain.response.AccountTransactionsRespo
 import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.domain.response.DepositAccountsResponse;
 import com.activeai.integration.banking.domain.response.AccountBalanceResponse;
+import com.activeai.integration.banking.domain.response.LoanAccountsResponse;
 import com.activeai.integration.banking.services.AccountsService;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,11 +61,16 @@ public class AccountApiController {
     ApplicationLogger.logInfo("Entering getCasaAccountsResponseEntity API");
     return accountsService.getCasaAccountsResponseEntity(customerId);
   }
-  @ApiOperation(value = "Returns list of depositgit status accounts based on customer ID")
+  @ApiOperation(value = "Returns list of deposit accounts based on customer ID")
   @RequestMapping(value = "/{customerId}/accounts/DEPOSIT", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<DepositAccountsResponse> getDepositAccounts(@PathVariable(name = "customerId", required = true) String customerId) {
     ApplicationLogger.logInfo("Entering getDepositAccountsResponseEntity API");
     return accountsService.getDepositAccountsResponseEntity(customerId);
   }
-
+  @ApiOperation(value = "Returns list of loan accounts based on customer ID")
+  @RequestMapping(value = "/{customerId}/accounts/LOAN", produces = {"application/json"}, method = RequestMethod.GET)
+  public ResponseEntity<LoanAccountsResponse> getLoanAccounts(@PathVariable(name = "customerId", required = true) String customerId) {
+    ApplicationLogger.logInfo("Entering getLoanAccountsResponseEntity API");
+    return accountsService.getLoanAccountsResponseEntity(customerId);
+  }
 }

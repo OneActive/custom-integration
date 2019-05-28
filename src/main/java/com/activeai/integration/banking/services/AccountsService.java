@@ -7,6 +7,7 @@ import com.activeai.integration.banking.domain.response.AccountBalanceResponse;
 import com.activeai.integration.banking.domain.response.AccountDetailResponse;
 import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.domain.response.DepositAccountsResponse;
+import com.activeai.integration.banking.domain.response.LoanAccountsResponse;
 import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
 import com.activeai.integration.banking.mapper.response.AccountsResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
@@ -62,6 +63,30 @@ public class AccountsService {
     }
     accountsResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(accountsResponse);
+  }
+  public ResponseEntity<LoanAccountsResponse> getLoanAccountsResponseEntity(String customerId) {
+    LoanAccountsResponse loanAccountsResponse = new LoanAccountsResponse();
+    try {
+      HttpResponse<String> response =
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.LOAN_ACCOUNT_API_END_POINT, customerId, null)).header("cache-control", "no-cache")
+              .asString();
+      ApplicationLogger.logInfo("Deposit API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
+        ApplicationLogger.logInfo(" Deposit Response Body Before Transformation :" + response.getBody());
+        String accountsResponseString = accountsResponseMapper.getManipulatedAccountsResponse(response.getBody());
+        ApplicationLogger.logInfo(" Deposit Response Body After Transformation :" + response.getBody());
+        loanAccountsResponse = objectMapper.readValue(accountsResponseString, LoanAccountsResponse.class);
+      }
+      return ResponseEntity.ok(loanAccountsResponse);
+    } catch (UnirestException e) {
+      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+    } catch (IOException e) {
+      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+    } catch (Exception e) {
+      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+    }
+    loanAccountsResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(loanAccountsResponse);
   }
   public ResponseEntity<DepositAccountsResponse> getDepositAccountsResponseEntity(String customerId) {
     DepositAccountsResponse depositAccountsResponse = new DepositAccountsResponse();
