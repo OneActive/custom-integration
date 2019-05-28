@@ -1,9 +1,10 @@
 package com.activeai.integration.banking.controller;
 
-import com.activeai.integration.banking.domain.response.AccountBalanceResponse;
 import com.activeai.integration.banking.domain.response.AccountDetailResponse;
 import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
 import com.activeai.integration.banking.domain.response.AccountsResponse;
+import com.activeai.integration.banking.domain.response.DepositAccountsResponse;
+import com.activeai.integration.banking.domain.response.AccountBalanceResponse;
 import com.activeai.integration.banking.services.AccountsService;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,43 +17,54 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @Api(value = "Accounts Related APIs", description = "Shows API Documentation Regards Accounts APIs")
 @RestController
 public class AccountApiController {
 
   @Autowired private AccountsService accountsService;
   @Autowired private ObjectMapper objectMapper;
-
-  @ApiOperation(value = "Returns selected account balance")
+  @ApiOperation(value = "Returns selected casa account balance")
   @RequestMapping(value = "/{customerId}/accounts/{accountId}/balance", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<AccountBalanceResponse> getAccountBalance(@PathVariable(name = "customerId", required = true) String customerId,
+  public ResponseEntity<AccountBalanceResponse> getCasaAccountBalance(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
     ApplicationLogger.logInfo("Entering getAccountBalance API");
     return accountsService.getAccountBalanceResponseEntity(customerId, accountId);
   }
 
-  @ApiOperation(value = "Returns selected account details")
+  @ApiOperation(value = "Returns selected casa account details")
   @RequestMapping(value = "/{customerId}/accounts/{accountId}", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<AccountDetailResponse> getAccountDetail(@PathVariable(name = "customerId", required = true) String customerId,
+  public ResponseEntity<AccountDetailResponse> getCasaAccountDetail(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
     ApplicationLogger.logInfo("Entering getAccountDetails API");
     return accountsService.getAccountDetailsResponseEntity(customerId, accountId);
   }
 
-  @ApiOperation(value = "Returns selected account transaction history")
+  @ApiOperation(value = "Returns selected casa account transaction history")
   @RequestMapping(value = "/{customerId}/accounts/{accountId}/transactions", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<AccountTransactionsResponse> getAccountTransactions(
+  public ResponseEntity<AccountTransactionsResponse> getCasaAccountTransactions(
       @PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
     ApplicationLogger.logInfo("Entering getAccountTransactions API");
     return accountsService.getAccountTransactionsResponseEntity(customerId, accountId);
   }
 
-  @ApiOperation(value = "Returns list of accounts based on customer ID")
-  @RequestMapping(value = "/{customerId}/accounts", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<AccountsResponse> getAccounts(@PathVariable(name = "customerId", required = true) String customerId) {
-    ApplicationLogger.logInfo("Entering getAccounts API");
-    return accountsService.getAccountsResponseEntity(customerId);
+  /**
+   *
+   * @param customerId
+   * @return
+   */
+  @ApiOperation(value = "Returns list of casa accounts based on customer ID")
+  @RequestMapping(value = "/{customerId}/accounts/CASA", produces = {"application/json"}, method = RequestMethod.GET)
+  public ResponseEntity<AccountsResponse> getCasaAccounts(@PathVariable(name = "customerId", required = true) String customerId) {
+    ApplicationLogger.logInfo("Entering getCasaAccountsResponseEntity API");
+    return accountsService.getCasaAccountsResponseEntity(customerId);
+  }
+  @ApiOperation(value = "Returns list of depositgit status accounts based on customer ID")
+  @RequestMapping(value = "/{customerId}/accounts/DEPOSIT", produces = {"application/json"}, method = RequestMethod.GET)
+  public ResponseEntity<DepositAccountsResponse> getDepositAccounts(@PathVariable(name = "customerId", required = true) String customerId) {
+    ApplicationLogger.logInfo("Entering getDepositAccountsResponseEntity API");
+    return accountsService.getDepositAccountsResponseEntity(customerId);
   }
 
 }

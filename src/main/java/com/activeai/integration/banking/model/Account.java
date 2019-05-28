@@ -1,13 +1,13 @@
 package com.activeai.integration.banking.model;
 
-import java.util.Objects;
-import javax.validation.Valid;
-
 import com.activeai.integration.banking.constants.AccountProductEnum;
 import com.activeai.integration.banking.constants.AccountStatusEnum;
 import com.activeai.integration.banking.constants.AccountTypeEnum;
-import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
+import java.util.Objects;
 
 /**
  * Account
