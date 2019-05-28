@@ -55,7 +55,7 @@ public class AccountApiController {
    * @return
    */
   @ApiOperation(value = "Returns list of accounts based on customer ID")
-  @RequestMapping(value = "/{customerId}/accounts/ACCOUNT", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/accounts/CASA", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<AccountsResponse> getCasaAccounts(@PathVariable(name = "customerId", required = true) String customerId) {
     ApplicationLogger.logInfo("Entering getCasaAccountsResponseEntity API");
     return accountsService.getCasaAccountsResponseEntity(customerId);

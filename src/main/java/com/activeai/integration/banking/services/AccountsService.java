@@ -1,6 +1,5 @@
 package com.activeai.integration.banking.services;
 
-import com.activeai.integration.banking.constants.AccountTypeEnum;
 import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.response.*;
@@ -18,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Objects;
 
 /**
@@ -93,7 +91,7 @@ public class AccountsService {
   public ResponseEntity<AccountDetailResponse> getAccountDetailsResponseEntity(String customerId, String accountId) {
     AccountDetailResponse accountDetailsResponse = new AccountDetailResponse();
     try {
-      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNT_DETAILS_API_END_POINT, customerId, accountId))
+      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CASA_ACCOUNT_DETAILS_API_END_POINT, customerId, accountId))
           .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
@@ -123,7 +121,7 @@ public class AccountsService {
   public ResponseEntity<AccountBalanceResponse> getAccountBalanceResponseEntity(String customerId, String accountId) {
     AccountBalanceResponse accountBalanceResponse = new AccountBalanceResponse();
     try {
-      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNT_BALANCE_API_END_POINT, customerId, accountId))
+      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CASA_ACCOUNT_BALANCE_API_END_POINT, customerId, accountId))
           .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
@@ -154,7 +152,7 @@ public class AccountsService {
     AccountTransactionsResponse accountTransactionsResponse = new AccountTransactionsResponse();
     try {
       HttpResponse<String> response =
-          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNT_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CASA_ACCOUNT_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))
               .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
