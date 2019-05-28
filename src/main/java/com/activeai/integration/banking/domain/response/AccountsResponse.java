@@ -6,8 +6,6 @@ import java.util.Objects;
 import javax.validation.Valid;
 
 import com.activeai.integration.banking.model.Account;
-import com.activeai.integration.banking.model.DepositAccount;
-import com.activeai.integration.banking.model.LoanAccount;
 import com.activeai.integration.banking.model.Result;
 import org.springframework.validation.annotation.Validated;
 

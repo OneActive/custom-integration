@@ -41,7 +41,7 @@ public class AccountsService {
     AccountsResponse accountsResponse = new AccountsResponse();
     try {
       HttpResponse<String> response =
-          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.ACCOUNT_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CASA_ACCOUNT_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("Casa API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
         ApplicationLogger.logInfo(" Casa Response Body Before Transformation :" + response.getBody());
@@ -64,7 +64,7 @@ public class AccountsService {
     DepositAccountsResponse depositAccountsResponse = new DepositAccountsResponse();
     try {
       HttpResponse<String> response =
-          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.DEPOSIT_API_END_POINT, customerId, null)).header("cache-control", "no-cache")
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.DEPOSIT_ACCOUNT_API_END_POINT, customerId, null)).header("cache-control", "no-cache")
               .asString();
       ApplicationLogger.logInfo("Deposit API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
