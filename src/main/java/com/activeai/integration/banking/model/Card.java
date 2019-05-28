@@ -17,9 +17,6 @@ public class Card {
   @JsonProperty("productCode")
   private String productCode = null;
 
-  @JsonProperty("product")
-  private String product = null;
-
   @JsonProperty("bankName")
   private String bankName;
 
@@ -228,19 +225,6 @@ public class Card {
 
   public void setProductCode(String productCode) {
     this.productCode = productCode;
-  }
-
-  /**
-   * Product name
-   *
-   * @return product
-   **/
-  public String getProduct() {
-    return product;
-  }
-
-  public void setProduct(String product) {
-    this.product = product;
   }
 
   /**
@@ -668,45 +652,11 @@ public class Card {
 
   public void setAvailableCash(Double availableCash) { this.availableCash = availableCash; }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Card card = (Card) o;
-    return Objects.equals(this.productCode, card.productCode)
-        && Objects.equals(this.product, card.product) && Objects.equals(this.cardType, card.cardType)
-        && Objects.equals(this.product, card.product) && Objects.equals(this.accountName, card.accountName)
-        && Objects.equals(this.product, card.product) && Objects.equals(this.bankName, card.bankName)
-        && Objects.equals(this.displayCardNumber, card.displayCardNumber) && Objects.equals(this.cardNumber, card.cardNumber)
-        && Objects.equals(this.accountId, card.accountId) && Objects.equals(this.cardIssuer, card.cardIssuer)
-        && Objects.equals(this.branchId, card.branchId) && Objects.equals(this.branchName, card.branchName)
-        && Objects.equals(this.cardStatus, card.cardStatus) && Objects.equals(this.overseasCardActivated, card.overseasCardActivated)
-        && Objects.equals(this.openingBalance, card.openingBalance) && Objects.equals(this.closingBalance, card.closingBalance)
-        && Objects.equals(this.amountDue, card.amountDue) && Objects.equals(this.minimumPayment, card.minimumPayment)
-        && Objects.equals(this.paymentDueDate, card.paymentDueDate) && Objects.equals(this.creditLimit, card.creditLimit)
-        && Objects.equals(this.availableCreditLimit, card.availableCreditLimit)
-        && Objects.equals(this.temporaryCreditLimit, card.temporaryCreditLimit)
-        && Objects.equals(this.permanentCreditLimit, card.permanentCreditLimit)
-        && Objects.equals(this.lastStatementDate, card.lastStatementDate)
-        && Objects.equals(this.lastStatementBalance, card.lastStatementBalance);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(productCode, product, accountName, bankName, cardType, displayCardNumber, cardNumber, accountId, cardIssuer, branchId,
-        branchName, cardStatus, overseasCardActivated, openingBalance, closingBalance, amountDue, minimumPayment, paymentDueDate, creditLimit,
-        availableCreditLimit, temporaryCreditLimit, permanentCreditLimit, lastStatementDate, lastStatementBalance);
-  }
 
 
   @Override public String toString() {
     final StringBuilder sb = new StringBuilder("Card{");
     sb.append("productCode='").append(productCode).append('\'');
-    sb.append(", product='").append(product).append('\'');
     sb.append(", bankName='").append(bankName).append('\'');
     sb.append(", accountName='").append(accountName).append('\'');
     sb.append(", cardType=").append(cardType);
