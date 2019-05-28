@@ -249,6 +249,12 @@ public class CardsService {
     return new ResponseEntity<>(blockCardResponse, HttpStatus.OK);
   }
 
+
+  /**
+   * Fetches ActivationCardResponse
+   *
+   * @return ResponseEntity of type ActivationCardResponse
+   */
   public ResponseEntity<ActivationCardResponse> getActivationCardResponseEntity(ActivationCardRequest activationCardRequest) {
     ActivationCardResponse activationCardResponse = new ActivationCardResponse();
     try {
