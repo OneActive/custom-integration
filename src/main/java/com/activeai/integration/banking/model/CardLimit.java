@@ -2,6 +2,8 @@ package com.activeai.integration.banking.model;
 
 import java.util.Objects;
 
+import com.activeai.integration.banking.constants.StatusEnum;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,6 +22,44 @@ public class CardLimit {
 
   @JsonProperty("overseasMonthlyLimit")
   private Double overseasMonthlyLimit = null;
+
+  @JsonProperty("responseCode")
+  private String responseCode;
+
+  @JsonProperty("newDomesticATMLimit")
+  private String newDomesticATMLimit;
+
+  @JsonProperty("newDomesticPOSLimit")
+  private String newDomesticPOSLimit;
+
+  @JsonProperty("newInternationalPOSLimit")
+  private String newInternationalPOSLimit;
+
+  @JsonProperty("newInternationalATMLimit")
+  private String newInternationalATMLimit;
+
+  @JsonProperty("referenceId")
+  private String referenceId;
+
+  @JsonProperty("transactionStatus")
+  private StatusEnum transactionStatus;
+
+
+  public String getReferenceId() {
+    return referenceId;
+  }
+
+  public void setReferenceId(String referenceId) {
+    this.referenceId = referenceId;
+  }
+
+  public StatusEnum getTransactionStatus() {
+    return transactionStatus;
+  }
+
+  public void setTransactionStatus(StatusEnum transactionStatus) {
+    this.transactionStatus = transactionStatus;
+  }
 
   public CardLimit dailyLimit(Double dailyLimit) {
     this.dailyLimit = dailyLimit;
@@ -75,6 +115,71 @@ public class CardLimit {
     this.overseasMonthlyLimit = overseasMonthlyLimit;
   }
 
+  /**
+   * responseCode
+   *
+   * @return responseCode
+   **/
+  public String getResponseCode() {
+    return responseCode;
+  }
+
+  public void setResponseCode(String responseCode) {
+    this.responseCode = responseCode;
+  }
+
+  /**
+   * newDomesticATMLimit
+   *
+   * @return newDomesticATMLimit
+   **/
+  public String getNewDomesticATMLimit() {
+    return newDomesticATMLimit;
+  }
+
+  public void setNewDomesticATMLimit(String newDomesticATMLimit) {
+    this.newDomesticATMLimit = newDomesticATMLimit;
+  }
+
+  /**
+   * newDomesticPOSLimit
+   *
+   * @return newDomesticPOSLimit
+   **/
+  public String getNewDomesticPOSLimit() {
+    return newDomesticPOSLimit;
+  }
+
+  public void setNewDomesticPOSLimit(String newDomesticPOSLimit) {
+    this.newDomesticPOSLimit = newDomesticPOSLimit;
+  }
+
+  /**
+   * newInternationalPOSLimit
+   *
+   * @return newInternationalPOSLimit
+   **/
+  public String getNewInternationalPOSLimit() {
+    return newInternationalPOSLimit;
+  }
+
+  public void setNewInternationalPOSLimit(String newInternationalPOSLimit) {
+    this.newInternationalPOSLimit = newInternationalPOSLimit;
+  }
+
+  /**
+   *newInternationalATMLimit
+   *
+   * @return newInternationalATMLimit
+   **/
+  public String getNewInternationalATMLimit() {
+    return newInternationalATMLimit;
+  }
+
+  public void setNewInternationalATMLimit(String newInternationalATMLimit) {
+    this.newInternationalATMLimit = newInternationalATMLimit;
+  }
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -93,15 +198,20 @@ public class CardLimit {
     return Objects.hash(dailyLimit, overseasDailyLimit, overseasMonthlyLimit);
   }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class CardLimit {\n");
 
-    sb.append("    dailyLimit: ").append(toIndentedString(dailyLimit)).append("\n");
-    sb.append("    overseasDailyLimit: ").append(toIndentedString(overseasDailyLimit)).append("\n");
-    sb.append("    overseasMonthlyLimit: ").append(toIndentedString(overseasMonthlyLimit)).append("\n");
-    sb.append("}");
+  @Override public String toString() {
+    final StringBuilder sb = new StringBuilder("CardLimit{");
+    sb.append("dailyLimit=").append(dailyLimit);
+    sb.append(", overseasDailyLimit=").append(overseasDailyLimit);
+    sb.append(", overseasMonthlyLimit=").append(overseasMonthlyLimit);
+    sb.append(", responseCode='").append(responseCode).append('\'');
+    sb.append(", newDomesticATMLimit='").append(newDomesticATMLimit).append('\'');
+    sb.append(", newDomesticPOSLimit='").append(newDomesticPOSLimit).append('\'');
+    sb.append(", newInternationalPOSLimit='").append(newInternationalPOSLimit).append('\'');
+    sb.append(", newInternationalATMLimit='").append(newInternationalATMLimit).append('\'');
+    sb.append(", transactionStatus='").append(transactionStatus).append('\'');
+    sb.append(", referenceId='").append(referenceId).append('\'');
+    sb.append('}');
     return sb.toString();
   }
 

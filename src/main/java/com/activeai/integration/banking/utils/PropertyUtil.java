@@ -27,7 +27,7 @@ public class PropertyUtil {
    * @return
    */
   public String getAPIUrl(String propertyValue, String customerId, String accountId) {
-    return StringUtils.isNotEmpty(env.getProperty(MessageFormat.format(APIDoublePropertyPattern, accountId, propertyValue))) ?
+     return StringUtils.isNotEmpty(env.getProperty(MessageFormat.format(APIDoublePropertyPattern, accountId, propertyValue))) ?
         env.getProperty(MessageFormat.format(APIDoublePropertyPattern, accountId, propertyValue)) :
         env.getProperty(propertyValue);
   }
