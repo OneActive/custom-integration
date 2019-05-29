@@ -55,7 +55,7 @@ public class AccountApiController {
   @RequestMapping(value = "/{customerId}/accounts/LOAN/{accountId}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<LoanAccountDetailResponse> getLoanAccountDetail(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
-    ApplicationLogger.logInfo("Entering getDepositAccountDetail API");
+    ApplicationLogger.logInfo("Entering getLoanAccountDetail API");
     return accountDetailsService.getLoanAccountDetailsResponseEntity(customerId, accountId);
   }
   @ApiOperation(value = "Returns selected casa account transaction history")
