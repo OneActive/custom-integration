@@ -4,12 +4,15 @@ import com.activeai.integration.banking.domain.response.AccountDetailResponse;
 import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
 import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.domain.response.DepositAccountsResponse;
-import com.activeai.integration.banking.domain.response.AccountBalanceResponse;
+import com.activeai.integration.banking.domain.response.CasaAccountBalanceResponse;
 import com.activeai.integration.banking.domain.response.LoanAccountsResponse;
 import com.activeai.integration.banking.services.AccountsService;
 import com.activeai.integration.banking.services.AccountDetailsService;
+import com.activeai.integration.banking.services.AccountBalanceService;
 import com.activeai.integration.banking.domain.response.DepositAccountDetailResponse;
 import com.activeai.integration.banking.domain.response.LoanAccountDetailResponse;
+import com.activeai.integration.banking.domain.response.LoanAccountBalanceResponse;
+import com.activeai.integration.banking.domain.response.DepositAccountBalanceResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
@@ -29,14 +32,29 @@ public class AccountApiController {
   @Autowired private AccountsService accountsService;
   @Autowired private ObjectMapper objectMapper;
   @Autowired private AccountDetailsService accountDetailsService;
+  @Autowired private AccountBalanceService accountBalanceService;
+
   @ApiOperation(value = "Returns selected casa account balance")
-  @RequestMapping(value = "/{customerId}/accounts/{accountId}/balance", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<AccountBalanceResponse> getCasaAccountBalance(@PathVariable(name = "customerId", required = true) String customerId,
+  @RequestMapping(value = "/{customerId}/accounts/CASA/{accountId}/balance", produces = {"application/json"}, method = RequestMethod.GET)
+  public ResponseEntity<CasaAccountBalanceResponse> getCasaAccountBalance(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
     ApplicationLogger.logInfo("Entering getCasaAccountBalance API");
-    return accountsService.getAccountBalanceResponseEntity(customerId, accountId);
+    return accountBalanceService.getCasaAccountBalanceResponseEntity(customerId, accountId);
   }
-
+  @ApiOperation(value = "Returns selected deposit account balance")
+  @RequestMapping(value = "/{customerId}/accounts/DEPOSIT/{accountId}/balance", produces = {"application/json"}, method = RequestMethod.GET)
+  public ResponseEntity<DepositAccountBalanceResponse> getDepositAccountBalance(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "accountId", required = true) String accountId) {
+    ApplicationLogger.logInfo("Entering getDepositAccountBalance API");
+    return accountBalanceService.getDepositAccountBalanceResponseEntity(customerId, accountId);
+  }
+  @ApiOperation(value = "Returns selected loan account balance")
+  @RequestMapping(value = "/{customerId}/accounts/LOAN/{accountId}/balance", produces = {"application/json"}, method = RequestMethod.GET)
+  public ResponseEntity<LoanAccountBalanceResponse> getLoanAccountBalance(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "accountId", required = true) String accountId) {
+    ApplicationLogger.logInfo("Entering getCasaAccountBalance API");
+    return accountBalanceService.getLoanAccountBalanceResponseEntity(customerId, accountId);
+  }
   @ApiOperation(value = "Returns selected casa account details")
   @RequestMapping(value = "/{customerId}/accounts/CASA/{accountId}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<AccountDetailResponse> getCasaAccountDetail(@PathVariable(name = "customerId", required = true) String customerId,

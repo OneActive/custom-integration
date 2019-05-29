@@ -11,10 +11,10 @@ import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * AccountBalanceResponse
+ * CasaAccountBalanceResponse
  */
 @Validated
-public class AccountBalanceResponse {
+public class CasaAccountBalanceResponse {
 
   @JsonProperty("result")
   private Result result = null;
@@ -22,7 +22,7 @@ public class AccountBalanceResponse {
   @JsonProperty("accountSelected")
   private Account accountSelected = null;
 
-  public AccountBalanceResponse result(Result result) {
+  public CasaAccountBalanceResponse result(Result result) {
     this.result = result;
     return this;
   }
@@ -57,9 +57,9 @@ public class AccountBalanceResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AccountBalanceResponse accountBalanceResponse = (AccountBalanceResponse) o;
-    return Objects.equals(this.result, accountBalanceResponse.result)
-        && Objects.equals(this.accountSelected, accountBalanceResponse.accountSelected);
+    CasaAccountBalanceResponse casaAccountBalanceResponse = (CasaAccountBalanceResponse) o;
+    return Objects.equals(this.result, casaAccountBalanceResponse.result)
+        && Objects.equals(this.accountSelected, casaAccountBalanceResponse.accountSelected);
   }
 
   @Override

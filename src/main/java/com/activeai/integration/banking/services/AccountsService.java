@@ -3,8 +3,7 @@ package com.activeai.integration.banking.services;
 import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
 
-import com.activeai.integration.banking.domain.response.AccountBalanceResponse;
-import com.activeai.integration.banking.domain.response.AccountDetailResponse;
+import com.activeai.integration.banking.domain.response.CasaAccountBalanceResponse;
 import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.domain.response.DepositAccountsResponse;
 import com.activeai.integration.banking.domain.response.LoanAccountsResponse;
@@ -112,35 +111,7 @@ public class AccountsService {
     depositAccountsResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(depositAccountsResponse);
   }
-  /**
-   * Fetches Account Balance for selected Account
-   * You should map balance inside AccountSelected object along with accountId which is required
-   * @param customerId,accountId
-   * @return ResponseEntity of type AccountBalanceResponse
-   */
-  public ResponseEntity<AccountBalanceResponse> getAccountBalanceResponseEntity(String customerId, String accountId) {
-    AccountBalanceResponse accountBalanceResponse = new AccountBalanceResponse();
-    try {
-      HttpResponse<String> response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CASA_ACCOUNT_BALANCE_API_END_POINT, customerId, accountId))
-          .header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Account Balance Response Body Before Transformation :" + response.getBody());
-        String accountDetailResponseString = accountsResponseMapper.getManipulatedAccountsBalanceResponse(response.getBody());
-        ApplicationLogger.logInfo("Account Balance Response Body After Transformation :" + response.getBody());
-        accountBalanceResponse = objectMapper.readValue(accountDetailResponseString, AccountBalanceResponse.class);
-      }
-      return ResponseEntity.ok(accountBalanceResponse);
-    } catch (UnirestException e) {
-      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
-    } catch (IOException e) {
-      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
-    } catch (Exception e) {
-      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
-    }
-    accountBalanceResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
-    return ResponseEntity.ok(accountBalanceResponse);
-  }
+
 
   /**
    * Fetches Account Transactions for selected Account
