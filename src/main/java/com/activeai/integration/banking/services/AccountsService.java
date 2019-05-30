@@ -3,7 +3,6 @@ package com.activeai.integration.banking.services;
 import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
 
-import com.activeai.integration.banking.domain.response.CasaAccountBalanceResponse;
 import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.domain.response.DepositAccountsResponse;
 import com.activeai.integration.banking.domain.response.LoanAccountsResponse;

@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * CasaAccountBalanceResponse
  */
 @Validated
-public class CasaAccountBalanceResponse {
+public class AccountBalanceResponse {
 
   @JsonProperty("result")
   private Result result = null;
@@ -22,7 +22,7 @@ public class CasaAccountBalanceResponse {
   @JsonProperty("accountSelected")
   private Account accountSelected = null;
 
-  public CasaAccountBalanceResponse result(Result result) {
+  public AccountBalanceResponse result(Result result) {
     this.result = result;
     return this;
   }
@@ -57,9 +57,9 @@ public class CasaAccountBalanceResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CasaAccountBalanceResponse casaAccountBalanceResponse = (CasaAccountBalanceResponse) o;
-    return Objects.equals(this.result, casaAccountBalanceResponse.result)
-        && Objects.equals(this.accountSelected, casaAccountBalanceResponse.accountSelected);
+    AccountBalanceResponse accountBalanceResponse = (AccountBalanceResponse) o;
+    return Objects.equals(this.result, accountBalanceResponse.result)
+        && Objects.equals(this.accountSelected, accountBalanceResponse.accountSelected);
   }
 
   @Override

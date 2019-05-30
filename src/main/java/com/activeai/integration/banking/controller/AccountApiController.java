@@ -4,7 +4,7 @@ import com.activeai.integration.banking.domain.response.AccountDetailResponse;
 import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
 import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.domain.response.DepositAccountsResponse;
-import com.activeai.integration.banking.domain.response.CasaAccountBalanceResponse;
+import com.activeai.integration.banking.domain.response.AccountBalanceResponse;
 import com.activeai.integration.banking.domain.response.LoanAccountsResponse;
 import com.activeai.integration.banking.services.AccountsService;
 import com.activeai.integration.banking.services.AccountDetailsService;
@@ -36,7 +36,7 @@ public class AccountApiController {
 
   @ApiOperation(value = "Returns selected casa account balance")
   @RequestMapping(value = "/{customerId}/accounts/CASA/{accountId}/balance", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<CasaAccountBalanceResponse> getCasaAccountBalance(@PathVariable(name = "customerId", required = true) String customerId,
+  public ResponseEntity<AccountBalanceResponse> getCasaAccountBalance(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
     ApplicationLogger.logInfo("Entering getCasaAccountBalance API");
     return accountBalanceService.getCasaAccountBalanceResponseEntity(customerId, accountId);
