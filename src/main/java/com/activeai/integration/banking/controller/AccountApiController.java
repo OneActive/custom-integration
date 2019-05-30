@@ -35,42 +35,42 @@ public class AccountApiController {
   @Autowired private AccountBalanceService accountBalanceService;
 
   @ApiOperation(value = "Returns selected casa account balance")
-  @RequestMapping(value = "/{customerId}/accounts/CASA/{accountId}/balance", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/accounts/casa/{accountId}/balance", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<AccountBalanceResponse> getCasaAccountBalance(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
     ApplicationLogger.logInfo("Entering getCasaAccountBalance API");
     return accountBalanceService.getCasaAccountBalanceResponseEntity(customerId, accountId);
   }
   @ApiOperation(value = "Returns selected deposit account balance")
-  @RequestMapping(value = "/{customerId}/accounts/DEPOSIT/{accountId}/balance", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/accounts/deposit/{accountId}/balance", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<DepositAccountBalanceResponse> getDepositAccountBalance(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
     ApplicationLogger.logInfo("Entering getDepositAccountBalance API");
     return accountBalanceService.getDepositAccountBalanceResponseEntity(customerId, accountId);
   }
   @ApiOperation(value = "Returns selected loan account balance")
-  @RequestMapping(value = "/{customerId}/accounts/LOAN/{accountId}/balance", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/accounts/loan/{accountId}/balance", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<LoanAccountBalanceResponse> getLoanAccountBalance(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
     ApplicationLogger.logInfo("Entering getCasaAccountBalance API");
     return accountBalanceService.getLoanAccountBalanceResponseEntity(customerId, accountId);
   }
   @ApiOperation(value = "Returns selected casa account details")
-  @RequestMapping(value = "/{customerId}/accounts/CASA/{accountId}", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/accounts/casa/{accountId}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<AccountDetailResponse> getCasaAccountDetail(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
     ApplicationLogger.logInfo("Entering getCasaAccountDetail API");
     return accountDetailsService.getCasaAccountDetailsResponseEntity(customerId, accountId);
   }
   @ApiOperation(value = "Returns selected deposit account details")
-  @RequestMapping(value = "/{customerId}/accounts/DEPOSIT/{accountId}", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/accounts/deposit/{accountId}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<DepositAccountDetailResponse> getDepositAccountDetail(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
     ApplicationLogger.logInfo("Entering getDepositAccountDetail API");
     return accountDetailsService.getDepositAccountDetailsResponseEntity(customerId, accountId);
   }
   @ApiOperation(value = "Returns selected loan account details")
-  @RequestMapping(value = "/{customerId}/accounts/LOAN/{accountId}", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/accounts/loan/{accountId}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<LoanAccountDetailResponse> getLoanAccountDetail(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
     ApplicationLogger.logInfo("Entering getLoanAccountDetail API");
@@ -91,19 +91,19 @@ public class AccountApiController {
    * @return
    */
   @ApiOperation(value = "Returns list of casa accounts based on customer ID")
-  @RequestMapping(value = "/{customerId}/accounts/CASA", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/accounts/casa", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<AccountsResponse> getCasaAccounts(@PathVariable(name = "customerId", required = true) String customerId) {
     ApplicationLogger.logInfo("Entering getCasaAccountsResponseEntity API");
     return accountsService.getCasaAccountsResponseEntity(customerId);
   }
   @ApiOperation(value = "Returns list of deposit accounts based on customer ID")
-  @RequestMapping(value = "/{customerId}/accounts/DEPOSIT", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/accounts/deposit", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<DepositAccountsResponse> getDepositAccounts(@PathVariable(name = "customerId", required = true) String customerId) {
     ApplicationLogger.logInfo("Entering getDepositAccountsResponseEntity API");
     return accountsService.getDepositAccountsResponseEntity(customerId);
   }
   @ApiOperation(value = "Returns list of loan accounts based on customer ID")
-  @RequestMapping(value = "/{customerId}/accounts/LOAN", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/accounts/loan", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<LoanAccountsResponse> getLoanAccounts(@PathVariable(name = "customerId", required = true) String customerId) {
     ApplicationLogger.logInfo("Entering getLoanAccountsResponseEntity API");
     return accountsService.getLoanAccountsResponseEntity(customerId);
