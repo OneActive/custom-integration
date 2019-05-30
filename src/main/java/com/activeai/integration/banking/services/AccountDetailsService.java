@@ -92,9 +92,9 @@ public class AccountDetailsService {
           .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Deposit Account Details Response Body Before Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Loan Account Details Response Body Before Transformation :" + response.getBody());
         String accountDetailResponseString = accountsResponseMapper.getManipulatedAccountDetailsResponse(response.getBody());
-        ApplicationLogger.logInfo("Deposit Account Details Response Body After Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Loan Account Details Response Body After Transformation :" + response.getBody());
         loanAccountDetailResponse = objectMapper.readValue(accountDetailResponseString, LoanAccountDetailResponse.class);
       }
       return ResponseEntity.ok(loanAccountDetailResponse);
