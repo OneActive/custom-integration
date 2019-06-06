@@ -5,7 +5,15 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum AccountProductEnum {
 
-  FIXED_DEPOSIT("Fixed Deposit");
+  FIXED_DEPOSIT("Fixed Deposit"),
+
+  TERM_DEPOSIT("Term Deposit"),
+
+  HOME_LOAN("Home Loan"),
+
+  CAR_LOAN("Car Loan"),
+
+  PERSONAL_LOAN("Personal Loan");
 
   private String value;
 
