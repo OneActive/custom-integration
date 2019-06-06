@@ -1,11 +1,15 @@
 package com.activeai.integration.banking.controller;
 
+import com.activeai.integration.banking.domain.request.ActivationCardRequest;
+import com.activeai.integration.banking.domain.request.BlockCardRequest;
 import com.activeai.integration.banking.domain.request.DebitCardLimitConfirmRequest;
+import com.activeai.integration.banking.domain.response.BlockCardResponse;
 import com.activeai.integration.banking.domain.response.CardDetailResponse;
-import com.activeai.integration.banking.domain.response.CardsResponse;
-import com.activeai.integration.banking.domain.response.DebitCardLimitConfirmResponse;
-import com.activeai.integration.banking.domain.response.DebitCardLimitResponse;
 import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
+import com.activeai.integration.banking.domain.response.CardsResponse;
+import com.activeai.integration.banking.domain.response.DebitCardLimitResponse;
+import com.activeai.integration.banking.domain.response.DebitCardLimitConfirmResponse;
+import com.activeai.integration.banking.domain.response.ActivationCardResponse;
 import com.activeai.integration.banking.services.CardsService;
 import com.activeai.integration.banking.services.DebitCardService;
 import com.activeai.integration.banking.utils.ApplicationLogger;
@@ -79,6 +83,24 @@ public class CardsApiController {
     ApplicationLogger.logInfo("Entering getDebitCardLimitConfirm API");
     return debitCardService.getDebitLimitConfirmResponseEntity(debitCardLimitConfirmRequest);
   }
+
+  @ApiOperation("Return Blocking Status of Selected Card")
+  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/block", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.PUT)
+  public ResponseEntity<BlockCardResponse> blockCard(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final BlockCardRequest blockCardRequest) {
+       return cardsService.getBlockCardResponseEntity(blockCardRequest);
+  }
+
+  @ApiOperation("Return Activation Status of Selected Card")
+  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/activation", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.PUT)
+  public ResponseEntity<ActivationCardResponse> activationCard(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final ActivationCardRequest activationCardRequest) {
+    return cardsService.getActivationCardResponseEntity(activationCardRequest);
+  }
+
+
 
 
   @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/overseasUse", produces = {"application/json"}, consumes = {
