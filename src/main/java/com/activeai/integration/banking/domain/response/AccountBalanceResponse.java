@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * AccountBalanceResponse
+ * CasaAccountBalanceResponse
  */
 @Validated
 public class AccountBalanceResponse {

@@ -4,11 +4,9 @@ import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.request.ActivationCardRequest;
 import com.activeai.integration.banking.domain.request.BlockCardRequest;
-import com.activeai.integration.banking.domain.response.BlockCardResponse;
-import com.activeai.integration.banking.domain.response.CardDetailResponse;
-import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
-import com.activeai.integration.banking.domain.response.CardsResponse;
-import com.activeai.integration.banking.domain.response.ActivationCardResponse;
+import com.activeai.integration.banking.domain.request.ReplaceCardConfirmRequest;
+import com.activeai.integration.banking.domain.request.ResetPinConfirmRequest;
+import com.activeai.integration.banking.domain.response.*;
 import com.activeai.integration.banking.mapper.response.ActivationCardResponseMapper;
 import com.activeai.integration.banking.mapper.response.BlockCardResponseMapper;
 import com.activeai.integration.banking.mapper.response.CardsResponseMapper;
@@ -277,5 +275,53 @@ public class CardsService {
       ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
     }
     return new ResponseEntity<>(activationCardResponse, HttpStatus.OK);
+  }
+
+  public ResponseEntity<ResetPinConfirmResponse> getResetPinResponseEntity(ResetPinConfirmRequest resetPinConfirmRequest) {
+    ResetPinConfirmResponse resetPinConfirmResponse = null;
+    try {
+      HttpResponse<String> response =
+          Unirest.post(propertyUtil.getAPIUrlForResetPin(PropertyConstants.RESET_PIN_CONFIRM_API_ENDPOINT, resetPinConfirmRequest))
+              .header("Content-Type", "application/json").body(objectMapper.writeValueAsString(resetPinConfirmRequest)).asString();
+      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
+        ApplicationLogger.logInfo("Reset Pin Confirm Response Body Before Transformation :" + response.getBody());
+        String resetPinConfirmResponseString = cardsResponseMapper.getManipulatedResetPinConfirmResponse(response.getBody());
+        ApplicationLogger.logInfo("Reset Pin Confirm Response Body After Transformation :" + response.getBody());
+        resetPinConfirmResponse = objectMapper.readValue(resetPinConfirmResponseString, ResetPinConfirmResponse.class);
+      }
+      return new ResponseEntity<>(resetPinConfirmResponse, HttpStatus.valueOf(response.getStatus()));
+    } catch (UnirestException e) {
+      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+    } catch (IOException e) {
+      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+    } catch (Exception e) {
+      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+    }
+    return new ResponseEntity<>(resetPinConfirmResponse, HttpStatus.OK);
+  }
+
+  public ResponseEntity<ReplaceCardConfirmResponse> getReplaceCardResponseEntity(ReplaceCardConfirmRequest replaceCardConfirmRequest) {
+    ReplaceCardConfirmResponse replaceCardConfirmResponse = null;
+    try {
+      HttpResponse<String> response =
+          Unirest.post(propertyUtil.getAPIUrlForReplaceCard(PropertyConstants.REPLACE_CARD_CONFIRM_API_ENDPOINT, replaceCardConfirmRequest))
+              .header("Content-Type", "application/json").body(objectMapper.writeValueAsString(replaceCardConfirmRequest)).asString();
+      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
+        ApplicationLogger.logInfo("Replace Card Confirm Response Body Before Transformation :" + response.getBody());
+        String replaceCardConfirmResponseString = cardsResponseMapper.getManipulatedReplaceCardConfirmResponse(response.getBody());
+        ApplicationLogger.logInfo("CardNumber :" + response.getBody());
+        replaceCardConfirmResponse = objectMapper.readValue(replaceCardConfirmResponseString, ReplaceCardConfirmResponse.class);
+      }
+      return new ResponseEntity<>(replaceCardConfirmResponse, HttpStatus.valueOf(response.getStatus()));
+    } catch (UnirestException e) {
+      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+    } catch (IOException e) {
+      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+    } catch (Exception e) {
+      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+    }
+    return new ResponseEntity<>(replaceCardConfirmResponse, HttpStatus.OK);
   }
 }

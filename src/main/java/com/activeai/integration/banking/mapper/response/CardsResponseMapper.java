@@ -33,4 +33,21 @@ public class CardsResponseMapper {
   }
 
 
+  /**
+   * In this method you can change the obtained string accordingly to the ResetPinConfirmResponse
+   * @param apiResponseBody
+   * @return String of ResetPinConfirmResponse
+   */
+  public String getManipulatedResetPinConfirmResponse(String apiResponseBody) {
+    return apiResponseBody;
+  }
+
+  /**
+   * In this method you can change the obtained string accordingly to the ReplaceCardConfirmResponse
+   * @param apiResponseBody
+   * @return String of ReplaceCardConfirmResponse
+   */
+  public String getManipulatedReplaceCardConfirmResponse(String apiResponseBody) {
+    return apiResponseBody;
+  }
 }

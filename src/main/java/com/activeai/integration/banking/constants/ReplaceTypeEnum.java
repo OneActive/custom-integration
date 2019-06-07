@@ -3,21 +3,17 @@ package com.activeai.integration.banking.constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum AccountProductEnum {
+public enum ReplaceTypeEnum {
 
-  FIXED_DEPOSIT("Fixed Deposit"),
+  REPLACE("REPLACE"),
 
-  TERM_DEPOSIT("Term Deposit"),
+  BLOCK_AND_REPLACE("BLOCK_AND_REPLACE"),
 
-  HOME_LOAN("Home Loan"),
-
-  CAR_LOAN("Car Loan"),
-
-  PERSONAL_LOAN("Personal Loan");
+  UNKNOWN("UNKNOWN");
 
   private String value;
 
-  AccountProductEnum(String value) {
+  ReplaceTypeEnum(String value) {
     this.value = value;
   }
 
@@ -28,8 +24,8 @@ public enum AccountProductEnum {
   }
 
   @JsonCreator
-  public static AccountProductEnum fromValue(String text) {
-    for (AccountProductEnum b : AccountProductEnum.values()) {
+  public static ReplaceTypeEnum fromValue(String text) {
+    for (ReplaceTypeEnum b : ReplaceTypeEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }
