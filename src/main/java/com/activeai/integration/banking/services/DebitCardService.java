@@ -63,7 +63,7 @@ public class DebitCardService {
   public ResponseEntity<DebitCardLimitConfirmResponse> getDebitLimitConfirmResponseEntity(DebitCardLimitConfirmRequest debitCardLimitConfirmRequest) {
     DebitCardLimitConfirmResponse debitCardLimitConfirmResponse = null;
     try {
-      HttpResponse<String> response = Unirest.get(propertyUtil
+      HttpResponse<String> response = Unirest.post(propertyUtil
           .getAPIUrl(PropertyConstants.DEBIT_CARD_LIMIT_CONFIRM_API_ENDPOINT, debitCardLimitConfirmRequest.getCustomerId(),
               debitCardLimitConfirmRequest.getCardDetails().getCardNumber())).header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());

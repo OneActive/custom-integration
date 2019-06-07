@@ -69,11 +69,11 @@ public class CardsApiController {
    * Getting DebitCardLimit
    */
   @ApiOperation(value = "Returns Debit Card Limit")
-  @RequestMapping(value = "/{customerId}/debitcards/{cardId}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/debitcards/{cardNumber}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<DebitCardLimitResponse> getDebitCardLimits(@PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardId", required = true) String cardId) {
+      @PathVariable(value = "cardNumber", required = true) String cardNumber) {
     logger.info("Entering getDebitLimitResponse");
-    return debitCardService.getDebitCardLimitResponseEntity(customerId, cardId);
+    return debitCardService.getDebitCardLimitResponseEntity(customerId, cardNumber);
   }
 
   @ApiOperation(value = "Returns Credit Card Limit")
@@ -88,9 +88,9 @@ public class CardsApiController {
    * Getting DebitCardLimitConfirmation
    */
   @ApiOperation(value = "Returns Confirmation of Debit Card Limit")
-  @RequestMapping(value = "/{customerId}/debitcards/limit/confirm", produces = {"application/json"}, consumes = {
+  @RequestMapping(value = "/{customerId}/debitcards/{cardNumber}/limit/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST) public ResponseEntity<DebitCardLimitConfirmResponse> confirmDebitCardLimit(
-      @PathVariable(value = "customerId", required = true) String customerId,
+      @PathVariable(value = "customerId", required = true) String customerId,@PathVariable(value = "cardNumber", required = true) String cardNumber,
       @RequestBody final DebitCardLimitConfirmRequest debitCardLimitConfirmRequest) {
     ApplicationLogger.logInfo("Entering getDebitCardLimitConfirm API");
     return debitCardService.getDebitLimitConfirmResponseEntity(debitCardLimitConfirmRequest);
@@ -109,7 +109,7 @@ public class CardsApiController {
    * Getting BlockCardStatus
    */
   @ApiOperation("Return Blocking Status of Selected Card")
-  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/block", produces = {"application/json"}, consumes = {
+  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/block/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<BlockCardResponse> blockCard(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final BlockCardRequest blockCardRequest) {
@@ -121,7 +121,7 @@ public class CardsApiController {
    * Getting ActivateCardStatus
    */
   @ApiOperation("Return Activation Status of Selected Card")
-  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/activation", produces = {"application/json"}, consumes = {
+  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/activation/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<ActivationCardResponse> activationCard(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final ActivationCardRequest activationCardRequest) {
@@ -133,7 +133,7 @@ public class CardsApiController {
    * Getting ResetPin
    */
   @ApiOperation("Return Reset Pin Status of Selected Card")
-  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/resetPin", produces = {"application/json"}, consumes = {
+  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/resetPin/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<ResetPinConfirmResponse> resetPin(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final ResetPinConfirmRequest resetPinConfirmRequest) {
@@ -145,7 +145,7 @@ public class CardsApiController {
    * Getting ResetPin
    */
   @ApiOperation("Return Status of Replacement of Card")
-  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/replaceCard", produces = {"application/json"}, consumes = {
+  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/replaceCard/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<ReplaceCardConfirmResponse> replaceCard(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final ReplaceCardConfirmRequest replaceCardConfirmRequest) {
