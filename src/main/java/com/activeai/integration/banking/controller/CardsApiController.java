@@ -77,11 +77,11 @@ public class CardsApiController {
   }
 
   @ApiOperation(value = "Returns Credit Card Limit")
-  @RequestMapping(value = "/{customerId}/creditcards/{cardId}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/creditcards/{cardNumber}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CreditCardLimitResponse> getCreditCardLimits(@PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardId", required = true) String cardId) {
+      @PathVariable(value = "cardNumber", required = true) String cardNumber) {
     logger.info("Entering getCreditLimitResponse");
-    return creditCardService.getCreditCardLimitResponseEntity(customerId, cardId);
+    return creditCardService.getCreditCardLimitResponseEntity(customerId, cardNumber);
   }
 
   /*
