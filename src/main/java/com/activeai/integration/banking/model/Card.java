@@ -65,9 +65,6 @@ public class Card {
   @JsonProperty("paymentDueDate")
   private String paymentDueDate = null;
 
-  @JsonProperty("creditLimit")
-  private Double creditLimit = null;
-
   @JsonProperty("availableCreditLimit")
   private Double availableCreditLimit = null;
 
@@ -113,6 +110,12 @@ public class Card {
   @JsonProperty("maxDomesticATMLimit")
   private String maxDomesticATMLimit = null;
 
+  @JsonProperty("maxCreditLimit")
+  private String maxCreditLimit = null;
+
+  @JsonProperty("maxCashLimit")
+  private String maxCashLimit = null;
+
   @JsonProperty("maxDomesticPOSLimit")
   private String maxDomesticPOSLimit = null;
 
@@ -133,6 +136,12 @@ public class Card {
 
   @JsonProperty("internationalPOSLimit")
   private String internationalPOSLimit;
+
+  @JsonProperty("creditLimit")
+  private String creditLimit = null;
+
+  @JsonProperty("cashLimit")
+  private String cashLimit = null;
 
   @JsonProperty("isInternationalEnabled")
   private boolean isInternationalEnabled;
@@ -408,24 +417,6 @@ public class Card {
     this.lastStatementDate = lastStatementDate;
   }
 
-  public Card creditLimit(Double creditLimit) {
-    this.creditLimit = creditLimit;
-    return this;
-  }
-
-  /**
-   * Credit limit
-   *
-   * @return creditLimit
-   **/
-  public Double getCreditLimit() {
-    return creditLimit;
-  }
-
-  public void setCreditLimit(Double creditLimit) {
-    this.creditLimit = creditLimit;
-  }
-
   public Card availableCreditLimit(Double availableCreditLimit) {
     this.availableCreditLimit = availableCreditLimit;
     return this;
@@ -652,9 +643,35 @@ public class Card {
 
   public void setAvailableCash(Double availableCash) { this.availableCash = availableCash; }
 
+    public String getMaxCreditLimit() {
+        return maxCreditLimit;
+    }
 
+    public void setMaxCreditLimit(String maxCreditLimit) {
+        this.maxCreditLimit = maxCreditLimit;
+    }
 
-  @Override public String toString() {
+    public String getMaxCashLimit() {
+        return maxCashLimit;
+    }
+
+    public void setMaxCashLimit(String maxCashLimit) {
+        this.maxCashLimit = maxCashLimit;
+    }
+
+    public void setCreditLimit(String creditLimit) {
+        this.creditLimit = creditLimit;
+    }
+
+    public String getCashLimit() {
+        return cashLimit;
+    }
+
+    public void setCashLimit(String cashLimit) {
+        this.cashLimit = cashLimit;
+    }
+
+    @Override public String toString() {
     final StringBuilder sb = new StringBuilder("Card{");
     sb.append("productCode='").append(productCode).append('\'');
     sb.append(", bankName='").append(bankName).append('\'');
@@ -673,7 +690,6 @@ public class Card {
     sb.append(", amountDue=").append(amountDue);
     sb.append(", minimumPayment=").append(minimumPayment);
     sb.append(", paymentDueDate='").append(paymentDueDate).append('\'');
-    sb.append(", creditLimit=").append(creditLimit);
     sb.append(", availableCreditLimit=").append(availableCreditLimit);
     sb.append(", temporaryCreditLimit=").append(temporaryCreditLimit);
     sb.append(", permanentCreditLimit=").append(permanentCreditLimit);
@@ -693,6 +709,10 @@ public class Card {
     sb.append(", domesticPOSLimit='").append(domesticPOSLimit).append('\'');
     sb.append(", maxInternationalATMLimit='").append(maxInternationalATMLimit).append('\'');
     sb.append(", maxInternationalPOSLimit='").append(maxInternationalPOSLimit).append('\'');
+    sb.append(", maxCreditLimit='").append(maxCreditLimit).append('\'');
+    sb.append(", maxCashLimit='").append(maxCashLimit).append('\'');
+    sb.append(", creditLimit='").append(creditLimit).append('\'');
+    sb.append(", cashLimit='").append(cashLimit).append('\'');
     sb.append(", internationalATMLimit='").append(internationalATMLimit).append('\'');
     sb.append(", internationalPOSLimit='").append(internationalPOSLimit).append('\'');
     sb.append(", isInternationalEnabled=").append(isInternationalEnabled);

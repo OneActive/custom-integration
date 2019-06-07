@@ -38,6 +38,12 @@ public class CardLimit {
   @JsonProperty("newInternationalATMLimit")
   private String newInternationalATMLimit;
 
+  @JsonProperty("newCreditLimit")
+  private String newCreditLimit;
+
+  @JsonProperty("newCashLimit")
+  private String newCashLimit;
+
   @JsonProperty("referenceId")
   private String referenceId;
 
@@ -180,6 +186,22 @@ public class CardLimit {
     this.newInternationalATMLimit = newInternationalATMLimit;
   }
 
+  public String getNewCreditLimit() {
+    return newCreditLimit;
+  }
+
+  public void setNewCreditLimit(String newCreditLimit) {
+    this.newCreditLimit = newCreditLimit;
+  }
+
+  public String getNewCashLimit() {
+    return newCashLimit;
+  }
+
+  public void setNewCashLimit(String newCashLimit) {
+    this.newCashLimit = newCashLimit;
+  }
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -209,6 +231,8 @@ public class CardLimit {
     sb.append(", newDomesticPOSLimit='").append(newDomesticPOSLimit).append('\'');
     sb.append(", newInternationalPOSLimit='").append(newInternationalPOSLimit).append('\'');
     sb.append(", newInternationalATMLimit='").append(newInternationalATMLimit).append('\'');
+    sb.append(", newCreditLimit='").append(newCreditLimit).append('\'');
+    sb.append(", newCashLimit='").append(newCashLimit).append('\'');
     sb.append(", transactionStatus='").append(transactionStatus).append('\'');
     sb.append(", referenceId='").append(referenceId).append('\'');
     sb.append('}');

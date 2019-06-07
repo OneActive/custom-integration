@@ -2,15 +2,11 @@ package com.activeai.integration.banking.controller;
 
 import com.activeai.integration.banking.domain.request.ActivationCardRequest;
 import com.activeai.integration.banking.domain.request.BlockCardRequest;
+import com.activeai.integration.banking.domain.request.CreditCardLimitConfirmRequest;
 import com.activeai.integration.banking.domain.request.DebitCardLimitConfirmRequest;
-import com.activeai.integration.banking.domain.response.BlockCardResponse;
-import com.activeai.integration.banking.domain.response.CardDetailResponse;
-import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
-import com.activeai.integration.banking.domain.response.CardsResponse;
-import com.activeai.integration.banking.domain.response.DebitCardLimitResponse;
-import com.activeai.integration.banking.domain.response.DebitCardLimitConfirmResponse;
-import com.activeai.integration.banking.domain.response.ActivationCardResponse;
+import com.activeai.integration.banking.domain.response.*;
 import com.activeai.integration.banking.services.CardsService;
+import com.activeai.integration.banking.services.CreditCardService;
 import com.activeai.integration.banking.services.DebitCardService;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,6 +35,7 @@ public class CardsApiController {
   @Autowired private ObjectMapper objectMapper;
   @Autowired private CardsService cardsService;
   @Autowired private DebitCardService debitCardService;
+  @Autowired private CreditCardService creditCardService;
 
   private static final Logger logger = LoggerFactory.getLogger(CardsApiController.class);
 
@@ -75,6 +72,14 @@ public class CardsApiController {
     return debitCardService.getDebitCardLimitResponseEntity(customerId, cardId);
   }
 
+  @ApiOperation(value = "Returns Credit Card Limit")
+  @RequestMapping(value = "/{customerId}/creditcards/{cardId}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
+  public ResponseEntity<CreditCardLimitResponse> getCreditCardLimits(@PathVariable(value = "customerId", required = true) String customerId,
+      @PathVariable(value = "cardId", required = true) String cardId) {
+    logger.info("Entering getCreditLimitResponse");
+    return creditCardService.getCreditCardLimitResponseEntity(customerId, cardId);
+  }
+
   @ApiOperation(value = "Returns Confirmation of Debit Card Limit")
   @RequestMapping(value = "/{customerId}/debitcards/limit/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST) public ResponseEntity<DebitCardLimitConfirmResponse> confirmDebitCardLimit(
@@ -82,6 +87,15 @@ public class CardsApiController {
       @RequestBody final DebitCardLimitConfirmRequest debitCardLimitConfirmRequest) {
     ApplicationLogger.logInfo("Entering getDebitCardLimitConfirm API");
     return debitCardService.getDebitLimitConfirmResponseEntity(debitCardLimitConfirmRequest);
+  }
+
+  @ApiOperation(value = "Returns Confirmation of Credit Card Limit")
+  @RequestMapping(value = "/{customerId}/creditcards/limit/confirm", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.POST) public ResponseEntity<CreditCardLimitConfirmResponse> confirmCreditCardLimit(
+      @PathVariable(value = "customerId", required = true) String customerId,
+      @RequestBody final CreditCardLimitConfirmRequest creditCardLimitConfirmRequest) {
+    ApplicationLogger.logInfo("Entering getCreditCardLimitConfirm API");
+    return creditCardService.getCreditLimitConfirmResponseEntity(creditCardLimitConfirmRequest);
   }
 
   @ApiOperation("Return Blocking Status of Selected Card")
