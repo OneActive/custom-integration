@@ -56,4 +56,8 @@ public class PropertyUtil {
   public String getAPIUrlForResetPin(String propertyValue, ResetPinConfirmRequest resetPinConfirmRequest) {
     return env.getProperty(propertyValue);
   }
+
+  public String getAPIUrlForReplaceCard(String propertyValue, ReplaceCardConfirmRequest replaceCardConfirmRequest) {
+    return env.getProperty(propertyValue);
+  }
 }

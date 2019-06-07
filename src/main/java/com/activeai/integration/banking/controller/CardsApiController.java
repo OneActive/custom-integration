@@ -118,6 +118,17 @@ public class CardsApiController {
     return cardsService.getResetPinResponseEntity(resetPinConfirmRequest);
   }
 
+  /*
+   * Getting ResetPin
+   */
+  @ApiOperation("Return Status of Replacement of Card")
+  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/replaceCard", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.POST)
+  public ResponseEntity<ReplaceCardConfirmResponse> replaceCard(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final ReplaceCardConfirmRequest replaceCardConfirmRequest) {
+    ApplicationLogger.logInfo("Entering getReplaceCard Confirm API");
+    return cardsService.getReplaceCardResponseEntity(replaceCardConfirmRequest);
+  }
 
 
 
