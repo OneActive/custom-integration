@@ -88,7 +88,7 @@ public class BillPaymentService {
         BillPaymentResponse billPaymentResponse = null;
         try {
             HttpResponse<String> response =
-                    Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.BILL_PAYMENT_API_ENDPOINT, billPaymentRequest.getCustomerId(), billPaymentRequest.getBillerDetails().getBillerId() )).header("cache-control", "no-cache").asString();
+                    Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.BILL_PAYMENT_API_ENDPOINT, billPaymentRequest.getCustomerId(), billPaymentRequest.getBillerDetails().getBillerId() )).header("cache-control", "no-cache").asString();
             ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
             if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
                 ApplicationLogger.logInfo("Bill Payment Confirm Response Body Before Transformation :" + response.getBody());
