@@ -1,15 +1,7 @@
 package com.activeai.integration.banking.controller;
 
-import com.activeai.integration.banking.domain.request.ActivationCardRequest;
-import com.activeai.integration.banking.domain.request.BlockCardRequest;
-import com.activeai.integration.banking.domain.request.DebitCardLimitConfirmRequest;
-import com.activeai.integration.banking.domain.response.BlockCardResponse;
-import com.activeai.integration.banking.domain.response.CardDetailResponse;
-import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
-import com.activeai.integration.banking.domain.response.CardsResponse;
-import com.activeai.integration.banking.domain.response.DebitCardLimitResponse;
-import com.activeai.integration.banking.domain.response.DebitCardLimitConfirmResponse;
-import com.activeai.integration.banking.domain.response.ActivationCardResponse;
+import com.activeai.integration.banking.domain.request.*;
+import com.activeai.integration.banking.domain.response.*;
 import com.activeai.integration.banking.services.CardsService;
 import com.activeai.integration.banking.services.DebitCardService;
 import com.activeai.integration.banking.utils.ApplicationLogger;
@@ -67,6 +59,9 @@ public class CardsApiController {
     return cardsService.getCreditAccountTransactionsResponseEntity(customerId, cardNumber);
   }
 
+  /*
+   * Getting DebitCardLimit
+   */
   @ApiOperation(value = "Returns Debit Card Limit")
   @RequestMapping(value = "/{customerId}/debitcards/{cardId}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<DebitCardLimitResponse> getDebitCardLimits(@PathVariable(value = "customerId", required = true) String customerId,
@@ -75,6 +70,9 @@ public class CardsApiController {
     return debitCardService.getDebitCardLimitResponseEntity(customerId, cardId);
   }
 
+  /*
+   * Getting DebitCardLimitConfirmation
+   */
   @ApiOperation(value = "Returns Confirmation of Debit Card Limit")
   @RequestMapping(value = "/{customerId}/debitcards/limit/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST) public ResponseEntity<DebitCardLimitConfirmResponse> confirmDebitCardLimit(
@@ -84,22 +82,53 @@ public class CardsApiController {
     return debitCardService.getDebitLimitConfirmResponseEntity(debitCardLimitConfirmRequest);
   }
 
+  /*
+   * Getting BlockCardStatus
+   */
   @ApiOperation("Return Blocking Status of Selected Card")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/block", produces = {"application/json"}, consumes = {
-      "application/json"}, method = RequestMethod.PUT)
+      "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<BlockCardResponse> blockCard(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final BlockCardRequest blockCardRequest) {
+       ApplicationLogger.logInfo("Entering getBlockStatus API");
        return cardsService.getBlockCardResponseEntity(blockCardRequest);
   }
 
+  /*
+   * Getting ActivateCardStatus
+   */
   @ApiOperation("Return Activation Status of Selected Card")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/activation", produces = {"application/json"}, consumes = {
-      "application/json"}, method = RequestMethod.PUT)
+      "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<ActivationCardResponse> activationCard(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final ActivationCardRequest activationCardRequest) {
+    ApplicationLogger.logInfo("Entering getActivationStatus API");
     return cardsService.getActivationCardResponseEntity(activationCardRequest);
   }
 
+  /*
+   * Getting ResetPin
+   */
+  @ApiOperation("Return Reset Pin Status of Selected Card")
+  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/resetPin", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.POST)
+  public ResponseEntity<ResetPinConfirmResponse> resetPin(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final ResetPinConfirmRequest resetPinConfirmRequest) {
+    ApplicationLogger.logInfo("Entering getResetPin Confirm API");
+    return cardsService.getResetPinResponseEntity(resetPinConfirmRequest);
+  }
+
+  /*
+   * Getting ResetPin
+   */
+  @ApiOperation("Return Status of Replacement of Card")
+  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/replaceCard", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.POST)
+  public ResponseEntity<ReplaceCardConfirmResponse> replaceCard(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final ReplaceCardConfirmRequest replaceCardConfirmRequest) {
+    ApplicationLogger.logInfo("Entering getReplaceCard Confirm API");
+    return cardsService.getReplaceCardResponseEntity(replaceCardConfirmRequest);
+  }
 
 
 
@@ -165,22 +194,4 @@ public class CardsApiController {
     return response;
   }
 
-
-  @RequestMapping(value = "/{customerId}/cards/debitcards/{cardNumber}/resetPin", produces = {"application/json"}, consumes = {
-      "multipart/form-data"}, method = RequestMethod.PUT)
-  public ResponseEntity<CardDetailResponse> resetDebitCardPin(@PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardNumber", required = true) String cardNumber, @RequestParam(value = "resetType", required = true) String resetType,
-      @RequestParam(value = "newPin", required = true) String newPin) {
-    ResponseEntity<CardDetailResponse> response = null;
-    try {
-      response = new ResponseEntity<>(objectMapper.readValue(
-          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"cardDetail\" : {    \"branchId\" : \"branchId\",    \"product\" : \"product\",    \"closingBalance\" : 6.027456183070403,    \"branchName\" : \"branchName\",    \"type\" : \"CREDIT\",    \"accountNumber\" : \"accountNumber\",    \"cardIssuer\" : \"Visa\",    \"amountDue\" : 1.4658129805029452,    \"accountId\" : \"accountId\",    \"paymentDueDate\" : \"2000-01-23T04:56:07.000+00:00\",    \"lastStatementDate\" : \"2000-01-23T04:56:07.000+00:00\",    \"productCode\" : \"productCode\",    \"lastStatementBalance\" : 3.616076749251911,    \"oversearCardActivated\" : true,    \"minimumPayment\" : 5.962133916683182,    \"creditLimit\" : 5.637376656633329,    \"displayAccountNumber\" : \"123xxxx890\",    \"permanentCreditLimit\" : 9.301444243932576,    \"category\" : \"category\",    \"openingBalance\" : 0.8008281904610115,    \"availableCreditLimit\" : 2.3021358869347655,    \"temporaryCreditLimit\" : 7.061401241503109,    \"status\" : \"ACTIVE\"  }}",
-          CardDetailResponse.class), HttpStatus.OK);
-    } catch (IOException e) {
-      logger.error("Couldn't serialize response for content type application/json", e);
-      response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    return response;
-  }
 }

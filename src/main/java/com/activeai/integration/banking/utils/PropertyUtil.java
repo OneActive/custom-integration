@@ -1,9 +1,6 @@
 package com.activeai.integration.banking.utils;
 
-import com.activeai.integration.banking.domain.request.ActivationCardRequest;
-import com.activeai.integration.banking.domain.request.BlockCardRequest;
-import com.activeai.integration.banking.domain.request.FundTransferRequest;
-import com.activeai.integration.banking.domain.request.PayeesRequest;
+import com.activeai.integration.banking.domain.request.*;
 import com.activeai.integration.banking.model.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +50,14 @@ public class PropertyUtil {
   }
 
   public String getAPIUrlForActivateCard(String propertyValue, ActivationCardRequest activationCardRequest) {
+    return env.getProperty(propertyValue);
+  }
+
+  public String getAPIUrlForResetPin(String propertyValue, ResetPinConfirmRequest resetPinConfirmRequest) {
+    return env.getProperty(propertyValue);
+  }
+
+  public String getAPIUrlForReplaceCard(String propertyValue, ReplaceCardConfirmRequest replaceCardConfirmRequest) {
     return env.getProperty(propertyValue);
   }
 }

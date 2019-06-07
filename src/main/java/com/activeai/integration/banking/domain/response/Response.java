@@ -5,6 +5,7 @@ import java.util.Objects;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import com.activeai.integration.banking.constants.StatusEnum;
 import com.activeai.integration.banking.model.Result;
 import org.springframework.validation.annotation.Validated;
 
@@ -18,6 +19,8 @@ public class Response {
 
   @JsonProperty("result")
   private Result result = null;
+
+
 
   public Response result(Result result) {
     this.result = result;
