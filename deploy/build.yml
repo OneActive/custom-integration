@@ -40,7 +40,7 @@ phases:
       - echo Pushing the Docker image...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$GIT_SHA
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$VERSION
-      - TASK_ID=`aws ecs list-tasks --cluster $CLUSTER_NAME --service $SERVICE_NAME | python -c "import sys, json; print json.load(sys.stdin)[\"taskArns\"][0]"`
+      - TASK_ID=`aws ecs list-tasks --cluster $CLUSTER_NAME --service $SERVICE_NAME | python -c "import sys, json; data = json.load(sys.stdin)[\"taskArns\"];  print(dict(enumerate(data)).get(0, \"\"))"`
       - echo $TASK_ID
       - echo Restarting the ECS Task...
       - echo "if [ '${CLUSTER_NAME}' == 'develop-saas-portal' ] ; then aws ecs stop-task --task '$TASK_ID' --cluster $CLUSTER_NAME ; fi" > /tmp/kill
