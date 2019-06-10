@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- The contents of this file will be loaded for each web application -->
+<Context>
+
+    <!-- Default set of monitored resources. If one of these changes, the    -->
+    <!-- web application will be reloaded.                                   -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="" />
+    -->
+
+    <Resource name="jms/mqConnectionFactory"
+              auth="Container"
+              type="org.apache.activemq.ActiveMQConnectionFactory"
+              description="JMS Connection Factory"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              brokerURL="vm://localhost:61616"
+              trustAllPackages="true" />
+
+    <Resource name="jms/socialInQueue"
+              auth="Container"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="SocialInQueue"/>
+
+    <Resource name="jms/socialOutQueue"
+              auth="Container"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="SocialOutQueue"/>
+
+    <Resource name="jms/auditQueue"
+              auth="Container"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="AuditQueue"/>
+
+    <Resource name="jms/transactionAuditQueue"
+              auth="Container"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="TransactionAuditQueue"/>
+
+    <Resource name="jms/userProfileQueue"
+              auth="Container"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="UserProfileQueue"/>
+
+    <!-- For Retail banking -->
+    <Resource name="jms/loginQueue"
+              auth="Container"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="LoginQueue"/>
+
+    <Resource name="jms/spendQueryQueue"
+              auth="Container"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="spendQueryQueue"/>
+
+    <Resource name="jdbc/billingDB"
+              global="jdbc/billingDB"
+              auth="Container"
+              type="javax.sql.DataSource"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://$MYSQL_HOST:$MYSQL_PORT/$MYSQL_DATABASE"
+              username="root"
+              password="password"
+              maxTotal="100"
+              maxIdle="20"
+              minIdle="5"
+              maxWaitMillis="10000"/>
+
+    <!-- INCUDE_CUSTOMER_RESOURCES -->
+
+    <Resources cachingAllowed="false" antiResourceLocking="false" antiJARLocking="true" cacheMaxSize="0" cacheTTL="1" />
+</Context>

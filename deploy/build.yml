@@ -1,0 +1,45 @@
+version: 0.2
+
+env:
+  variables:
+   CLUSTER_NAME : "develop-saas-portal"
+   AWS_ACCOUNT_ID : "940330296631"
+   IMAGE_REPO_NAME : "banking-integration"
+   SERVICE_NAME : "banking-integration"
+   ENVIRONMENT: "Development"
+   VERSION : "latest"
+   BUILD : "docker"
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - GIT_SHA=$(git rev-parse --short HEAD)
+      - echo $GIT_SHA
+      - apt-get update && apt-get -y install gettext-base
+      -
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - mvn clean install -DskipTests
+      - cat Dockerfile | envsubst > Dockerfile.banking-integration
+      - cat banking-integration
+      - docker build -t $IMAGE_REPO_NAME:$GIT_SHA -f banking-integration .
+      - docker tag $IMAGE_REPO_NAME:$GIT_SHA $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$GIT_SHA
+      - docker tag $IMAGE_REPO_NAME:$GIT_SHA $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$VERSION
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$GIT_SHA
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$VERSION
+      - TASK_ID=`aws ecs list-tasks --cluster $CLUSTER_NAME --service $SERVICE_NAME | python -c "import sys, json; print json.load(sys.stdin)[\"taskArns\"][0]"`
+      - echo $TASK_ID
+      - echo Restarting the ECS Task...
+      - echo "if [ '${CLUSTER_NAME}' == 'develop-saas-portal' ] ; then aws ecs stop-task --task '$TASK_ID' --cluster $CLUSTER_NAME ; fi" > /tmp/kill
+      - bash /tmp/kill
+
+cache:
+  paths:
+    - '/root/.m2/**/*'

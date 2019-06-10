@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# exit if any command in this script fails
+set -e
+
+# enable bash debugging
+set -x
+
+set -o pipefail
+
+
+export WORK_DIR='/opt/tomcat'
+export DEPLOY_DIR='/opt/deploy'
+
+#chmod +x /opt/deploy/load_ssm
+#/opt/deploy/load_ssm $ENVIRONMENT
+#source .env
+
+if [ ! -d "$WORK_DIR" ]; then
+
+  cd "$DEPLOY_DIR"
+  SERVER_TGZ="server.tar.gz"
+
+  tar -xf "$SERVER_TGZ" -C "$DEPLOY_DIR"
+
+  ls $DEPLOY_DIR
+  mv $DEPLOY_DIR/apache-tomcat* "$WORK_DIR"
+  mv $DEPLOY_DIR/banking-*.war "$WORK_DIR/webapps/banking-integration.war"
+  envsubst < "$DEPLOY_DIR/tomcat.conf" > /etc/supervisor/conf.d/tomcat.conf
+
+fi
+
+#start supervisor
+supervisord -n -c /etc/supervisor/supervisord.conf

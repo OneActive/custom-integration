@@ -1,0 +1,50 @@
+#!/bin/bash
+
+set -e
+
+# enable bash debugging
+set -x
+
+set -o pipefail
+
+file="$1"
+
+get_parameter () {
+ python - <<END
+import os
+import boto3
+import subprocess, json
+
+input="$1"
+env_domain=str(input.split("/")[1])
+env_type=str(input.split(env_domain+"/",1)[1])
+
+if env_type=="Staging":
+  substitute="Staging"
+elif env_type=="Development":
+  substitute="Dev"
+else:
+  substitute="Prod"
+
+
+f = open(".env", "w")
+
+session = boto3.Session(region_name='ap-southeast-1')
+ssm = session.client('ssm')
+list = dict(ssm.get_parameter(Name=env_domain))
+a = list.get("Parameter").get("Value").split(",")
+region="ap-southeast-1"
+for x in a:
+  d = str(x)
+  item="/"+env_domain+"/"+substitute+"/"+d
+  var = subprocess.check_output(['aws --region %s ssm get-parameter --name %s' %(region,item)], shell=True)
+  var_dict = json.loads(var)
+  value = str(var_dict.get('Parameter').get('Value'))
+  key=str(item.split(substitute +"/",1)[1])[:-1]
+  command='export %s="%s"'%(key.strip('\"'),value)
+  print command
+  f.write(command + '\n')
+END
+}
+get_parameter "$file"
+cat .env
