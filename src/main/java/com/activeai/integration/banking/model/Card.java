@@ -146,6 +146,10 @@ public class Card {
   @JsonProperty("isInternationalEnabled")
   private boolean isInternationalEnabled;
 
+  public String getCreditLimit() {
+    return creditLimit;
+  }
+
   public String getCardHolderName() {
     return cardHolderName;
   }

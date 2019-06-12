@@ -6,10 +6,18 @@ import com.activeai.integration.banking.domain.request.ActivationCardRequest;
 import com.activeai.integration.banking.domain.request.BlockCardRequest;
 import com.activeai.integration.banking.domain.request.ReplaceCardConfirmRequest;
 import com.activeai.integration.banking.domain.request.ResetPinConfirmRequest;
-import com.activeai.integration.banking.domain.response.*;
+import com.activeai.integration.banking.domain.response.CardDetailResponse;
+import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
+import com.activeai.integration.banking.domain.response.CardsResponse;
+import com.activeai.integration.banking.domain.response.BlockCardResponse;
 import com.activeai.integration.banking.mapper.response.ActivationCardResponseMapper;
 import com.activeai.integration.banking.mapper.response.BlockCardResponseMapper;
 import com.activeai.integration.banking.mapper.response.CardsResponseMapper;
+import com.activeai.integration.banking.domain.response.ActivationCardResponse;
+import com.activeai.integration.banking.domain.response.ReplaceCardConfirmResponse;
+import com.activeai.integration.banking.domain.response.ResetPinConfirmResponse;
+import com.activeai.integration.banking.domain.request.InternationalCardUsageRequest;
+import com.activeai.integration.banking.domain.response.InternationalUsageResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -171,9 +179,9 @@ public class CardsService {
                       .asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Credit Cards Response Body Before Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Debit Cards Response Body Before Transformation :" + response.getBody());
         String cardsResponseString = cardsResponseMapper.getManipulatedCardsResponse(response.getBody());
-        ApplicationLogger.logInfo("Credit Cards Response Body After Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Debit Cards Response Body After Transformation :" + response.getBody());
         cardsResponse = objectMapper.readValue(cardsResponseString, CardsResponse.class);
       }
       return new ResponseEntity<>(cardsResponse, HttpStatus.valueOf(response.getStatus()));
@@ -201,9 +209,9 @@ public class CardsService {
               .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Credit Card Details Response Body Before Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Debit Card Details Response Body Before Transformation :" + response.getBody());
         String cardDetailsResponseString = cardsResponseMapper.getManipulatedCardDetailsResponse(response.getBody());
-        ApplicationLogger.logInfo("Credit Card Details Response Body After Transformation :" + response.getBody());
+        ApplicationLogger.logInfo("Debit Card Details Response Body After Transformation :" + response.getBody());
         cardDetailResponse = objectMapper.readValue(cardDetailsResponseString, CardDetailResponse.class);
       }
       return ResponseEntity.ok(cardDetailResponse);
@@ -324,4 +332,55 @@ public class CardsService {
     }
     return new ResponseEntity<>(replaceCardConfirmResponse, HttpStatus.OK);
   }
+  public ResponseEntity<InternationalUsageResponse> getInternationalUsageCardResponseEntity(InternationalCardUsageRequest internationalCardUsageRequest) {
+    InternationalUsageResponse internationalUsageResponse = new InternationalUsageResponse();
+    try {
+
+      HttpResponse<String> response =
+          Unirest
+              .post(propertyUtil.getAPIUrl(PropertyConstants.INTERNATIONAL_USAGE_ENABLED_API_END_POINT, internationalCardUsageRequest.getCustomerId(),internationalCardUsageRequest.getCardDetails().getCardNumber())).header("cache-control", "no-cache").asString();
+      ApplicationLogger.logInfo("International Usage API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
+        ApplicationLogger.logInfo(" International Usage Response Body Before Transformation :" + response.getBody());
+        String depositPlanResponseString = cardsResponseMapper.getManipulatedInternationalUsageResponse(response.getBody());
+        ApplicationLogger.logInfo("International Usage Response Body After Transformation :" + response.getBody());
+        internationalUsageResponse = objectMapper.readValue(depositPlanResponseString, InternationalUsageResponse.class);
+      }
+      return ResponseEntity.ok(internationalUsageResponse);
+    } catch (UnirestException e) {
+      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+    } catch (IOException e) {
+      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+    } catch (Exception e) {
+      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+    }
+    internationalUsageResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(internationalUsageResponse);
+  }
+  public ResponseEntity<InternationalUsageResponse> updateInternationalUsageFinalApiCall(InternationalCardUsageRequest internationalCardUsageRequest) {
+    InternationalUsageResponse internationalUsageResponse = new InternationalUsageResponse();
+    try {
+
+      HttpResponse<String> response =
+          Unirest
+              .post(propertyUtil.getAPIUrl(PropertyConstants.INTERNATIONAL_USAGE_API_END_POINT, internationalCardUsageRequest.getCustomerId(),internationalCardUsageRequest.getCardDetails().getCardNumber())).header("cache-control", "no-cache").asString();
+      ApplicationLogger.logInfo("International Usage API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
+        ApplicationLogger.logInfo(" International Usage Response Body Before Transformation :" + response.getBody());
+        String depositPlanResponseString = cardsResponseMapper.getManipulatedInternationalUsageResponse(response.getBody());
+        ApplicationLogger.logInfo("International Usage Response Body After Transformation :" + response.getBody());
+        internationalUsageResponse = objectMapper.readValue(depositPlanResponseString, InternationalUsageResponse.class);
+      }
+      return ResponseEntity.ok(internationalUsageResponse);
+    } catch (UnirestException e) {
+      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+    } catch (IOException e) {
+      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+    } catch (Exception e) {
+      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+    }
+    internationalUsageResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(internationalUsageResponse);
+  }
+
 }
