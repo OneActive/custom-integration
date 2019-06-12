@@ -50,4 +50,8 @@ public class CardsResponseMapper {
   public String getManipulatedReplaceCardConfirmResponse(String apiResponseBody) {
     return apiResponseBody;
   }
+  public String getManipulatedInternationalUsageResponse(String apiResponseBody) {
+    return apiResponseBody;
+  }
+
 }

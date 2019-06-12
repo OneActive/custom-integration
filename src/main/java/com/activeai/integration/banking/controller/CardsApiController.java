@@ -4,8 +4,21 @@ import com.activeai.integration.banking.domain.request.ActivationCardRequest;
 import com.activeai.integration.banking.domain.request.BlockCardRequest;
 import com.activeai.integration.banking.domain.request.CreditCardLimitConfirmRequest;
 import com.activeai.integration.banking.domain.request.DebitCardLimitConfirmRequest;
-import com.activeai.integration.banking.domain.request.*;
-import com.activeai.integration.banking.domain.response.*;
+import com.activeai.integration.banking.domain.request.ResetPinConfirmRequest;
+import com.activeai.integration.banking.domain.request.ReplaceCardConfirmRequest;
+import com.activeai.integration.banking.domain.request.InternationalCardUsageRequest;
+import com.activeai.integration.banking.domain.response.CardDetailResponse;
+import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
+import com.activeai.integration.banking.domain.response.CardsResponse;
+import com.activeai.integration.banking.domain.response.DebitCardLimitResponse;
+import com.activeai.integration.banking.domain.response.CreditCardLimitResponse;
+import com.activeai.integration.banking.domain.response.DebitCardLimitConfirmResponse;
+import com.activeai.integration.banking.domain.response.BlockCardResponse;
+import com.activeai.integration.banking.domain.response.CreditCardLimitConfirmResponse;
+import com.activeai.integration.banking.domain.response.ActivationCardResponse;
+import com.activeai.integration.banking.domain.response.ResetPinConfirmResponse;
+import com.activeai.integration.banking.domain.response.ReplaceCardConfirmResponse;
+import com.activeai.integration.banking.domain.response.InternationalUsageResponse;
 import com.activeai.integration.banking.services.CardsService;
 import com.activeai.integration.banking.services.CreditCardService;
 import com.activeai.integration.banking.services.DebitCardService;
@@ -173,6 +186,22 @@ public class CardsApiController {
     return response;
   }
 
+  @ApiOperation("Return International Usage of Card")
+  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/internationalUsage/enabled", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.POST)
+  public ResponseEntity<InternationalUsageResponse> updateInternationalUsage(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final InternationalCardUsageRequest internationalCardUsageRequest ) {
+    ApplicationLogger.logInfo("Entering updateInternationalUsage  API");
+    return cardsService.getInternationalUsageCardResponseEntity(internationalCardUsageRequest);
+  }
+  @ApiOperation("Return International Usage Final API Call ")
+  @RequestMapping(value = "/{customerId}/cards/{cardNumber}/internationalUsage/api", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.POST)
+  public ResponseEntity<InternationalUsageResponse> updateInternationalUsageFinalApiCall(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final InternationalCardUsageRequest internationalCardUsageRequest ) {
+    ApplicationLogger.logInfo("Entering updateInternationalUsage  API");
+    return cardsService.updateInternationalUsageFinalApiCall(internationalCardUsageRequest);
+  }
 
   @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/payment", produces = {"application/json"}, consumes = {
       "multipart/form-data"}, method = RequestMethod.PUT)
