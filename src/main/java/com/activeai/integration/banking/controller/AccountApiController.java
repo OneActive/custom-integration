@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@Api(value = "Accounts Related APIs", description = "Shows API Documentation Regards Accounts APIs")
+@Api(value = "Accounts Related APIs", description = "Shows API documentation regarding accounts APIs like current and savings account, loan accounts, deposit accounts")
 @RestController
 public class AccountApiController {
 

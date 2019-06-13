@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(value = "Login and Customer Profile Related APIs", description = "Shows API Documentation Regards Logins and Customer Profile APIs")
+@Api(value = "Login and Customer Profile Related APIs", description = "Shows API documentation regarding login and customer profile APIs")
 @RestController
 public class LoginApiController {
 
@@ -24,7 +24,7 @@ public class LoginApiController {
   @Autowired private ObjectMapper objectMapper;
   @Autowired private LoginService loginService;
 
-  @ApiOperation("Return Authorisation of user")
+  @ApiOperation("Return authorisation of user")
   @RequestMapping(value = "/login", produces = {"application/json"}, consumes = {"application/json"}, method = RequestMethod.POST)
   public ResponseEntity<LoginResponse> login(@RequestBody final UserLoginRequest userLoginRequest) {
     ApplicationLogger.logInfo("Entered to Login API");

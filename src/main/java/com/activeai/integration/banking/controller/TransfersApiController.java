@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 
-@Api(value = "Fund Transfer Related APIs", description = "Shows API Documentation Regards Fund Transfer APIs")
+@Api(value = "Fund Transfer Related APIs", description = "Shows API documentation regarding fund transfer APIs")
 @RestController
 public class TransfersApiController {
 

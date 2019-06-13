@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 
-@Api(value = "Cards Related APIs", description = "Shows API Documentation Regards Cards APIs") @RestController
+@Api(value = "Cards Related APIs", description = "Shows API documentation regarding cards APIs like credit card, debit card") @RestController
 public class CardsApiController {
 
   @Autowired private ObjectMapper objectMapper;
@@ -81,7 +81,7 @@ public class CardsApiController {
   /*
    * Getting DebitCardLimit
    */
-  @ApiOperation(value = "Returns Debit Card Limit")
+  @ApiOperation(value = "Returns debit card limit")
   @RequestMapping(value = "/{customerId}/debitcards/{cardNumber}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<DebitCardLimitResponse> getDebitCardLimits(@PathVariable(value = "customerId", required = true) String customerId,
       @PathVariable(value = "cardNumber", required = true) String cardNumber) {
@@ -89,7 +89,7 @@ public class CardsApiController {
     return debitCardService.getDebitCardLimitResponseEntity(customerId, cardNumber);
   }
 
-  @ApiOperation(value = "Returns Credit Card Limit")
+  @ApiOperation(value = "Returns credit card limit")
   @RequestMapping(value = "/{customerId}/creditcards/{cardNumber}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CreditCardLimitResponse> getCreditCardLimits(@PathVariable(value = "customerId", required = true) String customerId,
       @PathVariable(value = "cardNumber", required = true) String cardNumber) {
@@ -100,7 +100,7 @@ public class CardsApiController {
   /*
    * Getting DebitCardLimitConfirmation
    */
-  @ApiOperation(value = "Returns Confirmation of Debit Card Limit")
+  @ApiOperation(value = "Returns confirmation of debit card limit")
   @RequestMapping(value = "/{customerId}/debitcards/{cardNumber}/limit/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST) public ResponseEntity<DebitCardLimitConfirmResponse> confirmDebitCardLimit(
       @PathVariable(value = "customerId", required = true) String customerId,@PathVariable(value = "cardNumber", required = true) String cardNumber,
@@ -109,7 +109,7 @@ public class CardsApiController {
     return debitCardService.getDebitLimitConfirmResponseEntity(debitCardLimitConfirmRequest);
   }
 
-  @ApiOperation(value = "Returns Confirmation of Credit Card Limit")
+  @ApiOperation(value = "Returns confirmation of credit card limit")
   @RequestMapping(value = "/{customerId}/creditcards/limit/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST) public ResponseEntity<CreditCardLimitConfirmResponse> confirmCreditCardLimit(
       @PathVariable(value = "customerId", required = true) String customerId,
@@ -121,7 +121,7 @@ public class CardsApiController {
   /*
    * Getting BlockCardStatus
    */
-  @ApiOperation("Return Blocking Status of Selected Card")
+  @ApiOperation("Return blocking status of selected card")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/block/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<BlockCardResponse> blockCard(@PathVariable(name = "customerId", required = true) String customerId,
@@ -133,7 +133,7 @@ public class CardsApiController {
   /*
    * Getting ActivateCardStatus
    */
-  @ApiOperation("Return Activation Status of Selected Card")
+  @ApiOperation("Return activation status of selected card")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/activation/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<ActivationCardResponse> activationCard(@PathVariable(name = "customerId", required = true) String customerId,
@@ -145,7 +145,7 @@ public class CardsApiController {
   /*
    * Getting ResetPin
    */
-  @ApiOperation("Return Reset Pin Status of Selected Card")
+  @ApiOperation("Return reset pin status of selected card")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/resetPin/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<ResetPinConfirmResponse> resetPin(@PathVariable(name = "customerId", required = true) String customerId,
@@ -157,7 +157,7 @@ public class CardsApiController {
   /*
    * Getting ResetPin
    */
-  @ApiOperation("Return Status of Replacement of Card")
+  @ApiOperation("Return status of replacement of card")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/replaceCard/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<ReplaceCardConfirmResponse> replaceCard(@PathVariable(name = "customerId", required = true) String customerId,
@@ -186,7 +186,7 @@ public class CardsApiController {
     return response;
   }
 
-  @ApiOperation("Return International Usage of Card")
+  @ApiOperation("Return international usage of card is enabled or disabled")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/internationalUsage/enabled", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<InternationalUsageResponse> updateInternationalUsage(@PathVariable(name = "customerId", required = true) String customerId,
@@ -194,7 +194,7 @@ public class CardsApiController {
     ApplicationLogger.logInfo("Entering updateInternationalUsage  API");
     return cardsService.getInternationalUsageCardResponseEntity(internationalCardUsageRequest);
   }
-  @ApiOperation("Return International Usage Final API Call ")
+  @ApiOperation("Return international usage reference id and status ")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/internationalUsage/api", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<InternationalUsageResponse> updateInternationalUsageFinalApiCall(@PathVariable(name = "customerId", required = true) String customerId,
