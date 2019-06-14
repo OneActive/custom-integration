@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 
-@Api(value = "BillPayment Related APIs", description = "Shows API Documentation Regards Billpayment APIs")
+@Api(value = "BillPayment Related APIs", description = "Shows API documentation regarding billpayment APIs")
 @RestController
 public class BillPaymentApiController {
 
@@ -55,21 +55,21 @@ public class BillPaymentApiController {
     return response;
   }
 
-  @ApiOperation(value = "Returns list of Registered Billers based on customerId")
+  @ApiOperation(value = "Returns list of registered billers based on customerId")
   @RequestMapping(value = "/{customerId}/billers", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<BillerResponse> getRegisteredBillerListForCustomer(@PathVariable(name = "customerId", required = true) String customerId) {
     ApplicationLogger.logInfo("Entering getRegisteredBillers API");
     return billpaymentService.getRegisteredBillerResponseEntity(customerId);
   }
 
-  @ApiOperation(value = "Returns Biller Details of Biller based on billerId")
+  @ApiOperation(value = "Returns Biller details of biller based on billerId")
   @RequestMapping(value = "/{customerId}/billers/{billerId}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<BillerResponse> getBillerDetialsofBiller(@PathVariable(name = "customerId", required = true) String customerId,@PathVariable(name = "billerId", required = true) String billerId) {
     ApplicationLogger.logInfo("Entering getBillerDetails API");
     return billpaymentService.getBillerDetailsResponseEntity(customerId,billerId);
   }
 
-  @ApiOperation(value = "Returns Confirmation of Bill Payment")
+  @ApiOperation(value = "Returns confirmation of bill payment")
   @RequestMapping(value = "/{customerId}/bill/payment/confirm", produces = {"application/json"}, consumes = {"application/json"},
           method = RequestMethod.POST)
   public ResponseEntity<BillPaymentResponse> confirmBillPayment(@PathVariable(value = "customerId", required = true) String customerId,

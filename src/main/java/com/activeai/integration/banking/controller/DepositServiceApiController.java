@@ -17,27 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-@Api(value = "Deposit Plan Related APIs", description = "Shows API Documentation Regarding Deposit Plan APIs")
+@Api(value = "Deposit Plan Related APIs", description = "Shows API documentation regarding deposit plan APIs")
 @RestController
-public class DepositPlanApiController {
+public class DepositServiceApiController {
 
   @Autowired private ObjectMapper objectMapper;
   @Autowired private DepositService depositService;
 
-  @ApiOperation(value = "Returns available deposit plans")
+  @ApiOperation(value = "Returns available deposit service plans")
   @RequestMapping(value = "/{customerId}/deposit/plans", produces = {"application/json"}, consumes = {"application/json"}, method = RequestMethod.POST)
   public ResponseEntity<DepositServiceResponse> getDepositPlans(@PathVariable(name = "customerId", required = true) String customerId,@RequestBody final DepositServiceRequest depositServiceRequest) {
     ApplicationLogger.logInfo("Entering getDepositPlans API");
     return depositService.getDepositPlansResponseEntity(depositServiceRequest);
   }
-  @ApiOperation(value = "Returns nominees for deposit plans")
+  @ApiOperation(value = "Returns nominees for deposit service")
   @RequestMapping(value = "/{customerId}/deposit/nominees", produces = {"application/json"},consumes = {"application/json"}, method = RequestMethod.POST)
   public ResponseEntity<DepositServiceResponse> getDepositPlanNominees(@PathVariable(name = "customerId", required = true) String customerId,@RequestBody final DepositServiceRequest depositServiceRequest) {
     ApplicationLogger.logInfo("Entering getDepositPlanNominees API");
     return depositService.getDepositPlanNomineesResponseEntity(depositServiceRequest);
   }
 
-  @ApiOperation(value = "Returns fd status and reference id ")
+  @ApiOperation(value = "Returns fixed deposit status and reference id for open fd, close fd ")
   @RequestMapping(value = "/{customerId}/deposit/plan/apicall", produces = {"application/json"}, consumes = {"application/json"},method = RequestMethod.POST)
   public ResponseEntity<DepositServiceResponse> getDepositPlanFinalResponse(@PathVariable(name = "customerId", required = true) String customerId,@RequestBody final DepositServiceRequest depositServiceRequest) {
     ApplicationLogger.logInfo("Entering getDepositPlanFinalResponse API");

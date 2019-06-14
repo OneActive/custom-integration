@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Beta
-@Api(value = "Customer Profile Related APIs", description = "Shows API Documentation Regards Customer Profile APIs")
+@Api(value = "Customer Profile Related APIs", description = "Shows API documentation regarding customer profile APIs")
 @RestController
 public class CustomerProfileApiController {
 
