@@ -3,6 +3,7 @@ package com.activeai.integration.banking.model;
 import com.activeai.integration.banking.constants.AccountProductEnum;
 import com.activeai.integration.banking.constants.AccountStatusEnum;
 import com.activeai.integration.banking.constants.AccountTypeEnum;
+import com.activeai.integration.banking.constants.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.validation.annotation.Validated;
 
@@ -65,6 +66,15 @@ public class Account {
 
   @JsonProperty("ifscCode")
   private String ifscCode;
+
+  @JsonProperty("leavesCount")
+  private String leavesCount;
+
+  @JsonProperty("referenceId")
+  private String referenceId;
+
+  @JsonProperty("transactionStatus")
+  private StatusEnum transactionStatus;
 
   public String getIfscCode() {
     return ifscCode;
@@ -259,6 +269,30 @@ public class Account {
   }
 
 
+  public String getLeavesCount() {
+    return leavesCount;
+  }
+
+  public void setLeavesCount(String leavesCount) {
+    this.leavesCount = leavesCount;
+  }
+
+  public String getReferenceId() {
+    return referenceId;
+  }
+
+  public void setReferenceId(String referenceId) {
+    this.referenceId = referenceId;
+  }
+
+  public StatusEnum getTransactionStatus() {
+    return transactionStatus;
+  }
+
+  public void setTransactionStatus(StatusEnum transactionStatus) {
+    this.transactionStatus = transactionStatus;
+  }
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -277,13 +311,16 @@ public class Account {
         && Objects.equals(this.branchId, account.branchId) && Objects.equals(this.branchName, account.branchName)
         && Objects.equals(this.status, account.status) && Objects.equals(this.openingDate, account.openingDate)
         && Objects.equals(this.lastStatementDate, account.lastStatementDate)
+        && Objects.equals(this.leavesCount, account.leavesCount)
+        && Objects.equals(this.referenceId, account.referenceId)
+        && Objects.equals(this.transactionStatus, account.transactionStatus)
         && Objects.equals(this.lastStatementBalance, account.lastStatementBalance) && Objects.equals(this.balance, account.balance);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(productCode, product,accountName, bankName, accountType, displayAccountNumber, accountNumber, accountId, branchId, branchName, status,
-        openingDate, lastStatementDate, lastStatementBalance, balance);
+        openingDate, lastStatementDate, lastStatementBalance, balance, leavesCount, referenceId, transactionStatus);
   }
 
   @Override
@@ -307,6 +344,9 @@ public class Account {
     sb.append("    lastStatementBalance: ").append(toIndentedString(lastStatementBalance)).append("\n");
     sb.append("    balance: ").append(toIndentedString(balance)).append("\n");
     sb.append("    branchAddress: ").append(toIndentedString(branchAddress)).append("\n");
+    sb.append("    leavesCount: ").append(toIndentedString(leavesCount)).append("\n");
+    sb.append("    referenceId: ").append(toIndentedString(referenceId)).append("\n");
+    sb.append("    transactionStatus: ").append(toIndentedString(transactionStatus)).append("\n");
     sb.append("}");
     return sb.toString();
   }
