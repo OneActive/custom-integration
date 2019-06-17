@@ -60,4 +60,10 @@ public class PropertyUtil {
   public String getAPIUrlForReplaceCard(String propertyValue, ReplaceCardConfirmRequest replaceCardConfirmRequest) {
     return env.getProperty(propertyValue);
   }
+
+  public String getLoginAPIUrl(String propertyValue, String customerId, String accountId) {
+    return StringUtils.isNotEmpty(env.getProperty(MessageFormat.format(APIDoublePropertyPattern, customerId, propertyValue))) ?
+        env.getProperty(MessageFormat.format(APIDoublePropertyPattern, customerId, propertyValue)) :
+        env.getProperty(propertyValue);
+  }
 }

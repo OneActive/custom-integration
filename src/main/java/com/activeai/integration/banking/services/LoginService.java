@@ -43,11 +43,20 @@ public class LoginService {
     try {
       Map<String, String> auth = new HashMap<>();
       LoginResponse loginResponse = new LoginResponse();
+      auth.put("testuser1","password");
+      auth.put("testuser2","password");
+      auth.put("testuser3","password");
       auth.put("stuart", "stuart@123");
+      auth.put("james", "james@123");
+      auth.put("thanos", "thanos@123");
+      auth.put("jack","jack@123");
+      auth.put("noah","noah@123");
+      auth.put("jackson","jackson@123");
+      auth.put("ethan","ethan@123");
       if (userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))) {
         try {
           HttpResponse<String> response =
-              Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,userLoginRequest.getUserID(),null))
+              Unirest.post(propertyUtil.getLoginAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,userLoginRequest.getUserID(),null))
                   .header("Content-Type", "application/json")
                   .body(loginRequestMapper.getLoginRequestBody(userLoginRequest)).asString();
           ApplicationLogger
