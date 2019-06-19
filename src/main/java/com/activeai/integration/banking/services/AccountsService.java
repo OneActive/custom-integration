@@ -1,5 +1,6 @@
 package com.activeai.integration.banking.services;
 
+import com.activeai.integration.banking.apiservice.domain.response.CitiAccountResponse;
 import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
 
@@ -35,20 +36,24 @@ public class AccountsService {
 
   /**
    * Fetches list of Accounts
-   * @param customerId
+   * @param accesstoken   CITI BANAMEX
    * @return ResponseEntity of type AccountsResponse
    */
-  public ResponseEntity<AccountsResponse> getCasaAccountsResponseEntity(String customerId) {
-    AccountsResponse accountsResponse = new AccountsResponse();
+  public ResponseEntity<AccountsResponse> getCasaAccountsResponseEntity(String accesstoken) {
+    AccountsResponse accountsResponse = null;
     try {
       HttpResponse<String> response =
-          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CASA_ACCOUNT_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("Casa API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+          Unirest.get("https://sandbox.apihub.citi.com/gcb/api/v1/accounts").header("Authorization", "Bearer " + accesstoken)
+              .header("Content-Type", "application/json").header("uuid", "12345")
+              .header("client_id", "8929a349-d8b3-4584-8cea-95f56499adef").header("Accept", "application/json").asString();
+      ApplicationLogger
+          .logInfo("Casa API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
         ApplicationLogger.logInfo(" Casa Response Body Before Transformation :" + response.getBody());
-        String accountsResponseString = accountsResponseMapper.getManipulatedAccountsResponse(response.getBody());
-        ApplicationLogger.logInfo("Casa Response Body After Transformation :" + response.getBody());
-        accountsResponse = objectMapper.readValue(accountsResponseString, AccountsResponse.class);
+        //to pojo
+        CitiAccountResponse citiAccountResponse = objectMapper.readValue(response.getBody(), CitiAccountResponse.class);
+        accountsResponse = accountsResponseMapper.getManipulatedCasaAccountsResponse(citiAccountResponse);
+        ApplicationLogger.logInfo("Casa Response Body After Transformation :" + accountsResponse);
       }
       return ResponseEntity.ok(accountsResponse);
     } catch (UnirestException e) {
@@ -61,6 +66,7 @@ public class AccountsService {
     accountsResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(accountsResponse);
   }
+
   public ResponseEntity<LoanAccountsResponse> getLoanAccountsResponseEntity(String customerId) {
     LoanAccountsResponse loanAccountsResponse = new LoanAccountsResponse();
     try {
