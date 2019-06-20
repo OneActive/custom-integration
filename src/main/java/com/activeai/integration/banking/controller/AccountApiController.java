@@ -77,15 +77,14 @@ public class AccountApiController {
 
   /**
    *
-   * @param accessToken
+   * @param customerId
    * @return
    */
-
   @ApiOperation(value = "Returns list of casa accounts based on customer ID")
   @RequestMapping(value = "/{customerId}/accounts/casa", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<AccountsResponse> getCasaAccounts(@PathVariable(name = "customerId", required = true) String accessToken) {
+  public ResponseEntity<AccountsResponse> getCasaAccounts(@PathVariable(name = "customerId", required = true) String customerId) {
     ApplicationLogger.logInfo("Entering getCasaAccountsResponseEntity API");
-    return accountsService.getCasaAccountsResponseEntity(accessToken);
+    return accountsService.getCasaAccountsResponseEntity(customerId);
   }
   @ApiOperation(value = "Returns list of deposit accounts based on customer ID")
   @RequestMapping(value = "/{customerId}/accounts/deposit", produces = {"application/json"}, method = RequestMethod.GET)
