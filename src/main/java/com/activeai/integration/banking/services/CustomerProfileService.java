@@ -2,6 +2,7 @@ package com.activeai.integration.banking.services;
 
 import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
+import com.activeai.integration.banking.domain.request.CustomerProfileRequest;
 import com.activeai.integration.banking.domain.response.CustomerProfileResponse;
 import com.activeai.integration.banking.mapper.response.CustomerProfileResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
@@ -31,7 +32,81 @@ public class CustomerProfileService {
     CustomerProfileResponse customerProfileResponse = new CustomerProfileResponse();
     try {
       HttpResponse<String> response =
-          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CUSTOMER_PROFILE_API_END_POINT, customerId,null))
+          Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CUSTOMER_PROFILE_API_END_POINT, customerId, null))
+              .header("cache-control", "no-cache").asString();
+      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
+        ApplicationLogger.logInfo("Customer Profile Response Body Before Transformation :" + response.getBody());
+        String customerProfileResponseString = customerProfileResponseMapper.getManipulatedCustomerProfileResponse(response.getBody());
+        ApplicationLogger.logInfo("Customer Profile Response Body After Transformation :" + response.getBody());
+        customerProfileResponse = objectMapper.readValue(customerProfileResponseString, CustomerProfileResponse.class);
+      }
+      return ResponseEntity.ok(customerProfileResponse);
+    } catch (UnirestException e) {
+      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+    } catch (IOException e) {
+      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+    } catch (Exception e) {
+      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+    }
+    customerProfileResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(customerProfileResponse);
+  }
+
+  public ResponseEntity<CustomerProfileResponse> getCustomerProfileEmailResponseEntity(String customerId, CustomerProfileRequest customerProfileRequest) {
+    CustomerProfileResponse customerProfileResponse = new CustomerProfileResponse();
+    try {
+      HttpResponse<String> response =
+          Unirest.put(propertyUtil.getAPIUrl(PropertyConstants.UPDATE_EMAIL_API_END_POINT, customerId, null))
+              .header("cache-control", "no-cache").asString();
+      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
+        ApplicationLogger.logInfo("Customer Profile Response Body Before Transformation :" + response.getBody());
+        String customerProfileResponseString = customerProfileResponseMapper.getManipulatedCustomerProfileResponse(response.getBody());
+        ApplicationLogger.logInfo("Customer Profile Response Body After Transformation :" + response.getBody());
+        customerProfileResponse = objectMapper.readValue(customerProfileResponseString, CustomerProfileResponse.class);
+      }
+      return ResponseEntity.ok(customerProfileResponse);
+    } catch (UnirestException e) {
+      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+    } catch (IOException e) {
+      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+    } catch (Exception e) {
+      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+    }
+    customerProfileResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(customerProfileResponse);
+  }
+  public ResponseEntity<CustomerProfileResponse> getCustomerProfilePhoneResponseEntity(String customerId, CustomerProfileRequest customerProfileRequest) {
+    CustomerProfileResponse customerProfileResponse = new CustomerProfileResponse();
+    try {
+      HttpResponse<String> response =
+          Unirest.put(propertyUtil.getAPIUrl(PropertyConstants.UPDATE_PHONE_API_END_POINT, customerId, null))
+              .header("cache-control", "no-cache").asString();
+      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
+        ApplicationLogger.logInfo("Customer Profile Response Body Before Transformation :" + response.getBody());
+        String customerProfileResponseString = customerProfileResponseMapper.getManipulatedCustomerProfileResponse(response.getBody());
+        ApplicationLogger.logInfo("Customer Profile Response Body After Transformation :" + response.getBody());
+        customerProfileResponse = objectMapper.readValue(customerProfileResponseString, CustomerProfileResponse.class);
+      }
+      return ResponseEntity.ok(customerProfileResponse);
+    } catch (UnirestException e) {
+      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+    } catch (IOException e) {
+      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+    } catch (Exception e) {
+      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+    }
+    customerProfileResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(customerProfileResponse);
+  }
+  public ResponseEntity<CustomerProfileResponse> getCustomerProfileAddressResponseEntity(String customerId, CustomerProfileRequest customerProfileRequest) {
+    CustomerProfileResponse customerProfileResponse = new CustomerProfileResponse();
+
+    try {
+      HttpResponse<String> response =
+          Unirest.put(propertyUtil.getAPIUrl(PropertyConstants.UPDATE_ADDRESS_API_END_POINT, customerId, null))
               .header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
       if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
