@@ -49,8 +49,8 @@ public class LoginService {
       auth.put("stuart", "stuart@123");
       auth.put("james", "james@123");
       auth.put("thanos", "thanos@123");
-      auth.put("jack","jack@123");
-      auth.put("noah","noah@123");
+      auth.put("henry","henry@123");
+      auth.put("lucas","lucas@123");
       auth.put("jackson","jackson@123");
       auth.put("ethan","ethan@123");
       if (userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))) {

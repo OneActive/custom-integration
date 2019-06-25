@@ -13,8 +13,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Validated
 public class AccountTransaction {
 
+  /** Transaction Id. */
+  private String transactionId;
+
+  /** Display account number which is masked. */
+  private String accountNumber;
+
+  /**
+   * Unique id which references a account number.
+   */
+  private String accountId;
+
   @JsonProperty("txnDate")
   private String txnDate = null;
+
+  /** Transaction posting date. */
+  private String txnPostingDate;
 
   @JsonProperty("description")
   private String description = null;
@@ -43,6 +57,25 @@ public class AccountTransaction {
   @JsonProperty("referenceId")
   private String referenceId = null;
 
+  /** Transaction status. */
+  private String transactionStatus;
+
+  /** Transaction code which tells the type of transaction, we would be able to apply any logic only if the bank provides the transaction code to purpose mapping. */
+  private String transactionCode;
+
+  /** Merchant Name when credit card purchases are done. */
+  private String merchantName;
+
+
+  /** Broader transaction classification EXPENSE, TRANSFER, BILL-PAYMENTS, PURCHASE, SELL, BUY. */
+  private String categoryType;
+
+  /** Specific transaction classification Groceries, Restaurant, Fuel, Travel. */
+  private String categorySubType;
+
+  /** The category image. */
+  private String categoryImage;
+
   /**
    * Transaction Date
    * 
@@ -54,11 +87,6 @@ public class AccountTransaction {
 
   public void setTxnDate(String txnDate) {
     this.txnDate = txnDate;
-  }
-
-  public AccountTransaction description(String description) {
-    this.description = description;
-    return this;
   }
 
   /**
@@ -74,11 +102,6 @@ public class AccountTransaction {
     this.description = description;
   }
 
-  public AccountTransaction category(String category) {
-    this.category = category;
-    return this;
-  }
-
   /**
    * Transaction category
    * 
@@ -90,11 +113,6 @@ public class AccountTransaction {
 
   public void setCategory(String category) {
     this.category = category;
-  }
-
-  public AccountTransaction amount(Double amount) {
-    this.amount = amount;
-    return this;
   }
 
   /**
