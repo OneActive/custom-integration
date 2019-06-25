@@ -2,6 +2,8 @@ package com.activeai.integration.banking.domain.response;
 
 import java.util.Objects;
 import javax.validation.Valid;
+
+import com.activeai.integration.banking.constants.StatusEnum;
 import com.activeai.integration.banking.model.CustomerProfile;
 import com.activeai.integration.banking.model.Result;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +20,9 @@ public class CustomerProfileResponse {
 
   @JsonProperty("customerProfile")
   private CustomerProfile customerProfile = null;
+
+  @JsonProperty("customerProfileUpdationStatus")
+  private StatusEnum customerProfileUpdationStatus = null;
 
   /**
    * Get result
@@ -47,6 +52,14 @@ public class CustomerProfileResponse {
     this.customerProfile = customerProfile;
   }
 
+  public StatusEnum getCustomerProfileUpdationStatus() {
+    return customerProfileUpdationStatus;
+  }
+
+  public void setCustomerProfileUpdationStatus(StatusEnum customerProfileUpdationStatus) {
+    this.customerProfileUpdationStatus = customerProfileUpdationStatus;
+  }
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -65,14 +78,12 @@ public class CustomerProfileResponse {
     return Objects.hash(result, customerProfile);
   }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class CustomerProfileResponse {\n");
-
-    sb.append("    result: ").append(toIndentedString(result)).append("\n");
-    sb.append("    customerProfile: ").append(toIndentedString(customerProfile)).append("\n");
-    sb.append("}");
+  @Override public String toString() {
+    final StringBuilder sb = new StringBuilder("CustomerProfileResponse{");
+    sb.append("result=").append(result);
+    sb.append(", customerProfile=").append(customerProfile);
+    sb.append(", customerProfileUpdationStatus=").append(customerProfileUpdationStatus);
+    sb.append('}');
     return sb.toString();
   }
 
