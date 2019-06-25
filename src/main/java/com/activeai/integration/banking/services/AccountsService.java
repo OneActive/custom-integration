@@ -3,10 +3,8 @@ package com.activeai.integration.banking.services;
 import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
 
-import com.activeai.integration.banking.domain.response.AccountsResponse;
-import com.activeai.integration.banking.domain.response.DepositAccountsResponse;
-import com.activeai.integration.banking.domain.response.LoanAccountsResponse;
-import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
+import com.activeai.integration.banking.domain.request.ChequeBookOrderConfirmRequest;
+import com.activeai.integration.banking.domain.response.*;
 import com.activeai.integration.banking.mapper.response.AccountsResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
@@ -17,6 +15,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -143,4 +142,27 @@ public class AccountsService {
     return ResponseEntity.ok(accountTransactionsResponse);
   }
 
+  public ResponseEntity<ChequeBookOrderConfirmResponse> getChequeBookOrderConfirmResponseEntity(ChequeBookOrderConfirmRequest chequeBookOrderConfirmRequest) {
+    ChequeBookOrderConfirmResponse chequeBookOrderConfirmResponse = null;
+    try {
+      HttpResponse<String> response = Unirest.get(propertyUtil
+          .getAPIUrl(PropertyConstants.CHEQUE_BOOK_ORDER_CONFIRM_API_ENDPOINT, chequeBookOrderConfirmRequest.getCustomerId(),
+              chequeBookOrderConfirmRequest.getAccount().getAccountNumber())).header("cache-control", "no-cache").asString();
+      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
+      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
+        ApplicationLogger.logInfo("Credit Card Limit Confirm Response Body Before Transformation :" + response.getBody());
+        String chequeBookOrderConfirmResponseString = accountsResponseMapper.getManipulatedAccountsResponse(response.getBody());
+        ApplicationLogger.logInfo("Credit Card Limit Confirm Response Body After Transformation :" + response.getBody());
+        chequeBookOrderConfirmResponse = objectMapper.readValue(chequeBookOrderConfirmResponseString, ChequeBookOrderConfirmResponse.class);
+      }
+      return new ResponseEntity<>(chequeBookOrderConfirmResponse, HttpStatus.valueOf(response.getStatus()));
+    } catch (UnirestException e) {
+      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+    } catch (IOException e) {
+      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+    } catch (Exception e) {
+      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+    }
+    return new ResponseEntity<>(chequeBookOrderConfirmResponse, HttpStatus.OK);
+  }
 }
