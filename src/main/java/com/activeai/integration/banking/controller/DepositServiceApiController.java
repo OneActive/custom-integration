@@ -38,7 +38,7 @@ public class DepositServiceApiController {
   }
 
   @ApiOperation(value = "Returns fixed deposit status and reference id for open fd, close fd ")
-  @RequestMapping(value = "/{customerId}/deposit/plan/apicall", produces = {"application/json"}, consumes = {"application/json"},method = RequestMethod.POST)
+  @RequestMapping(value = "/{customerId}/deposit/confirm", produces = {"application/json"}, consumes = {"application/json"},method = RequestMethod.POST)
   public ResponseEntity<DepositServiceResponse> getDepositPlanFinalResponse(@PathVariable(name = "customerId", required = true) String customerId,@RequestBody final DepositServiceRequest depositServiceRequest) {
     ApplicationLogger.logInfo("Entering getDepositPlanFinalResponse API");
     return depositService.getDepositPlanFinalResponseResponseEntity(depositServiceRequest);
