@@ -1,13 +1,13 @@
 package com.activeai.integration.banking.services;
 
+import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.request.BillPaymentRequest;
 import com.activeai.integration.banking.domain.response.BillPaymentResponse;
-import com.activeai.integration.banking.mapper.response.BillPaymentResponseMapper;
 import com.activeai.integration.banking.domain.response.BillerResponse;
+import com.activeai.integration.banking.mapper.response.BillPaymentResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -19,18 +19,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.text.MessageFormat;
 
 @Service("billpaymentService")
 public class BillPaymentService {
 
-    @Autowired private BillPaymentResponseMapper
-            billpaymentResponseMapper;
-
-    @Autowired
-    private PropertyUtil propertyUtil;
-
-    @Autowired private ObjectMapper objectMapper;
+    @Autowired private BillPaymentResponseMapper billpaymentResponseMapper;
+    @Autowired private PropertyUtil propertyUtil;
+    private static final String error_message_format = "{0} : {1} : {2}";
 
 
     /**
@@ -39,71 +35,80 @@ public class BillPaymentService {
      * @return ResponseEntity of type RegisteredBillerResponse
      */
     public ResponseEntity<BillerResponse> getRegisteredBillerResponseEntity(String customerId) {
-        BillerResponse billerResponse = null;
+        BillerResponse response = new BillerResponse();
         try {
-            HttpResponse<String> response =
+            HttpResponse<String> apiResponse =
                     Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.REGISTERED_BILLERS_API_ENDPOINT, customerId,null)).header("cache-control", "no-cache").asString();
-            ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-            if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-                ApplicationLogger.logInfo("Registered Billers Response Body Before Transformation :" + response.getBody());
-                String billerResponseString = billpaymentResponseMapper.getManipulatedRegisteredBillerResponse(response.getBody());
-                ApplicationLogger.logInfo("Registered Billers Response Body After Transformation :" + response.getBody());
-                billerResponse = objectMapper.readValue(billerResponseString, BillerResponse.class);
+            ApplicationLogger.logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+            if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+                ApplicationLogger.logInfo("Registered Billers Response Body Before Transformation :" + apiResponse.getBody());
+                response = billpaymentResponseMapper.getManipulatedRegisteredBillerResponse(apiResponse.getBody());
+                ApplicationLogger.logInfo("Registered Billers Response Body After Transformation :" + response);
             }
-            return new ResponseEntity<>(billerResponse, HttpStatus.valueOf(response.getStatus()));
+            return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));
         } catch (UnirestException e) {
-            ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         } catch (IOException e) {
-            ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+                    ExceptionUtils.getStackTrace(e)));
         } catch (Exception e) {
-            ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         }
-        return new ResponseEntity<>(billerResponse, HttpStatus.EXPECTATION_FAILED);
+        return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
     }
 
     public ResponseEntity<BillerResponse> getBillerDetailsResponseEntity(String customerId, String billerId) {
-        BillerResponse billerDetailsResponse = null;
+        BillerResponse response = new BillerResponse();
         try {
-            HttpResponse<String> response =
+            HttpResponse<String> apiResponse =
                     Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.BILLER_DETAILS_API_ENDPOINT, customerId,billerId)).header("cache-control", "no-cache").asString();
-            ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-            if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-                ApplicationLogger.logInfo("Biller Details Response Body Before Transformation :" + response.getBody());
-                String billerDetailsResponseString = billpaymentResponseMapper.getManipulatedBillerDetailsResponse(response.getBody());
-                ApplicationLogger.logInfo("Biller Details Response Body After Transformation :" + response.getBody());
-                billerDetailsResponse = objectMapper.readValue(billerDetailsResponseString, BillerResponse.class);
+            ApplicationLogger.logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+            if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+                ApplicationLogger.logInfo("Biller Details Response Body Before Transformation :" + apiResponse.getBody());
+                response = billpaymentResponseMapper.getManipulatedBillerDetailsResponse(apiResponse.getBody());
+                ApplicationLogger.logInfo("Biller Details Response Body After Transformation :" + response);
             }
-            return new ResponseEntity<>(billerDetailsResponse, HttpStatus.valueOf(response.getStatus()));
+            return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));
         } catch (UnirestException e) {
-            ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         } catch (IOException e) {
-            ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+                    ExceptionUtils.getStackTrace(e)));
         } catch (Exception e) {
-            ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         }
-        return new ResponseEntity<>(billerDetailsResponse, HttpStatus.EXPECTATION_FAILED);
+        return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
     }
 
     public ResponseEntity<BillPaymentResponse> getBillPaymentResponseEntity(BillPaymentRequest billPaymentRequest) {
-        BillPaymentResponse billPaymentResponse = null;
+        BillPaymentResponse response = new BillPaymentResponse();
         try {
-            HttpResponse<String> response =
+            HttpResponse<String> apiResponse =
                     Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.BILL_PAYMENT_API_ENDPOINT, billPaymentRequest.getCustomerId(), billPaymentRequest.getBillerDetails().getBillerId() )).header("cache-control", "no-cache").asString();
-            ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-            if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-                ApplicationLogger.logInfo("Bill Payment Confirm Response Body Before Transformation :" + response.getBody());
-                String billPaymentResponseString = billpaymentResponseMapper.getManipulatedBillPaymentResponse(response.getBody());
-                ApplicationLogger.logInfo("Bill Payment Confirm Response Body After Transformation :" + response.getBody());
-                billPaymentResponse = objectMapper.readValue(billPaymentResponseString, BillPaymentResponse.class);
+            ApplicationLogger.logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+            if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+                ApplicationLogger.logInfo("Bill Payment Confirm Response Body Before Transformation :" + apiResponse.getBody());
+                response = billpaymentResponseMapper.getManipulatedBillPaymentResponse(apiResponse.getBody());
+                ApplicationLogger.logInfo("Bill Payment Confirm Response Body After Transformation :" + response);
             }
-            return new ResponseEntity<>(billPaymentResponse, HttpStatus.valueOf(response.getStatus()));
+            return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));
         } catch (UnirestException e) {
-            ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         } catch (IOException e) {
-            ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+                    ExceptionUtils.getStackTrace(e)));
         } catch (Exception e) {
-            ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         }
-        return new ResponseEntity<>(billPaymentResponse, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

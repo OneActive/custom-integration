@@ -7,7 +7,6 @@ import com.activeai.integration.banking.domain.response.DepositServiceResponse;
 import com.activeai.integration.banking.mapper.response.DepositPlanResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -18,90 +17,99 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.text.MessageFormat;
 
 @Service("depositPlanService")
 public class DepositService {
 
   @Autowired private DepositPlanResponseMapper depositPlanResponseMapper;
-  @Autowired private ObjectMapper objectMapper;
   @Autowired private PropertyUtil propertyUtil;
+  private static final String error_message_format = "{0} : {1} : {2}";
 
   public ResponseEntity<DepositServiceResponse> getDepositPlansResponseEntity(DepositServiceRequest depositServiceRequest) {
-    DepositServiceResponse depositServiceResponse = new DepositServiceResponse();
+    DepositServiceResponse response = new DepositServiceResponse();
     try {
 
-      HttpResponse<String> response =
+      HttpResponse<String> apiResponse =
           Unirest
               .post(propertyUtil.getAPIUrl(PropertyConstants.DEPOSIT_PLAN_API_END_POINT, depositServiceRequest.getCustomerId(),depositServiceRequest.getCreditableAccounts().getAccountId())).header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("Deposit Plan API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo(" Deposit Plan Response Body Before Transformation :" + response.getBody());
-        String depositPlanResponseString = depositPlanResponseMapper.getManipulatedDepositPlanResponse(response.getBody());
-        ApplicationLogger.logInfo("Deposit Plan Response Body After Transformation :" + response.getBody());
-        depositServiceResponse = objectMapper.readValue(depositPlanResponseString, DepositServiceResponse.class);
+      ApplicationLogger.logInfo("Deposit Plan API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+        ApplicationLogger.logInfo(" Deposit Plan Response Body Before Transformation :" + apiResponse.getBody());
+        response = depositPlanResponseMapper.getManipulatedDepositPlanResponse(apiResponse.getBody());
+        ApplicationLogger.logInfo("Deposit Plan Response Body After Transformation :" + response);
       }
-      return ResponseEntity.ok(depositServiceResponse);
+      return ResponseEntity.ok(response);
     } catch (UnirestException e) {
-      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
-      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+              ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
-      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
-    depositServiceResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
-    return ResponseEntity.ok(depositServiceResponse);
+    response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(response);
   }
 
   public ResponseEntity<DepositServiceResponse> getDepositPlanNomineesResponseEntity(DepositServiceRequest depositServiceRequest) {
-    DepositServiceResponse depositServiceResponse = new DepositServiceResponse();
+    DepositServiceResponse response = new DepositServiceResponse();
     try {
-      HttpResponse<String> response =
+      HttpResponse<String> apiResponse =
           Unirest
               .post(propertyUtil.getAPIUrl(PropertyConstants.NOMINEE_API_END_POINT, depositServiceRequest.getCustomerId(),
                   depositServiceRequest.getCreditableAccounts().getAccountId())).header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("Nominee API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo(" Nominee Response Body Before Transformation :" + response.getBody());
-        String nomineesResponseString = depositPlanResponseMapper.getManipulatedNomineeResponse(response.getBody());
-        ApplicationLogger.logInfo("Nominee Response Body After Transformation :" + response.getBody());
-        depositServiceResponse = objectMapper.readValue(nomineesResponseString, DepositServiceResponse.class);
+      ApplicationLogger.logInfo("Nominee API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+        ApplicationLogger.logInfo(" Nominee Response Body Before Transformation :" + apiResponse.getBody());
+        response = depositPlanResponseMapper.getManipulatedNomineeResponse(apiResponse.getBody());
+        ApplicationLogger.logInfo("Nominee Response Body After Transformation :" + response);
       }
-      return ResponseEntity.ok(depositServiceResponse);
+      return ResponseEntity.ok(response);
     } catch (UnirestException e) {
-      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
-      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+              ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
-      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
-    depositServiceResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
-    return ResponseEntity.ok(depositServiceResponse);
+    response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(response);
   }
 
   public ResponseEntity<DepositServiceResponse> getDepositPlanFinalResponseResponseEntity(DepositServiceRequest depositServiceRequest) {
-    DepositServiceResponse depositServiceResponse = new DepositServiceResponse();
+    DepositServiceResponse response = new DepositServiceResponse();
     try {
-      HttpResponse<String> response =
+      HttpResponse<String> apiResponse =
           Unirest
               .post(propertyUtil.getAPIUrl(PropertyConstants.OPEN_FD_API_END_POINT, depositServiceRequest.getCustomerId(),
                   depositServiceRequest.getCreditableAccounts().getAccountId())).header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("Deposit Plan Final API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo(" Deposit Plan Final API Response Body Before Transformation :" + response.getBody());
-        String depositPlanFinalAPiCallResponseString = depositPlanResponseMapper.getManipulatedDepositPlanFinalApiCallResponse(response.getBody());
-        ApplicationLogger.logInfo("Deposit Plan Final API Response Body After Transformation :" + response.getBody());
-        depositServiceResponse = objectMapper.readValue(depositPlanFinalAPiCallResponseString, DepositServiceResponse.class);
+      ApplicationLogger.logInfo("Deposit Plan Final API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+        ApplicationLogger.logInfo(" Deposit Plan Final API Response Body Before Transformation :" + apiResponse.getBody());
+        response = depositPlanResponseMapper.getManipulatedDepositPlanFinalApiCallResponse(apiResponse.getBody());
+        ApplicationLogger.logInfo("Deposit Plan Final API Response Body After Transformation :" + response);
       }
-      return ResponseEntity.ok(depositServiceResponse);
+      return ResponseEntity.ok(response);
     } catch (UnirestException e) {
-      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
-      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+              ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
-      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
-    depositServiceResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
-    return ResponseEntity.ok(depositServiceResponse);
+    response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(response);
   }
 }

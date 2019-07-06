@@ -1,33 +1,41 @@
 package com.activeai.integration.banking.mapper.response;
 
+import com.activeai.integration.banking.domain.response.BillPaymentResponse;
+import com.activeai.integration.banking.domain.response.BillerResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 @Component("billpaymentResponseMapper")
 public class BillPaymentResponseMapper {
 
+    @Autowired private ObjectMapper objectMapper;
     /**
-     * In this method you can change the obtained string accordingly to the RegisteredBillerResponse
+     * In this method you can change the obtained string accordingly to the BillerResponse
      * @param apiResponseBody
-     * @return String of RegistereBillerResponse
+     * @return String of BillerResponse
      */
-    public static String getManipulatedRegisteredBillerResponse(String apiResponseBody) {
-        return apiResponseBody;
+    public BillerResponse getManipulatedRegisteredBillerResponse(String apiResponseBody) throws IOException {
+        return objectMapper.readValue(apiResponseBody, BillerResponse.class);
     }
 
     /**
-     * In this method you can change the obtained string accordingly to the BillDueAmountResponse
+     * In this method you can change the obtained string accordingly to the BillerResponse
      * @param apiResponseBody
-     * @return String of BillDueAmountResponse
+     * @return BillerResponse
      */
-    public static String getManipulatedBillerDetailsResponse(String apiResponseBody) {
-        return apiResponseBody;
+    public BillerResponse getManipulatedBillerDetailsResponse(String apiResponseBody) throws IOException{
+        return objectMapper.readValue(apiResponseBody, BillerResponse.class);
     }
 
     /**
      * In this method you can change the obtained string accordingly to the BillPaymentResponse
      * @param apiResponseBody
-     * @return String of BillPaymentResponse
+     * @return BillPaymentResponse
      */
-    public String getManipulatedBillPaymentResponse(String apiResponseBody  ) {
-    return apiResponseBody;}
+    public BillPaymentResponse getManipulatedBillPaymentResponse(String apiResponseBody) throws IOException {
+        return objectMapper.readValue(apiResponseBody, BillPaymentResponse.class);
+    }
 }

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 public class AccountApiController {
 
   @Autowired private AccountsService accountsService;
-  @Autowired private ObjectMapper objectMapper;
   @Autowired private AccountDetailsService accountDetailsService;
   @Autowired private AccountBalanceService accountBalanceService;
 
@@ -75,11 +74,6 @@ public class AccountApiController {
     return accountsService.getAccountTransactionsResponseEntity(customerId, accountId);
   }
 
-  /**
-   *
-   * @param customerId
-   * @return
-   */
   @ApiOperation(value = "Returns list of casa accounts based on customer ID")
   @RequestMapping(value = "/{customerId}/accounts/casa", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<AccountsResponse> getCasaAccounts(@PathVariable(name = "customerId", required = true) String customerId) {
@@ -99,12 +93,4 @@ public class AccountApiController {
     return accountsService.getLoanAccountsResponseEntity(customerId);
   }
 
-  @ApiOperation(value = "Returns confirmation of order cheque book")
-  @RequestMapping(value = "/{customerId}/chequebook/order/confirm", produces = {"application/json"}, consumes = {
-      "application/json"}, method = RequestMethod.POST) public ResponseEntity<ChequeBookOrderConfirmResponse> confirmChequeBookOrder(
-      @PathVariable(value = "customerId", required = true) String customerId,
-      @RequestBody final ChequeBookOrderConfirmRequest chequeBookConfirmRequest) {
-    ApplicationLogger.logInfo("Entering getconfirmChequeBookOrder API");
-    return accountsService.getChequeBookOrderConfirmResponseEntity(chequeBookConfirmRequest);
-  }
 }
