@@ -1,25 +1,32 @@
 package com.activeai.integration.banking.mapper.response;
 
+import com.activeai.integration.banking.domain.response.FundTransferResponse;
+import com.activeai.integration.banking.domain.response.PayeesResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 @Component("fundTransferResponseMapper")
 public class FundTransferResponseMapper {
 
+  @Autowired private ObjectMapper objectMapper;
   /**
    * In this method you can change the obtained string accordingly to the PayeesResponse
    * @param apiResponseBody
-   * @return String of PayeesResponse
+   * @return PayeesResponse
    */
-  public String getManipulatedPayeesResponse(String apiResponseBody) {
-    return apiResponseBody;
+  public PayeesResponse getManipulatedPayeesResponse(String apiResponseBody) throws IOException {
+    return objectMapper.readValue(apiResponseBody, PayeesResponse.class);
   }
 
   /**
    * In this method you can change the obtained string accordingly to the FundTransferResponse
    * @param apiResponseBody
-   * @return String of FundTransferResponse
+   * @return FundTransferResponse
    */
-  public String getManipulatedFundTransferResponse(String apiResponseBody) {
-    return apiResponseBody;
+  public FundTransferResponse getManipulatedFundTransferResponse(String apiResponseBody) throws IOException{
+    return objectMapper.readValue(apiResponseBody, FundTransferResponse.class);
   }
 }

@@ -22,61 +22,68 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Objects;
 
 @Service("creditCardService")
 public class CreditCardService {
 
     @Autowired private PropertyUtil propertyUtil;
-    @Autowired private ObjectMapper objectMapper;
     @Autowired private CreditCardResponseMapper creditCardResponseMapper;
+    private static final String error_message_format = "{0} : {1} : {2}";
 
     public ResponseEntity<CreditCardLimitResponse> getCreditCardLimitResponseEntity(String customerId, String cardNumber) {
-        CreditCardLimitResponse creditCardLimitResponse = null;
+        CreditCardLimitResponse response = new CreditCardLimitResponse();
         try {
-            HttpResponse<String> response =
+            HttpResponse<String> apiResponse =
                 Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARD_LIMIT_API_END_POINT, customerId, cardNumber))
                     .header("cache-control", "no-cache").asString();
-            ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-            if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-                ApplicationLogger.logInfo("Credit Card Limit Response Body Before Transformation :" + response.getBody());
-                String creditCardLimitResponseString = creditCardResponseMapper.getManipulatedCreditCardLimitResponse(response.getBody());
-                ApplicationLogger.logInfo("Credit Card Limit Response Body After Transformation :" + response.getBody());
-                creditCardLimitResponse = objectMapper.readValue(creditCardLimitResponseString, CreditCardLimitResponse.class);
+            ApplicationLogger.logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+            if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+                ApplicationLogger.logInfo("Credit Card Limit Response Body Before Transformation :" + apiResponse.getBody());
+                response = creditCardResponseMapper.getManipulatedCreditCardLimitResponse(apiResponse.getBody());
+                ApplicationLogger.logInfo("Credit Card Limit Response Body After Transformation :" + response);
             }
-            return ResponseEntity.ok(creditCardLimitResponse);
+            return ResponseEntity.ok(response);
         } catch (UnirestException e) {
-            ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         } catch (IOException e) {
-            ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+                    ExceptionUtils.getStackTrace(e)));
         } catch (Exception e) {
-            ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         }
-        creditCardLimitResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
-        return ResponseEntity.ok(creditCardLimitResponse);
+        response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+        return ResponseEntity.ok(response);
     }
 
     public ResponseEntity<CreditCardLimitConfirmResponse> getCreditLimitConfirmResponseEntity(CreditCardLimitConfirmRequest creditCardLimitConfirmRequest) {
-        CreditCardLimitConfirmResponse creditCardLimitConfirmResponse = null;
+        CreditCardLimitConfirmResponse response = new CreditCardLimitConfirmResponse();
         try {
-            HttpResponse<String> response = Unirest.get(propertyUtil
+            HttpResponse<String> apiResponse = Unirest.get(propertyUtil
                 .getAPIUrl(PropertyConstants.CREDIT_CARD_LIMIT_CONFIRM_API_ENDPOINT, creditCardLimitConfirmRequest.getCustomerId(),
                     creditCardLimitConfirmRequest.getCardDetails().getCardNumber())).header("cache-control", "no-cache").asString();
-            ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-            if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-                ApplicationLogger.logInfo("Credit Card Limit Confirm Response Body Before Transformation :" + response.getBody());
-                String creditCardLimitConfirmResponseString = creditCardResponseMapper.getManipulatedCreditCardLimitConfirmResponse(response.getBody());
-                ApplicationLogger.logInfo("Credit Card Limit Confirm Response Body After Transformation :" + response.getBody());
-                creditCardLimitConfirmResponse = objectMapper.readValue(creditCardLimitConfirmResponseString, CreditCardLimitConfirmResponse.class);
+            ApplicationLogger.logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+            if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+                ApplicationLogger.logInfo("Credit Card Limit Confirm Response Body Before Transformation :" + apiResponse.getBody());
+                response = creditCardResponseMapper.getManipulatedCreditCardLimitConfirmResponse(apiResponse.getBody());
+                ApplicationLogger.logInfo("Credit Card Limit Confirm Response Body After Transformation :" + response);
             }
-            return new ResponseEntity<>(creditCardLimitConfirmResponse, HttpStatus.valueOf(response.getStatus()));
+            return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));
         } catch (UnirestException e) {
-            ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         } catch (IOException e) {
-            ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+                    ExceptionUtils.getStackTrace(e)));
         } catch (Exception e) {
-            ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+            ApplicationLogger.logError(MessageFormat
+                .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         }
-        return new ResponseEntity<>(creditCardLimitConfirmResponse, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

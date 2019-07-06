@@ -8,7 +8,6 @@ import com.activeai.integration.banking.domain.response.LoanAccountDetailRespons
 import com.activeai.integration.banking.mapper.response.AccountsResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -19,93 +18,113 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Objects;
 
 @Service("accountDetailsService")
 public class AccountDetailsService {
   @Autowired private AccountsResponseMapper accountsResponseMapper;
-  @Autowired private ObjectMapper objectMapper;
   @Autowired private PropertyUtil propertyUtil;
+  private static final String error_message_format = "{0} : {1} : {2}";
 
   /**
-   * Fetches Account Details for selected Account
-   *
+   * Fetches CASA Account Details for selected Account
    * @param customerId,accountId
    * @return ResponseEntity of type AccountDetailResponse
    */
-
   public ResponseEntity<AccountDetailResponse> getCasaAccountDetailsResponseEntity(String customerId, String accountId) {
-    AccountDetailResponse accountDetailsResponse = new AccountDetailResponse();
+    AccountDetailResponse response = new AccountDetailResponse();
     try {
       HttpResponse<String>
-          response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CASA_ACCOUNT_DETAILS_API_END_POINT, customerId, accountId))
+          apiResponse = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CASA_ACCOUNT_DETAILS_API_END_POINT, customerId, accountId))
           .header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Casa Account Details Response Body Before Transformation :" + response.getBody());
-        String accountDetailResponseString = accountsResponseMapper.getManipulatedAccountDetailsResponse(response.getBody());
-        ApplicationLogger.logInfo("Casa Account Details Response Body After Transformation :" + response.getBody());
-        accountDetailsResponse = objectMapper.readValue(accountDetailResponseString, AccountDetailResponse.class);
+      ApplicationLogger.logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+        ApplicationLogger.logInfo("Casa Account Details Response Body Before Transformation :" + apiResponse.getBody());
+        response = accountsResponseMapper.getManipulatedCasaAccountDetailsResponse(apiResponse.getBody());
+        ApplicationLogger.logInfo("Casa Account Details Response Body After Transformation :" + response);
       }
-      return ResponseEntity.ok(accountDetailsResponse);
+      return ResponseEntity.ok(response);
     } catch (UnirestException e) {
-      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
-      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+              ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
-      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
-    accountDetailsResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
-    return ResponseEntity.ok(accountDetailsResponse);
+    response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(response);
   }
 
+  /**
+   * Fetches Deposit Account Details for selected Account
+   * @param customerId
+   * @param accountId
+   * @return ResponseEntity of type DepositAccountDetailResponse
+   */
   public ResponseEntity<DepositAccountDetailResponse> getDepositAccountDetailsResponseEntity(String customerId, String accountId) {
-    DepositAccountDetailResponse depositAccountDetailResponse = new DepositAccountDetailResponse();
+    DepositAccountDetailResponse response = new DepositAccountDetailResponse();
     try {
       HttpResponse<String>
-          response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.DEPOSIT_ACCOUNT_DETAILS_API_END_POINT, customerId, accountId))
+          apiResponse = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.DEPOSIT_ACCOUNT_DETAILS_API_END_POINT, customerId, accountId))
           .header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Deposit Account Details Response Body Before Transformation :" + response.getBody());
-        String accountDetailResponseString = accountsResponseMapper.getManipulatedAccountDetailsResponse(response.getBody());
-        ApplicationLogger.logInfo("Deposit Account Details Response Body After Transformation :" + response.getBody());
-        depositAccountDetailResponse = objectMapper.readValue(accountDetailResponseString, DepositAccountDetailResponse.class);
+      ApplicationLogger.logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+        ApplicationLogger.logInfo("Deposit Account Details Response Body Before Transformation :" + apiResponse.getBody());
+        response = accountsResponseMapper.getManipulatedDepositAccountDetailsResponse(apiResponse.getBody());
+        ApplicationLogger.logInfo("Deposit Account Details Response Body After Transformation :" + response);
       }
-      return ResponseEntity.ok(depositAccountDetailResponse);
+      return ResponseEntity.ok(response);
     } catch (UnirestException e) {
-      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
-      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+              ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
-      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
-    depositAccountDetailResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
-    return ResponseEntity.ok(depositAccountDetailResponse);
+    response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(response);
   }
 
+  /**
+   * Fetches Loan Account Details for selected Account
+   * @param customerId
+   * @param accountId
+   * @return ResponseEntity of type LoanAccountDetailResponse
+   */
   public ResponseEntity<LoanAccountDetailResponse> getLoanAccountDetailsResponseEntity(String customerId, String accountId) {
-    LoanAccountDetailResponse loanAccountDetailResponse = new LoanAccountDetailResponse();
+    LoanAccountDetailResponse response = new LoanAccountDetailResponse();
     try {
       HttpResponse<String>
-          response = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.LOAN_ACCOUNT_DETAILS_API_END_POINT, customerId, accountId))
+          apiResponse = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.LOAN_ACCOUNT_DETAILS_API_END_POINT, customerId, accountId))
           .header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-      if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-        ApplicationLogger.logInfo("Loan Account Details Response Body Before Transformation :" + response.getBody());
-        String accountDetailResponseString = accountsResponseMapper.getManipulatedAccountDetailsResponse(response.getBody());
-        ApplicationLogger.logInfo("Loan Account Details Response Body After Transformation :" + response.getBody());
-        loanAccountDetailResponse = objectMapper.readValue(accountDetailResponseString, LoanAccountDetailResponse.class);
+      ApplicationLogger.logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+        ApplicationLogger.logInfo("Loan Account Details Response Body Before Transformation :" + apiResponse.getBody());
+        response = accountsResponseMapper.getManipulatedLoanAccountDetailsResponse(apiResponse.getBody());
+        ApplicationLogger.logInfo("Loan Account Details Response Body After Transformation :" + response);
       }
-      return ResponseEntity.ok(loanAccountDetailResponse);
+      return ResponseEntity.ok(response);
     } catch (UnirestException e) {
-      ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
-      ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+              ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
-      ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
-    loanAccountDetailResponse.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
-    return ResponseEntity.ok(loanAccountDetailResponse);
+    response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(response);
   }
 }

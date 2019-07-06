@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -31,6 +32,7 @@ public class LoginService {
   @Autowired private LoginRequestMapper loginRequestMapper;
   @Autowired private ObjectMapper objectMapper;
   @Autowired private PropertyUtil propertyUtil;
+  public static final String error_message_format = "{0} : {1} : {2}";
 
   /**
    * Customise this based on your Use case
@@ -55,28 +57,31 @@ public class LoginService {
       auth.put("ethan","ethan@123");
       if (userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))) {
         try {
-          HttpResponse<String> response =
+          HttpResponse<String> apiResponse =
               Unirest.post(propertyUtil.getLoginAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,userLoginRequest.getUserID(),null))
                   .header("Content-Type", "application/json")
                   .body(loginRequestMapper.getLoginRequestBody(userLoginRequest)).asString();
           ApplicationLogger
-              .logInfo("API Response status: " + response.getStatus() + " and response status text :" + response.getStatusText());
-          if (Objects.nonNull(response) && StringUtils.isNotEmpty(response.getBody())) {
-            ApplicationLogger.logInfo("Login Response Body Before Transformation :" + response.getBody());
-            String cardsResponseString = loginResponseMapper.getManipulatedLoginResponse(response.getBody());
+              .logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+          if (Objects.nonNull(apiResponse) && StringUtils.isNotEmpty(apiResponse.getBody())) {
+            ApplicationLogger.logInfo("Login Response Body Before Transformation :" + apiResponse.getBody());
+            loginResponse = loginResponseMapper.getManipulatedLoginResponse(apiResponse.getBody());
 
             //Here you can call customer profile API and merge the response to login
 
-            ApplicationLogger.logInfo("Login Response Body After Transformation :" + response.getBody());
-            loginResponse = objectMapper.readValue(cardsResponseString, LoginResponse.class);
+            ApplicationLogger.logInfo("Login Response Body After Transformation :" + apiResponse.getBody());
           }
           return ResponseEntity.ok(loginResponse);
         } catch (UnirestException e) {
-          ApplicationLogger.logError("API failure : " + ExceptionUtils.getStackTrace(e));
+          ApplicationLogger.logError(MessageFormat
+              .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         } catch (IOException e) {
-          ApplicationLogger.logError("Couldn't serialize response for content type application/json :" + ExceptionUtils.getStackTrace(e));
+          ApplicationLogger.logError(MessageFormat
+              .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+                  ExceptionUtils.getStackTrace(e)));
         } catch (Exception e) {
-          ApplicationLogger.logError("Something went wrong while calling API ->" + ExceptionUtils.getStackTrace(e));
+          ApplicationLogger.logError(MessageFormat
+              .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         }
         return new ResponseEntity<>(objectMapper.readValue(
             "{  \"result\" : {    \"messageCode\" : \"EXPECTATION_FAILED\",    \"message\" : \"Application is Down!, Please Contact administrator\",    \"status\" : 417  }}",
@@ -86,7 +91,7 @@ public class LoginService {
         return ResponseEntity.ok(loginResponse);
       }
     } catch (IOException e) {
-      ApplicationLogger.logInfo("Couldn't serialize response for content type application/json", e);
+      ApplicationLogger.logInfo(MessageFormat.format(error_message_format,MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE,this.getClass().getName(),ExceptionUtils.getStackTrace(e)));
     }
     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
   }
