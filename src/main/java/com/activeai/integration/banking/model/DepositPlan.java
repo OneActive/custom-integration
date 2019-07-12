@@ -16,6 +16,10 @@ public class DepositPlan {
   /*total amount get after tenure*/
   @JsonProperty("maturityAmount") private Double maturityAmount = null;
 
+  /*total min amount to be deposited*/
+  @JsonProperty("minAmount")
+  private Double minAmount = null;
+
   public Double getAmount() {
     return amount;
   }
@@ -48,12 +52,22 @@ public class DepositPlan {
     this.maturityAmount = maturityAmount;
   }
 
+
+  public Double getMinAmount() {
+    return minAmount;
+  }
+
+  public void setMinAmount(Double minAmount) {
+    this.minAmount = minAmount;
+  }
+
   @Override public String toString() {
     final StringBuilder sb = new StringBuilder("DepositPlan{");
     sb.append("amount=").append(amount);
     sb.append(", tenure='").append(tenure).append('\'');
     sb.append(", interestRate='").append(interestRate).append('\'');
-    sb.append(", maturityAmount=").append(maturityAmount);
+    sb.append(", maturityAmount=").append(maturityAmount).append('\'');
+    sb.append(", minAmount=").append(minAmount);
     sb.append('}');
     return sb.toString();
   }
