@@ -7,13 +7,13 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Card issues like visa, master card, amex, Diners
  */
 public enum CardIssuerEnum {
-  VISA("Visa"),
+  VISA("VISA"),
 
-  MASTER_CARD("Master Card"),
+  MASTER("MASTER"),
 
   AMEX("AMEX"),
 
-  DINERS("Diners");
+  DINERS("DINERS");
 
   private String value;
 
