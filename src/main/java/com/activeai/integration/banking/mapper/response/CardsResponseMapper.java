@@ -60,4 +60,13 @@ public class CardsResponseMapper {
     return objectMapper.readValue(apiResponseBody, InternationalUsageResponse.class);
   }
 
+  public ConvertEMIResponse getManipulatedConvertEMIResponse(String apiResponseBody) throws IOException {
+    return objectMapper.readValue(apiResponseBody, ConvertEMIResponse.class);
+  }
+
+  public ConvertEMICreditCardConfirmResponse getManipulatedConvertEMIConfirmResponse(String apiResponseBody) throws IOException {
+    return objectMapper.readValue(apiResponseBody, ConvertEMICreditCardConfirmResponse.class);
+  }
+
+
 }

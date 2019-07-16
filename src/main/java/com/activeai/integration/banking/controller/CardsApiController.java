@@ -1,24 +1,7 @@
 package com.activeai.integration.banking.controller;
 
-import com.activeai.integration.banking.domain.request.ActivationCardRequest;
-import com.activeai.integration.banking.domain.request.BlockCardRequest;
-import com.activeai.integration.banking.domain.request.CreditCardLimitConfirmRequest;
-import com.activeai.integration.banking.domain.request.DebitCardLimitConfirmRequest;
-import com.activeai.integration.banking.domain.request.ResetPinConfirmRequest;
-import com.activeai.integration.banking.domain.request.ReplaceCardConfirmRequest;
-import com.activeai.integration.banking.domain.request.InternationalCardUsageRequest;
-import com.activeai.integration.banking.domain.response.CardDetailResponse;
-import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
-import com.activeai.integration.banking.domain.response.CardsResponse;
-import com.activeai.integration.banking.domain.response.DebitCardLimitResponse;
-import com.activeai.integration.banking.domain.response.CreditCardLimitResponse;
-import com.activeai.integration.banking.domain.response.DebitCardLimitConfirmResponse;
-import com.activeai.integration.banking.domain.response.BlockCardResponse;
-import com.activeai.integration.banking.domain.response.CreditCardLimitConfirmResponse;
-import com.activeai.integration.banking.domain.response.ActivationCardResponse;
-import com.activeai.integration.banking.domain.response.ResetPinConfirmResponse;
-import com.activeai.integration.banking.domain.response.ReplaceCardConfirmResponse;
-import com.activeai.integration.banking.domain.response.InternationalUsageResponse;
+import com.activeai.integration.banking.domain.request.*;
+import com.activeai.integration.banking.domain.response.*;
 import com.activeai.integration.banking.services.CardsService;
 import com.activeai.integration.banking.services.CreditCardService;
 import com.activeai.integration.banking.services.DebitCardService;
@@ -53,6 +36,9 @@ public class CardsApiController {
 
   private static final Logger logger = LoggerFactory.getLogger(CardsApiController.class);
 
+  /*
+  Return List of Credit Cards
+   */
   @ApiOperation(value = "Returns list of credit cards based on customer ID")
   @RequestMapping(value = "/{customerId}/cards/creditcards", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardsResponse> getCreditCards(@PathVariable(value = "customerId", required = true) String customerId) {
@@ -60,6 +46,9 @@ public class CardsApiController {
     return cardsService.getCreditCardsResponseEntity(customerId);
   }
 
+  /*
+  Return Selected Credit Card Details
+   */
   @ApiOperation(value = "Returns selected credit card details")
   @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardDetailResponse> getCreditCardDetails(@PathVariable(value = "customerId", required = true) String customerId,
@@ -68,7 +57,9 @@ public class CardsApiController {
     return cardsService.getCreditCardDetailsResponseEntity(customerId, cardNumber);
   }
 
-
+  /*
+  Return Selected Credit Card Transaction History
+   */
   @ApiOperation(value = "Returns selected card transaction history")
   @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/transactions", produces = {
       "application/json"}, method = RequestMethod.GET) public ResponseEntity<CardTransactionsResponse> getCreditCardTransactions(
@@ -78,8 +69,9 @@ public class CardsApiController {
     return cardsService.getCreditAccountTransactionsResponseEntity(customerId, cardNumber);
   }
 
+
   /*
-   * Getting DebitCardLimit
+  Return Selected Debit Card Limits
    */
   @ApiOperation(value = "Returns debit card limit")
   @RequestMapping(value = "/{customerId}/debitcards/{cardNumber}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
@@ -89,6 +81,9 @@ public class CardsApiController {
     return debitCardService.getDebitCardLimitResponseEntity(customerId, cardNumber);
   }
 
+  /*
+  Return Selected Credit Card Limit
+   */
   @ApiOperation(value = "Returns credit card limit")
   @RequestMapping(value = "/{customerId}/creditcards/{cardNumber}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CreditCardLimitResponse> getCreditCardLimits(@PathVariable(value = "customerId", required = true) String customerId,
@@ -109,6 +104,9 @@ public class CardsApiController {
     return debitCardService.getDebitLimitConfirmResponseEntity(debitCardLimitConfirmRequest);
   }
 
+  /*
+  Return DEbit CArd Limit Confirmation
+   */
   @ApiOperation(value = "Returns confirmation of credit card limit")
   @RequestMapping(value = "/{customerId}/creditcards/limit/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST) public ResponseEntity<CreditCardLimitConfirmResponse> confirmCreditCardLimit(
@@ -119,7 +117,7 @@ public class CardsApiController {
   }
 
   /*
-   * Getting BlockCardStatus
+   * Return Status of Blocking of Card
    */
   @ApiOperation("Return blocking status of selected card")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/block/confirm", produces = {"application/json"}, consumes = {
@@ -131,7 +129,7 @@ public class CardsApiController {
   }
 
   /*
-   * Getting ActivateCardStatus
+   * Return Status of Activation of Card
    */
   @ApiOperation("Return activation status of selected card")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/activation/confirm", produces = {"application/json"}, consumes = {
@@ -143,7 +141,7 @@ public class CardsApiController {
   }
 
   /*
-   * Getting ResetPin
+   * Return Status of Resetting of Pin
    */
   @ApiOperation("Return reset pin status of selected card")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/resetPin/confirm", produces = {"application/json"}, consumes = {
@@ -155,7 +153,7 @@ public class CardsApiController {
   }
 
   /*
-   * Getting ResetPin
+  Return Status of Replacement of Card
    */
   @ApiOperation("Return status of replacement of card")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/replaceCard/confirm", produces = {"application/json"}, consumes = {
@@ -186,6 +184,9 @@ public class CardsApiController {
     return response;
   }
 
+  /*
+  Return Intenational Usage Enabled of Card
+   */
   @ApiOperation("Return international usage of card is enabled or disabled")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/internationalUsage/enabled", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST)
@@ -194,6 +195,10 @@ public class CardsApiController {
     ApplicationLogger.logInfo("Entering updateInternationalUsage  API");
     return cardsService.getInternationalUsageCardResponseEntity(internationalCardUsageRequest);
   }
+
+  /*
+  Return Status of Internation Usage Enabled
+   */
   @ApiOperation("Return international usage reference id and status ")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/internationalUsage/api", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST)
@@ -213,6 +218,9 @@ public class CardsApiController {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
+  /*
+  Return List of Debit Cards
+   */
   @ApiOperation(value = "Returns list of debit cards based on customer ID")
   @RequestMapping(value = "/{customerId}/cards/debitcards", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardsResponse> getDebitCards(@PathVariable(value = "customerId", required = true) String customerId) {
@@ -220,6 +228,9 @@ public class CardsApiController {
     return cardsService.getDebitCardsResponseEntity(customerId);
   }
 
+  /*
+  Return Selected Debit Card Details
+   */
   @ApiOperation(value = "Returns selected debit card details")
   @RequestMapping(value = "/{customerId}/cards/debitcards/{cardNumber}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardDetailResponse> getDebitCardDetails(@PathVariable(value = "customerId", required = true) String customerId,
@@ -246,4 +257,27 @@ public class CardsApiController {
     return response;
   }
 
+  /*
+   * Getting EMI for Credit Cards
+   */
+  @ApiOperation("Return Conversion to EMI from Transaction of Credit card")
+  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/convertEMI", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.GET)
+  public ResponseEntity<ConvertEMIResponse> convertEMI(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "cardNumber", required = true) String cardNumber) {
+    ApplicationLogger.logInfo("Entering getEMIConversion API");
+    return cardsService.getConvertEMIResponseEntity(customerId, cardNumber);
+  }
+
+  /*
+   * Getting EMI for Credit Cards
+   */
+  @ApiOperation("Return status of Conversion to EMI from Transaction of Credit card")
+  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/convertEMI/confirm", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.POST)
+  public ResponseEntity<ConvertEMICreditCardConfirmResponse> convertEMICreditCard(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final ConvertEMICreditCardConfirmRequest convertEMICreditCardConfirmRequest) {
+    ApplicationLogger.logInfo("Entering getEMIConversion Confirm API");
+    return cardsService.getConvertEMICreditCardConfirmResponseEntity(convertEMICreditCardConfirmRequest);
+  }
 }

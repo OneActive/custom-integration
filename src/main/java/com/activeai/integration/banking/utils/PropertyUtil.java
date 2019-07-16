@@ -72,4 +72,14 @@ public class PropertyUtil {
         env.getProperty(MessageFormat.format(APIDoublePropertyPattern, customerId, propertyValue)) :
         env.getProperty(propertyValue);
   }
+
+  public String getAPIUrlForConvertEMI(String propertyValue, String customerId, String cardNumber) {
+    return StringUtils.isNotEmpty(env.getProperty(MessageFormat.format(APIDoublePropertyPattern, cardNumber, propertyValue))) ?
+        env.getProperty(MessageFormat.format(APIDoublePropertyPattern, cardNumber, propertyValue)) :
+        env.getProperty(propertyValue);
+  }
+
+  public String getAPIUrlForConvertEMIConfirm(String propertyValue, ConvertEMICreditCardConfirmRequest convertEMICreditCardConfirmRequest) {
+    return env.getProperty(propertyValue);
+  }
 }
