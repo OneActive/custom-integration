@@ -2,22 +2,11 @@ package com.activeai.integration.banking.services;
 
 import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
-import com.activeai.integration.banking.domain.request.ActivationCardRequest;
-import com.activeai.integration.banking.domain.request.BlockCardRequest;
-import com.activeai.integration.banking.domain.request.ReplaceCardConfirmRequest;
-import com.activeai.integration.banking.domain.request.ResetPinConfirmRequest;
-import com.activeai.integration.banking.domain.response.CardDetailResponse;
-import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
-import com.activeai.integration.banking.domain.response.CardsResponse;
-import com.activeai.integration.banking.domain.response.BlockCardResponse;
+import com.activeai.integration.banking.domain.request.*;
+import com.activeai.integration.banking.domain.response.*;
 import com.activeai.integration.banking.mapper.response.ActivationCardResponseMapper;
 import com.activeai.integration.banking.mapper.response.BlockCardResponseMapper;
 import com.activeai.integration.banking.mapper.response.CardsResponseMapper;
-import com.activeai.integration.banking.domain.response.ActivationCardResponse;
-import com.activeai.integration.banking.domain.response.ReplaceCardConfirmResponse;
-import com.activeai.integration.banking.domain.response.ResetPinConfirmResponse;
-import com.activeai.integration.banking.domain.request.InternationalCardUsageRequest;
-import com.activeai.integration.banking.domain.response.InternationalUsageResponse;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
 import com.mashape.unirest.http.HttpResponse;
@@ -419,4 +408,73 @@ public class CardsService {
     return ResponseEntity.ok(response);
   }
 
+  /**
+   * Fetches ConvertEMIResponse
+   *
+   * @return ResponseEntity of type ConvertEMIResponse
+   */
+  public ResponseEntity<ConvertEMIResponse> getConvertEMIResponseEntity(String customerId, String cardNumber) {
+    ConvertEMIResponse response = null;
+    try {
+      HttpResponse<String> apiResponse = Unirest
+          .get(propertyUtil.getAPIUrlForConvertEMI(PropertyConstants.CONVERT_EMI_API_ENDPOINT, customerId, cardNumber))
+          .header("cache-control", "no-cache").asString();
+      ApplicationLogger
+          .logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+        ApplicationLogger.logInfo("Convert EMI Confirm Response Body Before Transformation :" + apiResponse.getBody());
+        response = cardsResponseMapper.getManipulatedConvertEMIResponse(apiResponse.getBody());
+        ApplicationLogger.logInfo("Convert EMI Confirm Response Body After Transformation :" + apiResponse.getBody());
+      }
+      return ResponseEntity.ok(response);
+    } catch (UnirestException e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+    } catch (IOException e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+              ExceptionUtils.getStackTrace(e)));
+    } catch (Exception e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+    }
+    response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(response);
+  }
+
+  /**
+   * Fetches ConvertEMIConfirmResponse
+   *
+   * @return ResponseEntity of type ConvertEMIConfirmResponse
+   */
+  public ResponseEntity<ConvertEMICreditCardConfirmResponse> getConvertEMICreditCardConfirmResponseEntity(
+      ConvertEMICreditCardConfirmRequest convertEMICreditCardConfirmRequest) {
+    ConvertEMICreditCardConfirmResponse response = null;
+    try {
+      HttpResponse<String> apiResponse = Unirest.post(propertyUtil
+          .getAPIUrlForConvertEMIConfirm(PropertyConstants.CONVERT_EMI_CREDIT_CARD_CONFIRM_API_ENDPOINT,
+              convertEMICreditCardConfirmRequest)).header("Content-Type", "application/json").asString();
+      ApplicationLogger
+          .logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+        ApplicationLogger.logInfo("Convert EMI Confirm Response Body Before Transformation :" + apiResponse.getBody());
+        response = cardsResponseMapper.getManipulatedConvertEMIConfirmResponse(apiResponse.getBody());
+        ApplicationLogger.logInfo("Convert EMI Confirm Response Body After Transformation :" + apiResponse.getBody());
+      }
+      return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));
+    } catch (UnirestException e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+    } catch (IOException e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+              ExceptionUtils.getStackTrace(e)));
+    } catch (Exception e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+    }
+    response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(response);
+  }
 }
+
