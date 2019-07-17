@@ -4,7 +4,7 @@ import com.activeai.integration.banking.model.Card;
 import com.activeai.integration.banking.model.EMIPlan;
 import com.activeai.integration.banking.model.User;
 
-public class ConvertEMICreditCardConfirmRequest extends User {
+public class ConvertEMIConfirmRequest extends User {
 
   private Card cardDetails;
 

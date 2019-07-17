@@ -258,10 +258,10 @@ public class CardsApiController {
   }
 
   /*
-   * Getting EMI for Credit Cards
+   * Return the Conversion of Transaction to EMI for Credit Cards
    */
   @ApiOperation("Return Conversion to EMI from Transaction of Credit card")
-  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/convertEMI", produces = {"application/json"}, consumes = {
+  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/convertemi", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.GET)
   public ResponseEntity<ConvertEMIResponse> convertEMI(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "cardNumber", required = true) String cardNumber) {
@@ -270,14 +270,14 @@ public class CardsApiController {
   }
 
   /*
-   * Getting EMI for Credit Cards
+   * Return the Status of Conversion of Transaction to EMI for Credit Cards
    */
   @ApiOperation("Return status of Conversion to EMI from Transaction of Credit card")
-  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/convertEMI/confirm", produces = {"application/json"}, consumes = {
+  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/convertemi/confirm", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST)
-  public ResponseEntity<ConvertEMICreditCardConfirmResponse> convertEMICreditCard(@PathVariable(name = "customerId", required = true) String customerId,
-      @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final ConvertEMICreditCardConfirmRequest convertEMICreditCardConfirmRequest) {
+  public ResponseEntity<ConvertEMIConfirmResponse> convertEMIConfirm(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestBody final ConvertEMIConfirmRequest convertEMIConfirmRequest) {
     ApplicationLogger.logInfo("Entering getEMIConversion Confirm API");
-    return cardsService.getConvertEMICreditCardConfirmResponseEntity(convertEMICreditCardConfirmRequest);
+    return cardsService.getConvertEMIConfirmResponseEntity(convertEMIConfirmRequest);
   }
 }
