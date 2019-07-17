@@ -3,7 +3,7 @@ package com.activeai.integration.banking.domain.response;
 import com.activeai.integration.banking.constants.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ConvertEMICreditCardConfirmResponse extends Response{
+public class ConvertEMIConfirmResponse extends Response{
 
   @JsonProperty("referenceId")
   private String referenceId;

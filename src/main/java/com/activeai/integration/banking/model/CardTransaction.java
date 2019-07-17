@@ -1,6 +1,8 @@
 package com.activeai.integration.banking.model;
 
 import java.util.Objects;
+
+import com.activeai.integration.banking.constants.TransactionTypeEnum;
 import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,6 +11,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @Validated
 public class CardTransaction {
+
+  @JsonProperty("transactionId")
+  private String transactionId;
+
+  @JsonProperty("accountNumber")
+  private String accountNumber;
+
+  @JsonProperty("accountId")
+  private String accountId;
 
   @JsonProperty("txnDate")
   private String txnDate = null;
@@ -25,8 +36,8 @@ public class CardTransaction {
   @JsonProperty("currency")
   private String currency = null;
 
-  @JsonProperty("isDebit")
-  private Boolean isDebit = null;
+  @JsonProperty("transactionType")
+  private TransactionTypeEnum transactionType = null;
 
   @JsonProperty("foreignTxnAmount")
   private Double foreignTxnAmount = null;
@@ -40,6 +51,42 @@ public class CardTransaction {
   @JsonProperty("referenceId")
   private String referenceId = null;
 
+  @JsonProperty("merchantName")
+  private String merchantName;
+
+  @JsonProperty("categoryType")
+  private String categoryType;
+
+  @JsonProperty("categorySubType")
+  private String categorySubType;
+
+  @JsonProperty("emiEligibility")
+  private  String emiEligibility;
+
+  public String getTransactionId() {
+    return transactionId;
+  }
+
+  public void setTransactionId(String transactionId) {
+    this.transactionId = transactionId;
+  }
+
+  public String getAccountNumber() {
+    return accountNumber;
+  }
+
+  public void setAccountNumber(String accountNumber) {
+    this.accountNumber = accountNumber;
+  }
+
+  public String getAccountId() {
+    return accountId;
+  }
+
+  public void setAccountId(String accountId) {
+    this.accountId = accountId;
+  }
+
   public String getTxnDate() {
     return txnDate;
   }
@@ -48,11 +95,6 @@ public class CardTransaction {
     this.txnDate = txnDate;
   }
 
-  /**
-   * Transaction detail
-   * 
-   * @return description
-   **/
   public String getDescription() {
     return description;
   }
@@ -61,11 +103,6 @@ public class CardTransaction {
     this.description = description;
   }
 
-  /**
-   * Transaction category
-   * 
-   * @return category
-   **/
   public String getCategory() {
     return category;
   }
@@ -74,11 +111,6 @@ public class CardTransaction {
     this.category = category;
   }
 
-  /**
-   * Transaction Amount
-   * 
-   * @return amount
-   **/
   public Double getAmount() {
     return amount;
   }
@@ -87,11 +119,6 @@ public class CardTransaction {
     this.amount = amount;
   }
 
-  /**
-   * Currency code at which the transaction is made
-   * 
-   * @return currency
-   **/
   public String getCurrency() {
     return currency;
   }
@@ -100,24 +127,14 @@ public class CardTransaction {
     this.currency = currency;
   }
 
-  /**
-   * Is debit or credit
-   * 
-   * @return isDebit
-   **/
-  public Boolean isIsDebit() {
-    return isDebit;
+  public TransactionTypeEnum getTransactionType() {
+    return transactionType;
   }
 
-  public void setIsDebit(Boolean isDebit) {
-    this.isDebit = isDebit;
+  public void setTransactionType(TransactionTypeEnum transactionType) {
+    this.transactionType = transactionType;
   }
 
-  /**
-   * Transaction amount in foreign currency
-   * 
-   * @return foreignTxnAmount
-   **/
   public Double getForeignTxnAmount() {
     return foreignTxnAmount;
   }
@@ -126,11 +143,6 @@ public class CardTransaction {
     this.foreignTxnAmount = foreignTxnAmount;
   }
 
-  /**
-   * Currency code at which the transaction is made
-   * 
-   * @return foreignTxnCurrency
-   **/
   public String getForeignTxnCurrency() {
     return foreignTxnCurrency;
   }
@@ -139,11 +151,6 @@ public class CardTransaction {
     this.foreignTxnCurrency = foreignTxnCurrency;
   }
 
-  /**
-   * Exchange rate from source currency to foreign currency
-   * 
-   * @return foreignTxnExchangeRate
-   **/
   public Float getForeignTxnExchangeRate() {
     return foreignTxnExchangeRate;
   }
@@ -152,11 +159,6 @@ public class CardTransaction {
     this.foreignTxnExchangeRate = foreignTxnExchangeRate;
   }
 
-  /**
-   * Transaction Reference Id
-   * 
-   * @return referenceId
-   **/
   public String getReferenceId() {
     return referenceId;
   }
@@ -165,57 +167,59 @@ public class CardTransaction {
     this.referenceId = referenceId;
   }
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    CardTransaction cardTransaction = (CardTransaction) o;
-    return Objects.equals(this.txnDate, cardTransaction.txnDate) && Objects.equals(this.description, cardTransaction.description)
-        && Objects.equals(this.category, cardTransaction.category) && Objects.equals(this.amount, cardTransaction.amount)
-        && Objects.equals(this.currency, cardTransaction.currency) && Objects.equals(this.isDebit, cardTransaction.isDebit)
-        && Objects.equals(this.foreignTxnAmount, cardTransaction.foreignTxnAmount)
-        && Objects.equals(this.foreignTxnCurrency, cardTransaction.foreignTxnCurrency)
-        && Objects.equals(this.foreignTxnExchangeRate, cardTransaction.foreignTxnExchangeRate)
-        && Objects.equals(this.referenceId, cardTransaction.referenceId);
+  public String getMerchantName() {
+    return merchantName;
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(txnDate, description, category, amount, currency, isDebit, foreignTxnAmount, foreignTxnCurrency,
-        foreignTxnExchangeRate, referenceId);
+  public void setMerchantName(String merchantName) {
+    this.merchantName = merchantName;
   }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class CardTransaction {\n");
+  public String getCategoryType() {
+    return categoryType;
+  }
 
-    sb.append("    txnDate: ").append(toIndentedString(txnDate)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    category: ").append(toIndentedString(category)).append("\n");
-    sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
-    sb.append("    currency: ").append(toIndentedString(currency)).append("\n");
-    sb.append("    isDebit: ").append(toIndentedString(isDebit)).append("\n");
-    sb.append("    foreignTxnAmount: ").append(toIndentedString(foreignTxnAmount)).append("\n");
-    sb.append("    foreignTxnCurrency: ").append(toIndentedString(foreignTxnCurrency)).append("\n");
-    sb.append("    foreignTxnExchangeRate: ").append(toIndentedString(foreignTxnExchangeRate)).append("\n");
-    sb.append("    referenceId: ").append(toIndentedString(referenceId)).append("\n");
-    sb.append("}");
+  public void setCategoryType(String categoryType) {
+    this.categoryType = categoryType;
+  }
+
+  public String getCategorySubType() {
+    return categorySubType;
+  }
+
+  public void setCategorySubType(String categorySubType) {
+    this.categorySubType = categorySubType;
+  }
+
+  public String getEmiEligibility() {
+    return emiEligibility;
+  }
+
+  public void setEmiEligibility(String emiEligibility) {
+    this.emiEligibility = emiEligibility;
+  }
+
+  @Override public String toString() {
+    final StringBuilder sb = new StringBuilder("CardTransaction{");
+    sb.append("transactionId='").append(transactionId).append('\'');
+    sb.append(", accountNumber='").append(accountNumber).append('\'');
+    sb.append(", accountId='").append(accountId).append('\'');
+    sb.append(", txnDate='").append(txnDate).append('\'');
+    sb.append(", description='").append(description).append('\'');
+    sb.append(", category='").append(category).append('\'');
+    sb.append(", amount=").append(amount);
+    sb.append(", currency='").append(currency).append('\'');
+    sb.append(", transactionType=").append(transactionType);
+    sb.append(", foreignTxnAmount=").append(foreignTxnAmount);
+    sb.append(", foreignTxnCurrency='").append(foreignTxnCurrency).append('\'');
+    sb.append(", foreignTxnExchangeRate=").append(foreignTxnExchangeRate);
+    sb.append(", referenceId='").append(referenceId).append('\'');
+    sb.append(", merchantName='").append(merchantName).append('\'');
+    sb.append(", categoryType='").append(categoryType).append('\'');
+    sb.append(", categorySubType='").append(categorySubType).append('\'');
+    sb.append(", emiEligibility='").append(emiEligibility).append('\'');
+    sb.append('}');
     return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
   }
 }
 

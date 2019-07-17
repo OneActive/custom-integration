@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.Objects;
 
 @Service("cardsService")
 public class CardsService {
@@ -422,9 +421,9 @@ public class CardsService {
       ApplicationLogger
           .logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
-        ApplicationLogger.logInfo("Convert EMI Confirm Response Body Before Transformation :" + apiResponse.getBody());
+        ApplicationLogger.logInfo("Convert EMI Response Body Before Transformation :" + apiResponse.getBody());
         response = cardsResponseMapper.getManipulatedConvertEMIResponse(apiResponse.getBody());
-        ApplicationLogger.logInfo("Convert EMI Confirm Response Body After Transformation :" + apiResponse.getBody());
+        ApplicationLogger.logInfo("Convert EMI Response Body After Transformation :" + apiResponse.getBody());
       }
       return ResponseEntity.ok(response);
     } catch (UnirestException e) {
@@ -447,13 +446,12 @@ public class CardsService {
    *
    * @return ResponseEntity of type ConvertEMIConfirmResponse
    */
-  public ResponseEntity<ConvertEMICreditCardConfirmResponse> getConvertEMICreditCardConfirmResponseEntity(
-      ConvertEMICreditCardConfirmRequest convertEMICreditCardConfirmRequest) {
-    ConvertEMICreditCardConfirmResponse response = null;
+  public ResponseEntity<ConvertEMIConfirmResponse> getConvertEMIConfirmResponseEntity(
+      ConvertEMIConfirmRequest convertEMIConfirmRequest) {
+    ConvertEMIConfirmResponse response = null;
     try {
       HttpResponse<String> apiResponse = Unirest.post(propertyUtil
-          .getAPIUrlForConvertEMIConfirm(PropertyConstants.CONVERT_EMI_CREDIT_CARD_CONFIRM_API_ENDPOINT,
-              convertEMICreditCardConfirmRequest)).header("Content-Type", "application/json").asString();
+          .getAPIUrlForConvertEMIConfirm(PropertyConstants.CONVERT_EMI_CONFIRM_API_ENDPOINT, convertEMIConfirmRequest)).header("Content-Type", "application/json").asString();
       ApplicationLogger
           .logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {

@@ -79,7 +79,7 @@ public class PropertyUtil {
         env.getProperty(propertyValue);
   }
 
-  public String getAPIUrlForConvertEMIConfirm(String propertyValue, ConvertEMICreditCardConfirmRequest convertEMICreditCardConfirmRequest) {
+  public String getAPIUrlForConvertEMIConfirm(String propertyValue, ConvertEMIConfirmRequest convertEMIConfirmRequest) {
     return env.getProperty(propertyValue);
   }
 }
