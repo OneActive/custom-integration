@@ -60,9 +60,6 @@ public class CardTransaction {
   @JsonProperty("categorySubType")
   private String categorySubType;
 
-  @JsonProperty("emiEligibility")
-  private  String emiEligibility;
-
   public String getTransactionId() {
     return transactionId;
   }
@@ -191,14 +188,6 @@ public class CardTransaction {
     this.categorySubType = categorySubType;
   }
 
-  public String getEmiEligibility() {
-    return emiEligibility;
-  }
-
-  public void setEmiEligibility(String emiEligibility) {
-    this.emiEligibility = emiEligibility;
-  }
-
   @Override public String toString() {
     final StringBuilder sb = new StringBuilder("CardTransaction{");
     sb.append("transactionId='").append(transactionId).append('\'');
@@ -217,7 +206,6 @@ public class CardTransaction {
     sb.append(", merchantName='").append(merchantName).append('\'');
     sb.append(", categoryType='").append(categoryType).append('\'');
     sb.append(", categorySubType='").append(categorySubType).append('\'');
-    sb.append(", emiEligibility='").append(emiEligibility).append('\'');
     sb.append('}');
     return sb.toString();
   }
