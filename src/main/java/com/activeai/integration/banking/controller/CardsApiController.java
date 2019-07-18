@@ -261,16 +261,15 @@ public class CardsApiController {
    * Return the Conversion of Transaction to EMI for Credit Cards
    */
   @ApiOperation("Return Conversion to EMI from Transaction of Credit card")
-  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/convertemi", produces = {"application/json"}, consumes = {
-      "application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/convertemi", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<ConvertEMIResponse> convertEMI(@PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "cardNumber", required = true) String cardNumber) {
     ApplicationLogger.logInfo("Entering getEMIConversion API");
     return cardsService.getConvertEMIResponseEntity(customerId, cardNumber);
   }
 
-  /*
-   * Return the Status of Conversion of Transaction to EMI for Credit Cards
+/*
+   * Getting Status of Conversion to EMI for Credit Cards
    */
   @ApiOperation("Return status of Conversion to EMI from Transaction of Credit card")
   @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/convertemi/confirm", produces = {"application/json"}, consumes = {
