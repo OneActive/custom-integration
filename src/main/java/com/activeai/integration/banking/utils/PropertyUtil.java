@@ -72,4 +72,8 @@ public class PropertyUtil {
         env.getProperty(MessageFormat.format(APIDoublePropertyPattern, customerId, propertyValue)) :
         env.getProperty(propertyValue);
   }
+  public String getAPIUrlForAtmLocator(String propertyValue, AtmLocatorRequest locatorRequest)
+  {
+    return env.getProperty(propertyValue);
+  }
 }
