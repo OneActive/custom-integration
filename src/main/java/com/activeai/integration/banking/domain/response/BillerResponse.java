@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import com.activeai.integration.banking.model.Biller;
 import com.activeai.integration.banking.model.Result;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,14 +38,6 @@ public class BillerResponse   {
     this.result = result;
   }
 
-  public BillerResponse addBillersItem(Biller billersItem) {
-    if (this.billers == null) {
-      this.billers = new ArrayList<Biller>();
-    }
-    this.billers.add(billersItem);
-    return this;
-  }
-
   /**
    * Get billers
    * @return billers
@@ -58,44 +51,8 @@ public class BillerResponse   {
     this.billers = billers;
   }
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    BillerResponse billerList = (BillerResponse) o;
-    return Objects.equals(this.result, billerList.result) &&
-        Objects.equals(this.billers, billerList.billers);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(result, billers);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class BillerList {\n");
-    
-    sb.append("    result: ").append(toIndentedString(result)).append("\n");
-    sb.append("    billers: ").append(toIndentedString(billers)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("result", result).append("billers", billers).toString();
   }
 }
 
