@@ -26,7 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 
-@Api(value = "Cards Related APIs", description = "Shows API documentation regarding cards APIs like credit card, debit card") @RestController
+@Api(value = "Cards Related APIs", description = "Shows API documentation regarding cards APIs like credit card, debit card")
+@RestController
 public class CardsApiController {
 
   @Autowired private ObjectMapper objectMapper;
