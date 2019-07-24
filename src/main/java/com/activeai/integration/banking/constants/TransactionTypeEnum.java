@@ -3,21 +3,14 @@ package com.activeai.integration.banking.constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-/**
- * Card issues like visa, master card, amex, Diners
- */
-public enum CardIssuerEnum {
-  VISA("VISA"),
+public enum TransactionTypeEnum {
+  DEBIT("DEBIT"),
 
-  MASTER("MASTER"),
-
-  AMEX("AMEX"),
-
-  DINERS("DINERS");
+  CREDIT("CREDIT");
 
   private String value;
 
-  CardIssuerEnum(String value) {
+  TransactionTypeEnum(String value) {
     this.value = value;
   }
 
@@ -28,12 +21,13 @@ public enum CardIssuerEnum {
   }
 
   @JsonCreator
-  public static CardIssuerEnum fromValue(String text) {
-    for (CardIssuerEnum b : CardIssuerEnum.values()) {
+  public static TransactionTypeEnum fromValue(String text) {
+    for (TransactionTypeEnum b : TransactionTypeEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }
     }
     return null;
   }
+
 }

@@ -72,8 +72,18 @@ public class PropertyUtil {
         env.getProperty(MessageFormat.format(APIDoublePropertyPattern, customerId, propertyValue)) :
         env.getProperty(propertyValue);
   }
-  public String getAPIUrlForAtmLocator(String propertyValue, AtmLocatorRequest locatorRequest)
-  {
+
+  public String getAPIUrlForConvertEMI(String propertyValue, String customerId, String cardNumber) {
+    return StringUtils.isNotEmpty(env.getProperty(MessageFormat.format(APIDoublePropertyPattern, cardNumber, propertyValue))) ?
+        env.getProperty(MessageFormat.format(APIDoublePropertyPattern, cardNumber, propertyValue)) :
+        env.getProperty(propertyValue);
+  }
+
+  public String getAPIUrlForConvertEMIConfirm(String propertyValue, ConvertEMIConfirmRequest convertEMIConfirmRequest) {
+    return env.getProperty(propertyValue);
+  }
+
+  public String getAPIUrlForAtmLocator(String propertyValue, AtmLocatorRequest locatorRequest) {
     return env.getProperty(propertyValue);
   }
 }
