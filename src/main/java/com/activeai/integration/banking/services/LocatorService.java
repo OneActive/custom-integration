@@ -26,13 +26,43 @@ public class LocatorService {
   private PropertyUtil propertyUtil;
   private static final String error_message_format = "{0} : {1} : {2}";
 
-  public ResponseEntity<AtmLocatorResponse> getNearestAtmsResponseEntity(AtmLocatorRequest atmLocatorRequest) {
+  public ResponseEntity<AtmLocatorResponse> getNearestAtmsAddressResponseEntity(AtmLocatorRequest atmLocatorRequest) {
     AtmLocatorResponse response = new AtmLocatorResponse();
     try {
 
       HttpResponse<String> apiResponse =
           Unirest
-              .post(propertyUtil.getAPIUrlForAtmLocator(PropertyConstants.ATM_LOCATOR_API_END_POINT, atmLocatorRequest)).header("cache-control", "no-cache").asString();
+              .post(propertyUtil.getAPIUrlForAtmLocator(PropertyConstants.ATM_LOCATOR_ADDRESS_API_END_POINT, atmLocatorRequest)).header("cache-control", "no-cache").asString();
+
+      ApplicationLogger.logInfo("Atm Locator Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+        ApplicationLogger.logInfo(" Atm Locator Response Body Before Transformation :" + apiResponse.getBody());
+        response = atmLocatorResponseMapper.getManipulatedAtmsResponse(apiResponse.getBody());
+        ApplicationLogger.logInfo("Atm Locator Response Body After Transformation :" + response);
+      }
+      return ResponseEntity.ok(response);
+    } catch (UnirestException e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+    } catch (IOException e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+              ExceptionUtils.getStackTrace(e)));
+    } catch (Exception e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+    }
+    response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(response);
+  }
+
+  public ResponseEntity<AtmLocatorResponse> getNearestAtmsGeocodesResponseEntity(AtmLocatorRequest atmLocatorRequest) {
+    AtmLocatorResponse response = new AtmLocatorResponse();
+    try {
+
+      HttpResponse<String> apiResponse =
+          Unirest
+              .post(propertyUtil.getAPIUrlForAtmLocator(PropertyConstants.ATM_LOCATOR_GEOCODES_API_END_POINT, atmLocatorRequest)).header("cache-control", "no-cache").asString();
 
       ApplicationLogger.logInfo("Atm Locator Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
