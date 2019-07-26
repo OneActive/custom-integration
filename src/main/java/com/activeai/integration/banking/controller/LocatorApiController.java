@@ -6,6 +6,7 @@ import com.activeai.integration.banking.services.LocatorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,12 @@ public class LocatorApiController {
   public ResponseEntity<AtmLocatorResponse> getNearestAtms(@PathVariable(name = "fetchType", required = true) String fetchType,
       @RequestBody final AtmLocatorRequest atmLocatorRequest) {
     logger.info("Entering getAtms");
-    return locatorService.getNearestAtmsResponseEntity(atmLocatorRequest);
+    if(StringUtils.isNotEmpty(fetchType) && fetchType.equalsIgnoreCase("address"))
+    {
+      return locatorService.getNearestAtmsAddressResponseEntity(atmLocatorRequest);
+    }
+    else {
+      return locatorService.getNearestAtmsGeocodesResponseEntity(atmLocatorRequest);
+    }
   }
 }
