@@ -7,6 +7,7 @@ import com.activeai.integration.banking.domain.response.AtmLocatorResponse;
 import com.activeai.integration.banking.mapper.response.AtmLocatorResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -18,10 +19,12 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.List;
 
 @Service("locatorService")
 public class LocatorService {
   @Autowired AtmLocatorResponseMapper atmLocatorResponseMapper;
+  @Autowired private ObjectMapper objectMapper;
   @Autowired
   private PropertyUtil propertyUtil;
   private static final String error_message_format = "{0} : {1} : {2}";
@@ -37,7 +40,8 @@ public class LocatorService {
       ApplicationLogger.logInfo("Atm Locator Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo(" Atm Locator Response Body Before Transformation :" + apiResponse.getBody());
-        response = atmLocatorResponseMapper.getManipulatedAtmsResponse(apiResponse.getBody());
+        AtmLocatorResponse atmLocatorResponse =objectMapper.readValue(apiResponse.getBody(), AtmLocatorResponse.class);
+        response = atmLocatorResponseMapper.getManipulatedAtmsAddressResponse(atmLocatorResponse,atmLocatorRequest);
         ApplicationLogger.logInfo("Atm Locator Response Body After Transformation :" + response);
       }
       return ResponseEntity.ok(response);
