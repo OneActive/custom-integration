@@ -1,18 +1,19 @@
 package com.activeai.integration.banking.mapper.response;
 
-import com.activeai.integration.banking.constants.LocatorTypeEnum;
 import com.activeai.integration.banking.domain.request.AtmLocatorRequest;
 import com.activeai.integration.banking.domain.response.AtmLocatorResponse;
 import com.activeai.integration.banking.model.Address;
 import com.activeai.integration.banking.model.AtmBranch;
 import com.activeai.integration.banking.model.Geocodes;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Component("atmLocatorResponseMapper")
 public class AtmLocatorResponseMapper {
@@ -26,80 +27,28 @@ public class AtmLocatorResponseMapper {
    * @param locatorResponses
    * @return String of AtmLocatorResponse
    */
-  public AtmLocatorResponse getManipulatedAtmsAddressResponse(AtmLocatorResponse locatorResponses, AtmLocatorRequest atmLocatorRequest)
-      throws IOException {
+  public AtmLocatorResponse getManipulatedAtmsAddressResponse(AtmLocatorResponse locatorResponses, AtmLocatorRequest atmLocatorRequest) {
     AtmLocatorResponse atmLocatorResponse = new AtmLocatorResponse();
     List<AtmBranch> atmBranchList = new ArrayList<>();
-    if (locatorResponses != null) {
-      if (locatorResponses.getAtmBranches() != null) {
-        for (AtmBranch atmBranch : locatorResponses.getAtmBranches()) {
-          AtmBranch branch = new AtmBranch();
-          if (atmBranch.getAddress() != null) {
-            Address address = new Address();
-            Geocodes geocodes = new Geocodes();
-            if(atmLocatorRequest.getAddress().getLocality()!=null){
-              if (atmBranch.getAddress().getCity().toLowerCase().contains(atmLocatorRequest.getAddress().getLocality().toLowerCase()) || atmBranch
-                  .getAddress().getAddressLine1().toLowerCase().contains(atmLocatorRequest.getAddress().getLocality().toLowerCase()) || atmBranch
-                  .getAddress().getLocality().toLowerCase().contains(atmLocatorRequest.getAddress().getLocality().toLowerCase()) || atmBranch.getAddress()
-                  .getCountry().toLowerCase().contains(atmLocatorRequest.getAddress().getLocality().toLowerCase()) || atmBranch.getAddress().getState().toLowerCase()
-                  .contains(atmLocatorRequest.getAddress().getLocality().toLowerCase()))
-              {
-                branch.setLocateResponseType(atmBranch.getLocateResponseType());
-                address.setPostalCode(atmBranch.getAddress().getPostalCode());
-                address.setAddressLine1(atmBranch.getAddress().getAddressLine1());
-                address.setLocality(atmBranch.getAddress().getLocality());
-                address.setCity(atmBranch.getAddress().getCity());
-                address.setCountry(atmBranch.getAddress().getCountry());
-                address.setState(atmBranch.getAddress().getState());
-                branch.setAddress(address);
-                branch.setName(atmBranch.getName());
-                branch.setDistanceUnit(atmBranch.getDistanceUnit());
-                branch.setDistanceValue(atmBranch.getDistanceValue());
-                geocodes.setLatitude(atmBranch.getGeocodes().getLatitude());
-                geocodes.setLongitude(atmBranch.getGeocodes().getLongitude());
-                branch.setGeocodes(geocodes);
-                branch.setPageIndex(atmBranch.getPageIndex());
-                branch.setListCount(atmBranch.getListCount());
-                branch.setOperatingHours(atmBranch.getOperatingHours());
-                branch.setPhoneNumber(atmBranch.getPhoneNumber());
-                branch.setFax(atmBranch.getFax());
-                atmBranchList.add(branch);
-              }
+    if (Objects.nonNull(locatorResponses.getAtmBranches())) {
 
-            }
-            if(atmLocatorRequest.getDistanceValue()!=null)
-            {
-              if(atmBranch.getDistanceValue().equals(atmLocatorRequest.getDistanceValue()))
-              {
-                branch.setLocateResponseType(atmBranch.getLocateResponseType());
-                address.setPostalCode(atmBranch.getAddress().getPostalCode());
-                address.setAddressLine1(atmBranch.getAddress().getAddressLine1());
-                address.setLocality(atmBranch.getAddress().getLocality());
-                address.setCity(atmBranch.getAddress().getCity());
-                address.setCountry(atmBranch.getAddress().getCountry());
-                address.setState(atmBranch.getAddress().getState());
-                branch.setAddress(address);
-                branch.setName(atmBranch.getName());
-                branch.setDistanceUnit(atmBranch.getDistanceUnit());
-                branch.setDistanceValue(atmBranch.getDistanceValue());
-                geocodes.setLatitude(atmBranch.getGeocodes().getLatitude());
-                geocodes.setLongitude(atmBranch.getGeocodes().getLongitude());
-                branch.setGeocodes(geocodes);
-                branch.setPageIndex(atmBranch.getPageIndex());
-                branch.setListCount(atmBranch.getListCount());
-                branch.setOperatingHours(atmBranch.getOperatingHours());
-                branch.setPhoneNumber(atmBranch.getPhoneNumber());
-                branch.setFax(atmBranch.getFax());
-                atmBranchList.add(branch);
-              }
-            }
-            }
-
+      for (AtmBranch atmBranch : locatorResponses.getAtmBranches()) {
+        if (Objects.nonNull(atmBranch.getAddress()) && StringUtils.isNotEmpty(atmLocatorRequest.getAddress().getLocality())) {
+          String locality = atmLocatorRequest.getAddress().getLocality().toLowerCase();
+          if (StringUtils.isNotEmpty(atmBranch.getAddress().getCity())&&atmBranch.getAddress().getCity().toLowerCase().contains(locality) || StringUtils.isNotEmpty(atmBranch.getAddress().getAddressLine1())&&
+              atmBranch.getAddress().getAddressLine1().toLowerCase().contains(locality) ||StringUtils.isNotEmpty(atmBranch.getAddress().getLocality())&& atmBranch.getAddress().getLocality().toLowerCase().contains(locality) ||
+              StringUtils.isNotEmpty(atmBranch.getAddress().getCountry())&&atmBranch.getAddress().getCountry().toLowerCase().contains(locality) || StringUtils.isNotEmpty(atmBranch.getAddress().getState())&&
+              atmBranch.getAddress().getState().toLowerCase().contains(locality) || (
+              atmLocatorRequest.getDistanceValue() != null && atmLocatorRequest.getDistanceValue()
+                  .equals(atmLocatorRequest.getDistanceValue()))) {
+            atmBranchList.add(atmBranch);
+          }
         }
-        atmLocatorResponse.setAtmBranches(atmBranchList);
       }
-
     }
+    atmLocatorResponse.setAtmBranches(atmBranchList);
+
+
     return atmLocatorResponse;
   }
 
