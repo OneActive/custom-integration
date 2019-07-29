@@ -14,8 +14,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component("atmLocatorResponseMapper") public class AtmLocatorResponseMapper {
-  @Autowired private ObjectMapper objectMapper;
+@Component("atmLocatorResponseMapper")
+public class AtmLocatorResponseMapper {
+
+  @Autowired
+  private ObjectMapper objectMapper;
 
   /**
    * In this method you can change the obtained string accordingly to the DepositServiceResponse
