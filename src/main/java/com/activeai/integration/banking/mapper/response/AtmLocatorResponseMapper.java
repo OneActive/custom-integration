@@ -38,11 +38,15 @@ public class AtmLocatorResponseMapper {
           if (StringUtils.isNotEmpty(atmBranch.getAddress().getCity())&&atmBranch.getAddress().getCity().toLowerCase().contains(locality) || StringUtils.isNotEmpty(atmBranch.getAddress().getAddressLine1())&&
               atmBranch.getAddress().getAddressLine1().toLowerCase().contains(locality) ||StringUtils.isNotEmpty(atmBranch.getAddress().getLocality())&& atmBranch.getAddress().getLocality().toLowerCase().contains(locality) ||
               StringUtils.isNotEmpty(atmBranch.getAddress().getCountry())&&atmBranch.getAddress().getCountry().toLowerCase().contains(locality) || StringUtils.isNotEmpty(atmBranch.getAddress().getState())&&
-              atmBranch.getAddress().getState().toLowerCase().contains(locality) || (
-              atmLocatorRequest.getDistanceValue() != null && atmLocatorRequest.getDistanceValue()
-                  .equals(atmLocatorRequest.getDistanceValue()))) {
+              atmBranch.getAddress().getState().toLowerCase().contains(locality))
+               {
             atmBranchList.add(atmBranch);
           }
+        }
+        if(atmLocatorRequest.getDistanceValue() != null && atmBranch.getDistanceValue()
+            .equals(atmLocatorRequest.getDistanceValue()))
+        {
+          atmBranchList.add(atmBranch);
         }
       }
     }
