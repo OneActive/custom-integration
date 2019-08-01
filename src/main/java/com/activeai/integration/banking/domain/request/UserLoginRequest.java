@@ -13,6 +13,9 @@ public class UserLoginRequest {
   @JsonProperty("password")
   private String password;
 
+  @JsonProperty("accessToken")
+  private String accessToken;
+
   public String getUserID() {
     return userID;
   }
@@ -27,5 +30,13 @@ public class UserLoginRequest {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getAccessToken() {
+    return accessToken;
+  }
+
+  public void setAccessToken(String accessToken) {
+    this.accessToken = accessToken;
   }
 }

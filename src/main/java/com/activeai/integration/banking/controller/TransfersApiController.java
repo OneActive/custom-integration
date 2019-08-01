@@ -26,13 +26,13 @@ public class TransfersApiController {
   private TransferService transferService;
 
   @RequestMapping(value = "/{customerId}/transfer/payees", produces = {"application/json"}, consumes = {"application/json"}, method = RequestMethod.POST)
-  public ResponseEntity<PayeesResponse> getPayeesList(@Valid @RequestBody final PayeesRequest payeeRequest,@PathVariable(value = "customerId", required = true) Integer customerId) {
+  public ResponseEntity<PayeesResponse> getPayeesList(@Valid @RequestBody final PayeesRequest payeeRequest,@PathVariable(value = "customerId", required = true) String customerId) {
     return transferService.getPayeesResponseEntity(payeeRequest);
   }
 
   @RequestMapping(value = "/{customerId}/transfer/initiate", produces = {"application/json"}, consumes = {"application/json"},
       method = RequestMethod.POST)
-  public ResponseEntity<FundTransferResponse> initTransfer(@PathVariable(value = "customerId", required = true) Integer customerId,
+  public ResponseEntity<FundTransferResponse> initTransfer(@PathVariable(value = "customerId", required = true) String customerId,
       @RequestBody final FundTransferRequest fundTransferRequest){
     ResponseEntity<FundTransferResponse> response = null;
     try {
@@ -48,7 +48,7 @@ public class TransfersApiController {
 
   @RequestMapping(value = "/{customerId}/transfer/confirm", produces = {"application/json"}, consumes = {"application/json"},
       method = RequestMethod.POST)
-  public ResponseEntity<FundTransferResponse> confirmTransfer(@PathVariable(value = "customerId", required = true) Integer customerId,
+  public ResponseEntity<FundTransferResponse> confirmTransfer(@PathVariable(value = "customerId", required = true) String customerId,
       @RequestBody final FundTransferRequest fundTransferRequest) {
     return transferService.getConfirmTransferResponseEntity(fundTransferRequest);
   }

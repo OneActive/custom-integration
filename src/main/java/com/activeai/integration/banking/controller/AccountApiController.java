@@ -1,5 +1,6 @@
 package com.activeai.integration.banking.controller;
 
+import com.activeai.integration.banking.domain.request.AccountRequest;
 import com.activeai.integration.banking.domain.response.AccountBalanceResponse;
 import com.activeai.integration.banking.domain.response.DepositAccountBalanceResponse;
 import com.activeai.integration.banking.domain.response.LoanAccountBalanceResponse;
@@ -112,10 +113,10 @@ public class AccountApiController {
   Return List of CASA Account
    */
   @ApiOperation(value = "Returns list of casa accounts based on customer ID")
-  @RequestMapping(value = "/{customerId}/accounts/casa", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<AccountsResponse> getCasaAccounts(@PathVariable(name = "customerId", required = true) String customerId) {
+  @RequestMapping(value = "/{customerId}/accounts/casa", produces = {"application/json"}, consumes = {"application/json"}, method = RequestMethod.POST)
+  public ResponseEntity<AccountsResponse> getCasaAccounts(@PathVariable(name = "customerId", required = true)String customerId, @RequestBody final AccountRequest accountRequest) {
     ApplicationLogger.logInfo("Entering getCasaAccountsResponseEntity API");
-    return accountsService.getCasaAccountsResponseEntity(customerId);
+    return accountsService.getCasaAccountsResponseEntity(accountRequest);
   }
 
   /*

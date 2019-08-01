@@ -2,6 +2,7 @@ package com.activeai.integration.banking.services;
 
 import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
+import com.activeai.integration.banking.domain.request.AccountRequest;
 import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
 import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.domain.response.DepositAccountsResponse;
@@ -34,14 +35,14 @@ public class AccountsService {
 
   /**
    * Fetches list of Accounts
-   * @param customerId
+   * @param accountRequest
    * @return ResponseEntity of type AccountsResponse
    */
-  public ResponseEntity<AccountsResponse> getCasaAccountsResponseEntity(String customerId) {
+  public ResponseEntity<AccountsResponse> getCasaAccountsResponseEntity(AccountRequest accountRequest) {
     AccountsResponse response = new AccountsResponse();
     try {
       HttpResponse<String> apiResponse =
-          Unirest.get(propertyUtil.getAccountAPIUrl(PropertyConstants.CASA_ACCOUNT_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
+          Unirest.post(propertyUtil.getAccountAPIUrl(PropertyConstants.CASA_ACCOUNT_API_END_POINT, accountRequest.getCustomerId(),null)).header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("Casa API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo(" Casa Response Body Before Transformation :" + apiResponse.getBody());
