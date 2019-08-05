@@ -35,14 +35,15 @@ public class AccountsService {
 
   /**
    * Fetches list of Accounts
-   * @param accountRequest
+   * @param accessToken
+   * @param customerId
    * @return ResponseEntity of type AccountsResponse
    */
-  public ResponseEntity<AccountsResponse> getCasaAccountsResponseEntity(AccountRequest accountRequest) {
+  public ResponseEntity<AccountsResponse> getCasaAccountsResponseEntity(String customerId, String accessToken) {
     AccountsResponse response = new AccountsResponse();
     try {
       HttpResponse<String> apiResponse =
-          Unirest.post(propertyUtil.getAccountAPIUrl(PropertyConstants.CASA_ACCOUNT_API_END_POINT, accountRequest.getCustomerId(),null)).header("cache-control", "no-cache").asString();
+          Unirest.post(propertyUtil.getAccountAPIUrl(PropertyConstants.CASA_ACCOUNT_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
       ApplicationLogger.logInfo("Casa API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo(" Casa Response Body Before Transformation :" + apiResponse.getBody());
@@ -60,7 +61,7 @@ public class AccountsService {
     response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(response);
   }
-  public ResponseEntity<LoanAccountsResponse> getLoanAccountsResponseEntity(String customerId) {
+  public ResponseEntity<LoanAccountsResponse> getLoanAccountsResponseEntity(String customerId, String accessToken) {
     LoanAccountsResponse response = new LoanAccountsResponse();
     try {
       HttpResponse<String> apiResponse =
@@ -87,7 +88,7 @@ public class AccountsService {
     response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(response);
   }
-  public ResponseEntity<DepositAccountsResponse> getDepositAccountsResponseEntity(String customerId) {
+  public ResponseEntity<DepositAccountsResponse> getDepositAccountsResponseEntity(String customerId, String accessToken) {
     DepositAccountsResponse response = new DepositAccountsResponse();
     try {
       HttpResponse<String> apiResponse =
@@ -122,7 +123,7 @@ public class AccountsService {
    * @param customerId,accountId
    * @return ResponseEntity of type AccountTransactionsResponse
    */
-  public ResponseEntity<AccountTransactionsResponse> getAccountTransactionsResponseEntity(String customerId, String accountId) {
+  public ResponseEntity<AccountTransactionsResponse> getAccountTransactionsResponseEntity(String customerId, String accountId, String accessToken) {
     AccountTransactionsResponse response = new AccountTransactionsResponse();
     try {
       HttpResponse<String> apiResponse =

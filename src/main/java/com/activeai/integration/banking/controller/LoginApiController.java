@@ -4,7 +4,6 @@ import com.activeai.integration.banking.domain.request.UserLoginRequest;
 import com.activeai.integration.banking.domain.response.LoginResponse;
 import com.activeai.integration.banking.services.LoginService;
 import com.activeai.integration.banking.utils.ApplicationLogger;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginApiController {
 
   private static final Logger logger = LoggerFactory.getLogger(TransfersApiController.class);
-  @Autowired private ObjectMapper objectMapper;
   @Autowired private LoginService loginService;
 
   @ApiOperation("Return authorisation of user")

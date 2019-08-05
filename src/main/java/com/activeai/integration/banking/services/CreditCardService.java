@@ -32,7 +32,7 @@ public class CreditCardService {
     @Autowired private CreditCardResponseMapper creditCardResponseMapper;
     private static final String error_message_format = "{0} : {1} : {2}";
 
-    public ResponseEntity<CreditCardLimitResponse> getCreditCardLimitResponseEntity(String customerId, String cardNumber) {
+    public ResponseEntity<CreditCardLimitResponse> getCreditCardLimitResponseEntity(String customerId, String cardNumber, String accessToken) {
         CreditCardLimitResponse response = new CreditCardLimitResponse();
         try {
             HttpResponse<String> apiResponse =

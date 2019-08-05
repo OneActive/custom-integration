@@ -33,7 +33,7 @@ import java.text.MessageFormat;
    * @param customerId,accountId
    * @return ResponseEntity of type CasaAccountBalanceResponse
    */
-  public ResponseEntity<AccountBalanceResponse> getCasaAccountBalanceResponseEntity(String customerId, String accountId) {
+  public ResponseEntity<AccountBalanceResponse> getCasaAccountBalanceResponseEntity(String customerId, String accountId, String accessToken) {
     AccountBalanceResponse accountBalanceResponse = new AccountBalanceResponse();
     try {
       HttpResponse<String> apiResponse =
@@ -68,7 +68,7 @@ import java.text.MessageFormat;
    * @param customerId,accountId
    * @return ResponseEntity of type DepositAccountBalanceResponse
    */
-  public ResponseEntity<DepositAccountBalanceResponse> getDepositAccountBalanceResponseEntity(String customerId, String accountId) {
+  public ResponseEntity<DepositAccountBalanceResponse> getDepositAccountBalanceResponseEntity(String customerId, String accountId, String accessToken) {
     DepositAccountBalanceResponse response = new DepositAccountBalanceResponse();
     try {
       HttpResponse<String> apiResponse =
@@ -104,7 +104,7 @@ import java.text.MessageFormat;
    * @param customerId,accountId
    * @return ResponseEntity of type LoanAccountBalanceResponse
    */
-  public ResponseEntity<LoanAccountBalanceResponse> getLoanAccountBalanceResponseEntity(String customerId, String accountId) {
+  public ResponseEntity<LoanAccountBalanceResponse> getLoanAccountBalanceResponseEntity(String customerId, String accountId, String accessToken) {
     LoanAccountBalanceResponse response = new LoanAccountBalanceResponse();
     try {
       HttpResponse<String> apiResponse =

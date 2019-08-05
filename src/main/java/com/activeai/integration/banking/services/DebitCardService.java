@@ -36,7 +36,7 @@ public class DebitCardService {
    * @param customerId,cardNumber
    * @return ResponseEntity of type DebitCardLimitResponse
    */
-  public ResponseEntity<DebitCardLimitResponse> getDebitCardLimitResponseEntity(String customerId, String cardNumber) {
+  public ResponseEntity<DebitCardLimitResponse> getDebitCardLimitResponseEntity(String customerId, String cardNumber, String accessToken) {
     DebitCardLimitResponse response = new DebitCardLimitResponse();
     try {
       HttpResponse<String> apiResponse =

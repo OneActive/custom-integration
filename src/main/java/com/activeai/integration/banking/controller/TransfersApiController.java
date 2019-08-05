@@ -25,29 +25,15 @@ public class TransfersApiController {
   @Autowired
   private TransferService transferService;
 
-  @RequestMapping(value = "/{customerId}/transfer/payees", produces = {"application/json"}, consumes = {"application/json"}, method = RequestMethod.POST)
-  public ResponseEntity<PayeesResponse> getPayeesList(@Valid @RequestBody final PayeesRequest payeeRequest,@PathVariable(value = "customerId", required = true) String customerId) {
+  @RequestMapping(value = "/{customerId}/transfer/payees", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.POST)
+  public ResponseEntity<PayeesResponse> getPayeesList(@Valid @RequestBody final PayeesRequest payeeRequest,
+      @PathVariable(value = "customerId", required = true) String customerId) {
     return transferService.getPayeesResponseEntity(payeeRequest);
   }
 
-  @RequestMapping(value = "/{customerId}/transfer/initiate", produces = {"application/json"}, consumes = {"application/json"},
-      method = RequestMethod.POST)
-  public ResponseEntity<FundTransferResponse> initTransfer(@PathVariable(value = "customerId", required = true) String customerId,
-      @RequestBody final FundTransferRequest fundTransferRequest){
-    ResponseEntity<FundTransferResponse> response = null;
-    try {
-      response = new ResponseEntity<>(objectMapper.readValue(
-          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"txnReferenceId\" : \"txnReferenceId\",  \"status\" : \"INIT\"}",
-          FundTransferResponse.class), HttpStatus.OK);
-    } catch (IOException e) {
-      ApplicationLogger.logError("Couldn't serialize response for content type application/json", e);
-      response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return response;
-  }
-
-  @RequestMapping(value = "/{customerId}/transfer/confirm", produces = {"application/json"}, consumes = {"application/json"},
-      method = RequestMethod.POST)
+  @RequestMapping(value = "/{customerId}/transfer/confirm", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<FundTransferResponse> confirmTransfer(@PathVariable(value = "customerId", required = true) String customerId,
       @RequestBody final FundTransferRequest fundTransferRequest) {
     return transferService.getConfirmTransferResponseEntity(fundTransferRequest);
