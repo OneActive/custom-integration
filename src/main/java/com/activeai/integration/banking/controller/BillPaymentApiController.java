@@ -30,7 +30,7 @@ public class BillPaymentApiController {
   @ApiOperation(value = "Returns list of registered billers based on customerId")
   @RequestMapping(value = "/{customerId}/billers", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<BillerResponse> getRegisteredBillerListForCustomer(
-      @PathVariable(name = "customerId", required = true) String customerId, @RequestParam(name = "accessToken") String accessToken) {
+      @PathVariable(name = "customerId", required = true) String customerId, @RequestParam(name = "accessToken", required=false) String accessToken) {
     ApplicationLogger.logInfo("Entering getRegisteredBillers API");
     return billpaymentService.getRegisteredBillerResponseEntity(customerId, accessToken);
   }
@@ -38,7 +38,7 @@ public class BillPaymentApiController {
   @ApiOperation(value = "Returns Biller details of biller based on billerId")
   @RequestMapping(value = "/{customerId}/billers/{billerId}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<BillerResponse> getBillerDetialsofBiller(@PathVariable(name = "customerId", required = true) String customerId,
-      @PathVariable(name = "billerId", required = true) String billerId, @RequestParam(name = "accessToken") String accessToken) {
+      @PathVariable(name = "billerId", required = true) String billerId, @RequestParam(name = "accessToken", required=false) String accessToken) {
     ApplicationLogger.logInfo("Entering getBillerDetails API");
     return billpaymentService.getBillerDetailsResponseEntity(customerId, billerId, accessToken);
   }

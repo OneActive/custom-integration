@@ -36,7 +36,7 @@ public class CardsApiController {
   @ApiOperation(value = "Returns list of credit cards based on customer ID")
   @RequestMapping(value = "/{customerId}/cards/creditcards", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardsResponse> getCreditCards(@PathVariable(value = "customerId", required = true) String customerId,
-      @RequestParam(name = "accessToken") String accessToken) {
+      @RequestParam(name = "accessToken", required=false) String accessToken) {
     logger.info("Entering getCreditCards");
     return cardsService.getCreditCardsResponseEntity(customerId, accessToken);
   }
@@ -47,7 +47,7 @@ public class CardsApiController {
   @ApiOperation(value = "Returns selected credit card details")
   @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardDetailResponse> getCreditCardDetails(@PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardNumber", required = true) String cardNumber, @RequestParam(name = "accessToken") String accessToken) {
+      @PathVariable(value = "cardNumber", required = true) String cardNumber, @RequestParam(name = "accessToken", required=false) String accessToken) {
     logger.info("Entering getCreditCardDetails");
     return cardsService.getCreditCardDetailsResponseEntity(customerId, cardNumber, accessToken);
   }
@@ -59,7 +59,7 @@ public class CardsApiController {
   @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/transactions", produces = {
       "application/json"}, method = RequestMethod.GET) public ResponseEntity<CardTransactionsResponse> getCreditCardTransactions(
       @PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardNumber", required = true) String cardNumber, @RequestParam(name = "accessToken") String accessToken) {
+      @PathVariable(value = "cardNumber", required = true) String cardNumber, @RequestParam(name = "accessToken", required=false) String accessToken) {
     logger.info("Entering getCreditCardTransactions");
     return cardsService.getCreditAccountTransactionsResponseEntity(customerId, cardNumber, accessToken);
   }
@@ -71,7 +71,7 @@ public class CardsApiController {
   @ApiOperation(value = "Returns debit card limit")
   @RequestMapping(value = "/{customerId}/debitcards/{cardNumber}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<DebitCardLimitResponse> getDebitCardLimits(@PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardNumber", required = true) String cardNumber, @RequestParam(name = "accessToken") String accessToken) {
+      @PathVariable(value = "cardNumber", required = true) String cardNumber, @RequestParam(name = "accessToken", required=false) String accessToken) {
     logger.info("Entering getDebitLimitResponse");
     return debitCardService.getDebitCardLimitResponseEntity(customerId, cardNumber, accessToken);
   }
@@ -82,7 +82,7 @@ public class CardsApiController {
   @ApiOperation(value = "Returns credit card limit")
   @RequestMapping(value = "/{customerId}/creditcards/{cardNumber}/getLimits", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CreditCardLimitResponse> getCreditCardLimits(@PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardNumber", required = true) String cardNumber, @RequestParam(name = "accessToken") String accessToken) {
+      @PathVariable(value = "cardNumber", required = true) String cardNumber, @RequestParam(name = "accessToken", required=false) String accessToken) {
     logger.info("Entering getCreditLimitResponse");
     return creditCardService.getCreditCardLimitResponseEntity(customerId, cardNumber, accessToken);
   }
@@ -196,7 +196,7 @@ public class CardsApiController {
   @ApiOperation(value = "Returns list of debit cards based on customer ID")
   @RequestMapping(value = "/{customerId}/cards/debitcards", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardsResponse> getDebitCards(@PathVariable(value = "customerId", required = true) String customerId,
-      @RequestParam(name = "accessToken") String accessToken) {
+      @RequestParam(name = "accessToken", required=false) String accessToken) {
     logger.info("Entering getDebitCards");
     return cardsService.getDebitCardsResponseEntity(customerId, accessToken);
   }
@@ -207,7 +207,7 @@ public class CardsApiController {
   @ApiOperation(value = "Returns selected debit card details")
   @RequestMapping(value = "/{customerId}/cards/debitcards/{cardNumber}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CardDetailResponse> getDebitCardDetails(@PathVariable(value = "customerId", required = true) String customerId,
-      @PathVariable(value = "cardNumber", required = true) String cardNumber, @RequestParam(name = "accessToken") String accessToken) {
+      @PathVariable(value = "cardNumber", required = true) String cardNumber, @RequestParam(name = "accessToken", required=false) String accessToken) {
     logger.info("Entering getDebitCardDetails");
     return cardsService.getDebitCardDetailsResponseEntity(customerId, cardNumber, accessToken);
   }
@@ -219,7 +219,7 @@ public class CardsApiController {
   @RequestMapping(value = "/{customerId}/cards/creditcards/{cardNumber}/convertemi", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.GET) public ResponseEntity<ConvertEMIResponse> convertEMI(
       @PathVariable(name = "customerId", required = true) String customerId,
-      @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestParam(name = "accessToken") String accessToken) {
+      @PathVariable(name = "cardNumber", required = true) String cardNumber, @RequestParam(name = "accessToken", required=false) String accessToken) {
     ApplicationLogger.logInfo("Entering getEMIConversion API");
     return cardsService.getConvertEMIResponseEntity(customerId, cardNumber, accessToken);
   }

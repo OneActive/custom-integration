@@ -21,7 +21,7 @@ public class CustomerProfileApiController {
 
   @RequestMapping(value = "/customers/profile/{customerId}", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<CustomerProfileResponse> getCustomerProfile(@PathVariable("customerId") String customerId,
-      @RequestParam(name = "accessToken") String accessToken) {
+      @RequestParam(name = "accessToken", required=false) String accessToken) {
     ApplicationLogger.logInfo("Entering CustomerProfile Controller");
     return customerProfileService.getCustomerProfileResponseEntity(customerId);
   }
