@@ -8,12 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.annotations.Beta;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 @Beta
 @Api(value = "Customer Profile Related APIs", description = "Shows API documentation regarding customer profile APIs")
@@ -24,7 +20,8 @@ public class CustomerProfileApiController {
   @Autowired private CustomerProfileService customerProfileService;
 
   @RequestMapping(value = "/customers/profile/{customerId}", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<CustomerProfileResponse> getCustomerProfile(@PathVariable("customerId") String customerId) {
+  public ResponseEntity<CustomerProfileResponse> getCustomerProfile(@PathVariable("customerId") String customerId,
+      @RequestParam(name = "accessToken") String accessToken) {
     ApplicationLogger.logInfo("Entering CustomerProfile Controller");
     return customerProfileService.getCustomerProfileResponseEntity(customerId);
   }
@@ -44,6 +41,7 @@ public class CustomerProfileApiController {
     ApplicationLogger.logInfo("Entering CustomerProfile Controller");
     return customerProfileService.getCustomerProfilePhoneResponseEntity(customerId, customerProfileRequest);
   }
+
   @RequestMapping(value = "/customers/profile/{customerId}/address", produces = {"application/json"}, method = RequestMethod.PUT)
   public ResponseEntity<CustomerProfileResponse> updateCustomerProfileAddress(@PathVariable("customerId") String customerId,
       @RequestBody final CustomerProfileRequest customerProfileRequest) {

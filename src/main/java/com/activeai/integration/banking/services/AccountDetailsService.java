@@ -32,7 +32,7 @@ public class AccountDetailsService {
    * @param customerId,accountId
    * @return ResponseEntity of type AccountDetailResponse
    */
-  public ResponseEntity<AccountDetailResponse> getCasaAccountDetailsResponseEntity(String customerId, String accountId) {
+  public ResponseEntity<AccountDetailResponse> getCasaAccountDetailsResponseEntity(String customerId, String accountId, String accessToken) {
     AccountDetailResponse response = new AccountDetailResponse();
     try {
       HttpResponse<String>
@@ -66,7 +66,7 @@ public class AccountDetailsService {
    * @param accountId
    * @return ResponseEntity of type DepositAccountDetailResponse
    */
-  public ResponseEntity<DepositAccountDetailResponse> getDepositAccountDetailsResponseEntity(String customerId, String accountId) {
+  public ResponseEntity<DepositAccountDetailResponse> getDepositAccountDetailsResponseEntity(String customerId, String accountId, String accessToken) {
     DepositAccountDetailResponse response = new DepositAccountDetailResponse();
     try {
       HttpResponse<String>
@@ -100,7 +100,7 @@ public class AccountDetailsService {
    * @param accountId
    * @return ResponseEntity of type LoanAccountDetailResponse
    */
-  public ResponseEntity<LoanAccountDetailResponse> getLoanAccountDetailsResponseEntity(String customerId, String accountId) {
+  public ResponseEntity<LoanAccountDetailResponse> getLoanAccountDetailsResponseEntity(String customerId, String accountId, String accessToken) {
     LoanAccountDetailResponse response = new LoanAccountDetailResponse();
     try {
       HttpResponse<String>

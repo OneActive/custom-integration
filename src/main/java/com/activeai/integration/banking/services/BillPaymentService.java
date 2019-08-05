@@ -34,7 +34,7 @@ public class BillPaymentService {
      * @param customerId,accountId
      * @return ResponseEntity of type RegisteredBillerResponse
      */
-    public ResponseEntity<BillerResponse> getRegisteredBillerResponseEntity(String customerId) {
+    public ResponseEntity<BillerResponse> getRegisteredBillerResponseEntity(String customerId, String accessToken) {
         BillerResponse response = new BillerResponse();
         try {
             HttpResponse<String> apiResponse =
@@ -60,7 +60,7 @@ public class BillPaymentService {
         return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
     }
 
-    public ResponseEntity<BillerResponse> getBillerDetailsResponseEntity(String customerId, String billerId) {
+    public ResponseEntity<BillerResponse> getBillerDetailsResponseEntity(String customerId, String billerId, String accessToken) {
         BillerResponse response = new BillerResponse();
         try {
             HttpResponse<String> apiResponse =
