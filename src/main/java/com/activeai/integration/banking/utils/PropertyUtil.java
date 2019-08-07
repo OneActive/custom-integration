@@ -82,4 +82,8 @@ public class PropertyUtil {
   public String getAPIUrlForConvertEMIConfirm(String propertyValue, ConvertEMIConfirmRequest convertEMIConfirmRequest) {
     return env.getProperty(propertyValue);
   }
+
+  public String getAPIUrlForAtmLocator(String propertyValue, AtmLocatorRequest locatorRequest) {
+    return env.getProperty(propertyValue);
+  }
 }

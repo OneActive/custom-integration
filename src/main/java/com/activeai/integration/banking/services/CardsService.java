@@ -37,7 +37,7 @@ public class CardsService {
    * @param customerId
    * @return ResponseEntity of type AccountsResponse
    */
-  public ResponseEntity<CardsResponse> getCreditCardsResponseEntity(String customerId) {
+  public ResponseEntity<CardsResponse> getCreditCardsResponseEntity(String customerId, String accessToken) {
     CardsResponse response = new CardsResponse();
     try {
       HttpResponse<String> apiResponse =
@@ -71,7 +71,7 @@ public class CardsService {
    * @param customerId,cardNumber
    * @return ResponseEntity of type CardDetailResponse
    */
-  public ResponseEntity<CardDetailResponse> getCreditCardDetailsResponseEntity(String customerId, String cardNumber) {
+  public ResponseEntity<CardDetailResponse> getCreditCardDetailsResponseEntity(String customerId, String cardNumber, String accessToken) {
     CardDetailResponse response = new CardDetailResponse();
     try {
       HttpResponse<String> apiResponse = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARD_DETAILS_API_END_POINT, customerId, cardNumber))
@@ -137,7 +137,7 @@ public class CardsService {
    * @param customerId,accountId
    * @return ResponseEntity of type CardTransactionsResponse
    */
-  public ResponseEntity<CardTransactionsResponse> getCreditAccountTransactionsResponseEntity(String customerId, String accountId) {
+  public ResponseEntity<CardTransactionsResponse> getCreditAccountTransactionsResponseEntity(String customerId, String accountId,String accessToken) {
     CardTransactionsResponse response = new CardTransactionsResponse();
     try {
       HttpResponse<String> apiResponse =
@@ -171,7 +171,7 @@ public class CardsService {
    * @param customerId
    * @return ResponseEntity of type AccountsResponse
    */
-  public ResponseEntity<CardsResponse> getDebitCardsResponseEntity(String customerId) {
+  public ResponseEntity<CardsResponse> getDebitCardsResponseEntity(String customerId, String accessToken) {
     CardsResponse response = new CardsResponse();
     try {
       HttpResponse<String> apiResponse =
@@ -205,7 +205,7 @@ public class CardsService {
    * @param customerId,cardNumber
    * @return ResponseEntity of type CardDetailResponse
    */
-  public ResponseEntity<CardDetailResponse> getDebitCardDetailsResponseEntity(String customerId, String cardNumber) {
+  public ResponseEntity<CardDetailResponse> getDebitCardDetailsResponseEntity(String customerId, String cardNumber, String accessToken) {
     CardDetailResponse response = new CardDetailResponse();
     try {
       HttpResponse<String> apiResponse = Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.DEBIT_CARD_DETAILS_API_END_POINT, customerId, cardNumber))

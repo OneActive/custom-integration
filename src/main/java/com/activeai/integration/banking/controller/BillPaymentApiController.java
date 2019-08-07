@@ -27,53 +27,27 @@ public class BillPaymentApiController {
   @Autowired
   private BillPaymentService billpaymentService;
 
-  @RequestMapping(value = "/billers/categories", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<BillerCategoriesResponse> getBillerCategoriesList() {
-    ResponseEntity<BillerCategoriesResponse> response = null;
-    try {
-      response = new ResponseEntity<>(objectMapper.readValue(
-          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"billerCategories\" : [ {    \"categoryName\" : \"categoryName\",    \"categoryId\" : \"categoryId\"  }, {    \"categoryName\" : \"categoryName\",    \"categoryId\" : \"categoryId\"  } ]}",
-          BillerCategoriesResponse.class), HttpStatus.OK);
-    } catch (IOException e) {
-      ApplicationLogger.logError("Couldn't serialize response for content type application/json", e);
-      response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return response;
-  }
-
-  @RequestMapping(value = "/billers", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<BillerResponse> getBillerList(@Valid @RequestParam(value = "categoryId", required = false) Integer categoryId) {
-    ResponseEntity<BillerResponse> response = null;
-    try {
-      response = new ResponseEntity<>(objectMapper.readValue(
-          "{  \"result\" : {    \"messageCode\" : \"messageCode\",    \"message\" : \"message\",    \"status\" : 0  },  \"billers\" : [ {    \"billerCategory\" : \"billerCategory\",    \"billerId\" : \"billerId\",    \"allowPartialPay\" : true,    \"billerName\" : \"billerName\"  }, {    \"billerCategory\" : \"billerCategory\",    \"billerId\" : \"billerId\",    \"allowPartialPay\" : true,    \"billerName\" : \"billerName\"  } ]}",
-          BillerResponse.class), HttpStatus.OK);
-    } catch (IOException e) {
-      ApplicationLogger.logError("Couldn't serialize response for content type application/json", e);
-      response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return response;
-  }
-
   @ApiOperation(value = "Returns list of registered billers based on customerId")
   @RequestMapping(value = "/{customerId}/billers", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<BillerResponse> getRegisteredBillerListForCustomer(@PathVariable(name = "customerId", required = true) String customerId) {
+  public ResponseEntity<BillerResponse> getRegisteredBillerListForCustomer(
+      @PathVariable(name = "customerId", required = true) String customerId, @RequestParam(name = "accessToken", required=false) String accessToken) {
     ApplicationLogger.logInfo("Entering getRegisteredBillers API");
-    return billpaymentService.getRegisteredBillerResponseEntity(customerId);
+    return billpaymentService.getRegisteredBillerResponseEntity(customerId, accessToken);
   }
 
   @ApiOperation(value = "Returns Biller details of biller based on billerId")
   @RequestMapping(value = "/{customerId}/billers/{billerId}", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<BillerResponse> getBillerDetialsofBiller(@PathVariable(name = "customerId", required = true) String customerId,@PathVariable(name = "billerId", required = true) String billerId) {
+  public ResponseEntity<BillerResponse> getBillerDetialsofBiller(@PathVariable(name = "customerId", required = true) String customerId,
+      @PathVariable(name = "billerId", required = true) String billerId, @RequestParam(name = "accessToken", required=false) String accessToken) {
     ApplicationLogger.logInfo("Entering getBillerDetails API");
-    return billpaymentService.getBillerDetailsResponseEntity(customerId,billerId);
+    return billpaymentService.getBillerDetailsResponseEntity(customerId, billerId, accessToken);
   }
 
   @ApiOperation(value = "Returns confirmation of bill payment")
-  @RequestMapping(value = "/{customerId}/bill/payment/confirm", produces = {"application/json"}, consumes = {"application/json"},
-          method = RequestMethod.POST)
+  @RequestMapping(value = "/{customerId}/bill/payment/confirm", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.POST)
   public ResponseEntity<BillPaymentResponse> confirmBillPayment(@PathVariable(value = "customerId", required = true) String customerId,
-                                                                       @RequestBody final BillPaymentRequest billPaymentRequest) {
+      @RequestBody final BillPaymentRequest billPaymentRequest) {
     ApplicationLogger.logInfo("Entering getBillPaymentConfirm API");
     return billpaymentService.getBillPaymentResponseEntity(billPaymentRequest);
   }

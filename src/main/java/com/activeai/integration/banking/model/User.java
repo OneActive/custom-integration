@@ -30,6 +30,9 @@ public class User {
   @JsonProperty("address")
   private String address;
 
+  @JsonProperty("accessToken")
+  private String accessToken;
+
   public String getCustomerId() {
     return customerId;
   }
@@ -70,13 +73,22 @@ public class User {
     this.address = address;
   }
 
+  public String getAccessToken() {
+    return accessToken;
+  }
+
+  public void setAccessToken(String accessToken) {
+    this.accessToken = accessToken;
+  }
+
   @Override public String toString() {
-    final StringBuffer sb = new StringBuffer("User{");
+    final StringBuilder sb = new StringBuilder("User{");
     sb.append("customerId='").append(customerId).append('\'');
     sb.append(", customerName='").append(customerName).append('\'');
     sb.append(", mobileNumber='").append(mobileNumber).append('\'');
     sb.append(", emailId='").append(emailId).append('\'');
     sb.append(", address='").append(address).append('\'');
+    sb.append(", accessToken='").append(accessToken).append('\'');
     sb.append('}');
     return sb.toString();
   }

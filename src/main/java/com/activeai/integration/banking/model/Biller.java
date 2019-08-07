@@ -2,11 +2,11 @@ package com.activeai.integration.banking.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 import com.activeai.integration.banking.constants.BillerCategoryTypeEnum;
 import com.activeai.integration.banking.constants.PartialPaymentStatus;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,8 +23,16 @@ public class Biller {
   @JsonProperty("billerName")
   private String billerName = null;
 
-  @JsonProperty("billerCategory")
-  private BillerCategoryTypeEnum billerCategory;
+  /**
+   * Biller Category Type like ADHOC , REGISTERED
+   */
+  @JsonProperty("billerCategoryType")
+  private BillerCategoryTypeEnum billerCategoryType;
+
+  /**
+   * Biller Category Name like Mobile,Electricity,Charity
+   */
+  private String billerCategoryName;
 
   @JsonProperty("billerCategoryId")
   private String billerCategoryId;
@@ -94,7 +102,6 @@ public class Biller {
     this.billerId = billerId;
   }
 
-
   /**
    * BillerCategoryID
    *
@@ -107,8 +114,6 @@ public class Biller {
   public void setBillerCategoryId(String billerCategoryId) {
     this.billerCategoryId = billerCategoryId;
   }
-
-
 
   /**
    * Biller Name
@@ -123,19 +128,21 @@ public class Biller {
     this.billerName = billerName;
   }
 
-  /**
-   * Biller category
-   *
-   * @return billerCategory
-   **/
-  public BillerCategoryTypeEnum getBillerCategory() {
-    return billerCategory;
+  public BillerCategoryTypeEnum getBillerCategoryType() {
+    return billerCategoryType;
   }
 
-  public void setBillerCategory(BillerCategoryTypeEnum billerCategory) {
-    this.billerCategory = billerCategory;
+  public void setBillerCategoryType(BillerCategoryTypeEnum billerCategoryType) {
+    this.billerCategoryType = billerCategoryType;
   }
 
+  public String getBillerCategoryName() {
+    return billerCategoryName;
+  }
+
+  public void setBillerCategoryName(String billerCategoryName) {
+    this.billerCategoryName = billerCategoryName;
+  }
 
   /**
    * Biller category
@@ -289,58 +296,14 @@ public class Biller {
     this.paymentAllowedPostdueDate = paymentAllowedPostdueDate;
   }
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Biller biller = (Biller) o;
-    return Objects.equals(this.billerId, biller.billerId) && Objects.equals(this.billerName, biller.billerName)
-        && Objects.equals(this.billerCategory, biller.billerCategory) && Objects.equals(this.billerCategoryId, biller.billerCategoryId) && Objects.equals(this.dueAmount, biller.dueAmount) && Objects.equals(this.userIdentityInputs, biller.userIdentityInputs) && Objects.equals(this.partialPayment, biller.partialPayment);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(billerId, billerName, billerCategory,billerCategoryId, billNumber,billDate,billDueDate,authenticators,fillers,dueAmount,userIdentityInputs,partialPayment);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Biller {\n");
-
-    sb.append("    billerId: ").append(toIndentedString(billerId)).append("\n");
-    sb.append("    billerName: ").append(toIndentedString(billerName)).append("\n");
-    sb.append("    billerCategory: ").append(toIndentedString(billerCategory)).append("\n");
-    sb.append("    billerCategoryId: ").append(toIndentedString(billerCategoryId)).append("\n");
-    sb.append("    dueAmount: ").append(toIndentedString(dueAmount)).append("\n");
-    sb.append("    userIdentityInputs: ").append(toIndentedString(userIdentityInputs)).append("\n");
-    sb.append("    allowPartialPay: ").append(toIndentedString(partialPayment)).append("\n");
-    sb.append("    authenticators: ").append(toIndentedString(authenticators)).append("\n");
-    sb.append("    billDueDate: ").append(toIndentedString(billDueDate)).append("\n");
-    sb.append("    billDate: ").append(toIndentedString(billDate)).append("\n");
-    sb.append("    billNumber: ").append(toIndentedString(billNumber)).append("\n");
-    sb.append("    fillers: ").append(toIndentedString(fillers)).append("\n");
-    sb.append("    lastStatementBalance: ").append(toIndentedString(lastStatementBalance)).append("\n");
-    sb.append("    billerType: ").append(toIndentedString(billerType)).append("\n");
-    sb.append("    billerPresence: ").append(toIndentedString(billerPresence)).append("\n");
-    sb.append("    paymentAllowedPostdueDate: ").append(toIndentedString(paymentAllowedPostdueDate)).append("\n");
-
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("billerId", billerId).append("billerName", billerName)
+        .append("billerCategoryTypeEnum", billerCategoryType).append("billerCategoryName", billerCategoryName)
+        .append("billerCategoryId", billerCategoryId).append("partialPayment", partialPayment).append("dueAmount", dueAmount)
+        .append("userIdentityInputs", userIdentityInputs).append("authenticators", authenticators).append("fillers", fillers)
+        .append("billDate", billDate).append("billNumber", billNumber).append("payWithOutBill", payWithOutBill)
+        .append("billDueDate", billDueDate).append("lastStatementBalance", lastStatementBalance).append("billerType", billerType)
+        .append("billerPresence", billerPresence).append("paymentAllowedPostdueDate", paymentAllowedPostdueDate).toString();
   }
 }
 
