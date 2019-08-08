@@ -2,6 +2,7 @@ package com.activeai.integration.banking.model;
 
 import java.util.Objects;
 
+import com.activeai.integration.banking.constants.CardTypeEnum;
 import com.activeai.integration.banking.constants.TransactionTypeEnum;
 import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,11 +16,11 @@ public class CardTransaction {
   @JsonProperty("transactionId")
   private String transactionId;
 
-  @JsonProperty("accountNumber")
-  private String accountNumber;
-
   @JsonProperty("accountId")
   private String accountId;
+
+  @JsonProperty("accountNumber")
+  private String accountNumber;
 
   @JsonProperty("txnDate")
   private String txnDate = null;
@@ -38,6 +39,9 @@ public class CardTransaction {
 
   @JsonProperty("transactionType")
   private TransactionTypeEnum transactionType = null;
+
+  @JsonProperty("cardType")
+  private CardTypeEnum cardType;
 
   @JsonProperty("foreignTxnAmount")
   private Double foreignTxnAmount = null;
@@ -60,6 +64,9 @@ public class CardTransaction {
   @JsonProperty("categorySubType")
   private String categorySubType;
 
+  @JsonProperty("emiEligibility")
+  private String emiEligibility;
+
   public String getTransactionId() {
     return transactionId;
   }
@@ -68,20 +75,20 @@ public class CardTransaction {
     this.transactionId = transactionId;
   }
 
-  public String getAccountNumber() {
-    return accountNumber;
-  }
-
-  public void setAccountNumber(String accountNumber) {
-    this.accountNumber = accountNumber;
-  }
-
   public String getAccountId() {
     return accountId;
   }
 
   public void setAccountId(String accountId) {
     this.accountId = accountId;
+  }
+
+  public String getAccountNumber() {
+    return accountNumber;
+  }
+
+  public void setAccountNumber(String accountNumber) {
+    this.accountNumber = accountNumber;
   }
 
   public String getTxnDate() {
@@ -130,6 +137,14 @@ public class CardTransaction {
 
   public void setTransactionType(TransactionTypeEnum transactionType) {
     this.transactionType = transactionType;
+  }
+
+  public CardTypeEnum getCardType() {
+    return cardType;
+  }
+
+  public void setCardType(CardTypeEnum cardType) {
+    this.cardType = cardType;
   }
 
   public Double getForeignTxnAmount() {
@@ -188,17 +203,26 @@ public class CardTransaction {
     this.categorySubType = categorySubType;
   }
 
+  public String getEmiEligibility() {
+    return emiEligibility;
+  }
+
+  public void setEmiEligibility(String emiEligibility) {
+    this.emiEligibility = emiEligibility;
+  }
+
   @Override public String toString() {
     final StringBuilder sb = new StringBuilder("CardTransaction{");
     sb.append("transactionId='").append(transactionId).append('\'');
-    sb.append(", accountNumber='").append(accountNumber).append('\'');
     sb.append(", accountId='").append(accountId).append('\'');
+    sb.append(", accountNumber='").append(accountNumber).append('\'');
     sb.append(", txnDate='").append(txnDate).append('\'');
     sb.append(", description='").append(description).append('\'');
     sb.append(", category='").append(category).append('\'');
     sb.append(", amount=").append(amount);
     sb.append(", currency='").append(currency).append('\'');
     sb.append(", transactionType=").append(transactionType);
+    sb.append(", cardType=").append(cardType);
     sb.append(", foreignTxnAmount=").append(foreignTxnAmount);
     sb.append(", foreignTxnCurrency='").append(foreignTxnCurrency).append('\'');
     sb.append(", foreignTxnExchangeRate=").append(foreignTxnExchangeRate);
@@ -206,6 +230,7 @@ public class CardTransaction {
     sb.append(", merchantName='").append(merchantName).append('\'');
     sb.append(", categoryType='").append(categoryType).append('\'');
     sb.append(", categorySubType='").append(categorySubType).append('\'');
+    sb.append(", emiEligibility='").append(emiEligibility).append('\'');
     sb.append('}');
     return sb.toString();
   }
