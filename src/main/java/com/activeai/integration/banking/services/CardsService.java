@@ -412,7 +412,7 @@ public class CardsService {
    *
    * @return ResponseEntity of type ConvertEMIResponse
    */
-  public ResponseEntity<ConvertEMIResponse> getConvertEMIResponseEntity(String customerId, String cardNumber) {
+  public ResponseEntity<ConvertEMIResponse> getConvertEMIResponseEntity(String customerId, String cardNumber, String accessToken) {
     ConvertEMIResponse response = null;
     try {
       HttpResponse<String> apiResponse = Unirest
