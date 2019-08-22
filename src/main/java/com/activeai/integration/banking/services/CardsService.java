@@ -478,6 +478,11 @@ public class CardsService {
     return ResponseEntity.ok(response);
   }
 
+  /**
+   * Fetches CardPaymentResponse
+   *
+   * @return ResponseEntity of type CardPaymentResponse
+   */
   public ResponseEntity<CardPaymentResponse> getCardPaymentResponseEntity(CardPaymentRequest cardPaymentRequest) {
     CardPaymentResponse response = null;
     try {
