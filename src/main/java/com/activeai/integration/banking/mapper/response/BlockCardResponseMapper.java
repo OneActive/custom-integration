@@ -1,7 +1,9 @@
 package com.activeai.integration.banking.mapper.response;
 
+import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.response.BlockCardResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +19,10 @@ public class BlockCardResponseMapper {
      * @return String of BlockCardDetailsResponse
      */
     public BlockCardResponse getManipulatedBlockCardResponse(String apiResponseBody) throws IOException {
-        return objectMapper.readValue(apiResponseBody, BlockCardResponse.class);
+        BlockCardResponse blockCardResponse = objectMapper.readValue(apiResponseBody, BlockCardResponse.class);
+        //For Random Generation of Reference Id
+        blockCardResponse.setReferenceId(RandomStringUtils.random(PropertyConstants.RANDOM_VALUE_LENGTH, true, true));
+        return blockCardResponse;
     }
 
 }
