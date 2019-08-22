@@ -1,9 +1,7 @@
 package com.activeai.integration.banking.mapper.response;
 
-import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.response.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +11,6 @@ import java.io.IOException;
 public class CardsResponseMapper {
 
   @Autowired private ObjectMapper objectMapper;
-
   /**
    * In this method you can change the obtained string accordingly to the CardsResponse
    * @param apiResponseBody
@@ -44,35 +41,23 @@ public class CardsResponseMapper {
 
   /**
    * In this method you can change the obtained string accordingly to the ResetPinConfirmResponse
-   *
    * @param apiResponseBody
    * @return String of ResetPinConfirmResponse
    */
-  public ResetPinConfirmResponse getManipulatedResetPinConfirmResponse(String apiResponseBody) throws IOException {
-    ResetPinConfirmResponse resetPinConfirmResponse = objectMapper.readValue(apiResponseBody, ResetPinConfirmResponse.class);
-    //For Random generation of Reference Id
-    resetPinConfirmResponse.getCardDetail().setReferenceId(RandomStringUtils.random(PropertyConstants.RANDOM_VALUE_LENGTH, true, true));
-    return resetPinConfirmResponse;
+  public ResetPinConfirmResponse getManipulatedResetPinConfirmResponse(String apiResponseBody) throws IOException{
+    return objectMapper.readValue(apiResponseBody, ResetPinConfirmResponse.class);
   }
 
   /**
    * In this method you can change the obtained string accordingly to the ReplaceCardConfirmResponse
-   *
    * @param apiResponseBody
    * @return String of ReplaceCardConfirmResponse
    */
-  public ReplaceCardConfirmResponse getManipulatedReplaceCardConfirmResponse(String apiResponseBody) throws IOException {
-    ReplaceCardConfirmResponse replaceCardConfirmResponse = objectMapper.readValue(apiResponseBody, ReplaceCardConfirmResponse.class);
-    //For Random generation of Reference Id
-    replaceCardConfirmResponse.getCardDetail().setReferenceId(RandomStringUtils.random(PropertyConstants.RANDOM_VALUE_LENGTH, true, true));
-    return replaceCardConfirmResponse;
+  public ReplaceCardConfirmResponse getManipulatedReplaceCardConfirmResponse(String apiResponseBody) throws IOException{
+    return objectMapper.readValue(apiResponseBody, ReplaceCardConfirmResponse.class);
   }
-
-  public InternationalUsageResponse getManipulatedInternationalUsageResponse(String apiResponseBody) throws IOException {
-    InternationalUsageResponse internationalUsageResponse = objectMapper.readValue(apiResponseBody, InternationalUsageResponse.class);
-    //For Random generation of Reference Id
-    internationalUsageResponse.setReferenceId(RandomStringUtils.random(PropertyConstants.RANDOM_VALUE_LENGTH, true, true));
-    return internationalUsageResponse;
+  public InternationalUsageResponse getManipulatedInternationalUsageResponse(String apiResponseBody) throws IOException{
+    return objectMapper.readValue(apiResponseBody, InternationalUsageResponse.class);
   }
 
   public ConvertEMIResponse getManipulatedConvertEMIResponse(String apiResponseBody) throws IOException {
@@ -80,16 +65,8 @@ public class CardsResponseMapper {
   }
 
   public ConvertEMIConfirmResponse getManipulatedConvertEMIConfirmResponse(String apiResponseBody) throws IOException {
-    ConvertEMIConfirmResponse convertEMIConfirmResponse = objectMapper.readValue(apiResponseBody, ConvertEMIConfirmResponse.class);
-    //For Random generation of Reference Id
-    convertEMIConfirmResponse.setReferenceId(RandomStringUtils.random(PropertyConstants.RANDOM_VALUE_LENGTH, true, true));
-    return convertEMIConfirmResponse;
+    return objectMapper.readValue(apiResponseBody, ConvertEMIConfirmResponse.class);
   }
 
-  public CardPaymentResponse getManipulatedCardPaymentResponse(String apiResponseBody) throws IOException {
-    CardPaymentResponse cardPaymentResponse = objectMapper.readValue(apiResponseBody, CardPaymentResponse.class);
-    //For Random generation of Transaction Id
-    cardPaymentResponse.setTxnReferenceId(RandomStringUtils.random(PropertyConstants.RANDOM_VALUE_LENGTH, true, true));
-    return cardPaymentResponse;
-  }
+
 }
