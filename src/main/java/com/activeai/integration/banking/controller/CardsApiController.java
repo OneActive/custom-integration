@@ -238,4 +238,13 @@ public class CardsApiController {
     ApplicationLogger.logInfo("Entering getEMIConversion Confirm API");
     return cardsService.getConvertEMIConfirmResponseEntity(convertEMIConfirmRequest);
   }
+
+  @ApiOperation(value = "Returns confirmation of Credit Card payment")
+  @RequestMapping(value = "/{customerId}/cards/creditcards/payment/confirm", produces = {"application/json"}, consumes = {
+      "application/json"}, method = RequestMethod.POST)
+  public ResponseEntity<CardPaymentResponse> confirmCardPayment(@PathVariable(value = "customerId", required = true) String customerId,
+      @RequestBody final CardPaymentRequest cardPaymentRequest) {
+    ApplicationLogger.logInfo("Entering getCardPaymentConfirm API");
+    return cardsService.getCardPaymentResponseEntity(cardPaymentRequest);
+  }
 }
