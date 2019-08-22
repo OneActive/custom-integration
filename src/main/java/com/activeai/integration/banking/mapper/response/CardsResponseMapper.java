@@ -9,13 +9,12 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component("cardsResponseMapper") public class CardsResponseMapper {
+@Component("cardsResponseMapper")
+public class CardsResponseMapper {
 
   @Autowired private ObjectMapper objectMapper;
-
   /**
    * In this method you can change the obtained string accordingly to the CardsResponse
-   *
    * @param apiResponseBody
    * @return CardsResponse
    */
@@ -25,21 +24,19 @@ import java.io.IOException;
 
   /**
    * In this method you can change the obtained string accordingly to the CardTransactionsResponse
-   *
    * @param apiResponseBody
    * @return String of CardTransactionsResponse
    */
-  public CardTransactionsResponse getManipulatedCardTransactionsResponse(String apiResponseBody) throws IOException {
+  public CardTransactionsResponse getManipulatedCardTransactionsResponse(String apiResponseBody) throws IOException{
     return objectMapper.readValue(apiResponseBody, CardTransactionsResponse.class);
   }
 
   /**
    * In this method you can change the obtained string accordingly to the CardDetailsResponse
-   *
    * @param apiResponseBody
    * @return String of CardDetailsResponse
    */
-  public CardDetailResponse getManipulatedCardDetailsResponse(String apiResponseBody) throws IOException {
+  public CardDetailResponse getManipulatedCardDetailsResponse(String apiResponseBody) throws IOException{
     return objectMapper.readValue(apiResponseBody, CardDetailResponse.class);
   }
 
@@ -51,7 +48,9 @@ import java.io.IOException;
    * @return String of ResetPinConfirmResponse
    */
   public ResetPinConfirmResponse getManipulatedResetPinConfirmResponse(String apiResponseBody) throws IOException {
-    return objectMapper.readValue(apiResponseBody, ResetPinConfirmResponse.class);
+    ResetPinConfirmResponse resetPinConfirmResponse = objectMapper.readValue(apiResponseBody, ResetPinConfirmResponse.class);
+    resetPinConfirmResponse.getCardDetail().setReferenceId(RandomStringUtils.random(8, true, true));
+    return resetPinConfirmResponse;
   }
 
   /**
