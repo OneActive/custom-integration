@@ -20,7 +20,8 @@ public class Response {
   @JsonProperty("result")
   private Result result = null;
 
-
+  @JsonProperty("referenceId")
+  private String referenceId= null;
 
   public Response result(Result result) {
     this.result = result;
@@ -40,6 +41,16 @@ public class Response {
 
   public void setResult(Result result) {
     this.result = result;
+  }
+
+  @NotNull
+  @Valid
+  public String getReferenceId() {
+    return referenceId;
+  }
+
+  public void setReferenceId(String referenceId) {
+    this.referenceId = referenceId;
   }
 
   @Override
@@ -65,6 +76,7 @@ public class Response {
     sb.append("class Response {\n");
 
     sb.append("    result: ").append(toIndentedString(result)).append("\n");
+    sb.append("    referenceId: ").append(toIndentedString(referenceId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

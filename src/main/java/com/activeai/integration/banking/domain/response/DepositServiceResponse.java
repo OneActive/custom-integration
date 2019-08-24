@@ -13,8 +13,6 @@ import java.util.List;
 
 @Validated public class DepositServiceResponse extends Response{
 
-
-
   /* tenure,amount,interest rate */
   @JsonProperty("depositPlans") private List<DepositPlan> depositPlans = null;
 

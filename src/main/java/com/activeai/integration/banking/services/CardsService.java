@@ -12,6 +12,7 @@ import com.activeai.integration.banking.utils.PropertyUtil;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -350,6 +351,7 @@ public class CardsService {
     }
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
+
   public ResponseEntity<InternationalUsageResponse> getInternationalUsageCardResponseEntity(InternationalCardUsageRequest internationalCardUsageRequest) {
     InternationalUsageResponse response = new InternationalUsageResponse();
     try {
@@ -378,6 +380,7 @@ public class CardsService {
     response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(response);
   }
+
   public ResponseEntity<InternationalUsageResponse> updateInternationalUsageFinalApiCall(InternationalCardUsageRequest internationalCardUsageRequest) {
     InternationalUsageResponse response = new InternationalUsageResponse();
     try {
@@ -458,6 +461,40 @@ public class CardsService {
         ApplicationLogger.logInfo("Convert EMI Confirm Response Body Before Transformation :" + apiResponse.getBody());
         response = cardsResponseMapper.getManipulatedConvertEMIConfirmResponse(apiResponse.getBody());
         ApplicationLogger.logInfo("Convert EMI Confirm Response Body After Transformation :" + apiResponse.getBody());
+      }
+      return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));
+    } catch (UnirestException e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+    } catch (IOException e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+              ExceptionUtils.getStackTrace(e)));
+    } catch (Exception e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+    }
+    response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(response);
+  }
+
+  /**
+   * Fetches CardPaymentResponse
+   *
+   * @return ResponseEntity of type CardPaymentResponse
+   */
+  public ResponseEntity<CardPaymentResponse> getCardPaymentResponseEntity(CardPaymentRequest cardPaymentRequest) {
+    CardPaymentResponse response = null;
+    try {
+      HttpResponse<String> apiResponse =
+          Unirest.post(propertyUtil.getAPIUrlForCardPaymentConfirm(PropertyConstants.CARD_PAYMENT_API_ENDPOINT, cardPaymentRequest))
+              .header("Content-Type", "application/json").asString();
+      ApplicationLogger
+          .logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+        ApplicationLogger.logInfo("Card Payment Confirm Response Body Before Transformation :" + apiResponse.getBody());
+        response = cardsResponseMapper.getManipulatedCardPaymentResponse(apiResponse.getBody());
+        ApplicationLogger.logInfo("Card Payment Confirm Response Body After Transformation :" + apiResponse.getBody());
       }
       return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));
     } catch (UnirestException e) {

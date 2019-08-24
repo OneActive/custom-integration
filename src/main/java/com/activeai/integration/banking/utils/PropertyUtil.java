@@ -83,6 +83,10 @@ public class PropertyUtil {
     return env.getProperty(propertyValue);
   }
 
+  public String getAPIUrlForCardPaymentConfirm(String propertyValue, CardPaymentRequest cardPaymentRequest) {
+    return env.getProperty(propertyValue);
+  }
+
   public String getAPIUrlForAtmLocator(String propertyValue, AtmLocatorRequest locatorRequest) {
     return env.getProperty(propertyValue);
   }

@@ -1,8 +1,10 @@
 package com.activeai.integration.banking.mapper.response;
 
+import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.response.FundTransferResponse;
 import com.activeai.integration.banking.domain.response.PayeesResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +28,10 @@ public class FundTransferResponseMapper {
    * @param apiResponseBody
    * @return FundTransferResponse
    */
-  public FundTransferResponse getManipulatedFundTransferResponse(String apiResponseBody) throws IOException{
-    return objectMapper.readValue(apiResponseBody, FundTransferResponse.class);
+  public FundTransferResponse getManipulatedFundTransferResponse(String apiResponseBody) throws IOException {
+    FundTransferResponse fundTransferResponse = objectMapper.readValue(apiResponseBody, FundTransferResponse.class);
+    //For Random Generation of Reference Id
+    fundTransferResponse.setTxnReferenceId(RandomStringUtils.random(PropertyConstants.RANDOM_VALUE_LENGTH, true, true));
+    return fundTransferResponse;
   }
 }
