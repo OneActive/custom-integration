@@ -138,7 +138,7 @@ public class Card {
   private String internationalPOSLimit;
 
   @JsonProperty("creditLimit")
-  private String creditLimit = null;
+  private Double creditLimit = null;
 
   @JsonProperty("cashLimit")
   private String cashLimit = null;
@@ -146,7 +146,7 @@ public class Card {
   @JsonProperty("isInternationalEnabled")
   private boolean isInternationalEnabled;
 
-  public String getCreditLimit() {
+  public Double getCreditLimit() {
     return creditLimit;
   }
 
@@ -663,7 +663,7 @@ public class Card {
         this.maxCashLimit = maxCashLimit;
     }
 
-    public void setCreditLimit(String creditLimit) {
+    public void setCreditLimit(Double creditLimit) {
         this.creditLimit = creditLimit;
     }
 
