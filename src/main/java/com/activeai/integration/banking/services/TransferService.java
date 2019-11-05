@@ -5,8 +5,11 @@ import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.request.FundTransferRequest;
 import com.activeai.integration.banking.domain.request.PayeesRequest;
 import com.activeai.integration.banking.domain.response.FundTransferResponse;
+import com.activeai.integration.banking.domain.response.OneTimeTransferResponse;
 import com.activeai.integration.banking.domain.response.PayeesResponse;
+import com.activeai.integration.banking.domain.response.PayeesValidationResponse;
 import com.activeai.integration.banking.mapper.response.FundTransferResponseMapper;
+import com.activeai.integration.banking.mapper.response.OneTimeTransferResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +30,7 @@ import java.util.Objects;
 public class TransferService {
 
   @Autowired private FundTransferResponseMapper fundTransferResponseMapper;
+  @Autowired private OneTimeTransferResponseMapper oneTimeTransferResponseMapper;
   @Autowired private PropertyUtil propertyUtil;
   private static final String error_message_format = "{0} : {1} : {2}";
 
@@ -89,4 +93,55 @@ public class TransferService {
     response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(response);
   }
+
+  public ResponseEntity<OneTimeTransferResponse> getOneTimeTransferResponseEntity(String customerId) {
+    OneTimeTransferResponse response = new OneTimeTransferResponse();
+    try {
+      HttpResponse<String> apiResponse =
+          Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.ONE_TIME_TRANSFER_API_END_POINT, customerId, null))
+              .header("cache-control", "no-cache").asString();
+      ApplicationLogger
+          .logInfo("One Time Transfer API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+        ApplicationLogger.logInfo(" One Time Transfer  Response Body Before Transformation :" + apiResponse.getBody());
+        response = oneTimeTransferResponseMapper.getManipulatedOneTimeTransferResponse(apiResponse.getBody());
+        ApplicationLogger.logInfo("One Time Transfer  Response Body After Transformation :" + response);
+      }
+      return ResponseEntity.ok(response);
+    } catch (UnirestException e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+    } catch (Exception e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+    }
+    response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(response);
+  }
+
+  public ResponseEntity<PayeesValidationResponse> getOneTimeTransferPayeeValidationResponseEntity(String customerId) {
+    PayeesValidationResponse response = new PayeesValidationResponse();
+    try {
+      HttpResponse<String> apiResponse =
+          Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.ONE_TIME_TRANSFER_PAYEE_VALIDATION_API_END_POINT, customerId, null))
+              .header("cache-control", "no-cache").asString();
+      ApplicationLogger
+          .logInfo("One Time Transfer Payee Validation API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      if (StringUtils.isNotEmpty(apiResponse.getBody())) {
+        ApplicationLogger.logInfo(" One Time Transfer Payee Validation Response Body Before Transformation :" + apiResponse.getBody());
+        response = oneTimeTransferResponseMapper.getManipulatedOneTimeTransferPayeeResponse(apiResponse.getBody());
+        ApplicationLogger.logInfo("One Time Transfer Payee Validation Response Body After Transformation :" + response);
+      }
+      return ResponseEntity.ok(response);
+    } catch (UnirestException e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+    } catch (Exception e) {
+      ApplicationLogger.logError(MessageFormat
+          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+    }
+    response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
+    return ResponseEntity.ok(response);
+  }
 }
+
