@@ -12,10 +12,6 @@ public enum PayeeIdTypeEnum {
    */
   ACCOUNT_NUMBER("ACCOUNT_NUMBER"),
   /**
-   * The vpa.
-   */
-  VPA("VPA"),
-  /**
    * The email id.
    */
   EMAIL_ID("EMAIL_ID"),

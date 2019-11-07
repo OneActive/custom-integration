@@ -95,6 +95,11 @@ public class TransferService {
     return ResponseEntity.ok(response);
   }
 
+  /**
+   * To get One time transfer payee detail inputs
+   * @param payeesRequest
+   * @return
+   */
   public ResponseEntity<OneTimeTransferResponse> getOneTimeTransferResponseEntity(PayeesRequest payeesRequest) {
     OneTimeTransferResponse response = new OneTimeTransferResponse();
     try {
@@ -120,6 +125,11 @@ public class TransferService {
     return ResponseEntity.ok(response);
   }
 
+  /**
+   * To validate One time transfer payee inputs
+   * @param payeesValidationRequest
+   * @return
+   */
   public ResponseEntity<PayeesValidationResponse> getOneTimeTransferPayeeValidationResponseEntity(PayeesValidationRequest payeesValidationRequest) {
     PayeesValidationResponse response = new PayeesValidationResponse();
     try {
