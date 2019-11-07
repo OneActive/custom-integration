@@ -62,6 +62,9 @@ public class FundTransferRequest extends User {
    */
   private String payeeEmailId;
 
+  /** The payee name. */
+  private String payeeName;
+
   public String getType() {
     return type;
   }
@@ -174,22 +177,31 @@ public class FundTransferRequest extends User {
     this.payeeEmailId = payeeEmailId;
   }
 
+  public String getPayeeName() {
+    return payeeName;
+  }
+
+  public void setPayeeName(String payeeName) {
+    this.payeeName = payeeName;
+  }
+
   @Override public String toString() {
-    final StringBuffer sb = new StringBuffer("FundTransferRequest{");
+    final StringBuilder sb = new StringBuilder("FundTransferRequest{");
     sb.append("type='").append(type).append('\'');
     sb.append(", sourceAccountId='").append(sourceAccountId).append('\'');
     sb.append(", amount='").append(amount).append('\'');
     sb.append(", purpose='").append(purpose).append('\'');
     sb.append(", payeeId='").append(payeeId).append('\'');
     sb.append(", remarks='").append(remarks).append('\'');
-    sb.append(", payeeType='").append(payeeType).append('\'');
+    sb.append(", payeeType=").append(payeeType);
     sb.append(", payeeIFSCCode='").append(payeeIFSCCode).append('\'');
     sb.append(", payeeBankId='").append(payeeBankId).append('\'');
     sb.append(", payeeBranchId='").append(payeeBranchId).append('\'');
     sb.append(", payeeAccountId='").append(payeeAccountId).append('\'');
     sb.append(", payeeAccountNumber='").append(payeeAccountNumber).append('\'');
-    sb.append(", payeeMobileNumber='").append(payeeMobileNumber).append('\'');
+    sb.append(", payeeMobileNumber=").append(payeeMobileNumber);
     sb.append(", payeeEmailId='").append(payeeEmailId).append('\'');
+    sb.append(", payeeName='").append(payeeName).append('\'');
     sb.append('}');
     return sb.toString();
   }

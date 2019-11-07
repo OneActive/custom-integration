@@ -2,6 +2,7 @@ package com.activeai.integration.banking.controller;
 
 import com.activeai.integration.banking.domain.request.FundTransferRequest;
 import com.activeai.integration.banking.domain.request.PayeesRequest;
+import com.activeai.integration.banking.domain.request.PayeesValidationRequest;
 import com.activeai.integration.banking.domain.response.FundTransferResponse;
 import com.activeai.integration.banking.domain.response.OneTimeTransferResponse;
 import com.activeai.integration.banking.domain.response.PayeesResponse;
@@ -39,17 +40,17 @@ public class TransfersApiController {
   }
 
 
-  @RequestMapping(value = "/{customerId}/onetime/transfer/inputs", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/onetime-transfer-inputs", produces = {"application/json"}, method = RequestMethod.POST)
   public ResponseEntity<OneTimeTransferResponse> getOneTimeTransferInputList(
-      @PathVariable(value = "customerId", required = true) String customerId) {
+      @PathVariable(value = "customerId", required = true) String customerId, @RequestBody final PayeesRequest payeesRequest) {
     ApplicationLogger.logInfo("Entering getOneTimeTransferInputList API");
-    return transferService.getOneTimeTransferResponseEntity(customerId);
+    return transferService.getOneTimeTransferResponseEntity(payeesRequest);
   }
-  @RequestMapping(value = "/{customerId}/onetime/transfer/payee/validation", produces = {"application/json"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/{customerId}/onetime-transfer/payee/validation", produces = {"application/json"}, method = RequestMethod.POST)
   public ResponseEntity<PayeesValidationResponse> getOneTimeTransferPayeeValidation(
-      @PathVariable(value = "customerId", required = true) String customerId) {
+      @PathVariable(value = "customerId") String customerId, @RequestBody final PayeesValidationRequest payeesValidationRequest) {
     ApplicationLogger.logInfo("Entering getOneTimeTransferPayeeValidation API");
-    return transferService.getOneTimeTransferPayeeValidationResponseEntity(customerId);
+    return transferService.getOneTimeTransferPayeeValidationResponseEntity(payeesValidationRequest);
   }
 }
 

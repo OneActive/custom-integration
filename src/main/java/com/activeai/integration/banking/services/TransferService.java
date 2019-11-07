@@ -4,6 +4,7 @@ import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.request.FundTransferRequest;
 import com.activeai.integration.banking.domain.request.PayeesRequest;
+import com.activeai.integration.banking.domain.request.PayeesValidationRequest;
 import com.activeai.integration.banking.domain.response.FundTransferResponse;
 import com.activeai.integration.banking.domain.response.OneTimeTransferResponse;
 import com.activeai.integration.banking.domain.response.PayeesResponse;
@@ -94,11 +95,11 @@ public class TransferService {
     return ResponseEntity.ok(response);
   }
 
-  public ResponseEntity<OneTimeTransferResponse> getOneTimeTransferResponseEntity(String customerId) {
+  public ResponseEntity<OneTimeTransferResponse> getOneTimeTransferResponseEntity(PayeesRequest payeesRequest) {
     OneTimeTransferResponse response = new OneTimeTransferResponse();
     try {
       HttpResponse<String> apiResponse =
-          Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.ONE_TIME_TRANSFER_API_END_POINT, customerId, null))
+          Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.ONE_TIME_TRANSFER_API_END_POINT, payeesRequest.getCustomerId(), null))
               .header("cache-control", "no-cache").asString();
       ApplicationLogger
           .logInfo("One Time Transfer API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
@@ -119,11 +120,11 @@ public class TransferService {
     return ResponseEntity.ok(response);
   }
 
-  public ResponseEntity<PayeesValidationResponse> getOneTimeTransferPayeeValidationResponseEntity(String customerId) {
+  public ResponseEntity<PayeesValidationResponse> getOneTimeTransferPayeeValidationResponseEntity(PayeesValidationRequest payeesValidationRequest) {
     PayeesValidationResponse response = new PayeesValidationResponse();
     try {
       HttpResponse<String> apiResponse =
-          Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.ONE_TIME_TRANSFER_PAYEE_VALIDATION_API_END_POINT, customerId, null))
+          Unirest.post(propertyUtil.getAPIUrl(PropertyConstants.ONE_TIME_TRANSFER_PAYEE_VALIDATION_API_END_POINT, payeesValidationRequest.getCustomerId(), null))
               .header("cache-control", "no-cache").asString();
       ApplicationLogger
           .logInfo("One Time Transfer Payee Validation API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());

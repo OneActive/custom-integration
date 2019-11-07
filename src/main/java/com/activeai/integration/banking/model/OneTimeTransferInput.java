@@ -8,8 +8,8 @@ import java.util.List;
 public class OneTimeTransferInput {
 
   /* Internal payee, external payee, adhoc payee */
-  @JsonProperty("payeeTypeEnum")
-  private PayeeTypeEnum payeeTypeEnum;
+  @JsonProperty("payeeType")
+  private PayeeTypeEnum payeeType;
 
   /* Same Bank Payee, Other Bank Payee */
   @JsonProperty("displayPayeeType")
@@ -18,20 +18,12 @@ public class OneTimeTransferInput {
   @JsonProperty("userIdentityInputs")
   private List<UserIdentityInput> userIdentityInputs;
 
-  /**
-   *
-   * @return payeeTypeEnum
-   */
-  public PayeeTypeEnum getPayeeTypeEnum() {
-    return payeeTypeEnum;
+  public PayeeTypeEnum getPayeeType() {
+    return payeeType;
   }
 
-  /**
-   *
-   * @param payeeTypeEnum
-   */
-  public void setPayeeTypeEnum(PayeeTypeEnum payeeTypeEnum) {
-    this.payeeTypeEnum = payeeTypeEnum;
+  public void setPayeeType(PayeeTypeEnum payeeType) {
+    this.payeeType = payeeType;
   }
 
   /**
@@ -68,7 +60,7 @@ public class OneTimeTransferInput {
 
   @Override public String toString() {
     final StringBuilder sb = new StringBuilder("OneTimeTransferInput{");
-    sb.append("payeeTypeEnum=").append(payeeTypeEnum);
+    sb.append("payeeType").append(payeeType);
     sb.append(", displayPayeeType='").append(displayPayeeType).append('\'');
     sb.append(", userIdentityInputs=").append(userIdentityInputs);
     sb.append('}');
