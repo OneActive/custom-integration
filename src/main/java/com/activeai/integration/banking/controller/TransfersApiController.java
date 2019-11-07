@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Api(value = "Fund Transfer Related APIs", description = "Shows API documentation regarding fund transfer APIs") @RestController
+@Api(value = "Fund Transfer Related APIs", description = "Shows API documentation regarding fund transfer APIs")
+@RestController
 public class TransfersApiController {
 
   @Autowired
@@ -40,7 +41,7 @@ public class TransfersApiController {
   }
 
 
-  @RequestMapping(value = "/{customerId}/onetime-transfer-inputs", produces = {"application/json"}, method = RequestMethod.POST)
+  @RequestMapping(value = "/{customerId}/onetime-transfer/payee/inputs", produces = {"application/json"}, method = RequestMethod.POST)
   public ResponseEntity<OneTimeTransferResponse> getOneTimeTransferInputList(
       @PathVariable(value = "customerId", required = true) String customerId, @RequestBody final PayeesRequest payeesRequest) {
     ApplicationLogger.logInfo("Entering getOneTimeTransferInputList API");
