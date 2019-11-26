@@ -2,6 +2,7 @@ package com.activeai.integration.banking.model;
 
 
 import com.activeai.integration.banking.constants.UserIdentityInputDisplayTypeEnum;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +13,25 @@ import java.util.List;
 public class UserIdentityInput {
 
     /** The name. */
+    @JsonProperty("name")
     private String name;
 
     /** The regex. */
+    @JsonProperty("regex")
     private String regex;
 
     /** The message. */
+    @JsonProperty("message")
     private String message;
 
     /** The value. */
+    @JsonProperty("value")
     private String value;
+
+    /** Error message if regex validation failed */
+    @JsonProperty("errorMessage")
+    private String errorMessage;
+
     private UserIdentityInputDisplayTypeEnum userIdentityInputDisplayTypeEnum = UserIdentityInputDisplayTypeEnum.TEXT;
     private List<UserIdentityData> values = new ArrayList<>();
 
@@ -116,14 +126,33 @@ public class UserIdentityInput {
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    @Override
-    public String toString() {
-        return "UserIdentityInput{" +
-                "name='" + name + '\'' +
-                ", regex='" + regex + '\'' +
-                ", message='" + message + '\'' +
-                ", value='" + value + '\'' +
-                ", value='" + values + '\'' +
-                '}';
+
+    /**
+     *
+     * @return errorMessage
+     */
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    /**
+     *
+     * @param errorMessage
+     */
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    @Override public String toString() {
+        final StringBuilder sb = new StringBuilder("UserIdentityInput{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", regex='").append(regex).append('\'');
+        sb.append(", message='").append(message).append('\'');
+        sb.append(", value='").append(value).append('\'');
+        sb.append(", errorMessage='").append(errorMessage).append('\'');
+        sb.append(", userIdentityInputDisplayTypeEnum=").append(userIdentityInputDisplayTypeEnum);
+        sb.append(", values=").append(values);
+        sb.append('}');
+        return sb.toString();
     }
 }
