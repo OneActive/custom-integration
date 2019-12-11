@@ -183,10 +183,18 @@ public class FundTransferRequest extends User {
     this.payeeEmailId = payeeEmailId;
   }
 
+  /**
+   *
+   * @return payeeName
+   */
   public String getPayeeName() {
     return payeeName;
   }
 
+  /**
+   *
+   * @param payeeName
+   */
   public void setPayeeName(String payeeName) {
     this.payeeName = payeeName;
   }
