@@ -1,11 +1,8 @@
 package com.activeai.integration.banking.domain.request;
 
-import com.activeai.integration.banking.constants.PayeeExistsTypeEnum;
 import com.activeai.integration.banking.constants.PayeeTypeEnum;
 import com.activeai.integration.banking.model.Phone;
 import com.activeai.integration.banking.model.User;
-
-import java.util.List;
 
 public class FundTransferRequest extends User {
 
@@ -72,7 +69,7 @@ public class FundTransferRequest extends User {
    * Transaction happening through either added beneficiary(EXISTING_PAYEE)
    * or other mode of transactions(ADHOC_PAYEE) like one time transfer, MMID, UPI
    */
-  private PayeeExistsTypeEnum payeeExistsType;
+  private String payeeExistsType;
 
   public String getType() {
     return type;
@@ -194,17 +191,11 @@ public class FundTransferRequest extends User {
     this.payeeName = payeeName;
   }
 
-  /**
-   * @return payeeExistsType
-   */
-  public PayeeExistsTypeEnum getPayeeExistsType() {
+  public String getPayeeExistsType() {
     return payeeExistsType;
   }
 
-  /**
-   * @param payeeExistsType
-   */
-  public void setPayeeExistsType(PayeeExistsTypeEnum payeeExistsType) {
+  public void setPayeeExistsType(String payeeExistsType) {
     this.payeeExistsType = payeeExistsType;
   }
 
