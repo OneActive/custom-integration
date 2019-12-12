@@ -352,6 +352,7 @@ public class CardsService {
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
+  @Deprecated
   public ResponseEntity<InternationalUsageResponse> getInternationalUsageCardResponseEntity(InternationalCardUsageRequest internationalCardUsageRequest) {
     InternationalUsageResponse response = new InternationalUsageResponse();
     try {
