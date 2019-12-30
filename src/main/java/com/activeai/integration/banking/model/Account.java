@@ -76,6 +76,18 @@ public class Account {
   @JsonProperty("transactionStatus")
   private StatusEnum transactionStatus;
 
+  /**
+   * To make Account Debitable set isDebitable as true
+   */
+  @JsonProperty("isDebitable")
+  private boolean isDebitable;
+
+  /**
+   * To make Account Creditable set isCreditable as true
+   */
+  @JsonProperty("isCreditable")
+  private boolean isCreditable;
+
   public String getIfscCode() {
     return ifscCode;
   }
@@ -293,6 +305,30 @@ public class Account {
     this.transactionStatus = transactionStatus;
   }
 
+  /**
+   * Getter and Setter Methods for isDebitable
+   * @return
+   */
+  public boolean isDebitable() {
+    return isDebitable;
+  }
+
+  public void setDebitable(boolean debitable) {
+    isDebitable = debitable;
+  }
+
+  /**
+   * Getter and Setter Methods for isCreditable
+   * @return
+   */
+  public boolean isCreditable() {
+    return isCreditable;
+  }
+
+  public void setCreditable(boolean creditable) {
+    isCreditable = creditable;
+  }
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -314,13 +350,17 @@ public class Account {
         && Objects.equals(this.leavesCount, account.leavesCount)
         && Objects.equals(this.referenceId, account.referenceId)
         && Objects.equals(this.transactionStatus, account.transactionStatus)
-        && Objects.equals(this.lastStatementBalance, account.lastStatementBalance) && Objects.equals(this.balance, account.balance);
+        && Objects.equals(this.lastStatementBalance, account.lastStatementBalance) && Objects.equals(this.balance, account.balance)
+        && Objects.equals(this.isDebitable, account.isDebitable)
+        && Objects.equals(this.isCreditable, account.isCreditable);
+
+
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(productCode, product,accountName, bankName, accountType, displayAccountNumber, accountNumber, accountId, branchId, branchName, status,
-        openingDate, lastStatementDate, lastStatementBalance, balance, leavesCount, referenceId, transactionStatus);
+        openingDate, lastStatementDate, lastStatementBalance, balance, leavesCount, referenceId, transactionStatus,isCreditable,isDebitable);
   }
 
   @Override
@@ -347,6 +387,8 @@ public class Account {
     sb.append("    leavesCount: ").append(toIndentedString(leavesCount)).append("\n");
     sb.append("    referenceId: ").append(toIndentedString(referenceId)).append("\n");
     sb.append("    transactionStatus: ").append(toIndentedString(transactionStatus)).append("\n");
+    sb.append("    isDebitable: ").append(toIndentedString(isDebitable)).append("\n");
+    sb.append("    isCreditable: ").append(toIndentedString(isCreditable)).append("\n");
     sb.append("}");
     return sb.toString();
   }

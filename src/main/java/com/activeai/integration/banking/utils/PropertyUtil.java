@@ -36,7 +36,10 @@ public class PropertyUtil {
   }
 
   public String getAPIUrlForPayees(String propertyValue, PayeesRequest payeesRequest) {
-    return env.getProperty(propertyValue);
+    return StringUtils
+        .isNotEmpty(env.getProperty(MessageFormat.format(APIDoublePropertyPattern, payeesRequest.getCustomerId(), propertyValue))) ?
+        env.getProperty(MessageFormat.format(APIDoublePropertyPattern, payeesRequest.getCustomerId(), propertyValue)) :
+        env.getProperty(propertyValue);
   }
 
   public String getAPIUrlForFundTransfer(String propertyValue, FundTransferRequest fundTransferRequest) {
