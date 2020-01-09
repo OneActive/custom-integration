@@ -16,6 +16,11 @@ public class FundTransferRequest extends User {
    */
   private String sourceAccountId;
 
+  /**
+   * source account Number to debit from
+   */
+  private String sourceAccountNumber;
+
   /** amount to transfer. */
   private String amount;
 
@@ -79,6 +84,24 @@ public class FundTransferRequest extends User {
 
   public void setSourceAccountId(String sourceAccountId) {
     this.sourceAccountId = sourceAccountId;
+  }
+
+  /**
+   * Gets the source account number.
+   *
+   * @return the source account number
+   */
+  public String getSourceAccountNumber() {
+    return sourceAccountNumber;
+  }
+
+  /**
+   * Sets the source account number.
+   *
+   * @param sourceAccountNumber the new source account number
+   */
+  public void setSourceAccountNumber(String sourceAccountNumber) {
+    this.sourceAccountNumber = sourceAccountNumber;
   }
 
   public String getAmount() {

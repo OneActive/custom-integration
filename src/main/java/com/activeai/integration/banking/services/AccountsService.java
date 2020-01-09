@@ -2,7 +2,6 @@ package com.activeai.integration.banking.services;
 
 import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
-import com.activeai.integration.banking.domain.request.AccountRequest;
 import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
 import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.domain.response.DepositAccountsResponse;
@@ -10,6 +9,7 @@ import com.activeai.integration.banking.domain.response.LoanAccountsResponse;
 import com.activeai.integration.banking.mapper.response.AccountsResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
+import com.activeai.integration.data.service.AccountServiceData;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Objects;
 
 /**
  * This Class methods helps to get account related information using http
@@ -31,6 +32,7 @@ public class AccountsService {
 
   @Autowired private AccountsResponseMapper accountsResponseMapper;
   @Autowired private PropertyUtil propertyUtil;
+  @Autowired private AccountServiceData accountServiceData;
   private static final String error_message_format = "{0} : {1} : {2}";
 
   /**
@@ -40,7 +42,12 @@ public class AccountsService {
    * @return ResponseEntity of type AccountsResponse
    */
   public ResponseEntity<AccountsResponse> getCasaAccountsResponseEntity(String customerId, String accessToken) {
-    AccountsResponse response = new AccountsResponse();
+    // Fetch accounts from cache you can remove this on real integration
+    AccountsResponse response = accountServiceData.getAccountsResponse(customerId);
+    if(Objects.nonNull(response)){
+      return ResponseEntity.ok(response);
+    }
+    // Till this
     try {
       HttpResponse<String> apiResponse =
           Unirest.post(propertyUtil.getAccountAPIUrl(PropertyConstants.CASA_ACCOUNT_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
@@ -48,6 +55,9 @@ public class AccountsService {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo(" Casa Response Body Before Transformation :" + apiResponse.getBody());
         response = accountsResponseMapper.getManipulatedCasaAccountsResponse(apiResponse.getBody());
+        // Caching Account Response, Remove this later
+        accountServiceData.cacheAccountResponse(customerId, response);
+        // Till this
         ApplicationLogger.logInfo("Casa Response Body After Transformation :" + response);
       }
       return ResponseEntity.ok(response);
@@ -124,7 +134,12 @@ public class AccountsService {
    * @return ResponseEntity of type AccountTransactionsResponse
    */
   public ResponseEntity<AccountTransactionsResponse> getAccountTransactionsResponseEntity(String customerId, String accountId, String accessToken) {
-    AccountTransactionsResponse response = new AccountTransactionsResponse();
+    // Fetch accounts from cache you can remove this later
+    AccountTransactionsResponse response = accountServiceData.getAccountTransactionsResponse(customerId, accountId);
+    if (Objects.nonNull(response)) {
+      return ResponseEntity.ok(response);
+    }
+    // Till this
     try {
       HttpResponse<String> apiResponse =
           Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CASA_ACCOUNT_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))

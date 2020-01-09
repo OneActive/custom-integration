@@ -30,7 +30,7 @@ public enum BlockTypeEnum {
                 return b;
             }
         }
-        return null;
+        return UNKNOWN;
     }
 }
 

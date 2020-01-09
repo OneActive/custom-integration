@@ -9,10 +9,10 @@ import com.activeai.integration.banking.mapper.response.BlockCardResponseMapper;
 import com.activeai.integration.banking.mapper.response.CardsResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
+import com.activeai.integration.data.service.CardServiceData;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Objects;
 
 @Service("cardsService")
 public class CardsService {
@@ -30,6 +31,7 @@ public class CardsService {
   @Autowired private BlockCardResponseMapper blockCardResponseMapper;
   @Autowired private PropertyUtil propertyUtil;
   @Autowired private ActivationCardResponseMapper activationCardResponseMapper;
+  @Autowired private CardServiceData cardServiceData;
   private static final String error_message_format = "{0} : {1} : {2}";
 
   /**
@@ -39,7 +41,13 @@ public class CardsService {
    * @return ResponseEntity of type AccountsResponse
    */
   public ResponseEntity<CardsResponse> getCreditCardsResponseEntity(String customerId, String accessToken) {
-    CardsResponse response = new CardsResponse();
+    // Fetch cards from cache you can remove this later
+    CardsResponse response = cardServiceData.getCreditCardsResponse(customerId);
+    if (Objects.nonNull(response)) {
+      ApplicationLogger.logInfo("Credit Cards Fetched From Cache");
+      return ResponseEntity.ok(response);
+    }
+    // Till this
     try {
       HttpResponse<String> apiResponse =
           Unirest.get(propertyUtil.getAccountAPIUrl(PropertyConstants.CREDIT_CARDS_API_END_POINT, customerId, null)).header("cache-control", "no-cache")
@@ -48,6 +56,9 @@ public class CardsService {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Credit Cards Response Body Before Transformation :" + apiResponse.getBody());
         response = cardsResponseMapper.getManipulatedCardsResponse(apiResponse.getBody());
+        // Caching Credit cards, Remove this later
+        cardServiceData.cacheCreditCardsResponse(customerId, response);
+        // Till this
         ApplicationLogger.logInfo("Credit Cards Response Body After Transformation :" + response);
       }
       return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));
@@ -139,7 +150,13 @@ public class CardsService {
    * @return ResponseEntity of type CardTransactionsResponse
    */
   public ResponseEntity<CardTransactionsResponse> getCreditAccountTransactionsResponseEntity(String customerId, String accountId,String accessToken) {
-    CardTransactionsResponse response = new CardTransactionsResponse();
+    //Fetch Transactions from cache, remove this later
+    CardTransactionsResponse response = cardServiceData.getAccountTransactionsResponse(customerId, accountId);
+    if (Objects.nonNull(response)) {
+      ApplicationLogger.logInfo("Credit Card Transaction Fetched From Cache");
+      return ResponseEntity.ok(response);
+    }
+    // Till this
     try {
       HttpResponse<String> apiResponse =
           Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CREDIT_CARD_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))
@@ -173,7 +190,13 @@ public class CardsService {
    * @return ResponseEntity of type AccountsResponse
    */
   public ResponseEntity<CardsResponse> getDebitCardsResponseEntity(String customerId, String accessToken) {
-    CardsResponse response = new CardsResponse();
+    // Fetch accounts from cache you can remove this later
+    CardsResponse response = cardServiceData.getDebitCardsResponse(customerId);
+    if(Objects.nonNull(response)){
+      ApplicationLogger.logInfo("Debit Cards Fetched From Cache");
+      return ResponseEntity.ok(response);
+    }
+    // Till this
     try {
       HttpResponse<String> apiResponse =
               Unirest.get(propertyUtil.getAccountAPIUrl(PropertyConstants.DEBIT_CARDS_API_END_POINT, customerId, null)).header("cache-control", "no-cache")
@@ -182,6 +205,9 @@ public class CardsService {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Debit Cards Response Body Before Transformation :" + apiResponse.getBody());
         response = cardsResponseMapper.getManipulatedCardsResponse(apiResponse.getBody());
+        // Caching Debit cards, Remove this later
+        cardServiceData.cacheDebitCardsResponse(customerId,response);
+        // Till this
         ApplicationLogger.logInfo("Debit Cards Response Body After Transformation :" + response);
       }
       return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));
@@ -248,6 +274,9 @@ public class CardsService {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Block Card Response Body Before Transformation :" + apiResponse.getBody());
         response = blockCardResponseMapper.getManipulatedBlockCardResponse(apiResponse.getBody());
+        //updating stub data as BLOCKED on card status, Remove this later
+        cardServiceData.updateBlockCardStatus(blockCardRequest);
+        // Till this
         ApplicationLogger.logInfo("Block Card Response Body After Transformation :" + response);
       }
       return ResponseEntity.ok(response);
@@ -281,6 +310,10 @@ public class CardsService {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Activation Card Response Body Before Transformation :" + apiResponse.getBody());
         response = activationCardResponseMapper.getManipulatedActivationCardResponse(apiResponse.getBody());
+        //updating stub data as ACTIVE on card status, Remove this later
+        cardServiceData.activateCardStatus(activationCardRequest.getCustomerId(), activationCardRequest.getCardDetails().getCardNumber(),
+            activationCardRequest.getCardDetails().getCardType());
+        // Till this
         ApplicationLogger.logInfo("Activation Card Response Body After Transformation :" + response);
       }
       return ResponseEntity.ok(response);
