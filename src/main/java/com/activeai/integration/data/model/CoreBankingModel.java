@@ -21,8 +21,8 @@ public class CoreBankingModel implements Serializable {
   /**
    * expiry time for redis storage
    */
-  @TimeToLive(unit = TimeUnit.DAYS)
-  private long expiryTime = CoreBankingConstants.REDIS_EXPIRY_TIME;
+/*  @TimeToLive(unit = TimeUnit.DAYS)
+  private long expiryTime = CoreBankingConstants.REDIS_EXPIRY_TIME;*/
 
   /**
    * CASA account response
@@ -63,13 +63,13 @@ public class CoreBankingModel implements Serializable {
     this.id = id;
   }
 
-  public long getExpiryTime() {
+ /* public long getExpiryTime() {
     return expiryTime;
   }
 
   public void setExpiryTime(long expiryTime) {
     this.expiryTime = expiryTime;
-  }
+  }*/
 
   public AccountsResponse getAccountsResponse() {
     return accountsResponse;

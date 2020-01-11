@@ -33,8 +33,7 @@ public class AccountServiceData {
     return coreBankingService.getCoreBankingModel(customerId).getAccountsResponse();
   }
 
-  public void debitAmount(String customerId, String debitedAmount, String accountNumber) {
-    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
+  public CoreBankingModel debitAmount(CoreBankingModel coreBankingModel, String customerId, String debitedAmount, String accountNumber) {
     AccountsResponse accountsResponse = coreBankingModel.getAccountsResponse();
     if (Objects.nonNull(accountsResponse)) {
       accountsResponse.getAccounts().stream().forEach(a -> {
@@ -44,11 +43,10 @@ public class AccountServiceData {
         }
       });
     }
-    coreBankingService.saveCoreBankingModel(coreBankingModel);
+    return coreBankingModel;
   }
 
-  public void creditAmount(String customerId, String debitedAmount, String accountNumber) {
-    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
+  public CoreBankingModel creditAmount(CoreBankingModel coreBankingModel, String customerId, String debitedAmount, String accountNumber) {
     AccountsResponse accountsResponse = coreBankingModel.getAccountsResponse();
     if (Objects.nonNull(accountsResponse)) {
       accountsResponse.getAccounts().stream().forEach(a -> {
@@ -58,7 +56,7 @@ public class AccountServiceData {
         }
       });
     }
-    coreBankingService.saveCoreBankingModel(coreBankingModel);
+    return coreBankingModel;
   }
 
   public AccountTransactionsResponse getAccountTransactionsResponse(String customerId, String accountId) {

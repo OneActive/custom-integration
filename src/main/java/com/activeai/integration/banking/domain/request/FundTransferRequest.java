@@ -86,24 +86,6 @@ public class FundTransferRequest extends User {
     this.sourceAccountId = sourceAccountId;
   }
 
-  /**
-   * Gets the source account number.
-   *
-   * @return the source account number
-   */
-  public String getSourceAccountNumber() {
-    return sourceAccountNumber;
-  }
-
-  /**
-   * Sets the source account number.
-   *
-   * @param sourceAccountNumber the new source account number
-   */
-  public void setSourceAccountNumber(String sourceAccountNumber) {
-    this.sourceAccountNumber = sourceAccountNumber;
-  }
-
   public String getAmount() {
     return amount;
   }

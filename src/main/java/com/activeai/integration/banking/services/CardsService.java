@@ -10,6 +10,7 @@ import com.activeai.integration.banking.mapper.response.CardsResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
 import com.activeai.integration.data.service.CardServiceData;
+import com.activeai.integration.data.service.TransferServiceData;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -32,6 +33,7 @@ public class CardsService {
   @Autowired private PropertyUtil propertyUtil;
   @Autowired private ActivationCardResponseMapper activationCardResponseMapper;
   @Autowired private CardServiceData cardServiceData;
+  @Autowired private TransferServiceData transferServiceData;
   private static final String error_message_format = "{0} : {1} : {2}";
 
   /**
@@ -527,6 +529,7 @@ public class CardsService {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Card Payment Confirm Response Body Before Transformation :" + apiResponse.getBody());
         response = cardsResponseMapper.getManipulatedCardPaymentResponse(apiResponse.getBody());
+        transferServiceData.updateTransactionDetailsOnCache(cardPaymentRequest);
         ApplicationLogger.logInfo("Card Payment Confirm Response Body After Transformation :" + apiResponse.getBody());
       }
       return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));

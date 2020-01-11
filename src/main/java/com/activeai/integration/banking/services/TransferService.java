@@ -1,7 +1,6 @@
 package com.activeai.integration.banking.services;
 
 import com.activeai.integration.banking.constants.MessageConstants;
-import com.activeai.integration.banking.constants.PayeeTypeEnum;
 import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.request.FundTransferRequest;
 import com.activeai.integration.banking.domain.request.PayeesRequest;
@@ -14,7 +13,6 @@ import com.activeai.integration.banking.mapper.response.FundTransferResponseMapp
 import com.activeai.integration.banking.mapper.response.OneTimeTransferResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
-import com.activeai.integration.data.service.AccountServiceData;
 import com.activeai.integration.data.service.TransferServiceData;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -35,7 +33,6 @@ public class TransferService {
   @Autowired private FundTransferResponseMapper fundTransferResponseMapper;
   @Autowired private OneTimeTransferResponseMapper oneTimeTransferResponseMapper;
   @Autowired private PropertyUtil propertyUtil;
-  @Autowired private AccountServiceData accountServiceData;
   @Autowired private TransferServiceData transferServiceData;
   private static final String error_message_format = "{0} : {1} : {2}";
 
@@ -81,13 +78,7 @@ public class TransferService {
       if (Objects.nonNull(apiResponse) && StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Confirm Transfer Response Body Before Transformation :" + apiResponse.getBody());
         response = fundTransferResponseMapper.getManipulatedFundTransferResponse(apiResponse.getBody());
-        accountServiceData.debitAmount(fundTransferRequest.getCustomerId(), fundTransferRequest.getAmount(),
-            fundTransferRequest.getSourceAccountId());
-        if(fundTransferRequest.getPayeeType().equals(PayeeTypeEnum.SELF)){
-          accountServiceData.creditAmount(fundTransferRequest.getCustomerId(), fundTransferRequest.getAmount(),
-              fundTransferRequest.getPayeeAccountNumber());
-        }
-        transferServiceData.updateTransactionResponse(fundTransferRequest);
+        transferServiceData.updateTransactionDetailsOnCache(fundTransferRequest);
         ApplicationLogger.logInfo("Confirm Transfer Response Body After Transformation :" + response);
       }
       return ResponseEntity.ok(response);
