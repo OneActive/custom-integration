@@ -166,6 +166,7 @@ public class CardsApiController {
   /*
   Return Intenational Usage Enabled of Card
    */
+  @Deprecated
   @ApiOperation("Return international usage of card is enabled or disabled")
   @RequestMapping(value = "/{customerId}/cards/{cardNumber}/internationalUsage/enabled", produces = {"application/json"}, consumes = {
       "application/json"}, method = RequestMethod.POST) public ResponseEntity<InternationalUsageResponse> updateInternationalUsage(
