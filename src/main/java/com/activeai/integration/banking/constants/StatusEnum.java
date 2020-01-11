@@ -7,8 +7,8 @@ public enum  StatusEnum {
 
   SUCCESS("SUCCESS"),
   FAILURE("FAILURE"),
-  PENDING("PENDING");
-
+  PENDING("PENDING"),
+  UNKNOWN("");
   private String value;
 
   StatusEnum(String value) {
@@ -28,6 +28,6 @@ public enum  StatusEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 }

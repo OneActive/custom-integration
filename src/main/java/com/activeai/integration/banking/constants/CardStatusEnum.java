@@ -24,16 +24,12 @@ public enum CardStatusEnum {
   /** Closed */
   CLOSED("CLOSED"),
   /** Unkown. */
-  UNKNOWN("UNKNOWN");
+  UNKNOWN("");
 
   private String value;
 
   CardStatusEnum(String value) {
     this.value = value;
-  }
-
-  CardStatusEnum() {
-
   }
 
   @Override
@@ -49,6 +45,6 @@ public enum CardStatusEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 }

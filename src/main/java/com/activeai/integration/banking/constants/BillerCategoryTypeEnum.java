@@ -7,7 +7,9 @@ public enum BillerCategoryTypeEnum {
 
     REGISTERED("REGISTERED"),
 
-    ADHOC("ADHOC");
+    ADHOC("ADHOC"),
+
+    UNKNOWN("");
 
     private String value;
 
@@ -28,6 +30,6 @@ public enum BillerCategoryTypeEnum {
                 return b;
             }
         }
-        return null;
+        return UNKNOWN;
     }
 }

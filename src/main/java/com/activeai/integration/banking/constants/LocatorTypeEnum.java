@@ -8,7 +8,9 @@ public enum LocatorTypeEnum {
   ATM("atm"),
 
   /* Brach */
-  BRANCH("branch");
+  BRANCH("branch"),
+
+  UNKNOWN("");
 
   private String value;
 
@@ -29,7 +31,7 @@ public enum LocatorTypeEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
-  }
+}
 

@@ -10,7 +10,9 @@ public enum EmailTypeEnum {
 
   PRIMARY("PRIMARY"),
 
-  OFFICE("OFFICE");
+  OFFICE("OFFICE"),
+
+  UNKNOWN("");
 
   private String value;
 
@@ -31,7 +33,7 @@ public enum EmailTypeEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 
 }

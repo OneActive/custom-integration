@@ -10,7 +10,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum AddressTypeEnum {
   PRIMARY("PRIMARY"),
 
-  OFFICE("OFFICE");
+  OFFICE("OFFICE"),
+
+  UNKNOWN("");
 
   private String value;
 
@@ -31,6 +33,6 @@ public enum AddressTypeEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 }

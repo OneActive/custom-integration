@@ -1,10 +1,9 @@
 package com.activeai.integration.banking.domain.request;
 
 import com.activeai.integration.banking.constants.PayeeTypeEnum;
+import com.activeai.integration.banking.model.Account;
 import com.activeai.integration.banking.model.Phone;
 import com.activeai.integration.banking.model.User;
-
-import java.util.List;
 
 public class FundTransferRequest extends User {
 
@@ -64,6 +63,16 @@ public class FundTransferRequest extends User {
 
   /** The payee name. */
   private String payeeName;
+
+  /**
+   * source account
+   */
+  private Account debtor;
+
+  /**
+   * target account
+   */
+  private Account creditor;
 
   public String getType() {
     return type;
@@ -185,20 +194,32 @@ public class FundTransferRequest extends User {
     this.payeeName = payeeName;
   }
 
+  public Account getDebtor() {
+    return debtor;
+  }
+
+  public void setDebtor(Account debtor) {
+    this.debtor = debtor;
+  }
+
+  public Account getCreditor() {
+    return creditor;
+  }
+
+  public void setCreditor(Account creditor) {
+    this.creditor = creditor;
+  }
+
   @Override public String toString() {
     final StringBuilder sb = new StringBuilder("FundTransferRequest{");
     sb.append("type='").append(type).append('\'');
-    sb.append(", sourceAccountId='").append(sourceAccountId).append('\'');
     sb.append(", amount='").append(amount).append('\'');
     sb.append(", purpose='").append(purpose).append('\'');
-    sb.append(", payeeId='").append(payeeId).append('\'');
     sb.append(", remarks='").append(remarks).append('\'');
     sb.append(", payeeType=").append(payeeType);
     sb.append(", payeeIFSCCode='").append(payeeIFSCCode).append('\'');
     sb.append(", payeeBankId='").append(payeeBankId).append('\'');
     sb.append(", payeeBranchId='").append(payeeBranchId).append('\'');
-    sb.append(", payeeAccountId='").append(payeeAccountId).append('\'');
-    sb.append(", payeeAccountNumber='").append(payeeAccountNumber).append('\'');
     sb.append(", payeeMobileNumber=").append(payeeMobileNumber);
     sb.append(", payeeEmailId='").append(payeeEmailId).append('\'');
     sb.append(", payeeName='").append(payeeName).append('\'');

@@ -38,6 +38,6 @@ public enum CardTypeEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 }

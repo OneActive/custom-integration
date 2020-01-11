@@ -9,7 +9,7 @@ public enum ReplaceTypeEnum {
 
   BLOCK_AND_REPLACE("BLOCK_AND_REPLACE"),
 
-  UNKNOWN("UNKNOWN");
+  UNKNOWN("");
 
   private String value;
 
@@ -30,7 +30,7 @@ public enum ReplaceTypeEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 
 }

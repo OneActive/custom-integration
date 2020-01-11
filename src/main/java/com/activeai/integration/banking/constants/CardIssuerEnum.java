@@ -13,7 +13,9 @@ public enum CardIssuerEnum {
 
   AMEX("AMEX"),
 
-  DINERS("DINERS");
+  DINERS("DINERS"),
+
+  UNKNOWN("UNKNOWN");
 
   private String value;
 
@@ -34,6 +36,6 @@ public enum CardIssuerEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 }

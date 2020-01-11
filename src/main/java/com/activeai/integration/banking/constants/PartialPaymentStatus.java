@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum PartialPaymentStatus {
     ALLOWED("ALLOWED"),
 
-    NOT_ALLOWED("NOT_ALLOWED");
+    NOT_ALLOWED("NOT_ALLOWED"),
+
+    UNKNOWN("");
 
     private String value;
 
@@ -27,6 +29,6 @@ public enum PartialPaymentStatus {
                 return b;
             }
         }
-        return null;
+        return UNKNOWN;
     }
 }
