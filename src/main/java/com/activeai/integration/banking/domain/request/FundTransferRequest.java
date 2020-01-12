@@ -74,6 +74,14 @@ public class FundTransferRequest extends User {
    */
   private Account creditor;
 
+  /** In case of 2 step process, the id returned from step 1 should be set to this. */
+  private String flowReferenceId;
+
+  /**
+   * Currency code from which transaction happend
+   */
+  private String currencyCode;
+
   public String getType() {
     return type;
   }
@@ -210,6 +218,22 @@ public class FundTransferRequest extends User {
     this.creditor = creditor;
   }
 
+  public String getFlowReferenceId() {
+    return flowReferenceId;
+  }
+
+  public void setFlowReferenceId(String flowReferenceId) {
+    this.flowReferenceId = flowReferenceId;
+  }
+
+  public String getCurrencyCode() {
+    return currencyCode;
+  }
+
+  public void setCurrencyCode(String currencyCode) {
+    this.currencyCode = currencyCode;
+  }
+
   @Override public String toString() {
     final StringBuilder sb = new StringBuilder("FundTransferRequest{");
     sb.append("type='").append(type).append('\'');
@@ -223,6 +247,7 @@ public class FundTransferRequest extends User {
     sb.append(", payeeMobileNumber=").append(payeeMobileNumber);
     sb.append(", payeeEmailId='").append(payeeEmailId).append('\'');
     sb.append(", payeeName='").append(payeeName).append('\'');
+    sb.append(", currencyCode='").append(currencyCode).append('\'');
     sb.append('}');
     return sb.toString();
   }
