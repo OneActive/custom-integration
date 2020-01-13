@@ -43,7 +43,7 @@ public class CardsService {
    * @return ResponseEntity of type AccountsResponse
    */
   public ResponseEntity<CardsResponse> getCreditCardsResponseEntity(String customerId, String accessToken) {
-    // Fetch cards from cache you can remove this later
+    // Fetch cards from cache, you can remove this later
     CardsResponse response = cardServiceData.getCreditCardsResponse(customerId);
     if (Objects.nonNull(response)) {
       ApplicationLogger.logInfo("Credit Cards Fetched From Cache");
@@ -155,7 +155,7 @@ public class CardsService {
     //Fetch Transactions from cache, remove this later
     CardTransactionsResponse response = cardServiceData.getAccountTransactionsResponse(customerId, accountId);
     if (Objects.nonNull(response)) {
-      ApplicationLogger.logInfo("Credit Card Transaction Fetched From Cache");
+      ApplicationLogger.logInfo("Transaction for Card is shown from cache");
       return ResponseEntity.ok(response);
     }
     // Till this
@@ -312,10 +312,10 @@ public class CardsService {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Activation Card Response Body Before Transformation :" + apiResponse.getBody());
         response = activationCardResponseMapper.getManipulatedActivationCardResponse(apiResponse.getBody());
-        //updating stub data as ACTIVE on card status, Remove this later
+        /*//updating stub data as ACTIVE on card status, Remove this later
         cardServiceData.activateCardStatus(activationCardRequest.getCustomerId(), activationCardRequest.getCardDetails().getCardNumber(),
             activationCardRequest.getCardDetails().getCardType());
-        // Till this
+        // Till this*/
         ApplicationLogger.logInfo("Activation Card Response Body After Transformation :" + response);
       }
       return ResponseEntity.ok(response);

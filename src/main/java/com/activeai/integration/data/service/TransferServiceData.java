@@ -4,7 +4,10 @@ import com.activeai.integration.banking.constants.PayeeTypeEnum;
 import com.activeai.integration.banking.constants.TransactionTypeEnum;
 import com.activeai.integration.banking.domain.request.FundTransferRequest;
 import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
+import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
 import com.activeai.integration.banking.model.AccountTransaction;
+import com.activeai.integration.banking.model.CardTransaction;
+import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.data.model.CoreBankingModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,21 +27,24 @@ import java.util.UUID;
   @Autowired private AccountServiceData accountServiceData;
 
   public void updateTransactionDetailsOnCache(FundTransferRequest fundTransferRequest) {
+    ApplicationLogger.logInfo("Updating Transactions");
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(fundTransferRequest.getCustomerId());
-    accountServiceData.debitAmount(coreBankingModel, fundTransferRequest.getCustomerId(), fundTransferRequest.getAmount(),
-        fundTransferRequest.getSourceAccountId());
+    accountServiceData.debitAmount(coreBankingModel, fundTransferRequest.getAmount(), fundTransferRequest.getSourceAccountId());
     if (fundTransferRequest.getPayeeType().equals(PayeeTypeEnum.SELF)) {
-      accountServiceData.creditAmount(coreBankingModel, fundTransferRequest.getCustomerId(), fundTransferRequest.getAmount(),
-          fundTransferRequest.getPayeeAccountNumber());
+      accountServiceData.creditAmount(coreBankingModel, fundTransferRequest.getAmount(), fundTransferRequest.getPayeeAccountNumber());
       AccountTransaction transactions = mapFundTransferAsTransactionForCreditor(fundTransferRequest);
-      populateTransactionsOnCoreBankingModel(coreBankingModel, transactions, fundTransferRequest.getPayeeAccountId());
+      populateAccountTransactionsOnCoreBankingModel(coreBankingModel, transactions, fundTransferRequest.getPayeeAccountId());
+    } else if (fundTransferRequest.getPayeeType().equals(PayeeTypeEnum.CREDIT_CARD)) {
+      accountServiceData.creditOnBill(coreBankingModel, fundTransferRequest.getAmount(), fundTransferRequest.getPayeeAccountId());
+      CardTransaction transactions = mapFundTransferAsCardTransactionForCreditor(fundTransferRequest);
+      populateCardTransactionsOnCoreBankingModel(coreBankingModel, transactions, fundTransferRequest.getPayeeAccountId());
     }
     AccountTransaction transactions = mapFundTransferAsTransactionForDebtor(fundTransferRequest);
-    populateTransactionsOnCoreBankingModel(coreBankingModel, transactions, fundTransferRequest.getSourceAccountId());
+    populateAccountTransactionsOnCoreBankingModel(coreBankingModel, transactions, fundTransferRequest.getSourceAccountId());
     coreBankingService.saveCoreBankingModel(coreBankingModel);
   }
 
-  private CoreBankingModel populateTransactionsOnCoreBankingModel(CoreBankingModel coreBankingModel, AccountTransaction transaction,
+  private CoreBankingModel populateAccountTransactionsOnCoreBankingModel(CoreBankingModel coreBankingModel, AccountTransaction transaction,
       String accountId) {
     AccountTransactionsResponse transactionsResponse = coreBankingModel.getAccountTransactionsResponse().get(accountId);
     if (Objects.nonNull(transactionsResponse) && CollectionUtils.isNotEmpty(transactionsResponse.getAccountTransactions())) {
@@ -52,11 +58,29 @@ import java.util.UUID;
     return coreBankingModel;
   }
 
+  private CoreBankingModel populateCardTransactionsOnCoreBankingModel(CoreBankingModel coreBankingModel, CardTransaction transaction,
+      String accountId) {
+    CardTransactionsResponse transactionsResponse = coreBankingModel.getCardTransactionsResponse().get(accountId);
+    if (Objects.nonNull(transactionsResponse) && CollectionUtils.isNotEmpty(transactionsResponse.getCardTransactions())) {
+      transactionsResponse.getCardTransactions().add(transaction);
+    } else {
+      transactionsResponse = new CardTransactionsResponse();
+      List<CardTransaction> accountTransactions = new ArrayList<>();
+      accountTransactions.add(transaction);
+      transactionsResponse.setCardTransactions(accountTransactions);
+    }
+    return coreBankingModel;
+  }
+
   private AccountTransaction mapFundTransferAsTransactionForDebtor(FundTransferRequest fundTransferRequest) {
     AccountTransaction transaction = mapGenericTransactionDetails(fundTransferRequest);
     transaction.setAccountId(fundTransferRequest.getPayeeAccountId());
     transaction.setAccountNumber(fundTransferRequest.getPayeeAccountNumber());
-    transaction.setDescription(fundTransferRequest.getPayeeName());
+    if(PayeeTypeEnum.CREDIT_CARD.compareTo(fundTransferRequest.getPayeeType()) == 0){
+      transaction.setDescription("Credit Card Bill");
+    }else {
+      transaction.setDescription(fundTransferRequest.getPayeeName());
+    }
     transaction.setTransactionType(TransactionTypeEnum.DEBIT);
     return transaction;
   }
@@ -66,6 +90,23 @@ import java.util.UUID;
     transaction.setAccountId(fundTransferRequest.getSourceAccountId());
     transaction.setAccountNumber(fundTransferRequest.getPayeeAccountNumber());
     transaction.setTransactionType(TransactionTypeEnum.CREDIT);
+    return transaction;
+  }
+
+  private CardTransaction mapFundTransferAsCardTransactionForCreditor(FundTransferRequest fundTransferRequest) {
+    CardTransaction transaction = new CardTransaction();
+    transaction.setDescription("Credited");
+    transaction.setCurrency("USD");
+    transaction.setAmount(Double.valueOf(fundTransferRequest.getAmount()));
+    transaction.setTransactionId(UUID.randomUUID().toString());
+    transaction.setReferenceId(UUID.randomUUID().toString());
+    transaction.setCategory("Card Payment");
+    transaction.setTransactionType(TransactionTypeEnum.CREDIT);
+    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDateTime date = LocalDateTime.now();
+    transaction.setTxnDate(dateFormat.format(date));
+    transaction.setAccountId(fundTransferRequest.getSourceAccountId());
+    transaction.setAccountNumber(fundTransferRequest.getPayeeAccountNumber());
     return transaction;
   }
 

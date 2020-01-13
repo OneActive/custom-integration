@@ -2,6 +2,7 @@ package com.activeai.integration.data.model;
 
 import com.activeai.integration.banking.domain.response.*;
 import com.activeai.integration.data.constants.CoreBankingConstants;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 
@@ -16,13 +17,14 @@ public class CoreBankingModel implements Serializable {
   /**
    * customer ID
    */
+  @Id
   private String id;
 
   /**
    * expiry time for redis storage
    */
-/*  @TimeToLive(unit = TimeUnit.DAYS)
-  private long expiryTime = CoreBankingConstants.REDIS_EXPIRY_TIME;*/
+  @TimeToLive
+  private long expiryTime;
 
   /**
    * CASA account response
@@ -63,13 +65,9 @@ public class CoreBankingModel implements Serializable {
     this.id = id;
   }
 
- /* public long getExpiryTime() {
-    return expiryTime;
-  }
-
   public void setExpiryTime(long expiryTime) {
     this.expiryTime = expiryTime;
-  }*/
+  }
 
   public AccountsResponse getAccountsResponse() {
     return accountsResponse;

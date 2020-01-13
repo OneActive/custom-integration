@@ -45,4 +45,13 @@ public class CoreBankingService {
   public void saveCoreBankingModel(CoreBankingModel coreBankingModel) {
     coreBankingRepository.save(coreBankingModel);
   }
+
+  public void deleteCoreBankingModelOfCustomer(String customerId){
+    String redisKey = CoreBankingUtil.getRedisKey(customerId);
+    coreBankingRepository.delete(redisKey);
+  }
+
+  public void resetAll(){
+    coreBankingRepository.deleteAll();
+  }
 }

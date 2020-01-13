@@ -137,6 +137,7 @@ public class AccountsService {
     // Fetch accounts from cache you can remove this later
     AccountTransactionsResponse response = accountServiceData.getAccountTransactionsResponse(customerId, accountId);
     if (Objects.nonNull(response)) {
+      ApplicationLogger.logInfo("Transaction for account is shown from cache");
       return ResponseEntity.ok(response);
     }
     // Till this

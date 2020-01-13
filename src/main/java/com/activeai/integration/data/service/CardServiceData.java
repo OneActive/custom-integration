@@ -13,9 +13,12 @@ import com.activeai.integration.data.model.CoreBankingModel;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -49,9 +52,11 @@ public class CardServiceData {
    * @param cardsResponse contains only credit cards
    */
   public void cacheCreditCardsResponse(String customerId, CardsResponse cardsResponse) {
+    ApplicationLogger.logInfo("Caching Credit cards");
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
     coreBankingModel.setCreditCardsResponse(cardsResponse);
     Map<String, CardTransactionsResponse> cardTransactionsResponseMap = new HashMap<>();
+    ApplicationLogger.logInfo("Caching Credit cards Transactions");
     cardsResponse.getCards().stream().forEach(c -> {
       CardTransactionsResponse cardTransactionsResponse = getCardTransactions(customerId,c.getAccountId());
       cardTransactionsResponseMap.put(c.getAccountId(), cardTransactionsResponse);
@@ -61,12 +66,14 @@ public class CardServiceData {
   }
 
   public void cacheDebitCardsResponse(String customerId, CardsResponse cardsResponse){
+    ApplicationLogger.logInfo("Caching Debit cards");
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
     coreBankingModel.setDebitCardsResponse(cardsResponse);
     coreBankingService.saveCoreBankingModel(coreBankingModel);
   }
 
   public void updateBlockCardStatus(BlockCardRequest blockCardRequest) {
+    ApplicationLogger.logInfo("Updating Block card status in cache");
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(blockCardRequest.getCustomerId());
     CardsResponse cardsResponse;
     if (CardTypeEnum.CREDIT_CARD.compareTo(blockCardRequest.getCardDetails().getCardType()) == 0) {
@@ -85,6 +92,7 @@ public class CardServiceData {
   }
 
   public void activateCardStatus(String customerId, String cardNumber,CardTypeEnum cardTypeEnum) {
+    ApplicationLogger.logInfo("Updating card Status as ACTIVE for " + cardNumber);
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
     CardsResponse cardsResponse;
     if (CardTypeEnum.CREDIT_CARD.compareTo(cardTypeEnum) == 0) {
