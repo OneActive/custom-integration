@@ -26,8 +26,9 @@ public enum PayeeIdTypeEnum {
   /**
    * The card number.
    */
-  CARD_NUMBER("CARD_NUMBER");
+  CARD_NUMBER("CARD_NUMBER"),
 
+  UNKNOWN("");
 
 
   private String value;
@@ -42,6 +43,6 @@ public enum PayeeIdTypeEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 }

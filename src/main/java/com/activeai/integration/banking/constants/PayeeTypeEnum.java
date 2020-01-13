@@ -13,7 +13,11 @@ public enum PayeeTypeEnum {
 
   EXTERNAL_DOMESTIC("EXTERNAL_DOMESTIC"),
 
-  SELF("SELF");
+  SELF("SELF"),
+
+  CREDIT_CARD("CREDIT_CARD"),
+
+  UNKNOWN("");
 
   private String value;
 
@@ -34,6 +38,6 @@ public enum PayeeTypeEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 }

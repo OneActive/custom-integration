@@ -9,7 +9,7 @@ public enum BlockTypeEnum {
 
     TEMPORARY("TEMPORARY"),
 
-    UNKNOWN("UNKNOWN");
+    UNKNOWN("");
 
     private String value;
 

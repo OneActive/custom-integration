@@ -25,7 +25,7 @@ public enum CardStatusEnum {
   /** Closed */
   CLOSED("CLOSED"),
   /** Unkown. */
-  UNKNOWN("UNKNOWN");
+  UNKNOWN("");
 
   private String value;
 
@@ -42,7 +42,6 @@ public enum CardStatusEnum {
   CardStatusEnum(String value) {
     this.value = value;
   }
-
 
   @Override
   @JsonValue

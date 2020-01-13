@@ -11,7 +11,9 @@ public enum PhoneTypeEnum {
 
   OFFICE("OFFICE"),
 
-  HOME("HOME");
+  HOME("HOME"),
+
+  UNKNOWN("");
 
   private String value;
 
@@ -32,7 +34,7 @@ public enum PhoneTypeEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 
 }
