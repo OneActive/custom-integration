@@ -12,9 +12,10 @@ set -o pipefail
 export WORK_DIR='/opt/tomcat'
 export DEPLOY_DIR='/opt/deploy'
 
-#chmod +x /opt/deploy/load_ssm
-#/opt/deploy/load_ssm $ENVIRONMENT
-#source .env
+chmod +x /opt/deploy/load_ssm
+/opt/deploy/load_ssm $ENVIRONMENT
+source .env
+
 
 if [ ! -d "$WORK_DIR" ]; then
 
