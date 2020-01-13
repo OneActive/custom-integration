@@ -1,4 +1,4 @@
-package com.activeai.integration.banking;
+package com.activeai.integration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -15,6 +15,11 @@ public class FundTransferRequest extends User {
    */
   private String sourceAccountId;
 
+  /**
+   * source account Number to debit from
+   */
+  private String sourceAccountNumber;
+
   /** amount to transfer. */
   private String amount;
 

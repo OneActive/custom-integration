@@ -13,7 +13,7 @@ import com.activeai.integration.banking.mapper.response.FundTransferResponseMapp
 import com.activeai.integration.banking.mapper.response.OneTimeTransferResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.activeai.integration.data.service.TransferServiceData;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -33,6 +33,7 @@ public class TransferService {
   @Autowired private FundTransferResponseMapper fundTransferResponseMapper;
   @Autowired private OneTimeTransferResponseMapper oneTimeTransferResponseMapper;
   @Autowired private PropertyUtil propertyUtil;
+  @Autowired private TransferServiceData transferServiceData;
   private static final String error_message_format = "{0} : {1} : {2}";
 
   public ResponseEntity<PayeesResponse> getPayeesResponseEntity(PayeesRequest payeeRequest) {
@@ -77,6 +78,7 @@ public class TransferService {
       if (Objects.nonNull(apiResponse) && StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Confirm Transfer Response Body Before Transformation :" + apiResponse.getBody());
         response = fundTransferResponseMapper.getManipulatedFundTransferResponse(apiResponse.getBody());
+        transferServiceData.updateTransactionDetailsOnCache(fundTransferRequest);
         ApplicationLogger.logInfo("Confirm Transfer Response Body After Transformation :" + response);
       }
       return ResponseEntity.ok(response);
