@@ -1,5 +1,6 @@
 package com.activeai.integration.data.service;
 
+import com.activeai.integration.banking.constants.AccountTypeEnum;
 import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
 import com.activeai.integration.banking.domain.response.AccountsResponse;
@@ -35,6 +36,14 @@ public class AccountServiceData {
     return coreBankingService.getCoreBankingModel(customerId).getAccountsResponse();
   }
 
+  /**
+   * Debit amount from account and cache updated details
+   *
+   * @param coreBankingModel
+   * @param debitedAmount
+   * @param accountId
+   * @return CoreBankingModel
+   */
   public CoreBankingModel debitAmount(CoreBankingModel coreBankingModel, String debitedAmount, String accountId) {
     ApplicationLogger.logInfo("Debiting " + debitedAmount + " from account ID " + accountId);
     AccountsResponse accountsResponse = coreBankingModel.getAccountsResponse();
@@ -49,6 +58,14 @@ public class AccountServiceData {
     return coreBankingModel;
   }
 
+  /**
+   * Credit amount to Account and cache updated details
+   *
+   * @param coreBankingModel
+   * @param creditAmount
+   * @param accountId
+   * @return CoreBankingModel
+   */
   public CoreBankingModel creditAmount(CoreBankingModel coreBankingModel, String creditAmount, String accountId) {
     ApplicationLogger.logInfo("Crediting " + creditAmount + " to account ID " + accountId);
     AccountsResponse accountsResponse = coreBankingModel.getAccountsResponse();
@@ -63,6 +80,14 @@ public class AccountServiceData {
     return coreBankingModel;
   }
 
+  /**
+   * Credit amount to be paid for Credit Card and cache updated details
+   *
+   * @param coreBankingModel
+   * @param amount
+   * @param cardId
+   * @return CoreBankingModel
+   */
   public CoreBankingModel creditOnBill(CoreBankingModel coreBankingModel, String amount, String cardId) {
     ApplicationLogger.logInfo("Paying " + amount + " for credit card of ID " + cardId);
     CardsResponse cardsResponse = coreBankingModel.getCreditCardsResponse();
@@ -79,6 +104,13 @@ public class AccountServiceData {
     return coreBankingModel;
   }
 
+  /**
+   * Fetch Transaction for Account from cache
+   *
+   * @param customerId
+   * @param accountId
+   * @return AccountTransactionsResponse
+   */
   public AccountTransactionsResponse getAccountTransactionsResponse(String customerId, String accountId) {
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
     if (Objects.nonNull(coreBankingModel.getCardTransactionsResponse())) {
@@ -87,6 +119,12 @@ public class AccountServiceData {
     return null;
   }
 
+  /**
+   * Cache Accounts and fetch transactions for Savings and Checking  each accounts and cache transactions too
+   *
+   * @param customerId
+   * @param accountsResponse
+   */
   public void cacheAccountResponse(String customerId,AccountsResponse accountsResponse) {
     ApplicationLogger.logInfo("Caching Accounts");
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
@@ -94,13 +132,22 @@ public class AccountServiceData {
     Map<String, AccountTransactionsResponse> accountTransactionsResponseMap = new HashMap<>();
     ApplicationLogger.logInfo("Caching Accounts Transactions");
     accountsResponse.getAccounts().stream().forEach(a -> {
-      AccountTransactionsResponse accountTransactionsResponse = getAccountTransactions(customerId, a.getAccountId());
-      accountTransactionsResponseMap.put(a.getAccountId(), accountTransactionsResponse);
+      if (AccountTypeEnum.SAVINGS.compareTo(a.getAccountType()) == 0 || AccountTypeEnum.CHECKING.compareTo(a.getAccountType()) == 0) {
+        AccountTransactionsResponse accountTransactionsResponse = getAccountTransactions(customerId, a.getAccountId());
+        accountTransactionsResponseMap.put(a.getAccountId(), accountTransactionsResponse);
+      }
     });
     coreBankingModel.setAccountTransactionsResponse(accountTransactionsResponseMap);
     coreBankingService.saveCoreBankingModel(coreBankingModel);
   }
 
+  /**
+   * Fetch Transactions For Account
+   *
+   * @param customerId
+   * @param accountId
+   * @return AccountTransactionsResponse
+   */
   public AccountTransactionsResponse getAccountTransactions(String customerId, String accountId){
     AccountTransactionsResponse response = new AccountTransactionsResponse();
     try {

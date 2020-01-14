@@ -26,6 +26,11 @@ import java.util.UUID;
 
   @Autowired private AccountServiceData accountServiceData;
 
+  /**
+   * Update Transaction details on transaction happens and cache updated details
+   *
+   * @param fundTransferRequest
+   */
   public void updateTransactionDetailsOnCache(FundTransferRequest fundTransferRequest) {
     ApplicationLogger.logInfo("Updating Transactions");
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(fundTransferRequest.getCustomerId());
@@ -44,6 +49,14 @@ import java.util.UUID;
     coreBankingService.saveCoreBankingModel(coreBankingModel);
   }
 
+  /**
+   * Populate Given Account Transaction to CoreBanking Model for specific account
+   *
+   * @param coreBankingModel
+   * @param transaction
+   * @param accountId
+   * @return CoreBankingModel
+   */
   private CoreBankingModel populateAccountTransactionsOnCoreBankingModel(CoreBankingModel coreBankingModel, AccountTransaction transaction,
       String accountId) {
     AccountTransactionsResponse transactionsResponse = coreBankingModel.getAccountTransactionsResponse().get(accountId);
@@ -58,6 +71,14 @@ import java.util.UUID;
     return coreBankingModel;
   }
 
+  /**
+   * Populate Given Card Transaction to CoreBanking Model for specific card
+   *
+   * @param coreBankingModel
+   * @param transaction
+   * @param accountId
+   * @return CoreBankingModel
+   */
   private CoreBankingModel populateCardTransactionsOnCoreBankingModel(CoreBankingModel coreBankingModel, CardTransaction transaction,
       String accountId) {
     CardTransactionsResponse transactionsResponse = coreBankingModel.getCardTransactionsResponse().get(accountId);
@@ -72,6 +93,12 @@ import java.util.UUID;
     return coreBankingModel;
   }
 
+  /**
+   * Mapping Debiting Transaction on transactions like fund transfer,credit card payment
+   *
+   * @param fundTransferRequest
+   * @return Transaction
+   */
   private AccountTransaction mapFundTransferAsTransactionForDebtor(FundTransferRequest fundTransferRequest) {
     AccountTransaction transaction = mapGenericTransactionDetails(fundTransferRequest);
     transaction.setAccountId(fundTransferRequest.getPayeeAccountId());
@@ -85,6 +112,12 @@ import java.util.UUID;
     return transaction;
   }
 
+  /**
+   * Mapping Credited Transactions for an account on Self Transfer
+   *
+   * @param fundTransferRequest
+   * @return AccountTransaction
+   */
   private AccountTransaction mapFundTransferAsTransactionForCreditor(FundTransferRequest fundTransferRequest) {
     AccountTransaction transaction = mapGenericTransactionDetails(fundTransferRequest);
     transaction.setAccountId(fundTransferRequest.getSourceAccountId());
@@ -93,6 +126,12 @@ import java.util.UUID;
     return transaction;
   }
 
+  /**
+   * Map Details of transactions required on credit type
+   *
+   * @param fundTransferRequest
+   * @return CardTransaction
+   */
   private CardTransaction mapFundTransferAsCardTransactionForCreditor(FundTransferRequest fundTransferRequest) {
     CardTransaction transaction = new CardTransaction();
     transaction.setDescription("Credited");
@@ -110,6 +149,12 @@ import java.util.UUID;
     return transaction;
   }
 
+  /**
+   * Map Generic Details of transaction
+   *
+   * @param fundTransferRequest
+   * @return AccountTransaction
+   */
   private AccountTransaction mapGenericTransactionDetails(FundTransferRequest fundTransferRequest) {
     AccountTransaction transaction = new AccountTransaction();
     transaction.setDescription(fundTransferRequest.getRemarks());

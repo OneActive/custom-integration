@@ -13,12 +13,9 @@ import com.activeai.integration.data.model.CoreBankingModel;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -35,18 +32,30 @@ public class CardServiceData {
   @Autowired
   private CardsResponseMapper cardsResponseMapper;
 
+  /**
+   * Get Credit Cards from cache
+   *
+   * @param customerId
+   * @return CardsResponse
+   */
   public CardsResponse getCreditCardsResponse(String customerId){
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
     return coreBankingModel.getCreditCardsResponse();
   }
 
+  /**
+   * Get Debit Cards from cache
+   *
+   * @param customerId
+   * @return CardsResponse
+   */
   public CardsResponse getDebitCardsResponse(String customerId){
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
     return coreBankingModel.getDebitCardsResponse();
   }
 
   /**
-   * cache cardsResponse and fetch transactions for each credit cards and cache transactions too
+   * Cache Credit Cards and fetch transactions for each cards and cache transactions too
    *
    * @param customerId
    * @param cardsResponse contains only credit cards
@@ -65,6 +74,12 @@ public class CardServiceData {
     coreBankingService.saveCoreBankingModel(coreBankingModel);
   }
 
+  /**
+   * Cache Debit Cards and fetch transactions for each cards and cache transactions too
+   *
+   * @param customerId
+   * @param cardsResponse
+   */
   public void cacheDebitCardsResponse(String customerId, CardsResponse cardsResponse){
     ApplicationLogger.logInfo("Caching Debit cards");
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
@@ -72,6 +87,11 @@ public class CardServiceData {
     coreBankingService.saveCoreBankingModel(coreBankingModel);
   }
 
+  /**
+   * Update status of selected card as BLOCKED_TEMPORARY or BLOCKED_PERMANENT and cache cards
+   *
+   * @param blockCardRequest
+   */
   public void updateBlockCardStatus(BlockCardRequest blockCardRequest) {
     ApplicationLogger.logInfo("Updating Block card status in cache");
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(blockCardRequest.getCustomerId());
@@ -91,6 +111,13 @@ public class CardServiceData {
     coreBankingService.saveCoreBankingModel(coreBankingModel);
   }
 
+  /**
+   * Update status of selected card as ACTIVE and cache cards
+   *
+   * @param customerId
+   * @param cardNumber
+   * @param cardTypeEnum
+   */
   public void activateCardStatus(String customerId, String cardNumber,CardTypeEnum cardTypeEnum) {
     ApplicationLogger.logInfo("Updating card Status as ACTIVE for " + cardNumber);
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
@@ -110,10 +137,24 @@ public class CardServiceData {
     coreBankingService.saveCoreBankingModel(coreBankingModel);
   }
 
+  /**
+   * Fetch Transactions for Accounts from cache
+   *
+   * @param customerId
+   * @param accountId
+   * @return CardTransactionsResponse
+   */
   public CardTransactionsResponse getAccountTransactionsResponse(String customerId, String accountId) {
     return coreBankingService.getCoreBankingModel(customerId).getCardTransactionsResponse().get(accountId);
   }
 
+  /**
+   * Fetch Transactions of Cards from cache
+   *
+   * @param customerId
+   * @param accountId
+   * @return CardTransactionsResponse
+   */
   public CardTransactionsResponse getCardTransactions(String customerId, String accountId){
     CardTransactionsResponse response = new CardTransactionsResponse();
     try {

@@ -46,6 +46,11 @@ public class CoreBankingService {
     coreBankingRepository.save(coreBankingModel);
   }
 
+  /**
+   * Delete CoreBankingModel from cache for specific User
+   *
+   * @param customerId
+   */
   public void deleteCoreBankingModelOfCustomer(String customerId){
     String redisKey = CoreBankingUtil.getRedisKey(customerId);
     coreBankingRepository.delete(redisKey);
