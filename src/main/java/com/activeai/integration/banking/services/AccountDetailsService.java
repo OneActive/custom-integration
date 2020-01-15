@@ -19,13 +19,12 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.Objects;
 
 @Service("accountDetailsService")
 public class AccountDetailsService {
   @Autowired private AccountsResponseMapper accountsResponseMapper;
   @Autowired private PropertyUtil propertyUtil;
-  private static final String error_message_format = "{0} : {1} : {2}";
+  private static final String ERROR_MESSAGE_FORMAT = "{0} : {1} : {2}";
 
   /**
    * Fetches CASA Account Details for selected Account
@@ -47,14 +46,14 @@ public class AccountDetailsService {
       return ResponseEntity.ok(response);
     } catch (UnirestException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
               ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
     response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(response);
@@ -81,14 +80,14 @@ public class AccountDetailsService {
       return ResponseEntity.ok(response);
     } catch (UnirestException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
               ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
     response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(response);
@@ -115,14 +114,14 @@ public class AccountDetailsService {
       return ResponseEntity.ok(response);
     } catch (UnirestException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
               ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
     response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(response);

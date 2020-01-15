@@ -32,7 +32,7 @@ public class LoginService {
   @Autowired private LoginRequestMapper loginRequestMapper;
   @Autowired private ObjectMapper objectMapper;
   @Autowired private PropertyUtil propertyUtil;
-  public static final String error_message_format = "{0} : {1} : {2}";
+  public static final String ERROR_MESSAGE_FORMAT = "{0} : {1} : {2}";
 
   /**
    * Customise this based on your Use case
@@ -74,14 +74,14 @@ public class LoginService {
           return ResponseEntity.ok(loginResponse);
         } catch (UnirestException e) {
           ApplicationLogger.logError(MessageFormat
-              .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+              .format(ERROR_MESSAGE_FORMAT, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         } catch (IOException e) {
           ApplicationLogger.logError(MessageFormat
-              .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+              .format(ERROR_MESSAGE_FORMAT, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
                   ExceptionUtils.getStackTrace(e)));
         } catch (Exception e) {
           ApplicationLogger.logError(MessageFormat
-              .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+              .format(ERROR_MESSAGE_FORMAT, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         }
         return new ResponseEntity<>(objectMapper.readValue(
             "{  \"result\" : {    \"messageCode\" : \"EXPECTATION_FAILED\",    \"message\" : \"Application is Down!, Please Contact administrator\",    \"status\" : 417  }}",
@@ -91,7 +91,8 @@ public class LoginService {
         return ResponseEntity.ok(loginResponse);
       }
     } catch (IOException e) {
-      ApplicationLogger.logInfo(MessageFormat.format(error_message_format,MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE,this.getClass().getName(),ExceptionUtils.getStackTrace(e)));
+      ApplicationLogger.logInfo(MessageFormat.format(
+          ERROR_MESSAGE_FORMAT,MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE,this.getClass().getName(),ExceptionUtils.getStackTrace(e)));
     }
     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
   }

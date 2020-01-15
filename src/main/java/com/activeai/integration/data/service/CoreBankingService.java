@@ -19,7 +19,6 @@ public class CoreBankingService {
   protected CoreBankingRepository coreBankingRepository;
   @Autowired
   protected PropertyUtil propertyUtil;
-  @Autowired private AccountsResponseMapper accountsResponseMapper;
 
   /**
    * Fetch CoreBankingModel from Redis if null then new Object of CoreBankingModel initialised
