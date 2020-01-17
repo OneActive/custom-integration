@@ -1,4 +1,4 @@
-FROM 940330296631.dkr.ecr.ap-southeast-1.amazonaws.com/base:triniti-ai-backend
+FROM 940330296631.dkr.ecr.ap-southeast-1.amazonaws.com/base:bizapps
 
 WORKDIR /opt
 COPY deploy /opt/deploy
