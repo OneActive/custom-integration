@@ -6,6 +6,8 @@ import com.activeai.integration.banking.domain.request.UserLoginRequest;
 import com.activeai.integration.banking.domain.response.LoginResponse;
 import com.activeai.integration.banking.mapper.request.LoginRequestMapper;
 import com.activeai.integration.banking.mapper.response.LoginResponseMapper;
+import com.activeai.integration.banking.model.Result;
+import com.activeai.integration.banking.model.User;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,6 +50,14 @@ public class LoginService {
       auth.put("testuser1","password");
       auth.put("testuser2","password");
       auth.put("testuser3","password");
+      /**
+       * creating map of auth for testuser4 to testuser54
+       *
+       */
+      for (int i = 4; i <= 54; i++) {
+        String userId = "testuser" + i;
+        auth.put(userId, "password");
+      }
       auth.put("stuart", "stuart@123");
       auth.put("james", "james@123");
       auth.put("thanos", "thanos@123");
@@ -57,8 +67,13 @@ public class LoginService {
       auth.put("ethan","ethan@123");
       if (userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))) {
         try {
+          String url = propertyUtil.getLoginAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,userLoginRequest.getUserID(),null);
+          if (StringUtils.isEmpty(url)) {
+            loginResponse = customLoginResponseMapping(userLoginRequest.getUserID());
+            return ResponseEntity.ok(loginResponse);
+          }
           HttpResponse<String> apiResponse =
-              Unirest.post(propertyUtil.getLoginAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,userLoginRequest.getUserID(),null))
+              Unirest.post(url)
                   .header("Content-Type", "application/json")
                   .body(loginRequestMapper.getLoginRequestBody(userLoginRequest)).asString();
           ApplicationLogger
@@ -95,5 +110,29 @@ public class LoginService {
           ERROR_MESSAGE_FORMAT,MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE,this.getClass().getName(),ExceptionUtils.getStackTrace(e)));
     }
     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  /**
+   * Creating login response for more users  testuser4 to testuser54
+   * Kindly remove this method on real time integration
+   *
+   * @param userId
+   * @return LoginResponse
+   */
+  private LoginResponse customLoginResponseMapping(String userId) {
+    LoginResponse loginResponse = new LoginResponse();
+    Result result = new Result();
+    result.setMessage("Login successful");
+    result.setMessageCode("OK");
+    result.setStatus(200);
+    loginResponse.setResult(result);
+    User user = new User();
+    user.setAddress(userId);
+    user.setCustomerId(userId);
+    user.setCustomerName(userId);
+    user.setMobileNumber("+65 9832469" + userId.substring(8));
+    user.setEmailId(userId + "@gmail.com");
+    loginResponse.setUser(user);
+    return loginResponse;
   }
 }
