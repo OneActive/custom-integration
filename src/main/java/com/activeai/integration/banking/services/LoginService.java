@@ -47,9 +47,9 @@ public class LoginService {
     try {
       Map<String, String> auth = new HashMap<>();
       LoginResponse loginResponse = new LoginResponse();
-      auth.put("testuser1","password");
-      auth.put("testuser2","password");
-      auth.put("testuser3","password");
+      auth.put("testuser1", "password");
+      auth.put("testuser2", "password");
+      auth.put("testuser3", "password");
       /**
        * creating map of auth for testuser4 to testuser54
        *
@@ -61,15 +61,17 @@ public class LoginService {
       auth.put("stuart", "stuart@123");
       auth.put("james", "james@123");
       auth.put("thanos", "thanos@123");
-      auth.put("henry","henry@123");
-      auth.put("lucas","lucas@123");
-      auth.put("jackson","jackson@123");
-      auth.put("ethan","ethan@123");
+      auth.put("henry", "henry@123");
+      auth.put("lucas", "lucas@123");
+      auth.put("jackson", "jackson@123");
+      auth.put("ethan", "ethan@123");
+      ApplicationLogger.logInfo("Login For User ID:-> " + userLoginRequest.getUserID());
       if (userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))) {
         try {
           String url = propertyUtil.getLoginAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,userLoginRequest.getUserID(),null);
           if (StringUtils.isEmpty(url)) {
             loginResponse = customLoginResponseMapping(userLoginRequest.getUserID());
+            ApplicationLogger.logInfo("Login Response " + loginResponse);
             return ResponseEntity.ok(loginResponse);
           }
           HttpResponse<String> apiResponse =
@@ -120,6 +122,7 @@ public class LoginService {
    * @return LoginResponse
    */
   private LoginResponse customLoginResponseMapping(String userId) {
+    ApplicationLogger.logInfo("building login response for testing : " + userId);
     LoginResponse loginResponse = new LoginResponse();
     Result result = new Result();
     result.setMessage("Login successful");
