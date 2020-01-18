@@ -9,9 +9,9 @@ import com.activeai.integration.banking.model.AccountTransaction;
 import com.activeai.integration.banking.model.CardTransaction;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.data.model.CoreBankingModel;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.apache.commons.collections.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

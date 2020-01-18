@@ -9,7 +9,9 @@ import com.activeai.integration.banking.domain.response.LoanAccountsResponse;
 import com.activeai.integration.banking.mapper.response.AccountsResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
+import com.activeai.integration.data.model.CoreBankingModel;
 import com.activeai.integration.data.service.AccountServiceData;
+import com.activeai.integration.data.service.CoreBankingService;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -33,6 +35,7 @@ public class AccountsService {
   @Autowired private AccountsResponseMapper accountsResponseMapper;
   @Autowired private PropertyUtil propertyUtil;
   @Autowired private AccountServiceData accountServiceData;
+  @Autowired private CoreBankingService coreBankingService;
   private static final String ERROR_MESSAGE_FORMAT = "{0} : {1} : {2}";
 
   /**
@@ -43,20 +46,24 @@ public class AccountsService {
    */
   public ResponseEntity<AccountsResponse> getCasaAccountsResponseEntity(String customerId, String accessToken) {
     // Fetch accounts from cache you can remove this on real integration
-    AccountsResponse response = accountServiceData.getAccountsResponse(customerId);
-    if(Objects.nonNull(response)){
+    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
+    AccountsResponse response = coreBankingModel.getAccountsResponse();
+    if (Objects.nonNull(response)) {
+      ApplicationLogger.logInfo("Fetching Accounts from cache");
       return ResponseEntity.ok(response);
     }
     // Till this
     try {
       HttpResponse<String> apiResponse =
-          Unirest.post(propertyUtil.getAccountAPIUrl(PropertyConstants.CASA_ACCOUNT_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("Casa API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+          Unirest.post(propertyUtil.getAccountAPIUrl(PropertyConstants.CASA_ACCOUNT_API_END_POINT, customerId, null))
+              .header("cache-control", "no-cache").asString();
+      ApplicationLogger
+          .logInfo("Casa API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo(" Casa Response Body Before Transformation :" + apiResponse.getBody());
         response = accountsResponseMapper.getManipulatedCasaAccountsResponse(apiResponse.getBody());
         // Caching Account Response, Remove this later
-        accountServiceData.cacheAccountResponse(customerId, response);
+        accountServiceData.cacheAccountResponse(coreBankingModel, customerId, response);
         // Till this
         ApplicationLogger.logInfo("Casa Response Body After Transformation :" + response);
       }

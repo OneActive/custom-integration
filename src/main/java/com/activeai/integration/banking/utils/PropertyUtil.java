@@ -1,5 +1,6 @@
 package com.activeai.integration.banking.utils;
 
+import com.activeai.integration.banking.constants.PropertyConstants;
 import com.activeai.integration.banking.domain.request.*;
 import com.activeai.integration.banking.model.Result;
 import org.apache.commons.lang3.StringUtils;
@@ -37,6 +38,10 @@ public class PropertyUtil {
    * @return
    */
   public String getAccountAPIUrl(String propertyValue, String customerId, String accountId) {
+    // to do load testing
+    if (customerId.contains("testuser")) {
+      return env.getProperty(PropertyConstants.CASA_TWO_ACCOUNT_API_END_POINT);
+    }
     return StringUtils.isNotEmpty(env.getProperty(MessageFormat.format(API_DOUBLE_PROPERTY_PATTERN, customerId, propertyValue))) ?
         env.getProperty(MessageFormat.format(API_DOUBLE_PROPERTY_PATTERN, customerId, propertyValue)) :
         env.getProperty(propertyValue);

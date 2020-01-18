@@ -33,57 +33,21 @@ public class CardServiceData {
   private CardsResponseMapper cardsResponseMapper;
 
   /**
-   * Get Credit Cards from cache
-   *
-   * @param customerId
-   * @return CardsResponse
-   */
-  public CardsResponse getCreditCardsResponse(String customerId){
-    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
-    return coreBankingModel.getCreditCardsResponse();
-  }
-
-  /**
-   * Get Debit Cards from cache
-   *
-   * @param customerId
-   * @return CardsResponse
-   */
-  public CardsResponse getDebitCardsResponse(String customerId){
-    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
-    return coreBankingModel.getDebitCardsResponse();
-  }
-
-  /**
    * Cache Credit Cards and fetch transactions for each cards and cache transactions too
    *
    * @param customerId
    * @param cardsResponse contains only credit cards
    */
-  public void cacheCreditCardsResponse(String customerId, CardsResponse cardsResponse) {
+  public void cacheCreditCardsResponse(CoreBankingModel coreBankingModel, String customerId, CardsResponse cardsResponse) {
     ApplicationLogger.logInfo("Caching Credit cards");
-    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
     coreBankingModel.setCreditCardsResponse(cardsResponse);
     Map<String, CardTransactionsResponse> cardTransactionsResponseMap = new HashMap<>();
     ApplicationLogger.logInfo("Caching Credit cards Transactions");
     cardsResponse.getCards().stream().forEach(c -> {
-      CardTransactionsResponse cardTransactionsResponse = getCardTransactions(customerId,c.getAccountId());
+      CardTransactionsResponse cardTransactionsResponse = getCardTransactions(customerId, c.getAccountId());
       cardTransactionsResponseMap.put(c.getAccountId(), cardTransactionsResponse);
     });
     coreBankingModel.setCardTransactionsResponse(cardTransactionsResponseMap);
-    coreBankingService.saveCoreBankingModel(coreBankingModel);
-  }
-
-  /**
-   * Cache Debit Cards and fetch transactions for each cards and cache transactions too
-   *
-   * @param customerId
-   * @param cardsResponse
-   */
-  public void cacheDebitCardsResponse(String customerId, CardsResponse cardsResponse){
-    ApplicationLogger.logInfo("Caching Debit cards");
-    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
-    coreBankingModel.setDebitCardsResponse(cardsResponse);
     coreBankingService.saveCoreBankingModel(coreBankingModel);
   }
 

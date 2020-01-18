@@ -32,10 +32,6 @@ public class AccountServiceData {
   @Autowired
   private AccountsResponseMapper accountsResponseMapper;
 
-  public AccountsResponse getAccountsResponse(String customerId){
-    return coreBankingService.getCoreBankingModel(customerId).getAccountsResponse();
-  }
-
   /**
    * Debit amount from account and cache updated details
    *
@@ -125,9 +121,8 @@ public class AccountServiceData {
    * @param customerId
    * @param accountsResponse
    */
-  public void cacheAccountResponse(String customerId,AccountsResponse accountsResponse) {
+  public void cacheAccountResponse(CoreBankingModel coreBankingModel, String customerId,AccountsResponse accountsResponse) {
     ApplicationLogger.logInfo("Caching Accounts");
-    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
     coreBankingModel.setAccountsResponse(accountsResponse);
     Map<String, AccountTransactionsResponse> accountTransactionsResponseMap = new HashMap<>();
     ApplicationLogger.logInfo("Caching Accounts Transactions");

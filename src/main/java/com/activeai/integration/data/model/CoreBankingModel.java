@@ -56,6 +56,11 @@ public class CoreBankingModel implements Serializable {
    */
   private Map<String,CardTransactionsResponse> cardTransactionsResponse = new HashMap();
 
+  /**
+   * Payees Response
+   */
+  private PayeesResponse payeesResponse;
+
 
   public String getId() {
     return id;
@@ -115,5 +120,13 @@ public class CoreBankingModel implements Serializable {
 
   public void setDebitCardsResponse(CardsResponse debitCardsResponse) {
     this.debitCardsResponse = debitCardsResponse;
+  }
+
+  public PayeesResponse getPayeesResponse() {
+    return payeesResponse;
+  }
+
+  public void setPayeesResponse(PayeesResponse payeesResponse) {
+    this.payeesResponse = payeesResponse;
   }
 }

@@ -1,6 +1,5 @@
 package com.activeai.integration.data.service;
 
-import com.activeai.integration.banking.mapper.response.AccountsResponseMapper;
 import com.activeai.integration.banking.utils.PropertyUtil;
 import com.activeai.integration.data.model.CoreBankingModel;
 import com.activeai.integration.data.repository.CoreBankingRepository;

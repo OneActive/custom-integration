@@ -13,6 +13,8 @@ import com.activeai.integration.banking.mapper.response.FundTransferResponseMapp
 import com.activeai.integration.banking.mapper.response.OneTimeTransferResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
+import com.activeai.integration.data.model.CoreBankingModel;
+import com.activeai.integration.data.service.CoreBankingService;
 import com.activeai.integration.data.service.TransferServiceData;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -34,23 +36,36 @@ public class TransferService {
   @Autowired private OneTimeTransferResponseMapper oneTimeTransferResponseMapper;
   @Autowired private PropertyUtil propertyUtil;
   @Autowired private TransferServiceData transferServiceData;
+  @Autowired private CoreBankingService coreBankingService;
   private static final String ERROR_MESSAGE_FORMAT = "{0} : {1} : {2}";
 
   public ResponseEntity<PayeesResponse> getPayeesResponseEntity(PayeesRequest payeeRequest) {
-    PayeesResponse response = new PayeesResponse();
+    // Fetching Payees Response from cache, Remove this later
+    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(payeeRequest.getCustomerId());
+    PayeesResponse response = coreBankingModel.getPayeesResponse();
+    if (Objects.nonNull(response)) {
+      ApplicationLogger.logInfo("Fetching from cache");
+      return ResponseEntity.ok(response);
+    }
+    // Till this
     try {
       /**
        * Here only for first account fetching payees
        * But you need to fetch all payees for each accounts where user added as beneficiary
        */
-      HttpResponse<String> apiResponse =
-          Unirest.get(propertyUtil.getAPIUrlForPayees(PropertyConstants.PAYEES_API_END_POINT, payeeRequest))
-              .header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      HttpResponse<String> apiResponse = Unirest.get(propertyUtil.getAPIUrlForPayees(PropertyConstants.PAYEES_API_END_POINT, payeeRequest))
+          .header("cache-control", "no-cache").asString();
+      ApplicationLogger
+          .logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Payees Response Body Before Transformation :" + apiResponse.getBody());
         response = fundTransferResponseMapper.getManipulatedPayeesResponse(apiResponse.getBody());
         ApplicationLogger.logInfo("Payees Response Body After Transformation :" + apiResponse.getBody());
+        // Caching Payees Response, Remove this later
+        ApplicationLogger.logInfo("Caching Payee Response");
+        coreBankingModel.setPayeesResponse(response);
+        coreBankingService.saveCoreBankingModel(coreBankingModel);
+        // Till this
       }
       return ResponseEntity.ok(response);
     } catch (UnirestException e) {
@@ -78,8 +93,10 @@ public class TransferService {
       if (Objects.nonNull(apiResponse) && StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Confirm Transfer Response Body Before Transformation :" + apiResponse.getBody());
         response = fundTransferResponseMapper.getManipulatedFundTransferResponse(apiResponse.getBody());
-        transferServiceData.updateTransactionDetailsOnCache(fundTransferRequest);
         ApplicationLogger.logInfo("Confirm Transfer Response Body After Transformation :" + response);
+        // Updating transaction details on cache, Remove this later
+        transferServiceData.updateTransactionDetailsOnCache(fundTransferRequest);
+        // Till this
       }
       return ResponseEntity.ok(response);
     } catch (UnirestException e) {

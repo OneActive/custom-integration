@@ -9,7 +9,9 @@ import com.activeai.integration.banking.mapper.response.BlockCardResponseMapper;
 import com.activeai.integration.banking.mapper.response.CardsResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
+import com.activeai.integration.data.model.CoreBankingModel;
 import com.activeai.integration.data.service.CardServiceData;
+import com.activeai.integration.data.service.CoreBankingService;
 import com.activeai.integration.data.service.TransferServiceData;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -34,6 +36,7 @@ public class CardsService {
   @Autowired private ActivationCardResponseMapper activationCardResponseMapper;
   @Autowired private CardServiceData cardServiceData;
   @Autowired private TransferServiceData transferServiceData;
+  @Autowired private CoreBankingService coreBankingService;
   private static final String ERROR_MESSAGE_FORMAT = "{0} : {1} : {2}";
 
   /**
@@ -44,7 +47,8 @@ public class CardsService {
    */
   public ResponseEntity<CardsResponse> getCreditCardsResponseEntity(String customerId, String accessToken) {
     // Fetch cards from cache, you can remove this later
-    CardsResponse response = cardServiceData.getCreditCardsResponse(customerId);
+    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
+    CardsResponse response = coreBankingModel.getCreditCardsResponse();
     if (Objects.nonNull(response)) {
       ApplicationLogger.logInfo("Credit Cards Fetched From Cache");
       return ResponseEntity.ok(response);
@@ -52,14 +56,15 @@ public class CardsService {
     // Till this
     try {
       HttpResponse<String> apiResponse =
-          Unirest.get(propertyUtil.getAccountAPIUrl(PropertyConstants.CREDIT_CARDS_API_END_POINT, customerId, null)).header("cache-control", "no-cache")
-              .asString();
-      ApplicationLogger.logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+          Unirest.get(propertyUtil.getAccountAPIUrl(PropertyConstants.CREDIT_CARDS_API_END_POINT, customerId, null))
+              .header("cache-control", "no-cache").asString();
+      ApplicationLogger
+          .logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Credit Cards Response Body Before Transformation :" + apiResponse.getBody());
         response = cardsResponseMapper.getManipulatedCardsResponse(apiResponse.getBody());
         // Caching Credit cards, Remove this later
-        cardServiceData.cacheCreditCardsResponse(customerId, response);
+        cardServiceData.cacheCreditCardsResponse(coreBankingModel, customerId, response);
         // Till this
         ApplicationLogger.logInfo("Credit Cards Response Body After Transformation :" + response);
       }
@@ -193,22 +198,26 @@ public class CardsService {
    */
   public ResponseEntity<CardsResponse> getDebitCardsResponseEntity(String customerId, String accessToken) {
     // Fetch accounts from cache you can remove this later
-    CardsResponse response = cardServiceData.getDebitCardsResponse(customerId);
-    if(Objects.nonNull(response)){
+    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
+    CardsResponse response = coreBankingModel.getDebitCardsResponse();
+    if (Objects.nonNull(response)) {
       ApplicationLogger.logInfo("Debit Cards Fetched From Cache");
       return ResponseEntity.ok(response);
     }
     // Till this
     try {
       HttpResponse<String> apiResponse =
-              Unirest.get(propertyUtil.getAccountAPIUrl(PropertyConstants.DEBIT_CARDS_API_END_POINT, customerId, null)).header("cache-control", "no-cache")
-                      .asString();
-      ApplicationLogger.logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+          Unirest.get(propertyUtil.getAccountAPIUrl(PropertyConstants.DEBIT_CARDS_API_END_POINT, customerId, null))
+              .header("cache-control", "no-cache").asString();
+      ApplicationLogger
+          .logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Debit Cards Response Body Before Transformation :" + apiResponse.getBody());
         response = cardsResponseMapper.getManipulatedCardsResponse(apiResponse.getBody());
         // Caching Debit cards, Remove this later
-        cardServiceData.cacheDebitCardsResponse(customerId,response);
+        ApplicationLogger.logInfo("Caching Debit cards");
+        coreBankingModel.setDebitCardsResponse(response);
+        coreBankingService.saveCoreBankingModel(coreBankingModel);
         // Till this
         ApplicationLogger.logInfo("Debit Cards Response Body After Transformation :" + response);
       }
