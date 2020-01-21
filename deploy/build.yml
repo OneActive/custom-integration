@@ -7,7 +7,7 @@ env:
    AWS_ACCOUNT_ID : "940330296631"
    IMAGE_REPO_NAME : "banking-integration"
    SERVICE_NAME : "banking-integration"
-   ENVIRONMENT: "/BIZAPP/Development"
+   ENVIRONMENT: "/BIZAPP-BANK-INTEGRATION/Development"
    VERSION : "latest"
    BUILD : "docker"
    CLOUD: "AWS"
