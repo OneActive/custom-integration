@@ -4,8 +4,6 @@ import com.activeai.integration.banking.constants.PayeeTypeEnum;
 import com.activeai.integration.banking.model.Phone;
 import com.activeai.integration.banking.model.User;
 
-import java.util.List;
-
 public class FundTransferRequest extends User {
 
   /** IMPS, RTGS, NEFT. */
@@ -62,8 +60,16 @@ public class FundTransferRequest extends User {
    */
   private String payeeEmailId;
 
-  /** The payee name. */
+  /**
+   * The payee name.
+   */
   private String payeeName;
+
+  /**
+   * Transaction happening through either added beneficiary(EXISTING_PAYEE)
+   * or other mode of transactions(ADHOC_PAYEE) like one time transfer, MMID, UPI
+   */
+  private String payeeExistsType;
 
   public String getType() {
     return type;
@@ -177,12 +183,29 @@ public class FundTransferRequest extends User {
     this.payeeEmailId = payeeEmailId;
   }
 
+
   public String getPayeeName() {
     return payeeName;
   }
 
   public void setPayeeName(String payeeName) {
     this.payeeName = payeeName;
+  }
+
+  /**
+   *
+   * @return payeeExistsType
+   */
+  public String getPayeeExistsType() {
+    return payeeExistsType;
+  }
+
+  /**
+   *
+   * @param payeeExistsType
+   */
+  public void setPayeeExistsType(String payeeExistsType) {
+    this.payeeExistsType = payeeExistsType;
   }
 
   @Override public String toString() {
@@ -202,6 +225,7 @@ public class FundTransferRequest extends User {
     sb.append(", payeeMobileNumber=").append(payeeMobileNumber);
     sb.append(", payeeEmailId='").append(payeeEmailId).append('\'');
     sb.append(", payeeName='").append(payeeName).append('\'');
+    sb.append(", payeeExistsType=").append(payeeExistsType);
     sb.append('}');
     return sb.toString();
   }
