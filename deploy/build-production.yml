@@ -1,0 +1,39 @@
+version: 0.2
+
+env:
+  variables:
+   AWS_ACCOUNT_ID : "940330296631"
+   CLUSTER_NAME : "production-saas-portal"
+   SERVICE_NAME : "banking-integration"
+   AWS_REGION : "ap-southeast-1"
+   AWS_US_REGION: "us-east-2"
+   IMAGE_REPO_NAME: "banking-integration"
+   VERSION: "latest"
+   ENVIRONMENT: "/BIZAPP-BANK-INTEGRATION/Production"
+   BUILD : "docker"
+   CLOUD: "AWS"
+   APP_LOG_LOC : "/var/log/supervisor/bizapp-admin-backend.log"
+phases:
+  pre_build:
+    commands:
+      - DATE=`date +%Y-%m-%d`
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_REGION)
+      - $(aws ecr get-login --no-include-email --region $AWS_US_REGION)
+      - apt-get update && apt-get -y install gettext-base
+  build:
+    commands:
+      #- echo Retagging docker Image with "$IMAGE_TAG"
+      #- MANIFEST=$(aws ecr batch-get-image --repository-name $IMAGE_REPO_NAME --image-ids imageTag=$OLD_IMAGE_TAG --query 'images[].imageManifest' --output text)
+      #- aws ecr put-image --repository-name $IMAGE_REPO_NAME --image-tag $NEW_IMAGE_TAG --image-manifest "$MANIFEST" || true
+  post_build:
+    commands:
+      - echo Restarting Task in Staging ENVIRONMENT
+      #- TASK_ID=`aws ecs list-tasks --cluster $CLUSTER_NAME --service $SERVICE_NAME | python -c "import sys, json; data = json.load(sys.stdin)[\"taskArns\"];  print dict(enumerate(data)).get(0, \"\")"`
+      #- echo $TASK_ID
+      #- echo Restarting Task...
+      #- echo 'if [ "$CLUSTER_NAME" = "staging-saas-portal" ] && [ ! -z "$TASK_ID" ] ; then aws ecs stop-task --task "$TASK_ID" --cluster $CLUSTER_NAME ; fi' > /tmp/kill
+      #- bash /tmp/kill
+      - docker pull $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$VERSION
+      - docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$VERSION  $AWS_ACCOUNT_ID.dkr.ecr.$AWS_US_REGION.amazonaws.com/$IMAGE_REPO_NAME:$VERSION
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_US_REGION.amazonaws.com/$IMAGE_REPO_NAME:$VERSION
