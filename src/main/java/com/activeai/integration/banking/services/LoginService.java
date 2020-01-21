@@ -43,30 +43,10 @@ public class LoginService {
    * @return
    */
   public ResponseEntity<LoginResponse> getLoginResponseEntity(UserLoginRequest userLoginRequest) {
-    ResponseEntity<LoginResponse> loginResponseEntity = null;
     try {
-      Map<String, String> auth = new HashMap<>();
       LoginResponse loginResponse = new LoginResponse();
-      auth.put("testuser1", "password");
-      auth.put("testuser2", "password");
-      auth.put("testuser3", "password");
-      /**
-       * creating map of auth for testuser4 to testuser54
-       *
-       */
-      for (int i = 4; i <= 54; i++) {
-        String userId = "testuser" + i;
-        auth.put(userId, "password");
-      }
-      auth.put("stuart", "stuart@123");
-      auth.put("james", "james@123");
-      auth.put("thanos", "thanos@123");
-      auth.put("henry", "henry@123");
-      auth.put("lucas", "lucas@123");
-      auth.put("jackson", "jackson@123");
-      auth.put("ethan", "ethan@123");
       ApplicationLogger.logInfo("Login For User ID:-> " + userLoginRequest.getUserID());
-      if (userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))) {
+      if (isAuthorisedUser(userLoginRequest)) {
         try {
           String url = propertyUtil.getLoginAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,userLoginRequest.getUserID(),null);
           if (StringUtils.isEmpty(url)) {
@@ -115,6 +95,46 @@ public class LoginService {
   }
 
   /**
+   * Verify User is Authorised or not
+   *
+   * @param request
+   * @return
+   */
+  private boolean isAuthorisedUser(UserLoginRequest request) {
+    Map<String, String> auth = new HashMap<>();
+    getAuthenticatedUserDetails(auth);
+    return request.getPassword().equalsIgnoreCase(auth.get(request.getUserID()));
+  }
+
+  /**
+   * Populate authenticated user details stubs
+   *
+   * @param auth
+   */
+  private void getAuthenticatedUserDetails(Map<String, String> auth) {
+    auth.put("testuser1", "password");
+    auth.put("testuser2", "password");
+    auth.put("testuser3", "password");
+    /**
+     * creating map of auth for testuser4 to testuser54
+     *
+     * @n is number of users need to create
+     */
+    int n = 20;
+    for (int i = 4; i <= n+4; i++) {
+      String userId = "testuser" + i;
+      auth.put(userId, "password");
+    }
+    auth.put("stuart", "stuart@123");
+    auth.put("james", "james@123");
+    auth.put("thanos", "thanos@123");
+    auth.put("henry", "henry@123");
+    auth.put("lucas", "lucas@123");
+    auth.put("jackson", "jackson@123");
+    auth.put("ethan", "ethan@123");
+  }
+
+  /**
    * Creating login response for more users  testuser4 to testuser54
    * Kindly remove this method on real time integration
    *
@@ -132,7 +152,7 @@ public class LoginService {
     User user = new User();
     user.setAddress(userId);
     user.setCustomerId(userId);
-    user.setCustomerName(userId);
+    user.setCustomerName(userId+"name");
     user.setMobileNumber("+65 9832469" + userId.substring(8));
     user.setEmailId(userId + "@gmail.com");
     loginResponse.setUser(user);
