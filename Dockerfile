@@ -1,5 +1,9 @@
 FROM 940330296631.dkr.ecr.ap-southeast-1.amazonaws.com/base:bizapps
 
+ENV ENVIRONMENT $ENVIRONMENT
+ENV AWS_REGION $AWS_REGION
+ENV CLOUD $CLOUD
+
 WORKDIR /opt
 COPY deploy /opt/deploy
 
