@@ -9,7 +9,11 @@ COPY deploy /opt/deploy
 
 COPY target/*.war /opt/deploy/
 
-ENV ENVIRONMENT $ENVIRONMENT
+COPY banking-integration/src/main/resources/application-docker.properties /opt/deploy/banking-integration.properties
+
+RUN apt-get update \
+&& apt-get -y install nginx \
+&& rm -rf /var/lib/apt/lists/*
 
 RUN bash -x -c "ln -s /opt/deploy/run /usr/local/bin/run && chmod +x /usr/local/bin/run"
 
