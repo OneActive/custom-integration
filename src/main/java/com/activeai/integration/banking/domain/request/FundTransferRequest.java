@@ -15,11 +15,6 @@ public class FundTransferRequest extends User {
    */
   private String sourceAccountId;
 
-  /**
-   * source account Number to debit from
-   */
-  private String sourceAccountNumber;
-
   /** amount to transfer. */
   private String amount;
 
@@ -66,7 +61,9 @@ public class FundTransferRequest extends User {
    */
   private String payeeEmailId;
 
-  /** The payee name. */
+  /**
+   * The payee name.
+   */
   private String payeeName;
 
   /**
@@ -86,6 +83,12 @@ public class FundTransferRequest extends User {
    * Currency code from which transaction happend
    */
   private String currencyCode;
+
+  /**
+   * Transaction happening through either added beneficiary(EXISTING_PAYEE)
+   * or other mode of transactions(ADHOC_PAYEE) like one time transfer, MMID, UPI
+   */
+  private String payeeExistsType;
 
   public String getType() {
     return type;
@@ -239,6 +242,22 @@ public class FundTransferRequest extends User {
     this.currencyCode = currencyCode;
   }
 
+  /**
+   *
+   * @return payeeExistsType
+   */
+  public String getPayeeExistsType() {
+    return payeeExistsType;
+  }
+
+  /**
+   *
+   * @param payeeExistsType
+   */
+  public void setPayeeExistsType(String payeeExistsType) {
+    this.payeeExistsType = payeeExistsType;
+  }
+
   @Override public String toString() {
     final StringBuilder sb = new StringBuilder("FundTransferRequest{");
     sb.append("type='").append(type).append('\'');
@@ -253,6 +272,7 @@ public class FundTransferRequest extends User {
     sb.append(", payeeEmailId='").append(payeeEmailId).append('\'');
     sb.append(", payeeName='").append(payeeName).append('\'');
     sb.append(", currencyCode='").append(currencyCode).append('\'');
+    sb.append(", payeeExistsType=").append(payeeExistsType);
     sb.append('}');
     return sb.toString();
   }

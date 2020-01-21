@@ -146,6 +146,18 @@ public class Card {
   @JsonProperty("isInternationalEnabled")
   private boolean isInternationalEnabled;
 
+  /**
+   * To make Card Debitable set isDebitable as true
+   */
+  @JsonProperty("isDebitable")
+  private boolean isDebitable;
+
+  /**
+   * To make Card Creditable set isCreditable as true
+   */
+  @JsonProperty("isCreditable")
+  private boolean isCreditable;
+
   public Double getCreditLimit() {
     return creditLimit;
   }
@@ -647,35 +659,59 @@ public class Card {
 
   public void setAvailableCash(Double availableCash) { this.availableCash = availableCash; }
 
-    public String getMaxCreditLimit() {
-        return maxCreditLimit;
-    }
+  public String getMaxCreditLimit() {
+    return maxCreditLimit;
+  }
 
-    public void setMaxCreditLimit(String maxCreditLimit) {
-        this.maxCreditLimit = maxCreditLimit;
-    }
+  public void setMaxCreditLimit(String maxCreditLimit) {
+    this.maxCreditLimit = maxCreditLimit;
+  }
 
-    public String getMaxCashLimit() {
-        return maxCashLimit;
-    }
+  public String getMaxCashLimit() {
+    return maxCashLimit;
+  }
 
-    public void setMaxCashLimit(String maxCashLimit) {
-        this.maxCashLimit = maxCashLimit;
-    }
+  public void setMaxCashLimit(String maxCashLimit) {
+    this.maxCashLimit = maxCashLimit;
+  }
 
-    public void setCreditLimit(Double creditLimit) {
-        this.creditLimit = creditLimit;
-    }
+  public void setCreditLimit(Double creditLimit) {
+    this.creditLimit = creditLimit;
+  }
 
-    public String getCashLimit() {
-        return cashLimit;
-    }
+  public String getCashLimit() {
+    return cashLimit;
+  }
 
-    public void setCashLimit(String cashLimit) {
-        this.cashLimit = cashLimit;
-    }
+  public void setCashLimit(String cashLimit) {
+    this.cashLimit = cashLimit;
+  }
 
-    @Override public String toString() {
+  /**
+   * Getter and Setter Methods for isDebitable Flag
+   * @return
+   */
+  public boolean isDebitable() {
+    return isDebitable;
+  }
+
+  public void setDebitable(boolean debitable) {
+    isDebitable = debitable;
+  }
+
+  /**
+   * Getter and Setter for isCreditable Flag
+   * @return
+   */
+  public boolean isCreditable() {
+    return isCreditable;
+  }
+
+  public void setCreditable(boolean creditable) {
+    isCreditable = creditable;
+  }
+
+  @Override public String toString() {
     final StringBuilder sb = new StringBuilder("Card{");
     sb.append("productCode='").append(productCode).append('\'');
     sb.append(", bankName='").append(bankName).append('\'');
@@ -720,6 +756,8 @@ public class Card {
     sb.append(", internationalATMLimit='").append(internationalATMLimit).append('\'');
     sb.append(", internationalPOSLimit='").append(internationalPOSLimit).append('\'');
     sb.append(", isInternationalEnabled=").append(isInternationalEnabled);
+    sb.append(", isCreditable='").append(isCreditable).append('\'');
+    sb.append(", isDebitable=").append(isDebitable);
     sb.append('}');
     return sb.toString();
   }
