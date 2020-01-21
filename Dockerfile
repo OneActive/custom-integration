@@ -9,7 +9,7 @@ COPY deploy /opt/deploy
 
 COPY target/*.war /opt/deploy/
 
-COPY /src/main/resources/application-docker.properties /opt/deploy/banking-integration.properties
+COPY /src/main/resources/application.properties /opt/deploy/banking-integration.properties
 
 RUN apt-get update \
 && apt-get -y install nginx \
