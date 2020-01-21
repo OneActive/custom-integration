@@ -2,6 +2,7 @@ package com.activeai.integration.banking.services;
 
 import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
+import com.activeai.integration.banking.constants.StatusEnum;
 import com.activeai.integration.banking.domain.request.FundTransferRequest;
 import com.activeai.integration.banking.domain.request.PayeesRequest;
 import com.activeai.integration.banking.domain.request.PayeesValidationRequest;
@@ -11,6 +12,7 @@ import com.activeai.integration.banking.domain.response.PayeesResponse;
 import com.activeai.integration.banking.domain.response.PayeesValidationResponse;
 import com.activeai.integration.banking.mapper.response.FundTransferResponseMapper;
 import com.activeai.integration.banking.mapper.response.OneTimeTransferResponseMapper;
+import com.activeai.integration.banking.model.Result;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
 import com.activeai.integration.data.model.CoreBankingModel;
@@ -19,6 +21,7 @@ import com.activeai.integration.data.service.TransferServiceData;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,14 +88,18 @@ public class TransferService {
 
   public ResponseEntity<FundTransferResponse> getConfirmTransferResponseEntity(FundTransferRequest fundTransferRequest) {
     FundTransferResponse response = new FundTransferResponse();
+    if(fundTransferRequest.getCustomerId().contains("testuser")){
+      customResponseForConfirmation(response,fundTransferRequest);
+    }
     try {
       HttpResponse<String> apiResponse =
           Unirest.get(propertyUtil.getAPIUrlForFundTransfer(PropertyConstants.TRANSFER_CONFIRM_API_END_POINT, fundTransferRequest))
               .header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+      ApplicationLogger
+          .logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
       if (Objects.nonNull(apiResponse) && StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Confirm Transfer Response Body Before Transformation :" + apiResponse.getBody());
-        response = fundTransferResponseMapper.getManipulatedFundTransferResponse(apiResponse.getBody());
+        response = fundTransferResponseMapper.getManipulatedFundTransferResponse(apiResponse.getBody(), fundTransferRequest);
         ApplicationLogger.logInfo("Confirm Transfer Response Body After Transformation :" + response);
         // Updating transaction details on cache, Remove this later
         transferServiceData.updateTransactionDetailsOnCache(fundTransferRequest);
@@ -112,6 +119,22 @@ public class TransferService {
     }
     response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(response);
+  }
+
+  /**
+   * Temporary method to generate response directly
+   * @param response
+   */
+  private FundTransferResponse customResponseForConfirmation(FundTransferResponse response, FundTransferRequest fundTransferRequest) {
+    Result result = new Result();
+    result.setStatus(200);
+    result.setMessageCode("OK");
+    result.setMessage("Fund Transfer successful");
+    response.setResult(result);
+    response.setTransactionStatus(StatusEnum.SUCCESS);
+    response.setTxnReferenceId(RandomStringUtils.random(12));
+    response.setTransferAmount(Double.valueOf(fundTransferRequest.getAmount()));
+    return response;
   }
 
   /**
