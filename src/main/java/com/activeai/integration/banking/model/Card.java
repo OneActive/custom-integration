@@ -186,10 +186,6 @@ public class Card {
     this.branchAddress = branchAddress;
   }
 
-  public Boolean getOverseasCardActivated() {
-    return overseasCardActivated;
-  }
-
   public String getLastStatementDate() {
     return lastStatementDate;
   }

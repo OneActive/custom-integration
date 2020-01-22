@@ -40,7 +40,7 @@ public class PropertyUtil {
   public String getAccountAPIUrl(String propertyValue, String customerId, String accountId) {
     // to do load testing
     if (customerId.contains("testuser")) {
-      return env.getProperty(PropertyConstants.CASA_TWO_ACCOUNT_API_END_POINT);
+      return env.getProperty(MessageFormat.format(API_DOUBLE_PROPERTY_PATTERN, PropertyConstants.LOAD_TESTING_USER_PREFIX, propertyValue));
     }
     return StringUtils.isNotEmpty(env.getProperty(MessageFormat.format(API_DOUBLE_PROPERTY_PATTERN, customerId, propertyValue))) ?
         env.getProperty(MessageFormat.format(API_DOUBLE_PROPERTY_PATTERN, customerId, propertyValue)) :
