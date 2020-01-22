@@ -12,9 +12,12 @@ set -o pipefail
 export WORK_DIR='/opt/tomcat'
 export DEPLOY_DIR='/opt/deploy'
 
-#chmod +x /opt/deploy/load_ssm
-#/opt/deploy/load_ssm $ENVIRONMENT
-#source .env
+if [ "$CLOUD" == "AWS" ] ; then
+  chmod +x /opt/deploy/load_ssm
+  /opt/deploy/load_ssm $ENVIRONMENT $AWS_REGION
+  source .env
+fi
+
 
 if [ ! -d "$WORK_DIR" ]; then
 
@@ -27,6 +30,10 @@ if [ ! -d "$WORK_DIR" ]; then
   mv $DEPLOY_DIR/apache-tomcat* "$WORK_DIR"
   mv $DEPLOY_DIR/banking-*.war "$WORK_DIR/webapps/banking-integration.war"
   envsubst < "$DEPLOY_DIR/tomcat.conf" > /etc/supervisor/conf.d/tomcat.conf
+  
+  envsubst < "$DEPLOY_DIR/banking-integration.properties" > "$WORK_DIR/conf/banking-integration.properties"
+  mkdir -p "$WORK_DIR/conf/Catalina/localhost"
+  cp "$DEPLOY_DIR/banking-integration.xml" "$WORK_DIR/conf/Catalina/localhost/"
 
 fi
 

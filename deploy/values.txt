@@ -1,4 +1,0 @@
-/Billing/Dev/MYSQL_HOST
-/Billing/Dev/MYSQL_DATABASE
-/Billing/Dev/MYSQL_PORT
-/Billing/Dev/SPRING_ACTIVE_PROFILES
