@@ -21,7 +21,7 @@ public enum AccountStatusEnum {
   /** The no credit. */
   NO_CREDIT("NO_CREDIT"),
   /** The unknown. */
-  UNKNOWN("UNKNOWN"),
+  UNKNOWN(""),
   /** The open. */
   OPEN("OPEN");
 
@@ -44,6 +44,6 @@ public enum AccountStatusEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 }

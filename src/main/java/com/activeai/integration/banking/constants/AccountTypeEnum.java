@@ -58,6 +58,6 @@ public enum AccountTypeEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 }

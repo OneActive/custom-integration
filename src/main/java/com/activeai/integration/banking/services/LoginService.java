@@ -6,6 +6,8 @@ import com.activeai.integration.banking.domain.request.UserLoginRequest;
 import com.activeai.integration.banking.domain.response.LoginResponse;
 import com.activeai.integration.banking.mapper.request.LoginRequestMapper;
 import com.activeai.integration.banking.mapper.response.LoginResponseMapper;
+import com.activeai.integration.banking.model.Result;
+import com.activeai.integration.banking.model.User;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,7 +34,7 @@ public class LoginService {
   @Autowired private LoginRequestMapper loginRequestMapper;
   @Autowired private ObjectMapper objectMapper;
   @Autowired private PropertyUtil propertyUtil;
-  public static final String error_message_format = "{0} : {1} : {2}";
+  public static final String ERROR_MESSAGE_FORMAT = "{0} : {1} : {2}";
 
   /**
    * Customise this based on your Use case
@@ -41,24 +43,19 @@ public class LoginService {
    * @return
    */
   public ResponseEntity<LoginResponse> getLoginResponseEntity(UserLoginRequest userLoginRequest) {
-    ResponseEntity<LoginResponse> loginResponseEntity = null;
     try {
-      Map<String, String> auth = new HashMap<>();
       LoginResponse loginResponse = new LoginResponse();
-      auth.put("testuser1","password");
-      auth.put("testuser2","password");
-      auth.put("testuser3","password");
-      auth.put("stuart", "stuart@123");
-      auth.put("james", "james@123");
-      auth.put("thanos", "thanos@123");
-      auth.put("henry","henry@123");
-      auth.put("lucas","lucas@123");
-      auth.put("jackson","jackson@123");
-      auth.put("ethan","ethan@123");
-      if (userLoginRequest.getPassword().equalsIgnoreCase(auth.get(userLoginRequest.getUserID()))) {
+      ApplicationLogger.logInfo("Login For User ID:-> " + userLoginRequest.getUserID());
+      if (isAuthorisedUser(userLoginRequest)) {
         try {
+          String url = propertyUtil.getLoginAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,userLoginRequest.getUserID(),null);
+          if (StringUtils.isEmpty(url)) {
+            loginResponse = customLoginResponseMapping(userLoginRequest.getUserID());
+            ApplicationLogger.logInfo("Login Response " + loginResponse);
+            return ResponseEntity.ok(loginResponse);
+          }
           HttpResponse<String> apiResponse =
-              Unirest.post(propertyUtil.getLoginAPIUrl(PropertyConstants.CUSTOMER_LOGIN_API_END_POINT,userLoginRequest.getUserID(),null))
+              Unirest.post(url)
                   .header("Content-Type", "application/json")
                   .body(loginRequestMapper.getLoginRequestBody(userLoginRequest)).asString();
           ApplicationLogger
@@ -74,14 +71,14 @@ public class LoginService {
           return ResponseEntity.ok(loginResponse);
         } catch (UnirestException e) {
           ApplicationLogger.logError(MessageFormat
-              .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+              .format(ERROR_MESSAGE_FORMAT, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         } catch (IOException e) {
           ApplicationLogger.logError(MessageFormat
-              .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+              .format(ERROR_MESSAGE_FORMAT, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
                   ExceptionUtils.getStackTrace(e)));
         } catch (Exception e) {
           ApplicationLogger.logError(MessageFormat
-              .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+              .format(ERROR_MESSAGE_FORMAT, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
         }
         return new ResponseEntity<>(objectMapper.readValue(
             "{  \"result\" : {    \"messageCode\" : \"EXPECTATION_FAILED\",    \"message\" : \"Application is Down!, Please Contact administrator\",    \"status\" : 417  }}",
@@ -91,8 +88,74 @@ public class LoginService {
         return ResponseEntity.ok(loginResponse);
       }
     } catch (IOException e) {
-      ApplicationLogger.logInfo(MessageFormat.format(error_message_format,MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE,this.getClass().getName(),ExceptionUtils.getStackTrace(e)));
+      ApplicationLogger.logInfo(MessageFormat.format(
+          ERROR_MESSAGE_FORMAT,MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE,this.getClass().getName(),ExceptionUtils.getStackTrace(e)));
     }
     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  /**
+   * Verify User is Authorised or not
+   *
+   * @param request
+   * @return
+   */
+  private boolean isAuthorisedUser(UserLoginRequest request) {
+    Map<String, String> auth = new HashMap<>();
+    getAuthenticatedUserDetails(auth);
+    return request.getPassword().equalsIgnoreCase(auth.get(request.getUserID()));
+  }
+
+  /**
+   * Populate authenticated user details stubs
+   *
+   * @param auth
+   */
+  private void getAuthenticatedUserDetails(Map<String, String> auth) {
+    auth.put("testuser1", "password");
+    auth.put("testuser2", "password");
+    auth.put("testuser3", "password");
+    /**
+     * creating map of auth for testuser4 to testuser54
+     *
+     * @n is number of users need to create
+     */
+    int n = 20;
+    for (int i = 4; i <= n+4; i++) {
+      String userId = "testuser" + i;
+      auth.put(userId, "password");
+    }
+    auth.put("stuart", "stuart@123");
+    auth.put("james", "james@123");
+    auth.put("thanos", "thanos@123");
+    auth.put("henry", "henry@123");
+    auth.put("lucas", "lucas@123");
+    auth.put("jackson", "jackson@123");
+    auth.put("ethan", "ethan@123");
+  }
+
+  /**
+   * Creating login response for more users  testuser4 to testuser54
+   * Kindly remove this method on real time integration
+   *
+   * @param userId
+   * @return LoginResponse
+   */
+  private LoginResponse customLoginResponseMapping(String userId) {
+    ApplicationLogger.logInfo("building login response for testing : " + userId);
+    LoginResponse loginResponse = new LoginResponse();
+    Result result = new Result();
+    result.setMessage("Login successful");
+    result.setMessageCode("OK");
+    result.setStatus(200);
+    loginResponse.setResult(result);
+    User user = new User();
+    user.setAddress(userId);
+    user.setCustomerId(userId);
+    user.setCustomerName(userId+"name");
+    user.setMobileNumber("+65 9832469" + userId.substring(8));
+    user.setEmailId(userId + "@gmail.com");
+    loginResponse.setUser(user);
+    return loginResponse;
   }
 }

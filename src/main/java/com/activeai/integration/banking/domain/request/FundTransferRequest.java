@@ -1,6 +1,7 @@
 package com.activeai.integration.banking.domain.request;
 
 import com.activeai.integration.banking.constants.PayeeTypeEnum;
+import com.activeai.integration.banking.model.Account;
 import com.activeai.integration.banking.model.Phone;
 import com.activeai.integration.banking.model.User;
 
@@ -64,6 +65,24 @@ public class FundTransferRequest extends User {
    * The payee name.
    */
   private String payeeName;
+
+  /**
+   * source account
+   */
+  private Account debtor;
+
+  /**
+   * target account
+   */
+  private Account creditor;
+
+  /** In case of 2 step process, the id returned from step 1 should be set to this. */
+  private String flowReferenceId;
+
+  /**
+   * Currency code from which transaction happend
+   */
+  private String currencyCode;
 
   /**
    * Transaction happening through either added beneficiary(EXISTING_PAYEE)
@@ -183,13 +202,44 @@ public class FundTransferRequest extends User {
     this.payeeEmailId = payeeEmailId;
   }
 
-
   public String getPayeeName() {
     return payeeName;
   }
 
   public void setPayeeName(String payeeName) {
     this.payeeName = payeeName;
+  }
+
+  public Account getDebtor() {
+    return debtor;
+  }
+
+  public void setDebtor(Account debtor) {
+    this.debtor = debtor;
+  }
+
+  public Account getCreditor() {
+    return creditor;
+  }
+
+  public void setCreditor(Account creditor) {
+    this.creditor = creditor;
+  }
+
+  public String getFlowReferenceId() {
+    return flowReferenceId;
+  }
+
+  public void setFlowReferenceId(String flowReferenceId) {
+    this.flowReferenceId = flowReferenceId;
+  }
+
+  public String getCurrencyCode() {
+    return currencyCode;
+  }
+
+  public void setCurrencyCode(String currencyCode) {
+    this.currencyCode = currencyCode;
   }
 
   /**
@@ -211,20 +261,17 @@ public class FundTransferRequest extends User {
   @Override public String toString() {
     final StringBuilder sb = new StringBuilder("FundTransferRequest{");
     sb.append("type='").append(type).append('\'');
-    sb.append(", sourceAccountId='").append(sourceAccountId).append('\'');
     sb.append(", amount='").append(amount).append('\'');
     sb.append(", purpose='").append(purpose).append('\'');
-    sb.append(", payeeId='").append(payeeId).append('\'');
     sb.append(", remarks='").append(remarks).append('\'');
     sb.append(", payeeType=").append(payeeType);
     sb.append(", payeeIFSCCode='").append(payeeIFSCCode).append('\'');
     sb.append(", payeeBankId='").append(payeeBankId).append('\'');
     sb.append(", payeeBranchId='").append(payeeBranchId).append('\'');
-    sb.append(", payeeAccountId='").append(payeeAccountId).append('\'');
-    sb.append(", payeeAccountNumber='").append(payeeAccountNumber).append('\'');
     sb.append(", payeeMobileNumber=").append(payeeMobileNumber);
     sb.append(", payeeEmailId='").append(payeeEmailId).append('\'');
     sb.append(", payeeName='").append(payeeName).append('\'');
+    sb.append(", currencyCode='").append(currencyCode).append('\'');
     sb.append(", payeeExistsType=").append(payeeExistsType);
     sb.append('}');
     return sb.toString();

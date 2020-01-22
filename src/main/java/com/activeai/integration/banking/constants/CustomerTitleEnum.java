@@ -12,7 +12,9 @@ public enum CustomerTitleEnum {
 
   MISS_("Miss."),
 
-  DR_("Dr.");
+  DR_("Dr."),
+
+  UNKNOWN("");
 
   private String value;
 
@@ -33,6 +35,6 @@ public enum CustomerTitleEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 }

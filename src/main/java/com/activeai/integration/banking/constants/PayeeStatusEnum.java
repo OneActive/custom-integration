@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum PayeeStatusEnum {
   ACTIVE("ACTIVE"),
 
-  INACTIVE("INACTIVE");
+  INACTIVE("INACTIVE"),
+
+  UNKNOWN("");
 
   private String value;
 

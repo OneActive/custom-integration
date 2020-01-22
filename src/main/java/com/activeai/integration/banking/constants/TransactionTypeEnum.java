@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum TransactionTypeEnum {
   DEBIT("DEBIT"),
 
-  CREDIT("CREDIT");
+  CREDIT("CREDIT"),
+
+  UNKNOWN("");
 
   private String value;
 
@@ -27,7 +29,7 @@ public enum TransactionTypeEnum {
         return b;
       }
     }
-    return null;
+    return UNKNOWN;
   }
 
 }

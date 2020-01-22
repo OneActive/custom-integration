@@ -8,7 +8,6 @@ import com.activeai.integration.banking.domain.response.DebitCardLimitConfirmRes
 import com.activeai.integration.banking.mapper.response.DebitCardResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -28,7 +27,7 @@ public class DebitCardService {
 
   @Autowired private PropertyUtil propertyUtil;
   @Autowired private DebitCardResponseMapper debitCardResponseMapper;
-  private static final String error_message_format = "{0} : {1} : {2}";
+  private static final String ERROR_MESSAGE_FORMAT = "{0} : {1} : {2}";
 
   /**
    * Fetches Card Details for selected card
@@ -51,14 +50,14 @@ public class DebitCardService {
       return ResponseEntity.ok(response);
     } catch (UnirestException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
               ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
     response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(response);
@@ -79,14 +78,14 @@ public class DebitCardService {
       return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));
     } catch (UnirestException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
               ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
     return new ResponseEntity<>(response, HttpStatus.OK);
   }

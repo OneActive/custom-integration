@@ -9,7 +9,7 @@ public enum BlockTypeEnum {
 
     TEMPORARY("TEMPORARY"),
 
-    UNKNOWN("UNKNOWN");
+    UNKNOWN("");
 
     private String value;
 
@@ -30,7 +30,7 @@ public enum BlockTypeEnum {
                 return b;
             }
         }
-        return null;
+        return UNKNOWN;
     }
 }
 

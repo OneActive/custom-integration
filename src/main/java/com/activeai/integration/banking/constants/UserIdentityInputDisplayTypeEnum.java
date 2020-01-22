@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum UserIdentityInputDisplayTypeEnum {
     TEXT("TEXT"),
 
-    LIST("LIST");
+    LIST("LIST"),
+
+    UNKNOWN("");
 
     private String value;
 
@@ -27,6 +29,6 @@ public enum UserIdentityInputDisplayTypeEnum {
                 return b;
             }
         }
-        return null;
+        return UNKNOWN;
     }
 }

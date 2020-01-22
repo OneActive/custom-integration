@@ -2,7 +2,6 @@ package com.activeai.integration.banking.services;
 
 import com.activeai.integration.banking.constants.MessageConstants;
 import com.activeai.integration.banking.constants.PropertyConstants;
-import com.activeai.integration.banking.domain.request.AccountRequest;
 import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
 import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.domain.response.DepositAccountsResponse;
@@ -10,6 +9,9 @@ import com.activeai.integration.banking.domain.response.LoanAccountsResponse;
 import com.activeai.integration.banking.mapper.response.AccountsResponseMapper;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
+import com.activeai.integration.data.model.CoreBankingModel;
+import com.activeai.integration.data.service.AccountServiceData;
+import com.activeai.integration.data.service.CoreBankingService;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Objects;
 
 /**
  * This Class methods helps to get account related information using http
@@ -31,7 +34,9 @@ public class AccountsService {
 
   @Autowired private AccountsResponseMapper accountsResponseMapper;
   @Autowired private PropertyUtil propertyUtil;
-  private static final String error_message_format = "{0} : {1} : {2}";
+  @Autowired private AccountServiceData accountServiceData;
+  @Autowired private CoreBankingService coreBankingService;
+  private static final String ERROR_MESSAGE_FORMAT = "{0} : {1} : {2}";
 
   /**
    * Fetches list of Accounts
@@ -40,23 +45,35 @@ public class AccountsService {
    * @return ResponseEntity of type AccountsResponse
    */
   public ResponseEntity<AccountsResponse> getCasaAccountsResponseEntity(String customerId, String accessToken) {
-    AccountsResponse response = new AccountsResponse();
+    // Fetch accounts from cache you can remove this on real integration
+    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
+    AccountsResponse response = coreBankingModel.getAccountsResponse();
+    if (Objects.nonNull(response)) {
+      ApplicationLogger.logInfo("Fetching Accounts from cache");
+      return ResponseEntity.ok(response);
+    }
+    // Till this
     try {
       HttpResponse<String> apiResponse =
-          Unirest.post(propertyUtil.getAccountAPIUrl(PropertyConstants.CASA_ACCOUNT_API_END_POINT, customerId,null)).header("cache-control", "no-cache").asString();
-      ApplicationLogger.logInfo("Casa API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
+          Unirest.post(propertyUtil.getAccountAPIUrl(PropertyConstants.CASA_ACCOUNT_API_END_POINT, customerId, null))
+              .header("cache-control", "no-cache").asString();
+      ApplicationLogger
+          .logInfo("Casa API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo(" Casa Response Body Before Transformation :" + apiResponse.getBody());
         response = accountsResponseMapper.getManipulatedCasaAccountsResponse(apiResponse.getBody());
+        // Caching Account Response, Remove this later
+        accountServiceData.cacheAccountResponse(coreBankingModel, customerId, response);
+        // Till this
         ApplicationLogger.logInfo("Casa Response Body After Transformation :" + response);
       }
       return ResponseEntity.ok(response);
     } catch (UnirestException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
     response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(response);
@@ -76,14 +93,14 @@ public class AccountsService {
       return ResponseEntity.ok(response);
     } catch (UnirestException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
               ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
     response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(response);
@@ -103,14 +120,14 @@ public class AccountsService {
       return ResponseEntity.ok(response);
     } catch (UnirestException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
               ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
     response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(response);
@@ -124,7 +141,13 @@ public class AccountsService {
    * @return ResponseEntity of type AccountTransactionsResponse
    */
   public ResponseEntity<AccountTransactionsResponse> getAccountTransactionsResponseEntity(String customerId, String accountId, String accessToken) {
-    AccountTransactionsResponse response = new AccountTransactionsResponse();
+    // Fetch accounts from cache you can remove this later
+    AccountTransactionsResponse response = accountServiceData.getAccountTransactionsResponse(customerId, accountId);
+    if (Objects.nonNull(response)) {
+      ApplicationLogger.logInfo("Transaction for account is shown from cache");
+      return ResponseEntity.ok(response);
+    }
+    // Till this
     try {
       HttpResponse<String> apiResponse =
           Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CASA_ACCOUNT_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))
@@ -138,14 +161,14 @@ public class AccountsService {
       return ResponseEntity.ok(response);
     } catch (UnirestException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.API_FAILURE_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     } catch (IOException e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.DE_SERIALIZATION_EXCEPTION_MESSAGE, this.getClass().getName(),
               ExceptionUtils.getStackTrace(e)));
     } catch (Exception e) {
       ApplicationLogger.logError(MessageFormat
-          .format(error_message_format, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
+          .format(ERROR_MESSAGE_FORMAT, MessageConstants.EXCEPTION_MESSAGE, this.getClass().getName(), ExceptionUtils.getStackTrace(e)));
     }
     response.setResult(propertyUtil.frameErrorResponse(MessageConstants.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", 500));
     return ResponseEntity.ok(response);
