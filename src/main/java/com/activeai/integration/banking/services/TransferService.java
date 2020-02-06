@@ -133,7 +133,7 @@ public class TransferService {
     result.setMessage("Fund Transfer successful");
     response.setResult(result);
     response.setTransactionStatus(StatusEnum.SUCCESS);
-    response.setTxnReferenceId(RandomStringUtils.random(12));
+    response.setTxnReferenceId(RandomStringUtils.random(PropertyConstants.RANDOM_VALUE_LENGTH, true, true));
     response.setTransferAmount(Double.valueOf(fundTransferRequest.getAmount()));
     return response;
   }
