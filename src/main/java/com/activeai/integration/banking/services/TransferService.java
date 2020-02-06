@@ -90,6 +90,7 @@ public class TransferService {
     FundTransferResponse response = new FundTransferResponse();
     if(fundTransferRequest.getCustomerId().contains("testuser")){
       customResponseForConfirmation(response,fundTransferRequest);
+      return ResponseEntity.ok(response);
     }
     try {
       HttpResponse<String> apiResponse =
