@@ -41,7 +41,9 @@ public class CoreBankingService {
    * @param coreBankingModel
    */
   public void saveCoreBankingModel(CoreBankingModel coreBankingModel) {
-    coreBankingRepository.save(coreBankingModel);
+    if (CoreBankingUtil.isCacheEnabled()) {
+      coreBankingRepository.save(coreBankingModel);
+    }
   }
 
   /**

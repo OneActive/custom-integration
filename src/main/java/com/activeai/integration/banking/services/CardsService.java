@@ -13,6 +13,7 @@ import com.activeai.integration.data.model.CoreBankingModel;
 import com.activeai.integration.data.service.CardServiceData;
 import com.activeai.integration.data.service.CoreBankingService;
 import com.activeai.integration.data.service.TransferServiceData;
+import com.activeai.integration.data.util.CoreBankingUtil;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -64,7 +65,9 @@ public class CardsService {
         ApplicationLogger.logInfo("Credit Cards Response Body Before Transformation :" + apiResponse.getBody());
         response = cardsResponseMapper.getManipulatedCardsResponse(apiResponse.getBody());
         // Caching Credit cards, Remove this later
-        cardServiceData.cacheCreditCardsResponse(coreBankingModel, customerId, response);
+        if (CoreBankingUtil.isCacheEnabled()) {
+          cardServiceData.cacheCreditCardsResponse(coreBankingModel, customerId, response);
+        }
         // Till this
         ApplicationLogger.logInfo("Credit Cards Response Body After Transformation :" + response);
       }

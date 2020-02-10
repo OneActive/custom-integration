@@ -12,6 +12,7 @@ import com.activeai.integration.banking.utils.PropertyUtil;
 import com.activeai.integration.data.model.CoreBankingModel;
 import com.activeai.integration.data.service.AccountServiceData;
 import com.activeai.integration.data.service.CoreBankingService;
+import com.activeai.integration.data.util.CoreBankingUtil;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -63,7 +64,9 @@ public class AccountsService {
         ApplicationLogger.logInfo(" Casa Response Body Before Transformation :" + apiResponse.getBody());
         response = accountsResponseMapper.getManipulatedCasaAccountsResponse(apiResponse.getBody());
         // Caching Account Response, Remove this later
-        accountServiceData.cacheAccountResponse(coreBankingModel, customerId, response);
+        if (CoreBankingUtil.isCacheEnabled()) {
+          accountServiceData.cacheAccountResponse(coreBankingModel, customerId, response);
+        }
         // Till this
         ApplicationLogger.logInfo("Casa Response Body After Transformation :" + response);
       }
