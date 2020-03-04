@@ -59,15 +59,15 @@ public class AccountServiceData {
    *
    * @param coreBankingModel
    * @param creditAmount
-   * @param accountId
+   * @param accountNumber
    * @return CoreBankingModel
    */
-  public CoreBankingModel creditAmount(CoreBankingModel coreBankingModel, String creditAmount, String accountId) {
-    ApplicationLogger.logInfo("Crediting " + creditAmount + " to account ID " + accountId);
+  public CoreBankingModel creditAmount(CoreBankingModel coreBankingModel, String creditAmount, String accountNumber) {
+    ApplicationLogger.logInfo("Crediting " + creditAmount + " to Account Number " + accountNumber);
     AccountsResponse accountsResponse = coreBankingModel.getAccountsResponse();
     if (Objects.nonNull(accountsResponse)) {
       accountsResponse.getAccounts().stream().forEach(a -> {
-        if (accountId.equalsIgnoreCase(a.getAccountId())) {
+        if (accountNumber.equalsIgnoreCase(a.getAccountNumber() )) {
           a.getBalance().setAmount(a.getBalance().getAmount() + Double.valueOf(creditAmount));
           a.getBalance().setAvailableBalance(a.getBalance().getAvailableBalance() + Double.valueOf(creditAmount));
         }
