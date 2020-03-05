@@ -36,6 +36,12 @@ public class LoanAccount extends Account {
   @JsonProperty("interestAnnualPercentageRate")
   private String interestAnnualPercentageRate;
 
+  @JsonProperty("nextPaymentDate")
+  private String nextPaymentDate;
+
+  @JsonProperty("totalOutstandingDue")
+  private Double totalOutstandingDue;
+
   public Double getOriginalPrincipalAmount() {
     return originalPrincipalAmount;
   }
@@ -115,6 +121,33 @@ public class LoanAccount extends Account {
   public void setInterestAnnualPercentageRate(String interestAnnualPercentageRate) {
     this.interestAnnualPercentageRate = interestAnnualPercentageRate;
   }
+  /**
+   * @return nextPaymentDate
+   */
+  public String getNextPaymentDate() {
+    return nextPaymentDate;
+  }
+
+  /**
+   * @param nextPaymentDate
+   */
+  public void setNextPaymentDate(String nextPaymentDate) {
+    this.nextPaymentDate = nextPaymentDate;
+  }
+
+  /**
+   * @return totalOutstandingDue
+   */
+  public Double getTotalOutstandingDue() {
+    return totalOutstandingDue;
+  }
+
+  /**
+   * @param totalOutstandingDue
+   */
+  public void setTotalOutstandingDue(Double totalOutstandingDue) {
+    this.totalOutstandingDue = totalOutstandingDue;
+  }
 
   @Override public String toString() {
     final StringBuilder sb = new StringBuilder("LoanAccount{");
@@ -128,6 +161,8 @@ public class LoanAccount extends Account {
     sb.append(", tenorPeriod='").append(tenorPeriod).append('\'');
     sb.append(", maturityDate='").append(maturityDate).append('\'');
     sb.append(", interestAnnualPercentageRate='").append(interestAnnualPercentageRate).append('\'');
+    sb.append(", nextPaymentDate='").append(nextPaymentDate).append('\'');
+    sb.append(", totalOutstandingDue=").append(totalOutstandingDue);
     sb.append('}');
     return sb.toString();
   }

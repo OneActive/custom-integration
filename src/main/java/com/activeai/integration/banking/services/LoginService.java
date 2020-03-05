@@ -103,7 +103,7 @@ public class LoginService {
   private boolean isAuthorisedUser(UserLoginRequest request) {
     Map<String, String> auth = new HashMap<>();
     getAuthenticatedUserDetails(auth);
-    return request.getPassword().equalsIgnoreCase(auth.get(request.getUserID()));
+    return request.getPassword().equals(auth.get(request.getUserID()));
   }
 
   /**

@@ -158,6 +158,12 @@ public class Card {
   @JsonProperty("isCreditable")
   private boolean isCreditable;
 
+  /**
+   * Available Point Balance.
+   */
+  @JsonProperty("availablePointBalance")
+  private Double availablePointBalance;
+
   public Double getCreditLimit() {
     return creditLimit;
   }
@@ -707,55 +713,69 @@ public class Card {
     isCreditable = creditable;
   }
 
-  @Override public String toString() {
-    final StringBuilder sb = new StringBuilder("Card{");
-    sb.append("productCode='").append(productCode).append('\'');
-    sb.append(", bankName='").append(bankName).append('\'');
-    sb.append(", accountName='").append(accountName).append('\'');
-    sb.append(", cardType=").append(cardType);
-    sb.append(", displayCardNumber='").append(displayCardNumber).append('\'');
-    sb.append(", cardNumber='").append(cardNumber).append('\'');
-    sb.append(", accountId='").append(accountId).append('\'');
-    sb.append(", cardIssuer=").append(cardIssuer);
-    sb.append(", branchId='").append(branchId).append('\'');
-    sb.append(", branchName='").append(branchName).append('\'');
-    sb.append(", cardStatus=").append(cardStatus);
-    sb.append(", overseasCardActivated=").append(overseasCardActivated);
-    sb.append(", openingBalance=").append(openingBalance);
-    sb.append(", closingBalance=").append(closingBalance);
-    sb.append(", amountDue=").append(amountDue);
-    sb.append(", minimumPayment=").append(minimumPayment);
-    sb.append(", paymentDueDate='").append(paymentDueDate).append('\'');
-    sb.append(", availableCreditLimit=").append(availableCreditLimit);
-    sb.append(", temporaryCreditLimit=").append(temporaryCreditLimit);
-    sb.append(", permanentCreditLimit=").append(permanentCreditLimit);
-    sb.append(", lastStatementDate='").append(lastStatementDate).append('\'');
-    sb.append(", lastStatementBalance=").append(lastStatementBalance);
-    sb.append(", currencyCode='").append(currencyCode).append('\'');
-    sb.append(", expiryDate='").append(expiryDate).append('\'');
-    sb.append(", activationDate='").append(activationDate).append('\'');
-    sb.append(", branchAddress='").append(branchAddress).append('\'');
-    sb.append(", outStandingAmount=").append(outStandingAmount);
-    sb.append(", cardHolderName='").append(cardHolderName).append('\'');
-    sb.append(", cardName='").append(cardName).append('\'');
-    sb.append(", productType='").append(productType).append('\'');
-    sb.append(", maxDomesticATMLimit='").append(maxDomesticATMLimit).append('\'');
-    sb.append(", maxDomesticPOSLimit='").append(maxDomesticPOSLimit).append('\'');
-    sb.append(", domesticATMLimit='").append(domesticATMLimit).append('\'');
-    sb.append(", domesticPOSLimit='").append(domesticPOSLimit).append('\'');
-    sb.append(", maxInternationalATMLimit='").append(maxInternationalATMLimit).append('\'');
-    sb.append(", maxInternationalPOSLimit='").append(maxInternationalPOSLimit).append('\'');
-    sb.append(", maxCreditLimit='").append(maxCreditLimit).append('\'');
-    sb.append(", maxCashLimit='").append(maxCashLimit).append('\'');
-    sb.append(", creditLimit='").append(creditLimit).append('\'');
-    sb.append(", cashLimit='").append(cashLimit).append('\'');
-    sb.append(", internationalATMLimit='").append(internationalATMLimit).append('\'');
-    sb.append(", internationalPOSLimit='").append(internationalPOSLimit).append('\'');
-    sb.append(", isInternationalEnabled=").append(isInternationalEnabled);
-    sb.append(", isCreditable='").append(isCreditable).append('\'');
-    sb.append(", isDebitable=").append(isDebitable);
-    sb.append('}');
-    return sb.toString();
-  }
+    public Boolean getOverseasCardActivated() {
+        return overseasCardActivated;
+    }
+
+    public Double getAvailablePointBalance() {
+        return availablePointBalance;
+    }
+
+    public void setAvailablePointBalance(Double availablePointBalance) {
+        this.availablePointBalance = availablePointBalance;
+    }
+
+    @Override public String toString() {
+        final StringBuilder sb = new StringBuilder("Card{");
+        sb.append("productCode='").append(productCode).append('\'');
+        sb.append(", bankName='").append(bankName).append('\'');
+        sb.append(", accountName='").append(accountName).append('\'');
+        sb.append(", cardType=").append(cardType);
+        sb.append(", displayCardNumber='").append(displayCardNumber).append('\'');
+        sb.append(", cardNumber='").append(cardNumber).append('\'');
+        sb.append(", accountId='").append(accountId).append('\'');
+        sb.append(", cardIssuer=").append(cardIssuer);
+        sb.append(", branchId='").append(branchId).append('\'');
+        sb.append(", branchName='").append(branchName).append('\'');
+        sb.append(", cardStatus=").append(cardStatus);
+        sb.append(", overseasCardActivated=").append(overseasCardActivated);
+        sb.append(", openingBalance=").append(openingBalance);
+        sb.append(", closingBalance=").append(closingBalance);
+        sb.append(", amountDue=").append(amountDue);
+        sb.append(", minimumPayment=").append(minimumPayment);
+        sb.append(", paymentDueDate='").append(paymentDueDate).append('\'');
+        sb.append(", availableCreditLimit=").append(availableCreditLimit);
+        sb.append(", availableCash=").append(availableCash);
+        sb.append(", temporaryCreditLimit=").append(temporaryCreditLimit);
+        sb.append(", permanentCreditLimit=").append(permanentCreditLimit);
+        sb.append(", lastStatementDate='").append(lastStatementDate).append('\'');
+        sb.append(", lastStatementBalance=").append(lastStatementBalance);
+        sb.append(", currencyCode='").append(currencyCode).append('\'');
+        sb.append(", expiryDate='").append(expiryDate).append('\'');
+        sb.append(", activationDate='").append(activationDate).append('\'');
+        sb.append(", branchAddress='").append(branchAddress).append('\'');
+        sb.append(", outStandingAmount=").append(outStandingAmount);
+        sb.append(", cardHolderName='").append(cardHolderName).append('\'');
+        sb.append(", cardName='").append(cardName).append('\'');
+        sb.append(", productType='").append(productType).append('\'');
+        sb.append(", maxDomesticATMLimit='").append(maxDomesticATMLimit).append('\'');
+        sb.append(", maxCreditLimit='").append(maxCreditLimit).append('\'');
+        sb.append(", maxCashLimit='").append(maxCashLimit).append('\'');
+        sb.append(", maxDomesticPOSLimit='").append(maxDomesticPOSLimit).append('\'');
+        sb.append(", domesticATMLimit='").append(domesticATMLimit).append('\'');
+        sb.append(", domesticPOSLimit='").append(domesticPOSLimit).append('\'');
+        sb.append(", maxInternationalATMLimit='").append(maxInternationalATMLimit).append('\'');
+        sb.append(", maxInternationalPOSLimit='").append(maxInternationalPOSLimit).append('\'');
+        sb.append(", internationalATMLimit='").append(internationalATMLimit).append('\'');
+        sb.append(", internationalPOSLimit='").append(internationalPOSLimit).append('\'');
+        sb.append(", creditLimit=").append(creditLimit);
+        sb.append(", cashLimit='").append(cashLimit).append('\'');
+        sb.append(", isInternationalEnabled=").append(isInternationalEnabled);
+        sb.append(", isDebitable=").append(isDebitable);
+        sb.append(", isCreditable=").append(isCreditable);
+        sb.append(", availablePointBalance=").append(availablePointBalance);
+        sb.append('}');
+        return sb.toString();
+    }
 }
 
