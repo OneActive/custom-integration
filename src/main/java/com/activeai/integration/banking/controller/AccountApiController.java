@@ -35,24 +35,6 @@ public class AccountApiController {
   @Autowired private AccountsService accountsService;
   @Autowired private AccountDetailsService accountDetailsService;
   @Autowired private AccountBalanceService accountBalanceService;
-  
-  @Autowired
-  Environment env;
-  
-  /*
-  Return health check
-   */
-  @ApiOperation(value = "Returns health check for account api")
-  @RequestMapping(value = "/accounts/health", produces = {"application/json"}, method = RequestMethod.GET)
-  public ResponseEntity<String> healthCheck() {
-	ApplicationLogger.logInfo("Entering health chack API for accounts");
-	ApplicationLogger.logInfo("Redis host: {}", env.getProperty("REDIS_HOST"));
-	ApplicationLogger.logInfo("redis port: {}", env.getProperty("REDIS_PORT"));
-	ApplicationLogger.logInfo("redis DB: {}", env.getProperty("REDIS_DATABASE"));
-	ApplicationLogger.logInfo("is redis enabled: {}", env.getProperty("IS_REDIS_ENABLED"));
-	String response = "Account service is up and running";
-    return ResponseEntity.ok(response);
-  }
 
   /*
   Return Balance of Selected CASA Account
