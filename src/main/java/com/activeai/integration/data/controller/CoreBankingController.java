@@ -1,13 +1,17 @@
 package com.activeai.integration.data.controller;
 
-import com.activeai.integration.data.service.GenericService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.activeai.integration.banking.utils.ApplicationLogger;
+import com.activeai.integration.data.service.GenericService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController("coreBankingController")
 @RequestMapping("/reset")
@@ -16,6 +20,17 @@ public class CoreBankingController {
 
   @Autowired
   private GenericService genericService;
+  
+  /*
+  Return health check
+   */
+  @ApiOperation(value = "Returns health check api")
+  @RequestMapping(value = "/health", produces = {"application/json"}, method = RequestMethod.GET)
+  public ResponseEntity<String> healthCheck() {
+	ApplicationLogger.logInfo("Entering health chack API");
+	String response = "Banking service is up and running";
+    return ResponseEntity.ok(response);
+  }
 
   @ApiOperation(value = "Clear Redis Completely")
   @RequestMapping(value = "/", method = RequestMethod.GET)
