@@ -64,7 +64,7 @@ public class AccountsService {
         ApplicationLogger.logInfo(" Casa Response Body Before Transformation :" + apiResponse.getBody());
         response = accountsResponseMapper.getManipulatedCasaAccountsResponse(apiResponse.getBody());
         // Caching Account Response, Remove this later
-        if (CoreBankingUtil.isCacheEnabled()) {
+        if (CoreBankingUtil.isCacheEnabled) {
           accountServiceData.cacheAccountResponse(coreBankingModel, customerId, response);
         }
         // Till this
