@@ -1,7 +1,10 @@
 package com.activeai.integration.banking.model;
 
 import com.activeai.integration.banking.constants.CustomerTitleEnum;
+import com.activeai.integration.banking.constants.StatusEnum;
+import com.activeai.integration.banking.domain.response.Response;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import java.util.List;
@@ -11,7 +14,7 @@ import java.util.Objects;
  * CustomerProfile
  */
 @Validated
-public class CustomerProfile {
+public class CustomerProfile extends Response {
 
   @JsonProperty("customerId")
   private String customerId = null;
@@ -217,6 +220,7 @@ public class CustomerProfile {
     this.phone = phone;
   }
 
+
   @Override public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
@@ -236,17 +240,23 @@ public class CustomerProfile {
   }
 
   @Override public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class CustomerProfile {\n");
-
-    sb.append("    custId: ").append(toIndentedString(customerId)).append("\n");
-    sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
-    sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
-    sb.append("    middleName: ").append(toIndentedString(middleName)).append("\n");
-    sb.append("    title: ").append(toIndentedString(title)).append("\n");
-    sb.append("    address: ").append(toIndentedString(address)).append("\n");
-    sb.append("    phone: ").append(toIndentedString(phone)).append("\n");
-    sb.append("}");
+    final StringBuilder sb = new StringBuilder("CustomerProfile{");
+    sb.append("customerId='").append(customerId).append('\'');
+    sb.append(", firstName='").append(firstName).append('\'');
+    sb.append(", lastName='").append(lastName).append('\'');
+    sb.append(", middleName='").append(middleName).append('\'');
+    sb.append(", title=").append(title);
+    sb.append(", address=").append(address);
+    sb.append(", phone=").append(phone);
+    sb.append(", email=").append(email);
+    sb.append(", age=").append(age);
+    sb.append(", gender='").append(gender).append('\'');
+    sb.append(", DOB='").append(DOB).append('\'');
+    sb.append(", updatedDate='").append(updatedDate).append('\'');
+    sb.append(", updatedBy='").append(updatedBy).append('\'');
+    sb.append(", createdDate='").append(createdDate).append('\'');
+    sb.append(", createdBy='").append(createdBy).append('\'');
+    sb.append('}');
     return sb.toString();
   }
 
