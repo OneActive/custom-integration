@@ -1,16 +1,17 @@
 package com.activeai.integration.data.controller;
 
-import com.activeai.integration.banking.utils.ApplicationLogger;
-import com.activeai.integration.data.service.GenericService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.activeai.integration.banking.utils.ApplicationLogger;
+import com.activeai.integration.data.service.GenericService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController("coreBankingController")
 @RequestMapping("/reset")
@@ -20,9 +21,6 @@ public class CoreBankingController {
   @Autowired
   private GenericService genericService;
   
-  @Autowired
-  private Environment env;
-  
   /*
   Return health check
    */
@@ -30,10 +28,6 @@ public class CoreBankingController {
   @RequestMapping(value = "/health", produces = {"application/json"}, method = RequestMethod.GET)
   public ResponseEntity<String> healthCheck() {
 	ApplicationLogger.logInfo("Entering health chack API");
-	ApplicationLogger.logInfo("Redis host: {}", env.getProperty("REDIS_HOST"));
-	ApplicationLogger.logInfo("redis port: {}", env.getProperty("REDIS_PORT"));
-	ApplicationLogger.logInfo("redis DB: {}", env.getProperty("REDIS_DATABASE"));
-	ApplicationLogger.logInfo("is redis enabled: {}", env.getProperty("IS_REDIS_ENABLED"));
 	String response = "Banking service is up and running";
     return ResponseEntity.ok(response);
   }
