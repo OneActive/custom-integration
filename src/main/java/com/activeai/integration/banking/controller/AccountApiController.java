@@ -1,26 +1,31 @@
 package com.activeai.integration.banking.controller;
 
-import com.activeai.integration.banking.domain.request.AccountRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.activeai.integration.banking.domain.response.AccountBalanceResponse;
-import com.activeai.integration.banking.domain.response.DepositAccountBalanceResponse;
-import com.activeai.integration.banking.domain.response.LoanAccountBalanceResponse;
 import com.activeai.integration.banking.domain.response.AccountDetailResponse;
-import com.activeai.integration.banking.domain.response.DepositAccountDetailResponse;
-import com.activeai.integration.banking.domain.response.LoanAccountDetailResponse;
 import com.activeai.integration.banking.domain.response.AccountTransactionsResponse;
 import com.activeai.integration.banking.domain.response.AccountsResponse;
+import com.activeai.integration.banking.domain.response.DepositAccountBalanceResponse;
+import com.activeai.integration.banking.domain.response.DepositAccountDetailResponse;
 import com.activeai.integration.banking.domain.response.DepositAccountsResponse;
+import com.activeai.integration.banking.domain.response.LoanAccountBalanceResponse;
+import com.activeai.integration.banking.domain.response.LoanAccountDetailResponse;
 import com.activeai.integration.banking.domain.response.LoanAccountsResponse;
-import com.activeai.integration.banking.services.AccountsService;
-import com.activeai.integration.banking.services.AccountDetailsService;
 import com.activeai.integration.banking.services.AccountBalanceService;
+import com.activeai.integration.banking.services.AccountDetailsService;
+import com.activeai.integration.banking.services.AccountsService;
 import com.activeai.integration.banking.utils.ApplicationLogger;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 
 @Api(value = "Accounts Related APIs", description = "Shows API documentation regarding accounts APIs like current and savings account, loan accounts, deposit accounts")
@@ -30,6 +35,24 @@ public class AccountApiController {
   @Autowired private AccountsService accountsService;
   @Autowired private AccountDetailsService accountDetailsService;
   @Autowired private AccountBalanceService accountBalanceService;
+  
+  @Autowired
+  Environment env;
+  
+  /*
+  Return health check
+   */
+  @ApiOperation(value = "Returns health check for account api")
+  @RequestMapping(value = "/accounts/health", produces = {"application/json"}, method = RequestMethod.GET)
+  public ResponseEntity<String> healthCheck() {
+	ApplicationLogger.logInfo("Entering health chack API for accounts");
+	ApplicationLogger.logInfo("Redis host: {}", env.getProperty("REDIS_HOST"));
+	ApplicationLogger.logInfo("redis port: {}", env.getProperty("REDIS_PORT"));
+	ApplicationLogger.logInfo("redis DB: {}", env.getProperty("REDIS_DATABASE"));
+	ApplicationLogger.logInfo("is redis enabled: {}", env.getProperty("IS_REDIS_ENABLED"));
+	String response = "Account service is up and running";
+    return ResponseEntity.ok(response);
+  }
 
   /*
   Return Balance of Selected CASA Account
