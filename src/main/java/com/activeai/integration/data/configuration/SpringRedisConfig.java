@@ -12,11 +12,11 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 @Configuration
 public class SpringRedisConfig {
 
-  @Value("${redisPort:6379}") private int redisPort;
+  @Value("${REDIS_PORT:6379}") private int redisPort;
 
-  @Value("${dataBase:0}") private int dataBase;
+  @Value("${REDIS_DATABASE:0}") private int dataBase;
 
-  @Value("${redisHost:localhost}") private String redisHost;
+  @Value("${REDIS_HOST:localhost}") private String redisHost;
 
   @Bean public JedisConnectionFactory connectionFactory() {
     JedisConnectionFactory connectionFactory = new JedisConnectionFactory();

@@ -65,7 +65,7 @@ public class CardsService {
         ApplicationLogger.logInfo("Credit Cards Response Body Before Transformation :" + apiResponse.getBody());
         response = cardsResponseMapper.getManipulatedCardsResponse(apiResponse.getBody());
         // Caching Credit cards, Remove this later
-        if (CoreBankingUtil.isCacheEnabled()) {
+        if (CoreBankingUtil.isCacheEnabled) {
           cardServiceData.cacheCreditCardsResponse(coreBankingModel, customerId, response);
         }
         // Till this
