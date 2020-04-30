@@ -94,7 +94,7 @@ public class BillPaymentService {
             ApplicationLogger.logInfo("API Response status: " + apiResponse.getStatus() + " and response status text :" + apiResponse.getStatusText());
             if (StringUtils.isNotEmpty(apiResponse.getBody())) {
                 ApplicationLogger.logInfo("Bill Payment Confirm Response Body Before Transformation :" + apiResponse.getBody());
-                response = billpaymentResponseMapper.getManipulatedBillPaymentResponse(apiResponse.getBody());
+                response = billpaymentResponseMapper.getManipulatedBillPaymentResponse(apiResponse.getBody(), billPaymentRequest);
                 ApplicationLogger.logInfo("Bill Payment Confirm Response Body After Transformation :" + response);
             }
             return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));
