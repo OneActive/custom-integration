@@ -3,6 +3,7 @@ package com.activeai.integration.banking.domain.response;
 import com.activeai.integration.banking.constants.StatusEnum;
 import com.activeai.integration.banking.model.Payee;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class PayeesValidationResponse extends Response {
 
@@ -46,10 +47,6 @@ public class PayeesValidationResponse extends Response {
   }
 
   @Override public String toString() {
-    final StringBuilder sb = new StringBuilder("PayeesValidationResponse{");
-    sb.append("validPayee=").append(validPayee);
-    sb.append(", transactionStatus=").append(transactionStatus);
-    sb.append('}');
-    return sb.toString();
+    return new ToStringBuilder(this).append("validPayee", validPayee).append("transactionStatus", transactionStatus).toString();
   }
 }

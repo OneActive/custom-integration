@@ -2,8 +2,9 @@ package com.activeai.integration.banking.domain.response;
 
 import com.activeai.integration.banking.constants.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class InternationalUsageResponse extends Response{
+public class InternationalUsageResponse extends Response {
 
   @JsonProperty("referenceId")
   private String referenceId;
@@ -39,11 +40,8 @@ public class InternationalUsageResponse extends Response{
   }
 
   @Override public String toString() {
-    final StringBuilder sb = new StringBuilder("InternationalUsageResponse{");
-    sb.append("referenceId='").append(referenceId).append('\'');
-    sb.append(", status=").append(transactionStatus);
-    sb.append('}');
-    return sb.toString();
+    return new ToStringBuilder(this).append("referenceId", referenceId).append("transactionStatus", transactionStatus)
+        .append("isInternationalEnabled", isInternationalEnabled).toString();
   }
 }
 

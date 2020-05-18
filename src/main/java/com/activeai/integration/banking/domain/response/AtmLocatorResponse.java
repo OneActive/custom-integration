@@ -2,6 +2,7 @@ package com.activeai.integration.banking.domain.response;
 
 import com.activeai.integration.banking.model.AtmBranch;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
 
@@ -18,10 +19,8 @@ public class AtmLocatorResponse extends Response {
     this.atmBranches = atmBranches;
   }
 
-  @Override public String toString() {
-    final StringBuilder sb = new StringBuilder("LocatorResponse{");
-    sb.append("atmBranches=").append(atmBranches);
-    sb.append('}');
-    return sb.toString();
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("atmBranches", atmBranches).toString();
   }
 }

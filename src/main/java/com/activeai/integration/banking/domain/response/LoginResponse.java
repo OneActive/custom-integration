@@ -1,29 +1,18 @@
 package com.activeai.integration.banking.domain.response;
 
-import com.activeai.integration.banking.model.Result;
 import com.activeai.integration.banking.model.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
 
-public class LoginResponse {
-
-  @JsonProperty("result")
-  private Result result = null;
+public class LoginResponse extends Response {
 
   @JsonProperty("user")
   private User user;
 
   @JsonProperty("customerSegments")
   private List<String> customerSegments;
-
-  public Result getResult() {
-    return result;
-  }
-
-  public void setResult(Result result) {
-    this.result = result;
-  }
 
   public User getUser() {
     return user;
@@ -42,11 +31,6 @@ public class LoginResponse {
   }
 
   @Override public String toString() {
-    final StringBuffer sb = new StringBuffer("LoginResponse{");
-    sb.append("result=").append(result);
-    sb.append(", user=").append(user);
-    sb.append(", customerSegments=").append(customerSegments);
-    sb.append('}');
-    return sb.toString();
+    return new ToStringBuilder(this).append("user", user).append("customerSegments", customerSegments).toString();
   }
 }

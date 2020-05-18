@@ -1,50 +1,26 @@
 package com.activeai.integration.banking.domain.response;
 
-import java.util.List;
-import java.util.Objects;
-
-import javax.validation.Valid;
-
 import com.activeai.integration.banking.model.AccountTransaction;
-import com.activeai.integration.banking.model.Result;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.validation.annotation.Validated;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.validation.Valid;
+import java.util.List;
 
 
 /**
  * AccountTransactionsResponse
  */
 @Validated
-public class AccountTransactionsResponse {
-  @JsonProperty("result")
-  private Result result = null;
+public class AccountTransactionsResponse extends Response {
 
   @JsonProperty("accountTransactions")
   private List<AccountTransaction> accountTransactions;
 
-  public AccountTransactionsResponse result(Result result) {
-    this.result = result;
-    return this;
-  }
-
-  /**
-   * Get result
-   * 
-   * @return result
-   **/
-  @Valid
-  public Result getResult() {
-    return result;
-  }
-
-  public void setResult(Result result) {
-    this.result = result;
-  }
-
   /**
    * Get accountTransactions
-   * 
+   *
    * @return accountTransactions
    **/
   @Valid
@@ -56,44 +32,9 @@ public class AccountTransactionsResponse {
     this.accountTransactions = accountTransactions;
   }
 
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    AccountTransactionsResponse accountTransactionsResponse = (AccountTransactionsResponse) o;
-    return Objects.equals(this.result, accountTransactionsResponse.result)
-        && Objects.equals(this.accountTransactions, accountTransactionsResponse.accountTransactions);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(result, accountTransactions);
-  }
-
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class AccountTransactionsResponse {\n");
-
-    sb.append("    result: ").append(toIndentedString(result)).append("\n");
-    sb.append("    accountTransactions: ").append(toIndentedString(accountTransactions)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return new ToStringBuilder(this).append("accountTransactions", accountTransactions).toString();
   }
 }
 
