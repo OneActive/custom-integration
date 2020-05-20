@@ -8,19 +8,8 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class BlockCardResponse extends Response {
 
-  @JsonProperty("referenceId")
-  private String referenceId;
-
   @JsonProperty("status")
   private StatusEnum status;
-
-  public String getReferenceId() {
-    return referenceId;
-  }
-
-  public void setReferenceId(String referenceId) {
-    this.referenceId = referenceId;
-  }
 
   public StatusEnum getStatus() {
     return status;
@@ -30,8 +19,7 @@ public class BlockCardResponse extends Response {
     this.status = status;
   }
 
-  @Override
-  public String toString() {
-    return new ToStringBuilder(this).append("referenceId", referenceId).append("status", status).toString();
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("status", status).toString();
   }
 }

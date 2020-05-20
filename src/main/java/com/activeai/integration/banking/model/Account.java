@@ -94,7 +94,7 @@ public class Account {
    * To add extra params in the response
    */
   @JsonProperty("additionalProperties")
-  private Map<String,Object>additionalProperties = new HashMap<>();
+  private Map<String,Object> additionalProperties = new HashMap<>();
 
   public String getIfscCode() {
     return ifscCode;

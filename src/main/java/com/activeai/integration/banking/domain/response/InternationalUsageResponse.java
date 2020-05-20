@@ -6,9 +6,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class InternationalUsageResponse extends Response {
 
-  @JsonProperty("referenceId")
-  private String referenceId;
-
   @JsonProperty("transactionStatus")
   private StatusEnum transactionStatus;
 
@@ -23,14 +20,6 @@ public class InternationalUsageResponse extends Response {
     isInternationalEnabled = internationalEnabled;
   }
 
-  public String getReferenceId() {
-    return referenceId;
-  }
-
-  public void setReferenceId(String referenceId) {
-    this.referenceId = referenceId;
-  }
-
   public StatusEnum getTransactionStatus() {
     return transactionStatus;
   }
@@ -40,8 +29,8 @@ public class InternationalUsageResponse extends Response {
   }
 
   @Override public String toString() {
-    return new ToStringBuilder(this).append("referenceId", referenceId).append("transactionStatus", transactionStatus)
-        .append("isInternationalEnabled", isInternationalEnabled).toString();
+    return new ToStringBuilder(this).append("transactionStatus", transactionStatus).append("isInternationalEnabled", isInternationalEnabled)
+        .toString();
   }
 }
 
