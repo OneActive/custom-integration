@@ -1,8 +1,7 @@
 package com.activeai.integration.banking.domain.response;
 
-import com.activeai.integration.banking.constants.StatusEnum;
-import com.activeai.integration.banking.model.Result;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class BillPaymentResponse extends FundTransferResponse {
 
@@ -41,11 +40,7 @@ public class BillPaymentResponse extends FundTransferResponse {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("BillPaymentResponse{");
-        sb.append("billerName='").append(billerName).append('\'');
-        sb.append(", billDeskTransactionId='").append(billDeskTransactionId).append('\'');
-        sb.append(", pooledPayeeAccNumber='").append(pooledPayeeAccNumber).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return new ToStringBuilder(this).append("billerName", billerName).append("billDeskTransactionId", billDeskTransactionId)
+            .append("pooledPayeeAccNumber", pooledPayeeAccNumber).toString();
     }
 }

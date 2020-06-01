@@ -2,11 +2,12 @@ package com.activeai.integration.banking.domain.response;
 
 import com.activeai.integration.banking.model.LoanAccount;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
 
-public class LoanAccountsResponse extends Response{
+public class LoanAccountsResponse extends Response {
 
   @JsonProperty("loanAccounts")
   private List<LoanAccount> loanAccounts;
@@ -20,10 +21,8 @@ public class LoanAccountsResponse extends Response{
     this.loanAccounts = loanAccounts;
   }
 
-  @Override public String toString() {
-    final StringBuilder sb = new StringBuilder("LoanAccountsResponse{");
-    sb.append("loanAccounts=").append(loanAccounts);
-    sb.append('}');
-    return sb.toString();
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("loanAccounts", loanAccounts).toString();
   }
 }

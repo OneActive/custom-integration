@@ -2,6 +2,7 @@ package com.activeai.integration.banking.model;
 
 import com.activeai.integration.banking.constants.LocatorTypeEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class AtmBranch {
   private String fax;
 
   @JsonProperty("addtionalProperties")
-  private Map<String, String> addtionalProperties ;
+  private Map<String, Object> addtionalProperties;
 
   public LocatorTypeEnum getLocateResponseType() {
     return locateResponseType;
@@ -131,29 +132,18 @@ public class AtmBranch {
     this.fax = fax;
   }
 
-  public Map<String, String> getAddtionalProperties() {
+  public Map<String, Object> getAddtionalProperties() {
     return addtionalProperties;
   }
 
-  public void setAddtionalProperties(Map<String, String> addtionalProperties) {
+  public void setAddtionalProperties(Map<String, Object> addtionalProperties) {
     this.addtionalProperties = addtionalProperties;
   }
 
   @Override public String toString() {
-    final StringBuilder sb = new StringBuilder("AtmBranch{");
-    sb.append("locateResponseType=").append(locateResponseType);
-    sb.append(", address=").append(address);
-    sb.append(", name='").append(name).append('\'');
-    sb.append(", distanceUnit='").append(distanceUnit).append('\'');
-    sb.append(", distanceValue=").append(distanceValue);
-    sb.append(", geocodes=").append(geocodes);
-    sb.append(", pageIndex=").append(pageIndex);
-    sb.append(", listCount=").append(listCount);
-    sb.append(", operatingHours='").append(operatingHours).append('\'');
-    sb.append(", phoneNumber='").append(phoneNumber).append('\'');
-    sb.append(", fax='").append(fax).append('\'');
-    sb.append(", addtionalProperties=").append(addtionalProperties);
-    sb.append('}');
-    return sb.toString();
+    return new ToStringBuilder(this).append("locateResponseType", locateResponseType).append("address", address).append("name", name)
+        .append("distanceUnit", distanceUnit).append("distanceValue", distanceValue).append("geocodes", geocodes)
+        .append("pageIndex", pageIndex).append("listCount", listCount).append("operatingHours", operatingHours)
+        .append("phoneNumber", phoneNumber).append("fax", fax).append("addtionalProperties", addtionalProperties).toString();
   }
 }

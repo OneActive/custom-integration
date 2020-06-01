@@ -1,18 +1,18 @@
 package com.activeai.integration.banking.model;
 
-import java.util.Objects;
-
 import com.activeai.integration.banking.constants.CardIssuerEnum;
 import com.activeai.integration.banking.constants.CardStatusEnum;
 import com.activeai.integration.banking.constants.CardTypeEnum;
-import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.validation.annotation.Validated;
+
+import java.util.Map;
 
 /**
  * Card
  */
-@Validated
-public class Card {
+@Validated public class Card {
 
   @JsonProperty("productCode")
   private String productCode = null;
@@ -68,8 +68,8 @@ public class Card {
   @JsonProperty("availableCreditLimit")
   private Double availableCreditLimit = null;
 
- @JsonProperty("availableCash")
-  private Double availableCash=null;
+  @JsonProperty("availableCash")
+  private Double availableCash = null;
 
   @JsonProperty("temporaryCreditLimit")
   private Double temporaryCreditLimit = null;
@@ -163,6 +163,12 @@ public class Card {
    */
   @JsonProperty("availablePointBalance")
   private Double availablePointBalance;
+
+  /**
+   * Additional Properties
+   */
+  @JsonProperty("additionalProperties")
+  private Map<String, Object> additionalProperties;
 
   public Double getCreditLimit() {
     return creditLimit;
@@ -506,12 +512,15 @@ public class Card {
   public void setLastStatementBalance(Double lastStatementBalance) {
     this.lastStatementBalance = lastStatementBalance;
   }
+
   /**
    * available cash
    *
    * @return availableCash
    **/
-  public Double getAvailableCash() { return availableCash; }
+  public Double getAvailableCash() {
+    return availableCash;
+  }
 
   /**
    * cardName
@@ -659,7 +668,9 @@ public class Card {
   }
 
 
-  public void setAvailableCash(Double availableCash) { this.availableCash = availableCash; }
+  public void setAvailableCash(Double availableCash) {
+    this.availableCash = availableCash;
+  }
 
   public String getMaxCreditLimit() {
     return maxCreditLimit;
@@ -691,7 +702,8 @@ public class Card {
 
   /**
    * Getter and Setter Methods for isDebitable Flag
-   * @return
+   *
+   * @return isDebitable
    */
   public boolean isDebitable() {
     return isDebitable;
@@ -703,7 +715,8 @@ public class Card {
 
   /**
    * Getter and Setter for isCreditable Flag
-   * @return
+   *
+   * @return isCreditable
    */
   public boolean isCreditable() {
     return isCreditable;
@@ -713,69 +726,50 @@ public class Card {
     isCreditable = creditable;
   }
 
-    public Boolean getOverseasCardActivated() {
-        return overseasCardActivated;
-    }
+  public Boolean getOverseasCardActivated() {
+    return overseasCardActivated;
+  }
 
-    public Double getAvailablePointBalance() {
-        return availablePointBalance;
-    }
+  public Double getAvailablePointBalance() {
+    return availablePointBalance;
+  }
 
-    public void setAvailablePointBalance(Double availablePointBalance) {
-        this.availablePointBalance = availablePointBalance;
-    }
+  public void setAvailablePointBalance(Double availablePointBalance) {
+    this.availablePointBalance = availablePointBalance;
+  }
 
-    @Override public String toString() {
-        final StringBuilder sb = new StringBuilder("Card{");
-        sb.append("productCode='").append(productCode).append('\'');
-        sb.append(", bankName='").append(bankName).append('\'');
-        sb.append(", accountName='").append(accountName).append('\'');
-        sb.append(", cardType=").append(cardType);
-        sb.append(", displayCardNumber='").append(displayCardNumber).append('\'');
-        sb.append(", cardNumber='").append(cardNumber).append('\'');
-        sb.append(", accountId='").append(accountId).append('\'');
-        sb.append(", cardIssuer=").append(cardIssuer);
-        sb.append(", branchId='").append(branchId).append('\'');
-        sb.append(", branchName='").append(branchName).append('\'');
-        sb.append(", cardStatus=").append(cardStatus);
-        sb.append(", overseasCardActivated=").append(overseasCardActivated);
-        sb.append(", openingBalance=").append(openingBalance);
-        sb.append(", closingBalance=").append(closingBalance);
-        sb.append(", amountDue=").append(amountDue);
-        sb.append(", minimumPayment=").append(minimumPayment);
-        sb.append(", paymentDueDate='").append(paymentDueDate).append('\'');
-        sb.append(", availableCreditLimit=").append(availableCreditLimit);
-        sb.append(", availableCash=").append(availableCash);
-        sb.append(", temporaryCreditLimit=").append(temporaryCreditLimit);
-        sb.append(", permanentCreditLimit=").append(permanentCreditLimit);
-        sb.append(", lastStatementDate='").append(lastStatementDate).append('\'');
-        sb.append(", lastStatementBalance=").append(lastStatementBalance);
-        sb.append(", currencyCode='").append(currencyCode).append('\'');
-        sb.append(", expiryDate='").append(expiryDate).append('\'');
-        sb.append(", activationDate='").append(activationDate).append('\'');
-        sb.append(", branchAddress='").append(branchAddress).append('\'');
-        sb.append(", outStandingAmount=").append(outStandingAmount);
-        sb.append(", cardHolderName='").append(cardHolderName).append('\'');
-        sb.append(", cardName='").append(cardName).append('\'');
-        sb.append(", productType='").append(productType).append('\'');
-        sb.append(", maxDomesticATMLimit='").append(maxDomesticATMLimit).append('\'');
-        sb.append(", maxCreditLimit='").append(maxCreditLimit).append('\'');
-        sb.append(", maxCashLimit='").append(maxCashLimit).append('\'');
-        sb.append(", maxDomesticPOSLimit='").append(maxDomesticPOSLimit).append('\'');
-        sb.append(", domesticATMLimit='").append(domesticATMLimit).append('\'');
-        sb.append(", domesticPOSLimit='").append(domesticPOSLimit).append('\'');
-        sb.append(", maxInternationalATMLimit='").append(maxInternationalATMLimit).append('\'');
-        sb.append(", maxInternationalPOSLimit='").append(maxInternationalPOSLimit).append('\'');
-        sb.append(", internationalATMLimit='").append(internationalATMLimit).append('\'');
-        sb.append(", internationalPOSLimit='").append(internationalPOSLimit).append('\'');
-        sb.append(", creditLimit=").append(creditLimit);
-        sb.append(", cashLimit='").append(cashLimit).append('\'');
-        sb.append(", isInternationalEnabled=").append(isInternationalEnabled);
-        sb.append(", isDebitable=").append(isDebitable);
-        sb.append(", isCreditable=").append(isCreditable);
-        sb.append(", availablePointBalance=").append(availablePointBalance);
-        sb.append('}');
-        return sb.toString();
-    }
+  /**
+   * Get Additional Properties
+   *
+   * @return additionalProperties
+   **/
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+    this.additionalProperties = additionalProperties;
+  }
+
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("productCode", productCode).append("bankName", bankName).append("accountName", accountName)
+        .append("cardType", cardType).append("displayCardNumber", displayCardNumber).append("cardNumber", cardNumber)
+        .append("accountId", accountId).append("cardIssuer", cardIssuer).append("branchId", branchId).append("branchName", branchName)
+        .append("cardStatus", cardStatus).append("overseasCardActivated", overseasCardActivated).append("openingBalance", openingBalance)
+        .append("closingBalance", closingBalance).append("amountDue", amountDue).append("minimumPayment", minimumPayment)
+        .append("paymentDueDate", paymentDueDate).append("availableCreditLimit", availableCreditLimit)
+        .append("availableCash", availableCash).append("temporaryCreditLimit", temporaryCreditLimit)
+        .append("permanentCreditLimit", permanentCreditLimit).append("lastStatementDate", lastStatementDate)
+        .append("lastStatementBalance", lastStatementBalance).append("currencyCode", currencyCode).append("expiryDate", expiryDate)
+        .append("activationDate", activationDate).append("branchAddress", branchAddress).append("outStandingAmount", outStandingAmount)
+        .append("cardHolderName", cardHolderName).append("cardName", cardName).append("productType", productType)
+        .append("maxDomesticATMLimit", maxDomesticATMLimit).append("maxCreditLimit", maxCreditLimit).append("maxCashLimit", maxCashLimit)
+        .append("maxDomesticPOSLimit", maxDomesticPOSLimit).append("domesticATMLimit", domesticATMLimit)
+        .append("domesticPOSLimit", domesticPOSLimit).append("maxInternationalATMLimit", maxInternationalATMLimit)
+        .append("maxInternationalPOSLimit", maxInternationalPOSLimit).append("internationalATMLimit", internationalATMLimit)
+        .append("internationalPOSLimit", internationalPOSLimit).append("creditLimit", creditLimit).append("cashLimit", cashLimit)
+        .append("isInternationalEnabled", isInternationalEnabled).append("isDebitable", isDebitable).append("isCreditable", isCreditable)
+        .append("availablePointBalance", availablePointBalance).append("additionalProperties", additionalProperties).toString();
+  }
 }
 

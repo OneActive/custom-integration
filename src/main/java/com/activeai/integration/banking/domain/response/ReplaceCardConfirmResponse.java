@@ -1,4 +1,4 @@
 package com.activeai.integration.banking.domain.response;
 
-public class ReplaceCardConfirmResponse  extends  CardLimitResponse{
+public class ReplaceCardConfirmResponse extends CardLimitResponse {
 }

@@ -1,17 +1,17 @@
 package com.activeai.integration.banking.domain.response;
 
 import com.activeai.integration.banking.constants.StatusEnum;
-import com.activeai.integration.banking.model.Account;
 import com.activeai.integration.banking.model.DepositPlan;
 import com.activeai.integration.banking.model.Nominee;
-import com.activeai.integration.banking.model.Result;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@Validated public class DepositServiceResponse extends Response{
+@Validated
+public class DepositServiceResponse extends Response {
 
   /* tenure,amount,interest rate */
   @JsonProperty("depositPlans") private List<DepositPlan> depositPlans = null;
@@ -111,16 +111,9 @@ import java.util.List;
     this.FDAccountId = FDAccountId;
   }
 
-
   @Override public String toString() {
-    final StringBuilder sb = new StringBuilder("DepositServiceResponse{");
-    sb.append(", status=").append(status);
-    sb.append(", depositPlans=").append(depositPlans);
-    sb.append(", nominee=").append(nominee);
-    sb.append(", maturityInstruction=").append(maturityInstruction);
-    sb.append(", interestPayableFrequency=").append(interestPayableFrequency);
-    sb.append(", FDAccountId='").append(FDAccountId).append('\'');
-    sb.append('}');
-    return sb.toString();
+    return new ToStringBuilder(this).append("depositPlans", depositPlans).append("status", status).append("nominee", nominee)
+        .append("maturityInstruction", maturityInstruction).append("interestPayableFrequency", interestPayableFrequency)
+        .append("FDAccountId", FDAccountId).toString();
   }
 }
