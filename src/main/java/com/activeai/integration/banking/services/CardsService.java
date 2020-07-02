@@ -219,6 +219,7 @@ public class CardsService {
         response = cardsResponseMapper.getManipulatedCardsResponse(apiResponse.getBody());
         // Caching Debit cards, Remove this later
         ApplicationLogger.logInfo("Caching Debit cards");
+        response.getCards().forEach(c -> cardServiceData.updateDatesInCard(c));
         coreBankingModel.setDebitCardsResponse(response);
         coreBankingService.saveCoreBankingModel(coreBankingModel);
         // Till this
