@@ -108,7 +108,7 @@ public class CoreBankingController {
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
     coreBankingModel.setAccountTransactionsResponse(accountTransactionsResponseMap);
     coreBankingService.saveCoreBankingModel(coreBankingModel);
-    String response = "Re-initialised account response response successfully!";
+    String response = "Re-initialised account response successfully!";
     return ResponseEntity.ok(response);
   }
 
@@ -126,11 +126,11 @@ public class CoreBankingController {
       @RequestBody Map<String, CardTransactionsResponse> cardTransactionsResponseMap,
       @PathVariable(name = "customerId", required = true) String customerId,
       @PathVariable(name = "accountId", required = true) String accountId) {
-    ApplicationLogger.logInfo("Updating card response response...");
+    ApplicationLogger.logInfo("Updating card response...");
     CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
     coreBankingModel.setCardTransactionsResponse(cardTransactionsResponseMap);
     coreBankingService.saveCoreBankingModel(coreBankingModel);
-    String response = "Re-initialised card response response successfully";
+    String response = "Re-initialised card response successfully";
     return ResponseEntity.ok(response);
   }
 
