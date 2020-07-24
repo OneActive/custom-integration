@@ -7,6 +7,7 @@ import com.activeai.integration.banking.domain.request.BlockCardRequest;
 import com.activeai.integration.banking.domain.response.CardTransactionsResponse;
 import com.activeai.integration.banking.domain.response.CardsResponse;
 import com.activeai.integration.banking.mapper.response.CardsResponseMapper;
+import com.activeai.integration.banking.model.Card;
 import com.activeai.integration.banking.utils.ApplicationLogger;
 import com.activeai.integration.banking.utils.PropertyUtil;
 import com.activeai.integration.data.model.CoreBankingModel;
@@ -16,6 +17,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -43,12 +46,42 @@ public class CardServiceData {
     coreBankingModel.setCreditCardsResponse(cardsResponse);
     Map<String, CardTransactionsResponse> cardTransactionsResponseMap = new HashMap<>();
     ApplicationLogger.logInfo("Caching Credit cards Transactions");
-    cardsResponse.getCards().stream().forEach(c -> {
+    cardsResponse.getCards().forEach(c -> {
+      updateDatesInCreditCard(c);
       CardTransactionsResponse cardTransactionsResponse = getCardTransactions(customerId, c.getAccountId());
       cardTransactionsResponseMap.put(c.getAccountId(), cardTransactionsResponse);
     });
     coreBankingModel.setCardTransactionsResponse(cardTransactionsResponseMap);
     coreBankingService.saveCoreBankingModel(coreBankingModel);
+  }
+
+  /**
+   * Update date in credit cards always latest
+   *
+   * @param c
+   */
+  private void updateDatesInCreditCard(Card c) {
+    updateDatesInCard(c);
+    LocalDate currentDate = LocalDate.now();
+    LocalDate requiredDate = CoreBankingService.getRandomDate(currentDate, currentDate.plusMonths(1));
+    c.setPaymentDueDate(CoreBankingService.getLocalDateAsString(requiredDate, null));
+    requiredDate = CoreBankingService.getRandomDate(currentDate.minusMonths(1), currentDate);
+    c.setLastStatementDate(CoreBankingService.getLocalDateAsString(requiredDate, null));
+  }
+
+  /**
+   * Update date in cards always latest
+   * @param c
+   */
+  public void updateDatesInCard(Card c){
+    LocalDate currentDate = LocalDate.now();
+    LocalDate requiredDate = CoreBankingService.getRandomDate(currentDate, currentDate.plusMonths(1));
+    c.setPaymentDueDate(CoreBankingService.getLocalDateAsString(requiredDate, null));
+    requiredDate = CoreBankingService.getRandomDate(currentDate.minusYears(3), currentDate.minusYears(1));
+    c.setActivationDate(CoreBankingService.getLocalDateAsString(requiredDate, null));
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(CoreBankingService.API_DATE_PATTERN);
+    LocalDate cardActivationDate = LocalDate.parse(c.getActivationDate(), formatter);
+    c.setExpiryDate(CoreBankingService.getLocalDateAsString(cardActivationDate.plusYears(5), null));
   }
 
   /**
@@ -129,6 +162,11 @@ public class CardServiceData {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Account Transactions Response Body Before Transformation :" + apiResponse.getBody());
         response = cardsResponseMapper.getManipulatedCardTransactionsResponse(apiResponse.getBody());
+        response.getCardTransactions().forEach(t -> {
+          LocalDate date = LocalDate.now();
+          LocalDate txnDate = CoreBankingService.getRandomDate(date.minusMonths(2), date);
+          t.setTxnDate(CoreBankingService.getLocalDateAsString(txnDate, null));
+        });
         ApplicationLogger.logInfo("Account Transactions Response Body After Transformation :" + response);
       }
     } catch (Exception e) {
