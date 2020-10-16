@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.activeai</groupId>
 	<artifactId>banking-integration</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>banking-integration</name>
 	<description>Banking integration micro service</description>
 	<packaging>war</packaging>

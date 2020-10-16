@@ -1,6 +1,9 @@
 package com.activeai.integration.banking.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import java.util.Map;
 
 public class DepositPlan {
 
@@ -19,6 +22,10 @@ public class DepositPlan {
   /*total min amount to be deposited*/
   @JsonProperty("minAmount")
   private Double minAmount = null;
+
+  /*additional Properties*/
+  @JsonProperty("additionalProperties")
+  private Map<String,Object> additionalProperties;
 
   public Double getAmount() {
     return amount;
@@ -61,14 +68,17 @@ public class DepositPlan {
     this.minAmount = minAmount;
   }
 
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+    this.additionalProperties = additionalProperties;
+  }
+
   @Override public String toString() {
-    final StringBuilder sb = new StringBuilder("DepositPlan{");
-    sb.append("amount=").append(amount);
-    sb.append(", tenure='").append(tenure).append('\'');
-    sb.append(", interestRate='").append(interestRate).append('\'');
-    sb.append(", maturityAmount=").append(maturityAmount).append('\'');
-    sb.append(", minAmount=").append(minAmount);
-    sb.append('}');
-    return sb.toString();
+    return new ToStringBuilder(this).append("amount", amount).append("tenure", tenure).append("interestRate", interestRate)
+        .append("maturityAmount", maturityAmount).append("minAmount", minAmount).append("additionalProperties", additionalProperties)
+        .toString();
   }
 }

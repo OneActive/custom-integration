@@ -12,10 +12,9 @@ import java.util.List;
 public class DepositAccountsResponse extends Response {
 
   @JsonProperty("depositAccounts")
- private List<DepositAccount> depositAccounts;
+  private List<DepositAccount> depositAccounts;
 
-  @Valid
-  public List<DepositAccount> getDepositAccounts() {
+  @Valid public List<DepositAccount> getDepositAccounts() {
     return depositAccounts;
   }
 

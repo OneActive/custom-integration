@@ -16,9 +16,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service("accountServiceData")
 public class AccountServiceData {
@@ -153,6 +157,11 @@ public class AccountServiceData {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Account Transactions Response Body Before Transformation :" + apiResponse.getBody());
         response = accountsResponseMapper.getManipulatedAccountTransactionsResponse(apiResponse.getBody());
+        response.getAccountTransactions().forEach(t->{
+          LocalDate date = LocalDate.now();
+          LocalDate txnDate = CoreBankingService.getRandomDate(date.minusMonths(2), date);
+          t.setTxnDate(CoreBankingService.getLocalDateAsString(txnDate, null));
+        });
         ApplicationLogger.logInfo("Account Transactions Response Body After Transformation :" + response);
       }
     } catch (Exception e) {

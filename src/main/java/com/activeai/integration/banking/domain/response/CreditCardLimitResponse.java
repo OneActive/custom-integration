@@ -1,27 +1,15 @@
 package com.activeai.integration.banking.domain.response;
 
 import com.activeai.integration.banking.model.Card;
-import com.activeai.integration.banking.model.Result;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
 
-public class CreditCardLimitResponse {
-
-    @JsonProperty("result")
-    private Result result = null;
-
+public class CreditCardLimitResponse extends Response {
 
     @JsonProperty("card")
     private List<Card> card = null;
-
-    public Result getResult() {
-        return result;
-    }
-
-    public void setResult(Result result) {
-        this.result = result;
-    }
 
     public List<Card> getCard() {
         return card;
@@ -31,11 +19,8 @@ public class CreditCardLimitResponse {
         this.card = card;
     }
 
-    @Override public String toString() {
-        final StringBuilder sb = new StringBuilder("CreditCardLimitResponse{");
-        sb.append("result=").append(result);
-        sb.append(", card=").append(card);
-        sb.append('}');
-        return sb.toString();
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("card", card).toString();
     }
 }

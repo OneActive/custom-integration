@@ -1,12 +1,11 @@
 package com.activeai.integration.banking.domain.response;
 
 import com.activeai.integration.banking.model.OneTimeTransferInput;
-import com.activeai.integration.banking.model.Result;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class OneTimeTransferResponse  extends Response{
+public class OneTimeTransferResponse extends Response {
 
   /* List of oneTimeTransferInput*/
   @JsonProperty("oneTimeTransferInputs")

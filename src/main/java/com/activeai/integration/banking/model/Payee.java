@@ -1,14 +1,13 @@
 package com.activeai.integration.banking.model;
 
-import java.util.Objects;
-
-import javax.validation.Valid;
-
 import com.activeai.integration.banking.constants.PayeeStatusEnum;
 import com.activeai.integration.banking.constants.PayeeTypeEnum;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.validation.annotation.Validated;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.validation.Valid;
+import java.util.Map;
 
 /**
  * Payee
@@ -54,6 +53,9 @@ public class Payee {
 
   @JsonProperty("payeeType")
   private PayeeTypeEnum payeeType = null;
+
+  @JsonProperty("additionalProperties")
+  private Map<String,Object> additionalProperties;
 
   public String getPayeeId() {
     return payeeId;
@@ -229,60 +231,25 @@ public class Payee {
     this.payeeType = payeeType;
   }
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Payee payee = (Payee) o;
-    return Objects.equals(this.payeeId, payee.payeeId) && Objects.equals(this.payeeName, payee.payeeName)
-        && Objects.equals(this.payeeNickName, payee.payeeNickName) && Objects.equals(this.payeeBank, payee.payeeBank)
-        && Objects.equals(this.payeeBankBranch, payee.payeeBankBranch) && Objects.equals(this.payeeBankIFSC, payee.payeeBankIFSC)
-        && Objects.equals(this.payeeBankSWIFT, payee.payeeBankSWIFT) && Objects.equals(this.payeeAccountNo, payee.payeeAccountNo)
-        && Objects.equals(this.payeeMaskedAccountNo, payee.payeeMaskedAccountNo)
-        && Objects.equals(this.payeeAccountId, payee.payeeAccountId) && Objects.equals(this.currency, payee.currency)
-        && Objects.equals(this.status, payee.status) && Objects.equals(this.payeeType, payee.payeeType);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(payeeId, payeeName, payeeNickName, payeeBank, payeeBankBranch, payeeBankIFSC, payeeBankSWIFT, payeeAccountNo,
-        payeeMaskedAccountNo, payeeAccountId, currency, status, payeeType);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Payee {\n");
-
-    sb.append("    payeeId: ").append(toIndentedString(payeeId)).append("\n");
-    sb.append("    payeeName: ").append(toIndentedString(payeeName)).append("\n");
-    sb.append("    payeeNickName: ").append(toIndentedString(payeeNickName)).append("\n");
-    sb.append("    payeeBank: ").append(toIndentedString(payeeBank)).append("\n");
-    sb.append("    payeeBankBranch: ").append(toIndentedString(payeeBankBranch)).append("\n");
-    sb.append("    payeeBankIFSC: ").append(toIndentedString(payeeBankIFSC)).append("\n");
-    sb.append("    payeeBankSWIFT: ").append(toIndentedString(payeeBankSWIFT)).append("\n");
-    sb.append("    payeeAccountNo: ").append(toIndentedString(payeeAccountNo)).append("\n");
-    sb.append("    payeeMaskedAccountNo: ").append(toIndentedString(payeeMaskedAccountNo)).append("\n");
-    sb.append("    payeeAccountId: ").append(toIndentedString(payeeAccountId)).append("\n");
-    sb.append("    currency: ").append(toIndentedString(currency)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    payeeType: ").append(toIndentedString(payeeType)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * get Additional Properties
+   *
+   * @return additionalProperties
    */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+    this.additionalProperties = additionalProperties;
+  }
+
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("payeeId", payeeId).append("payeeName", payeeName).append("payeeNickName", payeeNickName)
+        .append("payeeBank", payeeBank).append("payeeBankBranch", payeeBankBranch).append("payeeBankIFSC", payeeBankIFSC)
+        .append("payeeBankSWIFT", payeeBankSWIFT).append("payeeAccountNo", payeeAccountNo)
+        .append("payeeMaskedAccountNo", payeeMaskedAccountNo).append("payeeAccountId", payeeAccountId).append("currency", currency)
+        .append("status", status).append("payeeType", payeeType).append("additionalProperties", additionalProperties).toString();
   }
 }
 

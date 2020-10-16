@@ -5,10 +5,12 @@ import com.activeai.integration.banking.constants.AccountStatusEnum;
 import com.activeai.integration.banking.constants.AccountTypeEnum;
 import com.activeai.integration.banking.constants.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Account
@@ -87,6 +89,12 @@ public class Account {
    */
   @JsonProperty("isCreditable")
   private boolean isCreditable;
+
+  /**
+   * To add extra params in the response
+   */
+  @JsonProperty("additionalProperties")
+  private Map<String,Object> additionalProperties = new HashMap<>();
 
   public String getIfscCode() {
     return ifscCode;
@@ -329,78 +337,28 @@ public class Account {
     isCreditable = creditable;
   }
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Account account = (Account) o;
-    return Objects.equals(this.productCode, account.productCode)
-        && Objects.equals(this.product, account.product) && Objects.equals(this.accountType, account.accountType)
-        && Objects.equals(this.product, account.product) && Objects.equals(this.accountName, account.accountName)
-        && Objects.equals(this.product, account.product) && Objects.equals(this.bankName, account.bankName)
-        && Objects.equals(this.displayAccountNumber, account.displayAccountNumber)
-        && Objects.equals(this.accountNumber, account.accountNumber) && Objects.equals(this.accountId, account.accountId)
-        && Objects.equals(this.branchId, account.branchId) && Objects.equals(this.branchName, account.branchName)
-        && Objects.equals(this.status, account.status) && Objects.equals(this.openingDate, account.openingDate)
-        && Objects.equals(this.lastStatementDate, account.lastStatementDate)
-        && Objects.equals(this.leavesCount, account.leavesCount)
-        && Objects.equals(this.referenceId, account.referenceId)
-        && Objects.equals(this.transactionStatus, account.transactionStatus)
-        && Objects.equals(this.lastStatementBalance, account.lastStatementBalance) && Objects.equals(this.balance, account.balance)
-        && Objects.equals(this.isDebitable, account.isDebitable)
-        && Objects.equals(this.isCreditable, account.isCreditable);
-
-
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(productCode, product,accountName, bankName, accountType, displayAccountNumber, accountNumber, accountId, branchId, branchName, status,
-        openingDate, lastStatementDate, lastStatementBalance, balance, leavesCount, referenceId, transactionStatus,isCreditable,isDebitable);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Account {\n");
-
-    sb.append("    productCode: ").append(toIndentedString(productCode)).append("\n");
-    sb.append("    product: ").append(toIndentedString(product)).append("\n");
-    sb.append("    accountName: ").append(toIndentedString(accountName)).append("\n");
-    sb.append("    bankName: ").append(toIndentedString(bankName)).append("\n");
-    sb.append("    accountType: ").append(toIndentedString(accountType)).append("\n");
-    sb.append("    displayAccountNumber: ").append(toIndentedString(displayAccountNumber)).append("\n");
-    sb.append("    accountNumber: ").append(toIndentedString(accountNumber)).append("\n");
-    sb.append("    accountId: ").append(toIndentedString(accountId)).append("\n");
-    sb.append("    branchId: ").append(toIndentedString(branchId)).append("\n");
-    sb.append("    branchName: ").append(toIndentedString(branchName)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    openingDate: ").append(toIndentedString(openingDate)).append("\n");
-    sb.append("    lastStatementDate: ").append(toIndentedString(lastStatementDate)).append("\n");
-    sb.append("    lastStatementBalance: ").append(toIndentedString(lastStatementBalance)).append("\n");
-    sb.append("    balance: ").append(toIndentedString(balance)).append("\n");
-    sb.append("    branchAddress: ").append(toIndentedString(branchAddress)).append("\n");
-    sb.append("    leavesCount: ").append(toIndentedString(leavesCount)).append("\n");
-    sb.append("    referenceId: ").append(toIndentedString(referenceId)).append("\n");
-    sb.append("    transactionStatus: ").append(toIndentedString(transactionStatus)).append("\n");
-    sb.append("    isDebitable: ").append(toIndentedString(isDebitable)).append("\n");
-    sb.append("    isCreditable: ").append(toIndentedString(isCreditable)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+   * Get Additional Properties
+   *
+   * @return additionalProperties
+   **/
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+    this.additionalProperties = additionalProperties;
+  }
+
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("productCode", productCode).append("product", product).append("bankName", bankName)
+        .append("accountName", accountName).append("accountType", accountType).append("displayAccountNumber", displayAccountNumber)
+        .append("accountNumber", accountNumber).append("accountId", accountId).append("branchId", branchId).append("branchName", branchName)
+        .append("status", status).append("openingDate", openingDate).append("lastStatementDate", lastStatementDate)
+        .append("lastStatementBalance", lastStatementBalance).append("balance", balance).append("branchAddress", branchAddress)
+        .append("ifscCode", ifscCode).append("leavesCount", leavesCount).append("referenceId", referenceId)
+        .append("transactionStatus", transactionStatus).append("isDebitable", isDebitable).append("isCreditable", isCreditable)
+        .append("additionalProperties", additionalProperties).toString();
   }
 }
 

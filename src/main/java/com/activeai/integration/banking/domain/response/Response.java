@@ -1,15 +1,14 @@
 package com.activeai.integration.banking.domain.response;
 
-import java.util.Objects;
+import com.activeai.integration.banking.model.Result;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
-import com.activeai.integration.banking.constants.StatusEnum;
-import com.activeai.integration.banking.model.Result;
-import org.springframework.validation.annotation.Validated;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Response
@@ -21,7 +20,10 @@ public class Response {
   private Result result = null;
 
   @JsonProperty("referenceId")
-  private String referenceId= null;
+  private String referenceId = null;
+
+  @JsonProperty("additionalProperties")
+  private Map<String, Object> additionalProperties = new HashMap<>();
 
   public Response result(Result result) {
     this.result = result;
@@ -30,7 +32,7 @@ public class Response {
 
   /**
    * Get result
-   * 
+   *
    * @return result
    **/
   @NotNull
@@ -53,42 +55,23 @@ public class Response {
     this.referenceId = referenceId;
   }
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Response response = (Response) o;
-    return Objects.equals(this.result, response.result);
+  /**
+   * Get Additional Properties
+   *
+   * @return additionalProperties
+   **/
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(result);
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+    this.additionalProperties = additionalProperties;
   }
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Response {\n");
-
-    sb.append("    result: ").append(toIndentedString(result)).append("\n");
-    sb.append("    referenceId: ").append(toIndentedString(referenceId)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return new ToStringBuilder(this).append("result", result).append("referenceId", referenceId)
+        .append("additionalProperties", additionalProperties).toString();
   }
 }
 

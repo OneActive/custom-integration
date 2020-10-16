@@ -1,9 +1,11 @@
 package com.activeai.integration.banking.model;
 
+import java.util.Map;
 import java.util.Objects;
 
 import com.activeai.integration.banking.constants.CardTypeEnum;
 import com.activeai.integration.banking.constants.TransactionTypeEnum;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -66,6 +68,9 @@ public class CardTransaction {
 
   @JsonProperty("emiEligibility")
   private String emiEligibility;
+
+  @JsonProperty("additionalProperties")
+  private Map<String, Object> additionalProperties;
 
   public String getTransactionId() {
     return transactionId;
@@ -211,28 +216,22 @@ public class CardTransaction {
     this.emiEligibility = emiEligibility;
   }
 
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+    this.additionalProperties = additionalProperties;
+  }
+
   @Override public String toString() {
-    final StringBuilder sb = new StringBuilder("CardTransaction{");
-    sb.append("transactionId='").append(transactionId).append('\'');
-    sb.append(", accountId='").append(accountId).append('\'');
-    sb.append(", accountNumber='").append(accountNumber).append('\'');
-    sb.append(", txnDate='").append(txnDate).append('\'');
-    sb.append(", description='").append(description).append('\'');
-    sb.append(", category='").append(category).append('\'');
-    sb.append(", amount=").append(amount);
-    sb.append(", currency='").append(currency).append('\'');
-    sb.append(", transactionType=").append(transactionType);
-    sb.append(", cardType=").append(cardType);
-    sb.append(", foreignTxnAmount=").append(foreignTxnAmount);
-    sb.append(", foreignTxnCurrency='").append(foreignTxnCurrency).append('\'');
-    sb.append(", foreignTxnExchangeRate=").append(foreignTxnExchangeRate);
-    sb.append(", referenceId='").append(referenceId).append('\'');
-    sb.append(", merchantName='").append(merchantName).append('\'');
-    sb.append(", categoryType='").append(categoryType).append('\'');
-    sb.append(", categorySubType='").append(categorySubType).append('\'');
-    sb.append(", emiEligibility='").append(emiEligibility).append('\'');
-    sb.append('}');
-    return sb.toString();
+    return new ToStringBuilder(this).append("transactionId", transactionId).append("accountId", accountId)
+        .append("accountNumber", accountNumber).append("txnDate", txnDate).append("description", description).append("category", category)
+        .append("amount", amount).append("currency", currency).append("transactionType", transactionType).append("cardType", cardType)
+        .append("foreignTxnAmount", foreignTxnAmount).append("foreignTxnCurrency", foreignTxnCurrency)
+        .append("foreignTxnExchangeRate", foreignTxnExchangeRate).append("referenceId", referenceId).append("merchantName", merchantName)
+        .append("categoryType", categoryType).append("categorySubType", categorySubType).append("emiEligibility", emiEligibility)
+        .append("additionalProperties", additionalProperties).toString();
   }
 }
 

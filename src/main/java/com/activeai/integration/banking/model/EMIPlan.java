@@ -1,6 +1,9 @@
 package com.activeai.integration.banking.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import java.util.Map;
 
 public class EMIPlan {
 
@@ -21,6 +24,8 @@ public class EMIPlan {
   @JsonProperty("tenure") private Tenure tenure;
 
   @JsonProperty("emiAmount") private Double emiAmount;
+
+  @JsonProperty("additionalProperties") private Map<String,Object> additionalProperties;
 
   public Double getAmount() {
     return amount;
@@ -86,17 +91,17 @@ public class EMIPlan {
     this.emiAmount = emiAmount;
   }
 
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+    this.additionalProperties = additionalProperties;
+  }
+
   @Override public String toString() {
-    final StringBuilder sb = new StringBuilder("EMIPlan{");
-    sb.append("amount=").append(amount);
-    sb.append(", interestRate='").append(interestRate).append('\'');
-    sb.append(", processingFee=").append(processingFee);
-    sb.append(", gst=").append(gst);
-    sb.append(", totalAmount=").append(totalAmount);
-    sb.append(", transactionSerialNumber='").append(transactionSerialNumber).append('\'');
-    sb.append(", tenure=").append(tenure);
-    sb.append(", emiAmount=").append(emiAmount);
-    sb.append('}');
-    return sb.toString();
+    return new ToStringBuilder(this).append("amount", amount).append("interestRate", interestRate).append("processingFee", processingFee)
+        .append("gst", gst).append("totalAmount", totalAmount).append("transactionSerialNumber", transactionSerialNumber)
+        .append("tenure", tenure).append("emiAmount", emiAmount).append("additionalProperties", additionalProperties).toString();
   }
 }
