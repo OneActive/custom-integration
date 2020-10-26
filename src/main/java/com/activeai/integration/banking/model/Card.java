@@ -1,110 +1,39 @@
 package com.activeai.integration.banking.model;
 
-import java.util.Date;
-import java.util.Objects;
-
-import javax.validation.Valid;
-
+import com.activeai.integration.banking.constants.CardIssuerEnum;
+import com.activeai.integration.banking.constants.CardStatusEnum;
+import com.activeai.integration.banking.constants.CardTypeEnum;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.validation.annotation.Validated;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Map;
 
 /**
  * Card
  */
-@Validated
-public class Card {
-
-  @JsonProperty("category")
-  private String category = null;
+@Validated public class Card {
 
   @JsonProperty("productCode")
   private String productCode = null;
 
-  @JsonProperty("product")
-  private String product = null;
+  @JsonProperty("bankName")
+  private String bankName;
 
-  /**
-   * Type of card
-   */
-  public enum TypeEnum {
-    CREDIT("CREDIT"),
+  @JsonProperty("accountName")
+  private String accountName;
 
-    DEBIT("DEBIT"),
+  @JsonProperty("cardType")
+  private CardTypeEnum cardType = null;
 
-    FOREX("FOREX");
+  @JsonProperty("displayCardNumber")
+  private String displayCardNumber = null;
 
-    private String value;
-
-    TypeEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static TypeEnum fromValue(String text) {
-      for (TypeEnum b : TypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-
-  @JsonProperty("type")
-  private TypeEnum type = null;
-
-  @JsonProperty("displayAccountNumber")
-  private String displayAccountNumber = null;
-
-  @JsonProperty("accountNumber")
-  private String accountNumber = null;
+  @JsonProperty("cardNumber")
+  private String cardNumber = null;
 
   @JsonProperty("accountId")
   private String accountId = null;
-
-  /**
-   * Card issues like visa, master card, amex, Diners
-   */
-  public enum CardIssuerEnum {
-    VISA("Visa"),
-
-    MASTER_CARD("Master Card"),
-
-    AMEX("AMEX"),
-
-    DINERS("Diners");
-
-    private String value;
-
-    CardIssuerEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static CardIssuerEnum fromValue(String text) {
-      for (CardIssuerEnum b : CardIssuerEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
 
   @JsonProperty("cardIssuer")
   private CardIssuerEnum cardIssuer = null;
@@ -115,46 +44,11 @@ public class Card {
   @JsonProperty("branchName")
   private String branchName = null;
 
-  /**
-   * Account status dormant / active / closed / blocker
-   */
-  public enum StatusEnum {
-    ACTIVE("ACTIVE"),
+  @JsonProperty("cardStatus")
+  private CardStatusEnum cardStatus = null;
 
-    INACTIVE("INACTIVE"),
-
-    CLOSED("CLOSED"),
-
-    BLOCKED("BLOCKED");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String text) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-
-  @JsonProperty("status")
-  private StatusEnum status = null;
-
-  @JsonProperty("oversearCardActivated")
-  private Boolean oversearCardActivated = null;
+  @JsonProperty("overseasCardActivated")
+  private Boolean overseasCardActivated = null;
 
   @JsonProperty("openingBalance")
   private Double openingBalance = null;
@@ -169,13 +63,13 @@ public class Card {
   private Double minimumPayment = null;
 
   @JsonProperty("paymentDueDate")
-  private Date paymentDueDate = null;
-
-  @JsonProperty("creditLimit")
-  private Double creditLimit = null;
+  private String paymentDueDate = null;
 
   @JsonProperty("availableCreditLimit")
   private Double availableCreditLimit = null;
+
+  @JsonProperty("availableCash")
+  private Double availableCash = null;
 
   @JsonProperty("temporaryCreditLimit")
   private Double temporaryCreditLimit = null;
@@ -184,27 +78,168 @@ public class Card {
   private Double permanentCreditLimit = null;
 
   @JsonProperty("lastStatementDate")
-  private Date lastStatementDate = null;
+  private String lastStatementDate = null;
 
   @JsonProperty("lastStatementBalance")
   private Double lastStatementBalance = null;
 
-  public Card category(String category) {
-    this.category = category;
-    return this;
-  }
+  @JsonProperty("currencyCode")
+  private String currencyCode;
+
+  @JsonProperty("expiryDate")
+  private String expiryDate;
+
+  @JsonProperty("activationDate")
+  private String activationDate;
+
+  @JsonProperty("branchAddress")
+  private String branchAddress;
+
+  @JsonProperty("outStandingAmount")
+  private Double outStandingAmount;
+
+  @JsonProperty("cardHolderName")
+  private String cardHolderName;
+
+  @JsonProperty("cardName")
+  private String cardName = null;
+
+  @JsonProperty("productType")
+  private String productType = null;
+
+  @JsonProperty("maxDomesticATMLimit")
+  private String maxDomesticATMLimit = null;
+
+  @JsonProperty("maxCreditLimit")
+  private String maxCreditLimit = null;
+
+  @JsonProperty("maxCashLimit")
+  private String maxCashLimit = null;
+
+  @JsonProperty("maxDomesticPOSLimit")
+  private String maxDomesticPOSLimit = null;
+
+  @JsonProperty("domesticATMLimit")
+  private String domesticATMLimit = null;
+
+  @JsonProperty("domesticPOSLimit")
+  private String domesticPOSLimit = null;
+
+  @JsonProperty("maxInternationalATMLimit")
+  private String maxInternationalATMLimit;
+
+  @JsonProperty("maxInternationalPOSLimit")
+  private String maxInternationalPOSLimit;
+
+  @JsonProperty("internationalATMLimit")
+  private String internationalATMLimit;
+
+  @JsonProperty("internationalPOSLimit")
+  private String internationalPOSLimit;
+
+  @JsonProperty("creditLimit")
+  private Double creditLimit = null;
+
+  @JsonProperty("cashLimit")
+  private String cashLimit = null;
+
+  @JsonProperty("isInternationalEnabled")
+  private boolean isInternationalEnabled;
 
   /**
-   * category like CARD
-   * 
-   * @return category
-   **/
-  public String getCategory() {
-    return category;
+   * To make Card Debitable set isDebitable as true
+   */
+  @JsonProperty("isDebitable")
+  private boolean isDebitable;
+
+  /**
+   * To make Card Creditable set isCreditable as true
+   */
+  @JsonProperty("isCreditable")
+  private boolean isCreditable;
+
+  /**
+   * Available Point Balance.
+   */
+  @JsonProperty("availablePointBalance")
+  private Double availablePointBalance;
+
+  /**
+   * Additional Properties
+   */
+  @JsonProperty("additionalProperties")
+  private Map<String, Object> additionalProperties;
+
+  public Double getCreditLimit() {
+    return creditLimit;
   }
 
-  public void setCategory(String category) {
-    this.category = category;
+  public String getCardHolderName() {
+    return cardHolderName;
+  }
+
+  public void setCardHolderName(String cardHolderName) {
+    this.cardHolderName = cardHolderName;
+  }
+
+  public Double getOutStandingAmount() {
+    return outStandingAmount;
+  }
+
+  public void setOutStandingAmount(Double outStandingAmount) {
+    this.outStandingAmount = outStandingAmount;
+  }
+
+  public String getBranchAddress() {
+    return branchAddress;
+  }
+
+  public void setBranchAddress(String branchAddress) {
+    this.branchAddress = branchAddress;
+  }
+
+  public String getLastStatementDate() {
+    return lastStatementDate;
+  }
+
+  public String getExpiryDate() {
+    return expiryDate;
+  }
+
+  public void setExpiryDate(String expiryDate) {
+    this.expiryDate = expiryDate;
+  }
+
+  public String getActivationDate() {
+    return activationDate;
+  }
+
+  public void setActivationDate(String activationDate) {
+    this.activationDate = activationDate;
+  }
+
+  public String getCurrencyCode() {
+    return currencyCode;
+  }
+
+  public void setCurrencyCode(String currencyCode) {
+    this.currencyCode = currencyCode;
+  }
+
+  public String getBankName() {
+    return bankName;
+  }
+
+  public void setBankName(String bankName) {
+    this.bankName = bankName;
+  }
+
+  public String getAccountName() {
+    return accountName;
+  }
+
+  public void setAccountName(String accountName) {
+    this.accountName = accountName;
   }
 
   public Card productCode(String productCode) {
@@ -214,7 +249,7 @@ public class Card {
 
   /**
    * Product code
-   * 
+   *
    * @return productCode
    **/
   public String getProductCode() {
@@ -225,86 +260,48 @@ public class Card {
     this.productCode = productCode;
   }
 
-  public Card product(String product) {
-    this.product = product;
-    return this;
-  }
-
-  /**
-   * Product name
-   * 
-   * @return product
-   **/
-  public String getProduct() {
-    return product;
-  }
-
-  public void setProduct(String product) {
-    this.product = product;
-  }
-
-  public Card type(TypeEnum type) {
-    this.type = type;
-    return this;
-  }
-
   /**
    * Type of card
-   * 
-   * @return type
+   *
+   * @return cardType
    **/
-  public TypeEnum getType() {
-    return type;
+  public CardTypeEnum getCardType() {
+    return cardType;
   }
 
-  public void setType(TypeEnum type) {
-    this.type = type;
-  }
-
-  public Card displayAccountNumber(String displayAccountNumber) {
-    this.displayAccountNumber = displayAccountNumber;
-    return this;
+  public void setCardType(CardTypeEnum cardType) {
+    this.cardType = cardType;
   }
 
   /**
    * Display Account number (in masked form)
-   * 
-   * @return displayAccountNumber
+   *
+   * @return displayCardNumber
    **/
-  public String getDisplayAccountNumber() {
-    return displayAccountNumber;
+  public String getDisplayCardNumber() {
+    return displayCardNumber;
   }
 
-  public void setDisplayAccountNumber(String displayAccountNumber) {
-    this.displayAccountNumber = displayAccountNumber;
-  }
-
-  public Card accountNumber(String accountNumber) {
-    this.accountNumber = accountNumber;
-    return this;
+  public void setDisplayCardNumber(String displayCardNumber) {
+    this.displayCardNumber = displayCardNumber;
   }
 
   /**
    * Display Account number
-   * 
-   * @return accountNumber
+   *
+   * @return CardNumber
    **/
-  public String getAccountNumber() {
-    return accountNumber;
+  public String getCardNumber() {
+    return cardNumber;
   }
 
-  public void setAccountNumber(String accountNumber) {
-    this.accountNumber = accountNumber;
-  }
-
-  public Card accountId(String accountId) {
-    this.accountId = accountId;
-    return this;
+  public void setCardNumber(String cardNumber) {
+    this.cardNumber = cardNumber;
   }
 
   /**
    * Account Id for communication where in actual a/c no is not sent
-   * 
+   *
    * @return accountId
    **/
   public String getAccountId() {
@@ -315,14 +312,9 @@ public class Card {
     this.accountId = accountId;
   }
 
-  public Card cardIssuer(CardIssuerEnum cardIssuer) {
-    this.cardIssuer = cardIssuer;
-    return this;
-  }
-
   /**
    * Card issues like visa, master card, amex, Diners
-   * 
+   *
    * @return cardIssuer
    **/
   public CardIssuerEnum getCardIssuer() {
@@ -333,14 +325,9 @@ public class Card {
     this.cardIssuer = cardIssuer;
   }
 
-  public Card branchId(String branchId) {
-    this.branchId = branchId;
-    return this;
-  }
-
   /**
    * Branch ID
-   * 
+   *
    * @return branchId
    **/
   public String getBranchId() {
@@ -351,14 +338,9 @@ public class Card {
     this.branchId = branchId;
   }
 
-  public Card branchName(String branchName) {
-    this.branchName = branchName;
-    return this;
-  }
-
   /**
    * Branch Name
-   * 
+   *
    * @return branchName
    **/
   public String getBranchName() {
@@ -369,50 +351,35 @@ public class Card {
     this.branchName = branchName;
   }
 
-  public Card status(StatusEnum status) {
-    this.status = status;
-    return this;
-  }
-
   /**
    * Account status dormant / active / closed / blocker
-   * 
+   *
    * @return status
    **/
-  public StatusEnum getStatus() {
-    return status;
+  public CardStatusEnum getCardStatus() {
+    return cardStatus;
   }
 
-  public void setStatus(StatusEnum status) {
-    this.status = status;
-  }
-
-  public Card oversearCardActivated(Boolean oversearCardActivated) {
-    this.oversearCardActivated = oversearCardActivated;
-    return this;
+  public void setCardStatus(CardStatusEnum cardStatus) {
+    this.cardStatus = cardStatus;
   }
 
   /**
    * Is card activated for overseas use
-   * 
-   * @return oversearCardActivated
+   *
+   * @return overseasCardActivated
    **/
   public Boolean isOversearCardActivated() {
-    return oversearCardActivated;
+    return overseasCardActivated;
   }
 
-  public void setOversearCardActivated(Boolean oversearCardActivated) {
-    this.oversearCardActivated = oversearCardActivated;
-  }
-
-  public Card openingBalance(Double openingBalance) {
-    this.openingBalance = openingBalance;
-    return this;
+  public void setOverseasCardActivated(Boolean overseasCardActivated) {
+    this.overseasCardActivated = overseasCardActivated;
   }
 
   /**
    * Opening balance
-   * 
+   *
    * @return openingBalance
    **/
   public Double getOpeningBalance() {
@@ -423,14 +390,9 @@ public class Card {
     this.openingBalance = openingBalance;
   }
 
-  public Card closingBalance(Double closingBalance) {
-    this.closingBalance = closingBalance;
-    return this;
-  }
-
   /**
    * Closing balance
-   * 
+   *
    * @return closingBalance
    **/
   public Double getClosingBalance() {
@@ -441,14 +403,9 @@ public class Card {
     this.closingBalance = closingBalance;
   }
 
-  public Card amountDue(Double amountDue) {
-    this.amountDue = amountDue;
-    return this;
-  }
-
   /**
    * Amount Due
-   * 
+   *
    * @return amountDue
    **/
   public Double getAmountDue() {
@@ -459,14 +416,9 @@ public class Card {
     this.amountDue = amountDue;
   }
 
-  public Card minimumPayment(Double minimumPayment) {
-    this.minimumPayment = minimumPayment;
-    return this;
-  }
-
   /**
    * Minimum payment
-   * 
+   *
    * @return minimumPayment
    **/
   public Double getMinimumPayment() {
@@ -477,41 +429,16 @@ public class Card {
     this.minimumPayment = minimumPayment;
   }
 
-  public Card paymentDueDate(Date paymentDueDate) {
-    this.paymentDueDate = paymentDueDate;
-    return this;
-  }
-
-  /**
-   * Payment due date
-   * 
-   * @return paymentDueDate
-   **/
-  @Valid
-  public Date getPaymentDueDate() {
+  public String getPaymentDueDate() {
     return paymentDueDate;
   }
 
-  public void setPaymentDueDate(Date paymentDueDate) {
+  public void setPaymentDueDate(String paymentDueDate) {
     this.paymentDueDate = paymentDueDate;
   }
 
-  public Card creditLimit(Double creditLimit) {
-    this.creditLimit = creditLimit;
-    return this;
-  }
-
-  /**
-   * Credit limit
-   * 
-   * @return creditLimit
-   **/
-  public Double getCreditLimit() {
-    return creditLimit;
-  }
-
-  public void setCreditLimit(Double creditLimit) {
-    this.creditLimit = creditLimit;
+  public void setLastStatementDate(String lastStatementDate) {
+    this.lastStatementDate = lastStatementDate;
   }
 
   public Card availableCreditLimit(Double availableCreditLimit) {
@@ -521,7 +448,7 @@ public class Card {
 
   /**
    * Available Credit limit
-   * 
+   *
    * @return availableCreditLimit
    **/
   public Double getAvailableCreditLimit() {
@@ -539,7 +466,7 @@ public class Card {
 
   /**
    * Temporary Credit limit
-   * 
+   *
    * @return temporaryCreditLimit
    **/
   public Double getTemporaryCreditLimit() {
@@ -557,7 +484,7 @@ public class Card {
 
   /**
    * Permanent Credit limit
-   * 
+   *
    * @return permanentCreditLimit
    **/
   public Double getPermanentCreditLimit() {
@@ -568,25 +495,6 @@ public class Card {
     this.permanentCreditLimit = permanentCreditLimit;
   }
 
-  public Card lastStatementDate(Date lastStatementDate) {
-    this.lastStatementDate = lastStatementDate;
-    return this;
-  }
-
-  /**
-   * Last statement date
-   * 
-   * @return lastStatementDate
-   **/
-  @Valid
-  public Date getLastStatementDate() {
-    return lastStatementDate;
-  }
-
-  public void setLastStatementDate(Date lastStatementDate) {
-    this.lastStatementDate = lastStatementDate;
-  }
-
   public Card lastStatementBalance(Double lastStatementBalance) {
     this.lastStatementBalance = lastStatementBalance;
     return this;
@@ -594,7 +502,7 @@ public class Card {
 
   /**
    * last statement balance
-   * 
+   *
    * @return lastStatementBalance
    **/
   public Double getLastStatementBalance() {
@@ -605,78 +513,263 @@ public class Card {
     this.lastStatementBalance = lastStatementBalance;
   }
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Card card = (Card) o;
-    return Objects.equals(this.category, card.category) && Objects.equals(this.productCode, card.productCode)
-        && Objects.equals(this.product, card.product) && Objects.equals(this.type, card.type)
-        && Objects.equals(this.displayAccountNumber, card.displayAccountNumber) && Objects.equals(this.accountNumber, card.accountNumber)
-        && Objects.equals(this.accountId, card.accountId) && Objects.equals(this.cardIssuer, card.cardIssuer)
-        && Objects.equals(this.branchId, card.branchId) && Objects.equals(this.branchName, card.branchName)
-        && Objects.equals(this.status, card.status) && Objects.equals(this.oversearCardActivated, card.oversearCardActivated)
-        && Objects.equals(this.openingBalance, card.openingBalance) && Objects.equals(this.closingBalance, card.closingBalance)
-        && Objects.equals(this.amountDue, card.amountDue) && Objects.equals(this.minimumPayment, card.minimumPayment)
-        && Objects.equals(this.paymentDueDate, card.paymentDueDate) && Objects.equals(this.creditLimit, card.creditLimit)
-        && Objects.equals(this.availableCreditLimit, card.availableCreditLimit)
-        && Objects.equals(this.temporaryCreditLimit, card.temporaryCreditLimit)
-        && Objects.equals(this.permanentCreditLimit, card.permanentCreditLimit)
-        && Objects.equals(this.lastStatementDate, card.lastStatementDate)
-        && Objects.equals(this.lastStatementBalance, card.lastStatementBalance);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(category, productCode, product, type, displayAccountNumber, accountNumber, accountId, cardIssuer, branchId,
-        branchName, status, oversearCardActivated, openingBalance, closingBalance, amountDue, minimumPayment, paymentDueDate, creditLimit,
-        availableCreditLimit, temporaryCreditLimit, permanentCreditLimit, lastStatementDate, lastStatementBalance);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Card {\n");
-
-    sb.append("    category: ").append(toIndentedString(category)).append("\n");
-    sb.append("    productCode: ").append(toIndentedString(productCode)).append("\n");
-    sb.append("    product: ").append(toIndentedString(product)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    displayAccountNumber: ").append(toIndentedString(displayAccountNumber)).append("\n");
-    sb.append("    accountNumber: ").append(toIndentedString(accountNumber)).append("\n");
-    sb.append("    accountId: ").append(toIndentedString(accountId)).append("\n");
-    sb.append("    cardIssuer: ").append(toIndentedString(cardIssuer)).append("\n");
-    sb.append("    branchId: ").append(toIndentedString(branchId)).append("\n");
-    sb.append("    branchName: ").append(toIndentedString(branchName)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    oversearCardActivated: ").append(toIndentedString(oversearCardActivated)).append("\n");
-    sb.append("    openingBalance: ").append(toIndentedString(openingBalance)).append("\n");
-    sb.append("    closingBalance: ").append(toIndentedString(closingBalance)).append("\n");
-    sb.append("    amountDue: ").append(toIndentedString(amountDue)).append("\n");
-    sb.append("    minimumPayment: ").append(toIndentedString(minimumPayment)).append("\n");
-    sb.append("    paymentDueDate: ").append(toIndentedString(paymentDueDate)).append("\n");
-    sb.append("    creditLimit: ").append(toIndentedString(creditLimit)).append("\n");
-    sb.append("    availableCreditLimit: ").append(toIndentedString(availableCreditLimit)).append("\n");
-    sb.append("    temporaryCreditLimit: ").append(toIndentedString(temporaryCreditLimit)).append("\n");
-    sb.append("    permanentCreditLimit: ").append(toIndentedString(permanentCreditLimit)).append("\n");
-    sb.append("    lastStatementDate: ").append(toIndentedString(lastStatementDate)).append("\n");
-    sb.append("    lastStatementBalance: ").append(toIndentedString(lastStatementBalance)).append("\n");
-    sb.append("}");
-    return sb.toString();
+  /**
+   * available cash
+   *
+   * @return availableCash
+   **/
+  public Double getAvailableCash() {
+    return availableCash;
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * cardName
+   *
+   * @return cardName
+   **/
+  public String getCardName() {
+    return cardName;
+  }
+
+  public void setCardName(String cardName) {
+    this.cardName = cardName;
+  }
+
+  /**
+   * productType
+   *
+   * @return productType
+   **/
+  public String getProductType() {
+    return productType;
+  }
+
+  public void setProductType(String productType) {
+    this.productType = productType;
+  }
+
+  /**
+   * maxDomesticATMLimit
+   *
+   * @return maxDomesticATMLimit
+   **/
+  public String getMaxDomesticATMLimit() {
+    return maxDomesticATMLimit;
+  }
+
+  public void setMaxDomesticATMLimit(String maxDomesticATMLimit) {
+    this.maxDomesticATMLimit = maxDomesticATMLimit;
+  }
+
+  /**
+   * maxDomesticPOSLimit
+   *
+   * @return maxDomesticPOSLimit
+   **/
+  public String getMaxDomesticPOSLimit() {
+    return maxDomesticPOSLimit;
+  }
+
+  public void setMaxDomesticPOSLimit(String maxDomesticPOSLimit) {
+    this.maxDomesticPOSLimit = maxDomesticPOSLimit;
+  }
+
+  /**
+   * domesticATMLimit
+   *
+   * @return domesticATMLimit
+   **/
+  public String getDomesticATMLimit() {
+    return domesticATMLimit;
+  }
+
+  public void setDomesticATMLimit(String domesticATMLimit) {
+    this.domesticATMLimit = domesticATMLimit;
+  }
+
+  /**
+   * domesticPOSLimit
+   *
+   * @return domesticPOSLimit
+   **/
+  public String getDomesticPOSLimit() {
+    return domesticPOSLimit;
+  }
+
+  public void setDomesticPOSLimit(String domesticPOSLimit) {
+    this.domesticPOSLimit = domesticPOSLimit;
+  }
+
+  /**
+   * maxInternationalATMLimit
+   *
+   * @return maxInternationalATMLimit
+   **/
+  public String getMaxInternationalATMLimit() {
+    return maxInternationalATMLimit;
+  }
+
+  public void setMaxInternationalATMLimit(String maxInternationalATMLimit) {
+    this.maxInternationalATMLimit = maxInternationalATMLimit;
+  }
+
+  /**
+   * maxInternationalPOSLimit
+   *
+   * @return maxInternationalPOSLimit
+   **/
+  public String getMaxInternationalPOSLimit() {
+    return maxInternationalPOSLimit;
+  }
+
+  public void setMaxInternationalPOSLimit(String maxInternationalPOSLimit) {
+    this.maxInternationalPOSLimit = maxInternationalPOSLimit;
+  }
+
+  /**
+   * internationalATMLimit
+   *
+   * @return internationalATMLimit
+   **/
+  public String getInternationalATMLimit() {
+    return internationalATMLimit;
+  }
+
+  public void setInternationalATMLimit(String internationalATMLimit) {
+    this.internationalATMLimit = internationalATMLimit;
+  }
+
+  /**
+   * internationalPOSLimit
+   *
+   * @return internationalPOSLimit
+   **/
+  public String getInternationalPOSLimit() {
+    return internationalPOSLimit;
+  }
+
+  public void setInternationalPOSLimit(String internationalPOSLimit) {
+    this.internationalPOSLimit = internationalPOSLimit;
+  }
+
+
+  /**
+   * internationalEnabled
+   *
+   * @return internationalEnabled
+   **/
+
+  public boolean isInternationalEnabled() {
+    return isInternationalEnabled;
+  }
+
+  public void setInternationalEnabled(boolean internationalEnabled) {
+    isInternationalEnabled = internationalEnabled;
+  }
+
+
+  public void setAvailableCash(Double availableCash) {
+    this.availableCash = availableCash;
+  }
+
+  public String getMaxCreditLimit() {
+    return maxCreditLimit;
+  }
+
+  public void setMaxCreditLimit(String maxCreditLimit) {
+    this.maxCreditLimit = maxCreditLimit;
+  }
+
+  public String getMaxCashLimit() {
+    return maxCashLimit;
+  }
+
+  public void setMaxCashLimit(String maxCashLimit) {
+    this.maxCashLimit = maxCashLimit;
+  }
+
+  public void setCreditLimit(Double creditLimit) {
+    this.creditLimit = creditLimit;
+  }
+
+  public String getCashLimit() {
+    return cashLimit;
+  }
+
+  public void setCashLimit(String cashLimit) {
+    this.cashLimit = cashLimit;
+  }
+
+  /**
+   * Getter and Setter Methods for isDebitable Flag
+   *
+   * @return isDebitable
    */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+  public boolean isDebitable() {
+    return isDebitable;
+  }
+
+  public void setDebitable(boolean debitable) {
+    isDebitable = debitable;
+  }
+
+  /**
+   * Getter and Setter for isCreditable Flag
+   *
+   * @return isCreditable
+   */
+  public boolean isCreditable() {
+    return isCreditable;
+  }
+
+  public void setCreditable(boolean creditable) {
+    isCreditable = creditable;
+  }
+
+  public Boolean getOverseasCardActivated() {
+    return overseasCardActivated;
+  }
+
+  public Double getAvailablePointBalance() {
+    return availablePointBalance;
+  }
+
+  public void setAvailablePointBalance(Double availablePointBalance) {
+    this.availablePointBalance = availablePointBalance;
+  }
+
+  /**
+   * Get Additional Properties
+   *
+   * @return additionalProperties
+   **/
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+    this.additionalProperties = additionalProperties;
+  }
+
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("productCode", productCode).append("bankName", bankName).append("accountName", accountName)
+        .append("cardType", cardType).append("displayCardNumber", displayCardNumber).append("cardNumber", cardNumber)
+        .append("accountId", accountId).append("cardIssuer", cardIssuer).append("branchId", branchId).append("branchName", branchName)
+        .append("cardStatus", cardStatus).append("overseasCardActivated", overseasCardActivated).append("openingBalance", openingBalance)
+        .append("closingBalance", closingBalance).append("amountDue", amountDue).append("minimumPayment", minimumPayment)
+        .append("paymentDueDate", paymentDueDate).append("availableCreditLimit", availableCreditLimit)
+        .append("availableCash", availableCash).append("temporaryCreditLimit", temporaryCreditLimit)
+        .append("permanentCreditLimit", permanentCreditLimit).append("lastStatementDate", lastStatementDate)
+        .append("lastStatementBalance", lastStatementBalance).append("currencyCode", currencyCode).append("expiryDate", expiryDate)
+        .append("activationDate", activationDate).append("branchAddress", branchAddress).append("outStandingAmount", outStandingAmount)
+        .append("cardHolderName", cardHolderName).append("cardName", cardName).append("productType", productType)
+        .append("maxDomesticATMLimit", maxDomesticATMLimit).append("maxCreditLimit", maxCreditLimit).append("maxCashLimit", maxCashLimit)
+        .append("maxDomesticPOSLimit", maxDomesticPOSLimit).append("domesticATMLimit", domesticATMLimit)
+        .append("domesticPOSLimit", domesticPOSLimit).append("maxInternationalATMLimit", maxInternationalATMLimit)
+        .append("maxInternationalPOSLimit", maxInternationalPOSLimit).append("internationalATMLimit", internationalATMLimit)
+        .append("internationalPOSLimit", internationalPOSLimit).append("creditLimit", creditLimit).append("cashLimit", cashLimit)
+        .append("isInternationalEnabled", isInternationalEnabled).append("isDebitable", isDebitable).append("isCreditable", isCreditable)
+        .append("availablePointBalance", availablePointBalance).append("additionalProperties", additionalProperties).toString();
   }
 }
 

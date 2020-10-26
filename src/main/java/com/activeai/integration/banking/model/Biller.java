@@ -1,7 +1,12 @@
 package com.activeai.integration.banking.model;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
+
+import com.activeai.integration.banking.constants.BillerCategoryTypeEnum;
+import com.activeai.integration.banking.constants.PartialPaymentStatus;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,11 +23,66 @@ public class Biller {
   @JsonProperty("billerName")
   private String billerName = null;
 
-  @JsonProperty("billerCategory")
-  private String billerCategory = null;
+  /**
+   * Biller Category Type like ADHOC , REGISTERED
+   */
+  @JsonProperty("billerCategoryType")
+  private BillerCategoryTypeEnum billerCategoryType;
 
-  @JsonProperty("allowPartialPay")
-  private Boolean allowPartialPay = null;
+  /**
+   * Biller Category Name like Mobile,Electricity,Charity
+   */
+  private String billerCategoryName;
+
+  @JsonProperty("billerCategoryId")
+  private String billerCategoryId;
+
+  @JsonProperty("partialPayment")
+  private PartialPaymentStatus partialPayment;
+
+  @JsonProperty("dueAmount")
+  private Double dueAmount;
+
+  @JsonProperty("userIdentityInputs")
+  private List<UserIdentityInput> userIdentityInputs = new ArrayList<>();
+
+  @JsonProperty("authenticators")
+  private List<String> authenticators = new ArrayList<>();
+
+  @JsonProperty("fillers")
+  private List<String> fillers = new ArrayList<>();
+
+  @JsonProperty("billDate")
+  private String billDate;
+
+  @JsonProperty("billNumber")
+  private String billNumber;
+
+  @JsonProperty("payWithOutBill")
+  private String payWithOutBill;
+
+  @JsonProperty("billDueDate")
+  private String billDueDate;
+
+  @JsonProperty("lastStatementBalance")
+  private Double lastStatementBalance;
+
+  @JsonProperty("billerType")
+  private String billerType;
+
+  @JsonProperty("billerPresence")
+  private String billerPresence;
+
+  @JsonProperty("paymentAllowedPostdueDate")
+  private String paymentAllowedPostdueDate;
+
+  public Double getLastStatementBalance() {
+    return lastStatementBalance;
+  }
+
+  public void setLastStatementBalance(Double lastStatementBalance) {
+    this.lastStatementBalance = lastStatementBalance;
+  }
 
   public Biller billerId(String billerId) {
     this.billerId = billerId;
@@ -42,9 +102,17 @@ public class Biller {
     this.billerId = billerId;
   }
 
-  public Biller billerName(String billerName) {
-    this.billerName = billerName;
-    return this;
+  /**
+   * BillerCategoryID
+   *
+   * @return billerICategoryId
+   **/
+  public String getBillerCategoryId() {
+    return billerCategoryId;
+  }
+
+  public void setBillerCategoryId(String billerCategoryId) {
+    this.billerCategoryId = billerCategoryId;
   }
 
   /**
@@ -60,82 +128,182 @@ public class Biller {
     this.billerName = billerName;
   }
 
-  public Biller billerCategory(String billerCategory) {
-    this.billerCategory = billerCategory;
-    return this;
+  public BillerCategoryTypeEnum getBillerCategoryType() {
+    return billerCategoryType;
+  }
+
+  public void setBillerCategoryType(BillerCategoryTypeEnum billerCategoryType) {
+    this.billerCategoryType = billerCategoryType;
+  }
+
+  public String getBillerCategoryName() {
+    return billerCategoryName;
+  }
+
+  public void setBillerCategoryName(String billerCategoryName) {
+    this.billerCategoryName = billerCategoryName;
   }
 
   /**
    * Biller category
-   * 
+   *
    * @return billerCategory
    **/
-  public String getBillerCategory() {
-    return billerCategory;
+
+  public Double getDueAmount() {
+    return dueAmount;
   }
 
-  public void setBillerCategory(String billerCategory) {
-    this.billerCategory = billerCategory;
-  }
-
-  public Biller allowPartialPay(Boolean allowPartialPay) {
-    this.allowPartialPay = allowPartialPay;
-    return this;
+  public void setDueAmount(Double dueAmount) {
+    this.dueAmount = dueAmount;
   }
 
   /**
-   * Does this biller allow partial pay
-   * 
-   * @return allowPartialPay
+   * Does this biller Partial Payment
+   *
+   * @return Partial Payment
    **/
-  public Boolean isAllowPartialPay() {
-    return allowPartialPay;
+
+  public PartialPaymentStatus getPartialPayment() {
+    return partialPayment;
   }
 
-  public void setAllowPartialPay(Boolean allowPartialPay) {
-    this.allowPartialPay = allowPartialPay;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Biller biller = (Biller) o;
-    return Objects.equals(this.billerId, biller.billerId) && Objects.equals(this.billerName, biller.billerName)
-        && Objects.equals(this.billerCategory, biller.billerCategory) && Objects.equals(this.allowPartialPay, biller.allowPartialPay);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(billerId, billerName, billerCategory, allowPartialPay);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Biller {\n");
-
-    sb.append("    billerId: ").append(toIndentedString(billerId)).append("\n");
-    sb.append("    billerName: ").append(toIndentedString(billerName)).append("\n");
-    sb.append("    billerCategory: ").append(toIndentedString(billerCategory)).append("\n");
-    sb.append("    allowPartialPay: ").append(toIndentedString(allowPartialPay)).append("\n");
-    sb.append("}");
-    return sb.toString();
+  public void setPartialPayment(PartialPaymentStatus partialPayment) {
+    this.partialPayment = partialPayment;
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+   * Does this biller userIdentityInput
+   *
+   *
+   * @return userIdentityInput
+   **/
+  public List<UserIdentityInput> getUserIdentityInputs() {
+    return userIdentityInputs;
+  }
+
+  public void setUserIdentityInputs(List<UserIdentityInput> userIdentityInputs) {
+    this.userIdentityInputs = userIdentityInputs;
+  }
+
+  /**
+   * Does this biller authenticators
+   *
+   *
+   * @return authenticators
+   **/
+  public List<String> getAuthenticators() {
+    return authenticators;
+  }
+
+  public void setAuthenticators(List<String> authenticators) {
+    this.authenticators = authenticators;
+  }
+
+  /**
+   * Does this biller fillers
+   *
+   *
+   * @return fillers
+   **/
+  public List<String> getFillers() {
+    return fillers;
+  }
+
+  public void setFillers(List<String> fillers) {
+    this.fillers = fillers;
+  }
+
+  /**
+   * Does this biller billDate
+   *
+   *
+   * @return billDate
+   **/
+  public String getBillDate() {
+    return billDate;
+  }
+
+  public void setBillDate(String billDate) {
+    this.billDate = billDate;
+  }
+
+  /**
+   * Does this biller billDueDate
+   *
+   *
+   * @return billDueDate
+   **/
+  public String getBillDueDate() {
+    return billDueDate;
+  }
+
+  public void setBillDueDate(String billDueDate) {
+    this.billDueDate = billDueDate;
+  }
+
+  /**
+   * Does this biller BillNumber
+   *
+   *
+   * @return billNumber
+   **/
+  public String getBillNumber() {
+    return billNumber;
+  }
+
+  public void setBillNumber(String billNumber) {
+    this.billNumber = billNumber;
+  }
+
+  /**
+   * Does this biller PaytwithoutBill
+   *
+   *
+   *
+   * @return PaytwithoutBill
+   **/
+  public String getPayWithOutBill() {
+    return payWithOutBill;
+  }
+
+  public void setPayWithOutBill(String payWithOutBill) {
+    this.payWithOutBill = payWithOutBill;
+  }
+
+
+  public String getBillerType() {
+    return billerType;
+  }
+
+  public void setBillerType(String billerType) {
+    this.billerType = billerType;
+  }
+
+  public String getBillerPresence() {
+    return billerPresence;
+  }
+
+  public void setBillerPresence(String billerPresence) {
+    this.billerPresence = billerPresence;
+  }
+
+  public String getPaymentAllowedPostdueDate() {
+    return paymentAllowedPostdueDate;
+  }
+
+  public void setPaymentAllowedPostdueDate(String paymentAllowedPostdueDate) {
+    this.paymentAllowedPostdueDate = paymentAllowedPostdueDate;
+  }
+
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("billerId", billerId).append("billerName", billerName)
+        .append("billerCategoryTypeEnum", billerCategoryType).append("billerCategoryName", billerCategoryName)
+        .append("billerCategoryId", billerCategoryId).append("partialPayment", partialPayment).append("dueAmount", dueAmount)
+        .append("userIdentityInputs", userIdentityInputs).append("authenticators", authenticators).append("fillers", fillers)
+        .append("billDate", billDate).append("billNumber", billNumber).append("payWithOutBill", payWithOutBill)
+        .append("billDueDate", billDueDate).append("lastStatementBalance", lastStatementBalance).append("billerType", billerType)
+        .append("billerPresence", billerPresence).append("paymentAllowedPostdueDate", paymentAllowedPostdueDate).toString();
   }
 }
 

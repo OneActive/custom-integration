@@ -1,12 +1,10 @@
 package com.activeai.integration.banking.model;
 
-import java.util.Objects;
-
+import com.activeai.integration.banking.constants.AddressTypeEnum;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.validation.annotation.Validated;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Objects;
 
 /**
  * Address
@@ -22,39 +20,6 @@ public class Address {
 
   @JsonProperty("addressLine3")
   private String addressLine3 = null;
-
-  /**
-   * Address type like primary, work, office, etc.
-   */
-  public enum AddressTypeEnum {
-    PRIMARY("PRIMARY"),
-
-    OFFICE("OFFICE"),
-
-    WORK("WORK");
-
-    private String value;
-
-    AddressTypeEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static AddressTypeEnum fromValue(String text) {
-      for (AddressTypeEnum b : AddressTypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
 
   @JsonProperty("addressType")
   private AddressTypeEnum addressType = null;
@@ -73,6 +38,12 @@ public class Address {
 
   @JsonProperty("countryCode")
   private String countryCode = null;
+
+  @JsonProperty("locality")
+  private String locality;
+
+  @JsonProperty("postalCode")
+  private String postalCode;
 
   public Address addressLine1(String addressLine1) {
     this.addressLine1 = addressLine1;
@@ -236,43 +207,54 @@ public class Address {
     this.countryCode = countryCode;
   }
 
+  public String getLocality() {
+    return locality;
+  }
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
+  public void setLocality(String locality) {
+    this.locality = locality;
+  }
+
+  public String getPostalCode() {
+    return postalCode;
+  }
+
+  public void setPostalCode(String postalCode) {
+    this.postalCode = postalCode;
+  }
+
+  @Override public boolean equals(Object o) {
+    if (this == o)
       return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
+    if (o == null || getClass() != o.getClass())
       return false;
-    }
     Address address = (Address) o;
-    return Objects.equals(this.addressLine1, address.addressLine1) && Objects.equals(this.addressLine2, address.addressLine2)
-        && Objects.equals(this.addressLine3, address.addressLine3) && Objects.equals(this.addressType, address.addressType)
-        && Objects.equals(this.city, address.city) && Objects.equals(this.state, address.state)
-        && Objects.equals(this.province, address.province) && Objects.equals(this.country, address.country)
-        && Objects.equals(this.countryCode, address.countryCode);
+    return Objects.equals(addressLine1, address.addressLine1) && Objects.equals(addressLine2, address.addressLine2) && Objects
+        .equals(addressLine3, address.addressLine3) && addressType == address.addressType && Objects.equals(city, address.city) && Objects
+        .equals(state, address.state) && Objects.equals(province, address.province) && Objects.equals(country, address.country) && Objects
+        .equals(countryCode, address.countryCode) && Objects.equals(locality, address.locality) && Objects
+        .equals(postalCode, address.postalCode);
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(addressLine1, addressLine2, addressLine3, addressType, city, state, province, country, countryCode);
+  @Override public int hashCode() {
+    return Objects
+        .hash(addressLine1, addressLine2, addressLine3, addressType, city, state, province, country, countryCode, locality, postalCode);
   }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Address {\n");
-
-    sb.append("    addressLine1: ").append(toIndentedString(addressLine1)).append("\n");
-    sb.append("    addressLine2: ").append(toIndentedString(addressLine2)).append("\n");
-    sb.append("    addressLine3: ").append(toIndentedString(addressLine3)).append("\n");
-    sb.append("    addressType: ").append(toIndentedString(addressType)).append("\n");
-    sb.append("    city: ").append(toIndentedString(city)).append("\n");
-    sb.append("    state: ").append(toIndentedString(state)).append("\n");
-    sb.append("    province: ").append(toIndentedString(province)).append("\n");
-    sb.append("    country: ").append(toIndentedString(country)).append("\n");
-    sb.append("    countryCode: ").append(toIndentedString(countryCode)).append("\n");
-    sb.append("}");
+  @Override public String toString() {
+    final StringBuilder sb = new StringBuilder("Address{");
+    sb.append("addressLine1='").append(addressLine1).append('\'');
+    sb.append(", addressLine2='").append(addressLine2).append('\'');
+    sb.append(", addressLine3='").append(addressLine3).append('\'');
+    sb.append(", addressType=").append(addressType);
+    sb.append(", city='").append(city).append('\'');
+    sb.append(", state='").append(state).append('\'');
+    sb.append(", province='").append(province).append('\'');
+    sb.append(", country='").append(country).append('\'');
+    sb.append(", countryCode='").append(countryCode).append('\'');
+    sb.append(", locality='").append(locality).append('\'');
+    sb.append(", postalCode='").append(postalCode).append('\'');
+    sb.append('}');
     return sb.toString();
   }
 

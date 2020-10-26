@@ -1,15 +1,16 @@
 package com.activeai.integration.banking.model;
 
-import java.util.Date;
-import java.util.Objects;
-
-import javax.validation.Valid;
-
+import com.activeai.integration.banking.constants.AccountProductEnum;
+import com.activeai.integration.banking.constants.AccountStatusEnum;
+import com.activeai.integration.banking.constants.AccountTypeEnum;
+import com.activeai.integration.banking.constants.StatusEnum;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.validation.annotation.Validated;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Account
@@ -17,54 +18,20 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @Validated
 public class Account {
 
-  @JsonProperty("category")
-  private String category = null;
-
   @JsonProperty("productCode")
   private String productCode = null;
 
   @JsonProperty("product")
-  private String product = null;
+  private AccountProductEnum product = null;
 
-  /**
-   * Type of account
-   */
-  public enum TypeEnum {
-    SAVINGS("SAVINGS"),
+  @JsonProperty("bankName")
+  private String bankName;
 
-    CHECKING("CHECKING"),
+  @JsonProperty("accountName")
+  private String accountName;
 
-    CURRENT("CURRENT"),
-
-    LOAN("LOAN"),
-
-    DEPOSIT("DEPOSIT");
-
-    private String value;
-
-    TypeEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static TypeEnum fromValue(String text) {
-      for (TypeEnum b : TypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-
-  @JsonProperty("type")
-  private TypeEnum type = null;
+  @JsonProperty("accountType")
+  private AccountTypeEnum accountType = null;
 
   @JsonProperty("displayAccountNumber")
   private String displayAccountNumber = null;
@@ -81,47 +48,14 @@ public class Account {
   @JsonProperty("branchName")
   private String branchName = null;
 
-  /**
-   * Account status dormant / active / closed
-   */
-  public enum StatusEnum {
-    ACTIVE("ACTIVE"),
-
-    INACTIVE("INACTIVE"),
-
-    CLOSED("CLOSED");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String text) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-
   @JsonProperty("status")
-  private StatusEnum status = null;
+  private AccountStatusEnum status = null;
 
   @JsonProperty("openingDate")
-  private Date openingDate = null;
+  private String openingDate = null;
 
   @JsonProperty("lastStatementDate")
-  private Date lastStatementDate = null;
+  private String lastStatementDate = null;
 
   @JsonProperty("lastStatementBalance")
   private Double lastStatementBalance = null;
@@ -129,27 +63,69 @@ public class Account {
   @JsonProperty("balance")
   private AccountBalance balance = null;
 
-  public Account category(String category) {
-    this.category = category;
-    return this;
-  }
+  @JsonProperty("branchAddress")
+  private String branchAddress;
+
+  @JsonProperty("ifscCode")
+  private String ifscCode;
+
+  @JsonProperty("leavesCount")
+  private String leavesCount;
+
+  @JsonProperty("referenceId")
+  private String referenceId;
+
+  @JsonProperty("transactionStatus")
+  private StatusEnum transactionStatus;
 
   /**
-   * category like ACCOUNT, LOAN, DEPOSIT, etc.
-   * 
-   * @return category
-   **/
-  public String getCategory() {
-    return category;
+   * To make Account Debitable set isDebitable as true
+   */
+  @JsonProperty("isDebitable")
+  private boolean isDebitable;
+
+  /**
+   * To make Account Creditable set isCreditable as true
+   */
+  @JsonProperty("isCreditable")
+  private boolean isCreditable;
+
+  /**
+   * To add extra params in the response
+   */
+  @JsonProperty("additionalProperties")
+  private Map<String,Object> additionalProperties = new HashMap<>();
+
+  public String getIfscCode() {
+    return ifscCode;
   }
 
-  public void setCategory(String category) {
-    this.category = category;
+  public void setIfscCode(String ifscCode) {
+    this.ifscCode = ifscCode;
   }
 
-  public Account productCode(String productCode) {
-    this.productCode = productCode;
-    return this;
+  public String getBranchAddress() {
+    return branchAddress;
+  }
+
+  public void setBranchAddress(String branchAddress) {
+    this.branchAddress = branchAddress;
+  }
+
+  public String getAccountName() {
+    return accountName;
+  }
+
+  public void setAccountName(String accountName) {
+    this.accountName = accountName;
+  }
+
+  public String getBankName() {
+    return bankName;
+  }
+
+  public void setBankName(String bankName) {
+    this.bankName = bankName;
   }
 
   /**
@@ -165,45 +141,30 @@ public class Account {
     this.productCode = productCode;
   }
 
-  public Account product(String product) {
-    this.product = product;
-    return this;
-  }
-
   /**
    * Product name
    * 
    * @return product
    **/
-  public String getProduct() {
+  public AccountProductEnum getProduct() {
     return product;
   }
 
-  public void setProduct(String product) {
+  public void setProduct(AccountProductEnum product) {
     this.product = product;
-  }
-
-  public Account type(TypeEnum type) {
-    this.type = type;
-    return this;
   }
 
   /**
    * Type of account
    * 
-   * @return type
+   * @return accountType
    **/
-  public TypeEnum getType() {
-    return type;
+  public AccountTypeEnum getAccountType() {
+    return accountType;
   }
 
-  public void setType(TypeEnum type) {
-    this.type = type;
-  }
-
-  public Account displayAccountNumber(String displayAccountNumber) {
-    this.displayAccountNumber = displayAccountNumber;
-    return this;
+  public void setAccountType(AccountTypeEnum accountType) {
+    this.accountType = accountType;
   }
 
   /**
@@ -219,11 +180,6 @@ public class Account {
     this.displayAccountNumber = displayAccountNumber;
   }
 
-  public Account accountNumber(String accountNumber) {
-    this.accountNumber = accountNumber;
-    return this;
-  }
-
   /**
    * Display Account number (in masked form)
    * 
@@ -235,11 +191,6 @@ public class Account {
 
   public void setAccountNumber(String accountNumber) {
     this.accountNumber = accountNumber;
-  }
-
-  public Account accountId(String accountId) {
-    this.accountId = accountId;
-    return this;
   }
 
   /**
@@ -255,11 +206,6 @@ public class Account {
     this.accountId = accountId;
   }
 
-  public Account branchId(String branchId) {
-    this.branchId = branchId;
-    return this;
-  }
-
   /**
    * Branch ID
    * 
@@ -271,11 +217,6 @@ public class Account {
 
   public void setBranchId(String branchId) {
     this.branchId = branchId;
-  }
-
-  public Account branchName(String branchName) {
-    this.branchName = branchName;
-    return this;
   }
 
   /**
@@ -291,65 +232,33 @@ public class Account {
     this.branchName = branchName;
   }
 
-  public Account status(StatusEnum status) {
-    this.status = status;
-    return this;
-  }
-
   /**
    * Account status dormant / active / closed
    * 
    * @return status
    **/
-  public StatusEnum getStatus() {
+  public AccountStatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(StatusEnum status) {
+  public void setStatus(AccountStatusEnum status) {
     this.status = status;
   }
 
-  public Account openingDate(Date openingDate) {
-    this.openingDate = openingDate;
-    return this;
-  }
-
-  /**
-   * Account opening date
-   * 
-   * @return openingDate
-   **/
-  @Valid
-  public Date getOpeningDate() {
+  public String getOpeningDate() {
     return openingDate;
   }
 
-  public void setOpeningDate(Date openingDate) {
+  public void setOpeningDate(String openingDate) {
     this.openingDate = openingDate;
   }
 
-  public Account lastStatementDate(Date lastStatementDate) {
-    this.lastStatementDate = lastStatementDate;
-    return this;
-  }
-
-  /**
-   * Last statement date
-   * 
-   * @return lastStatementDate
-   **/
-  @Valid
-  public Date getLastStatementDate() {
+  public String getLastStatementDate() {
     return lastStatementDate;
   }
 
-  public void setLastStatementDate(Date lastStatementDate) {
+  public void setLastStatementDate(String lastStatementDate) {
     this.lastStatementDate = lastStatementDate;
-  }
-
-  public Account lastStatementBalance(Double lastStatementBalance) {
-    this.lastStatementBalance = lastStatementBalance;
-    return this;
   }
 
   /**
@@ -363,11 +272,6 @@ public class Account {
 
   public void setLastStatementBalance(Double lastStatementBalance) {
     this.lastStatementBalance = lastStatementBalance;
-  }
-
-  public Account balance(AccountBalance balance) {
-    this.balance = balance;
-    return this;
   }
 
   /**
@@ -385,62 +289,76 @@ public class Account {
   }
 
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Account account = (Account) o;
-    return Objects.equals(this.category, account.category) && Objects.equals(this.productCode, account.productCode)
-        && Objects.equals(this.product, account.product) && Objects.equals(this.type, account.type)
-        && Objects.equals(this.displayAccountNumber, account.displayAccountNumber)
-        && Objects.equals(this.accountNumber, account.accountNumber) && Objects.equals(this.accountId, account.accountId)
-        && Objects.equals(this.branchId, account.branchId) && Objects.equals(this.branchName, account.branchName)
-        && Objects.equals(this.status, account.status) && Objects.equals(this.openingDate, account.openingDate)
-        && Objects.equals(this.lastStatementDate, account.lastStatementDate)
-        && Objects.equals(this.lastStatementBalance, account.lastStatementBalance) && Objects.equals(this.balance, account.balance);
+  public String getLeavesCount() {
+    return leavesCount;
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(category, productCode, product, type, displayAccountNumber, accountNumber, accountId, branchId, branchName, status,
-        openingDate, lastStatementDate, lastStatementBalance, balance);
+  public void setLeavesCount(String leavesCount) {
+    this.leavesCount = leavesCount;
   }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Account {\n");
+  public String getReferenceId() {
+    return referenceId;
+  }
 
-    sb.append("    category: ").append(toIndentedString(category)).append("\n");
-    sb.append("    productCode: ").append(toIndentedString(productCode)).append("\n");
-    sb.append("    product: ").append(toIndentedString(product)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    displayAccountNumber: ").append(toIndentedString(displayAccountNumber)).append("\n");
-    sb.append("    accountNumber: ").append(toIndentedString(accountNumber)).append("\n");
-    sb.append("    accountId: ").append(toIndentedString(accountId)).append("\n");
-    sb.append("    branchId: ").append(toIndentedString(branchId)).append("\n");
-    sb.append("    branchName: ").append(toIndentedString(branchName)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    openingDate: ").append(toIndentedString(openingDate)).append("\n");
-    sb.append("    lastStatementDate: ").append(toIndentedString(lastStatementDate)).append("\n");
-    sb.append("    lastStatementBalance: ").append(toIndentedString(lastStatementBalance)).append("\n");
-    sb.append("    balance: ").append(toIndentedString(balance)).append("\n");
-    sb.append("}");
-    return sb.toString();
+  public void setReferenceId(String referenceId) {
+    this.referenceId = referenceId;
+  }
+
+  public StatusEnum getTransactionStatus() {
+    return transactionStatus;
+  }
+
+  public void setTransactionStatus(StatusEnum transactionStatus) {
+    this.transactionStatus = transactionStatus;
   }
 
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * Getter and Setter Methods for isDebitable
+   * @return
    */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+  public boolean isDebitable() {
+    return isDebitable;
+  }
+
+  public void setDebitable(boolean debitable) {
+    isDebitable = debitable;
+  }
+
+  /**
+   * Getter and Setter Methods for isCreditable
+   * @return
+   */
+  public boolean isCreditable() {
+    return isCreditable;
+  }
+
+  public void setCreditable(boolean creditable) {
+    isCreditable = creditable;
+  }
+
+  /**
+   * Get Additional Properties
+   *
+   * @return additionalProperties
+   **/
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+    this.additionalProperties = additionalProperties;
+  }
+
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("productCode", productCode).append("product", product).append("bankName", bankName)
+        .append("accountName", accountName).append("accountType", accountType).append("displayAccountNumber", displayAccountNumber)
+        .append("accountNumber", accountNumber).append("accountId", accountId).append("branchId", branchId).append("branchName", branchName)
+        .append("status", status).append("openingDate", openingDate).append("lastStatementDate", lastStatementDate)
+        .append("lastStatementBalance", lastStatementBalance).append("balance", balance).append("branchAddress", branchAddress)
+        .append("ifscCode", ifscCode).append("leavesCount", leavesCount).append("referenceId", referenceId)
+        .append("transactionStatus", transactionStatus).append("isDebitable", isDebitable).append("isCreditable", isCreditable)
+        .append("additionalProperties", additionalProperties).toString();
   }
 }
 

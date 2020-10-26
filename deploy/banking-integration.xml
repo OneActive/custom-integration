@@ -1,0 +1,5 @@
+<Context>
+	<Environment name="configurationPath"
+		value="/opt/tomcat/conf/banking-integration.properties"
+		type="java.lang.String" />
+</Context>

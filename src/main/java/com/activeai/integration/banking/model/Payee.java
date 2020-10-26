@@ -1,15 +1,13 @@
 package com.activeai.integration.banking.model;
 
-import java.math.BigDecimal;
-import java.util.Objects;
-
-import javax.validation.Valid;
-
+import com.activeai.integration.banking.constants.PayeeStatusEnum;
+import com.activeai.integration.banking.constants.PayeeTypeEnum;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.validation.annotation.Validated;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
+import javax.validation.Valid;
+import java.util.Map;
 
 /**
  * Payee
@@ -18,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public class Payee {
 
   @JsonProperty("payeeId")
-  private BigDecimal payeeId = null;
+  private String payeeId = null;
 
   @JsonProperty("payeeName")
   private String payeeName = null;
@@ -39,90 +37,32 @@ public class Payee {
   private String payeeBankSWIFT = null;
 
   @JsonProperty("payeeAccountNo")
-  private BigDecimal payeeAccountNo = null;
+  private String payeeAccountNo = null;
 
   @JsonProperty("payeeMaskedAccountNo")
   private String payeeMaskedAccountNo = null;
 
   @JsonProperty("payeeAccountId")
-  private BigDecimal payeeAccountId = null;
+  private String payeeAccountId = null;
 
   @JsonProperty("currency")
   private String currency = null;
 
-  /**
-   * account status - active, inactive
-   */
-  public enum StatusEnum {
-    ACTIVE("ACTIVE"),
-
-    INACTIVE("INACTIVE");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String text) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-
   @JsonProperty("status")
-  private StatusEnum status = null;
-
-  /**
-   * account status - active, inactive
-   */
-  public enum PayeeTypeEnum {
-    INTERNAL("INTERNAL"),
-
-    EXTERNAL("EXTERNAL"),
-
-    WALLET("WALLET");
-
-    private String value;
-
-    PayeeTypeEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static PayeeTypeEnum fromValue(String text) {
-      for (PayeeTypeEnum b : PayeeTypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
+  private PayeeStatusEnum status = null;
 
   @JsonProperty("payeeType")
   private PayeeTypeEnum payeeType = null;
 
-  public Payee payeeId(BigDecimal payeeId) {
+  @JsonProperty("additionalProperties")
+  private Map<String,Object> additionalProperties;
+
+  public String getPayeeId() {
+    return payeeId;
+  }
+
+  public void setPayeeId(String payeeId) {
     this.payeeId = payeeId;
-    return this;
   }
 
   /**
@@ -131,18 +71,7 @@ public class Payee {
    * @return payeeId
    **/
   @Valid
-  public BigDecimal getPayeeId() {
-    return payeeId;
-  }
 
-  public void setPayeeId(BigDecimal payeeId) {
-    this.payeeId = payeeId;
-  }
-
-  public Payee payeeName(String payeeName) {
-    this.payeeName = payeeName;
-    return this;
-  }
 
   /**
    * Payee Name
@@ -155,11 +84,6 @@ public class Payee {
 
   public void setPayeeName(String payeeName) {
     this.payeeName = payeeName;
-  }
-
-  public Payee payeeNickName(String payeeNickName) {
-    this.payeeNickName = payeeNickName;
-    return this;
   }
 
   /**
@@ -175,11 +99,6 @@ public class Payee {
     this.payeeNickName = payeeNickName;
   }
 
-  public Payee payeeBank(String payeeBank) {
-    this.payeeBank = payeeBank;
-    return this;
-  }
-
   /**
    * Payee Bank name
    * 
@@ -191,11 +110,6 @@ public class Payee {
 
   public void setPayeeBank(String payeeBank) {
     this.payeeBank = payeeBank;
-  }
-
-  public Payee payeeBankBranch(String payeeBankBranch) {
-    this.payeeBankBranch = payeeBankBranch;
-    return this;
   }
 
   /**
@@ -211,11 +125,6 @@ public class Payee {
     this.payeeBankBranch = payeeBankBranch;
   }
 
-  public Payee payeeBankIFSC(String payeeBankIFSC) {
-    this.payeeBankIFSC = payeeBankIFSC;
-    return this;
-  }
-
   /**
    * IFSC Code of the branch where the account is opened
    * 
@@ -227,11 +136,6 @@ public class Payee {
 
   public void setPayeeBankIFSC(String payeeBankIFSC) {
     this.payeeBankIFSC = payeeBankIFSC;
-  }
-
-  public Payee payeeBankSWIFT(String payeeBankSWIFT) {
-    this.payeeBankSWIFT = payeeBankSWIFT;
-    return this;
   }
 
   /**
@@ -247,28 +151,18 @@ public class Payee {
     this.payeeBankSWIFT = payeeBankSWIFT;
   }
 
-  public Payee payeeAccountNo(BigDecimal payeeAccountNo) {
-    this.payeeAccountNo = payeeAccountNo;
-    return this;
-  }
-
   /**
    * Payee account number
    * 
    * @return payeeAccountNo
    **/
   @Valid
-  public BigDecimal getPayeeAccountNo() {
+  public String getPayeeAccountNo() {
     return payeeAccountNo;
   }
 
-  public void setPayeeAccountNo(BigDecimal payeeAccountNo) {
+  public void setPayeeAccountNo(String payeeAccountNo) {
     this.payeeAccountNo = payeeAccountNo;
-  }
-
-  public Payee payeeMaskedAccountNo(String payeeMaskedAccountNo) {
-    this.payeeMaskedAccountNo = payeeMaskedAccountNo;
-    return this;
   }
 
   /**
@@ -284,28 +178,18 @@ public class Payee {
     this.payeeMaskedAccountNo = payeeMaskedAccountNo;
   }
 
-  public Payee payeeAccountId(BigDecimal payeeAccountId) {
-    this.payeeAccountId = payeeAccountId;
-    return this;
-  }
-
   /**
    * Payee account id
    * 
    * @return payeeAccountId
    **/
   @Valid
-  public BigDecimal getPayeeAccountId() {
+  public String getPayeeAccountId() {
     return payeeAccountId;
   }
 
-  public void setPayeeAccountId(BigDecimal payeeAccountId) {
+  public void setPayeeAccountId(String payeeAccountId) {
     this.payeeAccountId = payeeAccountId;
-  }
-
-  public Payee currency(String currency) {
-    this.currency = currency;
-    return this;
   }
 
   /**
@@ -321,27 +205,17 @@ public class Payee {
     this.currency = currency;
   }
 
-  public Payee status(StatusEnum status) {
-    this.status = status;
-    return this;
-  }
-
   /**
    * account status - active, inactive
    * 
    * @return status
    **/
-  public StatusEnum getStatus() {
+  public PayeeStatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(StatusEnum status) {
+  public void setStatus(PayeeStatusEnum status) {
     this.status = status;
-  }
-
-  public Payee payeeType(PayeeTypeEnum payeeType) {
-    this.payeeType = payeeType;
-    return this;
   }
 
   /**
@@ -357,60 +231,25 @@ public class Payee {
     this.payeeType = payeeType;
   }
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Payee payee = (Payee) o;
-    return Objects.equals(this.payeeId, payee.payeeId) && Objects.equals(this.payeeName, payee.payeeName)
-        && Objects.equals(this.payeeNickName, payee.payeeNickName) && Objects.equals(this.payeeBank, payee.payeeBank)
-        && Objects.equals(this.payeeBankBranch, payee.payeeBankBranch) && Objects.equals(this.payeeBankIFSC, payee.payeeBankIFSC)
-        && Objects.equals(this.payeeBankSWIFT, payee.payeeBankSWIFT) && Objects.equals(this.payeeAccountNo, payee.payeeAccountNo)
-        && Objects.equals(this.payeeMaskedAccountNo, payee.payeeMaskedAccountNo)
-        && Objects.equals(this.payeeAccountId, payee.payeeAccountId) && Objects.equals(this.currency, payee.currency)
-        && Objects.equals(this.status, payee.status) && Objects.equals(this.payeeType, payee.payeeType);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(payeeId, payeeName, payeeNickName, payeeBank, payeeBankBranch, payeeBankIFSC, payeeBankSWIFT, payeeAccountNo,
-        payeeMaskedAccountNo, payeeAccountId, currency, status, payeeType);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Payee {\n");
-
-    sb.append("    payeeId: ").append(toIndentedString(payeeId)).append("\n");
-    sb.append("    payeeName: ").append(toIndentedString(payeeName)).append("\n");
-    sb.append("    payeeNickName: ").append(toIndentedString(payeeNickName)).append("\n");
-    sb.append("    payeeBank: ").append(toIndentedString(payeeBank)).append("\n");
-    sb.append("    payeeBankBranch: ").append(toIndentedString(payeeBankBranch)).append("\n");
-    sb.append("    payeeBankIFSC: ").append(toIndentedString(payeeBankIFSC)).append("\n");
-    sb.append("    payeeBankSWIFT: ").append(toIndentedString(payeeBankSWIFT)).append("\n");
-    sb.append("    payeeAccountNo: ").append(toIndentedString(payeeAccountNo)).append("\n");
-    sb.append("    payeeMaskedAccountNo: ").append(toIndentedString(payeeMaskedAccountNo)).append("\n");
-    sb.append("    payeeAccountId: ").append(toIndentedString(payeeAccountId)).append("\n");
-    sb.append("    currency: ").append(toIndentedString(currency)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    payeeType: ").append(toIndentedString(payeeType)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
   /**
-   * Convert the given object to string with each line indented by 4 spaces (except the first line).
+   * get Additional Properties
+   *
+   * @return additionalProperties
    */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+    this.additionalProperties = additionalProperties;
+  }
+
+  @Override public String toString() {
+    return new ToStringBuilder(this).append("payeeId", payeeId).append("payeeName", payeeName).append("payeeNickName", payeeNickName)
+        .append("payeeBank", payeeBank).append("payeeBankBranch", payeeBankBranch).append("payeeBankIFSC", payeeBankIFSC)
+        .append("payeeBankSWIFT", payeeBankSWIFT).append("payeeAccountNo", payeeAccountNo)
+        .append("payeeMaskedAccountNo", payeeMaskedAccountNo).append("payeeAccountId", payeeAccountId).append("currency", currency)
+        .append("status", status).append("payeeType", payeeType).append("additionalProperties", additionalProperties).toString();
   }
 }
 

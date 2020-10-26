@@ -1,28 +1,23 @@
 package com.activeai.integration.banking.model;
 
-import java.util.ArrayList;
+import com.activeai.integration.banking.constants.CustomerTitleEnum;
+import com.activeai.integration.banking.constants.StatusEnum;
+import com.activeai.integration.banking.domain.response.Response;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
-
-import javax.validation.Valid;
-
-import org.springframework.validation.annotation.Validated;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * CustomerProfile
  */
 @Validated
-public class CustomerProfile {
+public class CustomerProfile extends Response {
 
-  @JsonProperty("custId")
-  private Integer custId = null;
-
-  @JsonProperty("custSegment")
-  private String custSegment = null;
+  @JsonProperty("customerId")
+  private String customerId = null;
 
   @JsonProperty("firstName")
   private String firstName = null;
@@ -33,95 +28,123 @@ public class CustomerProfile {
   @JsonProperty("middleName")
   private String middleName = null;
 
-  /**
-   * Tile
-   */
-  public enum TitleEnum {
-    MR_("Mr."),
-
-    MRS_("Mrs."),
-
-    MS_("Ms."),
-
-    MISS_("Miss.");
-
-    private String value;
-
-    TitleEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static TitleEnum fromValue(String text) {
-      for (TitleEnum b : TitleEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-
   @JsonProperty("title")
-  private TitleEnum title = null;
+  private CustomerTitleEnum title = null;
 
   @JsonProperty("address")
-  private Address address = null;
+  private List<Address> address = null;
 
   @JsonProperty("phone")
   @Valid
   private List<Phone> phone = null;
 
-  public CustomerProfile custId(Integer custId) {
-    this.custId = custId;
-    return this;
+  @JsonProperty("email")
+  @Valid
+  private List<Email> email;
+
+  private Integer age;
+
+  @JsonProperty("gender")
+  private String gender;
+
+  public String getGender() {
+    return gender;
+  }
+
+  public void setGender(String gender) {
+    this.gender = gender;
+  }
+
+  /**
+   * Date of Birth of customer
+   */
+  @JsonProperty("DOB")
+  private String DOB;
+
+  @JsonProperty("updatedDate")
+  private String updatedDate;
+
+  @JsonProperty("updatedBy")
+  private String updatedBy;
+
+  @JsonProperty("createdDate")
+  private String createdDate;
+
+  @JsonProperty("createdBy")
+  private String createdBy;
+
+  public Integer getAge() {
+    return age;
+  }
+
+  public void setAge(Integer age) {
+    this.age = age;
+  }
+
+  public String getDOB() {
+    return DOB;
+  }
+
+  public void setDOB(String DOB) {
+    this.DOB = DOB;
+  }
+
+  public String getUpdatedDate() {
+    return updatedDate;
+  }
+
+  public void setUpdatedDate(String updatedDate) {
+    this.updatedDate = updatedDate;
+  }
+
+  public String getUpdatedBy() {
+    return updatedBy;
+  }
+
+  public void setUpdatedBy(String updatedBy) {
+    this.updatedBy = updatedBy;
+  }
+
+  public String getCreatedDate() {
+    return createdDate;
+  }
+
+  public void setCreatedDate(String createdDate) {
+    this.createdDate = createdDate;
+  }
+
+  public String getCreatedBy() {
+    return createdBy;
+  }
+
+  public void setCreatedBy(String createdBy) {
+    this.createdBy = createdBy;
+  }
+
+  public List<Email> getEmail() {
+    return email;
+  }
+
+  public void setEmail(List<Email> email) {
+    this.email = email;
   }
 
   /**
    * Customer ID example = "80975412"
-   * 
-   * @return custId
+   *
+   * @return customerId
    **/
-  public Integer getCustId() {
-    return custId;
+  public String getCustomerId() {
+    return customerId;
   }
 
-  public void setCustId(Integer custId) {
-    this.custId = custId;
-  }
-
-  public CustomerProfile custSegment(String custSegment) {
-    this.custSegment = custSegment;
-    return this;
-  }
-
-  /**
-   * segment id / code of customer
-   * 
-   * @return custSegment
-   **/
-  public String getCustSegment() {
-    return custSegment;
-  }
-
-  public void setCustSegment(String custSegment) {
-    this.custSegment = custSegment;
-  }
-
-  public CustomerProfile firstName(String firstName) {
-    this.firstName = firstName;
-    return this;
+  public void setCustomerId(String customerId) {
+    this.customerId = customerId;
   }
 
   /**
    * First name of customer
-   * 
+   *
    * @return firstName
    **/
   public String getFirstName() {
@@ -132,14 +155,9 @@ public class CustomerProfile {
     this.firstName = firstName;
   }
 
-  public CustomerProfile lastName(String lastName) {
-    this.lastName = lastName;
-    return this;
-  }
-
   /**
    * Last name of customer
-   * 
+   *
    * @return lastName
    **/
   public String getLastName() {
@@ -150,14 +168,9 @@ public class CustomerProfile {
     this.lastName = lastName;
   }
 
-  public CustomerProfile middleName(String middleName) {
-    this.middleName = middleName;
-    return this;
-  }
-
   /**
    * Middle name of customer
-   * 
+   *
    * @return middleName
    **/
   public String getMiddleName() {
@@ -168,63 +181,38 @@ public class CustomerProfile {
     this.middleName = middleName;
   }
 
-  public CustomerProfile title(TitleEnum title) {
-    this.title = title;
-    return this;
-  }
-
   /**
    * Tile
-   * 
+   *
    * @return title
    **/
-  public TitleEnum getTitle() {
+  public CustomerTitleEnum getTitle() {
     return title;
   }
 
-  public void setTitle(TitleEnum title) {
+  public void setTitle(CustomerTitleEnum title) {
     this.title = title;
-  }
-
-  public CustomerProfile address(Address address) {
-    this.address = address;
-    return this;
   }
 
   /**
    * Get address
-   * 
+   *
    * @return address
    **/
-  @Valid
-  public Address getAddress() {
+  @Valid public List<Address> getAddress() {
     return address;
   }
 
-  public void setAddress(Address address) {
+  public void setAddress(List<Address> address) {
     this.address = address;
-  }
-
-  public CustomerProfile phone(List<Phone> phone) {
-    this.phone = phone;
-    return this;
-  }
-
-  public CustomerProfile addPhoneItem(Phone phoneItem) {
-    if (this.phone == null) {
-      this.phone = new ArrayList<Phone>();
-    }
-    this.phone.add(phoneItem);
-    return this;
   }
 
   /**
    * Get phone
-   * 
+   *
    * @return phone
    **/
-  @Valid
-  public List<Phone> getPhone() {
+  @Valid public List<Phone> getPhone() {
     return phone;
   }
 
@@ -232,8 +220,8 @@ public class CustomerProfile {
     this.phone = phone;
   }
 
-  @Override
-  public boolean equals(java.lang.Object o) {
+
+  @Override public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -241,31 +229,34 @@ public class CustomerProfile {
       return false;
     }
     CustomerProfile customerProfile = (CustomerProfile) o;
-    return Objects.equals(this.custId, customerProfile.custId) && Objects.equals(this.custSegment, customerProfile.custSegment)
-        && Objects.equals(this.firstName, customerProfile.firstName) && Objects.equals(this.lastName, customerProfile.lastName)
-        && Objects.equals(this.middleName, customerProfile.middleName) && Objects.equals(this.title, customerProfile.title)
-        && Objects.equals(this.address, customerProfile.address) && Objects.equals(this.phone, customerProfile.phone);
+    return Objects.equals(this.customerId, customerProfile.customerId) && Objects
+        .equals(this.firstName, customerProfile.firstName) && Objects.equals(this.lastName, customerProfile.lastName) && Objects
+        .equals(this.middleName, customerProfile.middleName) && Objects.equals(this.title, customerProfile.title) && Objects
+        .equals(this.address, customerProfile.address) && Objects.equals(this.phone, customerProfile.phone);
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(custId, custSegment, firstName, lastName, middleName, title, address, phone);
+  @Override public int hashCode() {
+    return Objects.hash(customerId, firstName, lastName, middleName, title, address, phone);
   }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class CustomerProfile {\n");
-
-    sb.append("    custId: ").append(toIndentedString(custId)).append("\n");
-    sb.append("    custSegment: ").append(toIndentedString(custSegment)).append("\n");
-    sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
-    sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
-    sb.append("    middleName: ").append(toIndentedString(middleName)).append("\n");
-    sb.append("    title: ").append(toIndentedString(title)).append("\n");
-    sb.append("    address: ").append(toIndentedString(address)).append("\n");
-    sb.append("    phone: ").append(toIndentedString(phone)).append("\n");
-    sb.append("}");
+  @Override public String toString() {
+    final StringBuilder sb = new StringBuilder("CustomerProfile{");
+    sb.append("customerId='").append(customerId).append('\'');
+    sb.append(", firstName='").append(firstName).append('\'');
+    sb.append(", lastName='").append(lastName).append('\'');
+    sb.append(", middleName='").append(middleName).append('\'');
+    sb.append(", title=").append(title);
+    sb.append(", address=").append(address);
+    sb.append(", phone=").append(phone);
+    sb.append(", email=").append(email);
+    sb.append(", age=").append(age);
+    sb.append(", gender='").append(gender).append('\'');
+    sb.append(", DOB='").append(DOB).append('\'');
+    sb.append(", updatedDate='").append(updatedDate).append('\'');
+    sb.append(", updatedBy='").append(updatedBy).append('\'');
+    sb.append(", createdDate='").append(createdDate).append('\'');
+    sb.append(", createdBy='").append(createdBy).append('\'');
+    sb.append('}');
     return sb.toString();
   }
 

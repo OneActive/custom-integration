@@ -13,22 +13,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AccountBalance {
 
   @JsonProperty("amount")
-  private Double amount = null;
+  private Double amount = 0.0;
 
   @JsonProperty("availableBalance")
-  private Double availableBalance = null;
+  private Double availableBalance = 0.0;
 
   @JsonProperty("currentBalance")
-  private Double currentBalance = null;
+  private Double currentBalance = 0.0;
+
+  @JsonProperty("monthlyAverageBalance")
+  private Double monthlyAverageBalance = 0.0;
 
   @JsonProperty("currencyCode")
-  private String currencyCode = null;
+  private String currencyCode;
 
-  public AccountBalance amount(Double amount) {
-    this.amount = amount;
-    return this;
+  public Double getMonthlyAverageBalance() {
+    return monthlyAverageBalance;
   }
 
+  public void setMonthlyAverageBalance(Double monthlyAverageBalance) {
+    this.monthlyAverageBalance = monthlyAverageBalance;
+  }
   /**
    * Amount
    * 
@@ -40,11 +45,6 @@ public class AccountBalance {
 
   public void setAmount(Double amount) {
     this.amount = amount;
-  }
-
-  public AccountBalance availableBalance(Double availableBalance) {
-    this.availableBalance = availableBalance;
-    return this;
   }
 
   /**
@@ -60,11 +60,6 @@ public class AccountBalance {
     this.availableBalance = availableBalance;
   }
 
-  public AccountBalance currentBalance(Double currentBalance) {
-    this.currentBalance = currentBalance;
-    return this;
-  }
-
   /**
    * current balance
    * 
@@ -76,11 +71,6 @@ public class AccountBalance {
 
   public void setCurrentBalance(Double currentBalance) {
     this.currentBalance = currentBalance;
-  }
-
-  public AccountBalance currencyCode(String currencyCode) {
-    this.currencyCode = currencyCode;
-    return this;
   }
 
   /**
@@ -108,12 +98,13 @@ public class AccountBalance {
     AccountBalance accountBalance = (AccountBalance) o;
     return Objects.equals(this.amount, accountBalance.amount) && Objects.equals(this.availableBalance, accountBalance.availableBalance)
         && Objects.equals(this.currentBalance, accountBalance.currentBalance)
+        && Objects.equals(this.monthlyAverageBalance, accountBalance.monthlyAverageBalance)
         && Objects.equals(this.currencyCode, accountBalance.currencyCode);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(amount, availableBalance, currentBalance, currencyCode);
+    return Objects.hash(amount, availableBalance, currentBalance, monthlyAverageBalance, currencyCode);
   }
 
   @Override
@@ -124,6 +115,7 @@ public class AccountBalance {
     sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
     sb.append("    availableBalance: ").append(toIndentedString(availableBalance)).append("\n");
     sb.append("    currentBalance: ").append(toIndentedString(currentBalance)).append("\n");
+    sb.append("    monthlyAverageBalance: ").append(toIndentedString(monthlyAverageBalance)).append("\n");
     sb.append("    currencyCode: ").append(toIndentedString(currencyCode)).append("\n");
     sb.append("}");
     return sb.toString();

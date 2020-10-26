@@ -1,0 +1,10 @@
+# Pull base image.
+FROM centos
+
+# Install Packages
+RUN \
+  yum -y update && \
+  yum install -y epel-release && \
+  yum install -y java-1.8.0-openjdk.x86_64 && \
+  yum install -y supervisor telnet ack-grep ngrep curl vim gettext-base unzip zip && \
+  yum clean all
