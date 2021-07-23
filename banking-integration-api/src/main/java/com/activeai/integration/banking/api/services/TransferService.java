@@ -16,9 +16,6 @@ import com.activeai.integration.banking.domain.response.FundTransferResponse;
 import com.activeai.integration.banking.domain.response.OneTimeTransferResponse;
 import com.activeai.integration.banking.domain.response.PayeesResponse;
 import com.activeai.integration.banking.domain.response.PayeesValidationResponse;
-import com.activeai.integration.data.model.CoreBankingModel;
-import com.activeai.integration.data.service.CoreBankingService;
-import com.activeai.integration.data.service.TransferServiceData;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -38,19 +35,10 @@ public class TransferService {
   @Autowired private FundTransferResponseMapper fundTransferResponseMapper;
   @Autowired private OneTimeTransferResponseMapper oneTimeTransferResponseMapper;
   @Autowired private PropertyUtil propertyUtil;
-  @Autowired private TransferServiceData transferServiceData;
-  @Autowired private CoreBankingService coreBankingService;
   private static final String ERROR_MESSAGE_FORMAT = "{0} : {1} : {2}";
 
   public ResponseEntity<PayeesResponse> getPayeesResponseEntity(PayeesRequest payeeRequest) {
-    // Fetching Payees Response from cache, Remove this later
-    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(payeeRequest.getCustomerId());
-    PayeesResponse response = coreBankingModel.getPayeesResponse();
-    if (Objects.nonNull(response)) {
-      ApplicationLogger.logInfo("Fetching from cache", this.getClass());
-      return ResponseEntity.ok(response);
-    }
-    // Till this
+    PayeesResponse response = new PayeesResponse();
     try {
       /**
        * Here only for first account fetching payees
@@ -65,11 +53,6 @@ public class TransferService {
         ApplicationLogger.logInfo("Payees Response Body Before Transformation :" + apiResponse.getBody(), this.getClass());
         response = fundTransferResponseMapper.getManipulatedPayeesResponse(apiResponse.getBody());
         ApplicationLogger.logInfo("Payees Response Body After Transformation :" + apiResponse.getBody(), this.getClass());
-        // Caching Payees Response, Remove this later
-        ApplicationLogger.logInfo("Caching Payee Response", this.getClass());
-        coreBankingModel.setPayeesResponse(response);
-        coreBankingService.saveCoreBankingModel(coreBankingModel);
-        // Till this
       }
       return ResponseEntity.ok(response);
     } catch (UnirestException e) {
@@ -105,9 +88,6 @@ public class TransferService {
         ApplicationLogger.logInfo("Confirm Transfer Response Body Before Transformation :" + apiResponse.getBody(), this.getClass());
         response = fundTransferResponseMapper.getManipulatedFundTransferResponse(apiResponse.getBody(), fundTransferRequest);
         ApplicationLogger.logInfo("Confirm Transfer Response Body After Transformation :" + response, this.getClass());
-        // Updating transaction details on cache, Remove this later
-        transferServiceData.updateTransactionDetailsOnCache(fundTransferRequest);
-        // Till this
       }
       return ResponseEntity.ok(response);
     } catch (UnirestException e) {

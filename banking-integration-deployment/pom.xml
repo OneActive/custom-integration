@@ -21,11 +21,6 @@
         </dependency>
         <dependency>
             <groupId>com.activeai</groupId>
-            <artifactId>banking-integration-data</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.activeai</groupId>
             <artifactId>banking-integration-domain</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

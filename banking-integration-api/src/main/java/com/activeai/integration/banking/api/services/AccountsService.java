@@ -10,10 +10,6 @@ import com.activeai.integration.banking.domain.response.AccountTransactionsRespo
 import com.activeai.integration.banking.domain.response.AccountsResponse;
 import com.activeai.integration.banking.domain.response.DepositAccountsResponse;
 import com.activeai.integration.banking.domain.response.LoanAccountsResponse;
-import com.activeai.integration.data.model.CoreBankingModel;
-import com.activeai.integration.data.service.AccountServiceData;
-import com.activeai.integration.data.service.CoreBankingService;
-import com.activeai.integration.data.util.CoreBankingUtil;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -24,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
-import java.util.Objects;
 
 /**
  * This Class methods helps to get account related information using http
@@ -35,8 +30,6 @@ public class AccountsService {
 
   @Autowired private AccountsResponseMapper accountsResponseMapper;
   @Autowired private PropertyUtil propertyUtil;
-  @Autowired private AccountServiceData accountServiceData;
-  @Autowired private CoreBankingService coreBankingService;
   private static final String ERROR_MESSAGE_FORMAT = "{0} : {1} : {2}";
 
   /**
@@ -46,14 +39,7 @@ public class AccountsService {
    * @return ResponseEntity of type AccountsResponse
    */
   public ResponseEntity<AccountsResponse> getCasaAccountsResponseEntity(String customerId, String accessToken) {
-    // Fetch accounts from cache you can remove this on real integration
-    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
-    AccountsResponse response = coreBankingModel.getAccountsResponse();
-    if (Objects.nonNull(response)) {
-      ApplicationLogger.logInfo("Fetching Accounts from cache", this.getClass());
-      return ResponseEntity.ok(response);
-    }
-    // Till this
+    AccountsResponse response = new AccountsResponse();
     try {
       HttpResponse<String> apiResponse =
           Unirest.post(propertyUtil.getAccountAPIUrl(com.activeai.integration.banking.api.constants.PropertyConstants.CASA_ACCOUNT_API_END_POINT, customerId, null))
@@ -64,11 +50,6 @@ public class AccountsService {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo(" Casa Response Body Before Transformation :" + apiResponse.getBody(), this.getClass());
         response = accountsResponseMapper.getManipulatedCasaAccountsResponse(apiResponse.getBody());
-        // Caching Account Response, Remove this later
-        if (CoreBankingUtil.isCacheEnabled()) {
-          accountServiceData.cacheAccountResponse(coreBankingModel, customerId, response);
-        }
-        // Till this
         ApplicationLogger.logInfo("Casa Response Body After Transformation :" + response, this.getClass());
       }
       return ResponseEntity.ok(response);
@@ -171,13 +152,7 @@ public class AccountsService {
    * @return ResponseEntity of type AccountTransactionsResponse
    */
   public ResponseEntity<AccountTransactionsResponse> getAccountTransactionsResponseEntity(String customerId, String accountId, String accessToken) {
-    // Fetch accounts from cache you can remove this later
-    AccountTransactionsResponse response = accountServiceData.getAccountTransactionsResponse(customerId, accountId);
-    if (Objects.nonNull(response)) {
-      ApplicationLogger.logInfo("Transaction for account is shown from cache", this.getClass());
-      return ResponseEntity.ok(response);
-    }
-    // Till this
+    AccountTransactionsResponse response = new AccountTransactionsResponse();
     try {
       HttpResponse<String> apiResponse =
           Unirest.get(propertyUtil.getAPIUrl(PropertyConstants.CASA_ACCOUNT_TRANSACTIONS_HISTORY_API_END_POINT, customerId, accountId))

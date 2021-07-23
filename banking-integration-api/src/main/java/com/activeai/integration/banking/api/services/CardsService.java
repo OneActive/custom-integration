@@ -10,11 +10,6 @@ import com.activeai.integration.banking.common.util.ApplicationLogger;
 import com.activeai.integration.banking.common.util.PropertyUtil;
 import com.activeai.integration.banking.domain.request.*;
 import com.activeai.integration.banking.domain.response.*;
-import com.activeai.integration.data.model.CoreBankingModel;
-import com.activeai.integration.data.service.CardServiceData;
-import com.activeai.integration.data.service.CoreBankingService;
-import com.activeai.integration.data.service.TransferServiceData;
-import com.activeai.integration.data.util.CoreBankingUtil;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -35,9 +30,6 @@ public class CardsService {
   @Autowired private BlockCardResponseMapper blockCardResponseMapper;
   @Autowired private PropertyUtil propertyUtil;
   @Autowired private ActivationCardResponseMapper activationCardResponseMapper;
-  @Autowired private CardServiceData cardServiceData;
-  @Autowired private TransferServiceData transferServiceData;
-  @Autowired private CoreBankingService coreBankingService;
   private static final String ERROR_MESSAGE_FORMAT = "{0} : {1} : {2}";
 
   /**
@@ -48,14 +40,7 @@ public class CardsService {
    * @return ResponseEntity of type AccountsResponse
    */
   public ResponseEntity<CardsResponse> getCreditCardsResponseEntity(String customerId, String accessToken) {
-    // Fetch cards from cache, you can remove this later
-    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
-    CardsResponse response = coreBankingModel.getCreditCardsResponse();
-    if (Objects.nonNull(response)) {
-      ApplicationLogger.logInfo("Credit Cards Fetched From Cache", this.getClass());
-      return ResponseEntity.ok(response);
-    }
-    // Till this
+    CardsResponse response = new CardsResponse();
     try {
       HttpResponse<String> apiResponse = Unirest.get(propertyUtil
           .getAccountAPIUrl(com.activeai.integration.banking.api.constants.PropertyConstants.CREDIT_CARDS_API_END_POINT, customerId, null))
@@ -66,11 +51,6 @@ public class CardsService {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Credit Cards Response Body Before Transformation :" + apiResponse.getBody(), this.getClass());
         response = cardsResponseMapper.getManipulatedCardsResponse(apiResponse.getBody());
-        // Caching Credit cards, Remove this later
-        if (CoreBankingUtil.isCacheEnabled()) {
-          cardServiceData.cacheCreditCardsResponse(coreBankingModel, customerId, response);
-        }
-        // Till this
         ApplicationLogger.logInfo("Credit Cards Response Body After Transformation :" + response, this.getClass());
       }
       return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));
@@ -158,13 +138,7 @@ public class CardsService {
    */
   public ResponseEntity<CardTransactionsResponse> getCreditAccountTransactionsResponseEntity(String customerId, String accountId,
       String accessToken) {
-    //Fetch Transactions from cache, remove this later
-    CardTransactionsResponse response = cardServiceData.getAccountTransactionsResponse(customerId, accountId);
-    if (Objects.nonNull(response)) {
-      ApplicationLogger.logInfo("Transaction for Card is shown from cache", this.getClass());
-      return ResponseEntity.ok(response);
-    }
-    // Till this
+    CardTransactionsResponse response = new CardTransactionsResponse();
     try {
       HttpResponse<String> apiResponse = Unirest.get(propertyUtil
           .getAPIUrl(com.activeai.integration.banking.api.constants.PropertyConstants.CREDIT_CARD_TRANSACTIONS_HISTORY_API_END_POINT,
@@ -194,14 +168,7 @@ public class CardsService {
    * @return ResponseEntity of type AccountsResponse
    */
   public ResponseEntity<CardsResponse> getDebitCardsResponseEntity(String customerId, String accessToken) {
-    // Fetch accounts from cache you can remove this later
-    CoreBankingModel coreBankingModel = coreBankingService.getCoreBankingModel(customerId);
-    CardsResponse response = coreBankingModel.getDebitCardsResponse();
-    if (Objects.nonNull(response)) {
-      ApplicationLogger.logInfo("Debit Cards Fetched From Cache", this.getClass());
-      return ResponseEntity.ok(response);
-    }
-    // Till this
+    CardsResponse response = new CardsResponse();
     try {
       HttpResponse<String> apiResponse = Unirest.get(propertyUtil
           .getAccountAPIUrl(com.activeai.integration.banking.api.constants.PropertyConstants.DEBIT_CARDS_API_END_POINT, customerId, null))
@@ -212,12 +179,6 @@ public class CardsService {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Debit Cards Response Body Before Transformation :" + apiResponse.getBody(), this.getClass());
         response = cardsResponseMapper.getManipulatedCardsResponse(apiResponse.getBody());
-        // Caching Debit cards, Remove this later
-        ApplicationLogger.logInfo("Caching Debit cards", this.getClass());
-        response.getCards().forEach(c -> cardServiceData.updateDatesInCard(c));
-        coreBankingModel.setDebitCardsResponse(response);
-        coreBankingService.saveCoreBankingModel(coreBankingModel);
-        // Till this
         ApplicationLogger.logInfo("Debit Cards Response Body After Transformation :" + response, this.getClass());
       }
       return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));
@@ -284,9 +245,6 @@ public class CardsService {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Block Card Response Body Before Transformation :" + apiResponse.getBody(), this.getClass());
         response = blockCardResponseMapper.getManipulatedBlockCardResponse(apiResponse.getBody());
-        //updating stub data as BLOCKED on card status, Remove this later
-        cardServiceData.updateBlockCardStatus(blockCardRequest);
-        // Till this
         ApplicationLogger.logInfo("Block Card Response Body After Transformation :" + response, this.getClass());
       }
       return ResponseEntity.ok(response);
@@ -552,7 +510,6 @@ public class CardsService {
       if (StringUtils.isNotEmpty(apiResponse.getBody())) {
         ApplicationLogger.logInfo("Card Payment Confirm Response Body Before Transformation :" + apiResponse.getBody(), this.getClass());
         response = cardsResponseMapper.getManipulatedCardPaymentResponse(apiResponse.getBody());
-        transferServiceData.updateTransactionDetailsOnCache(cardPaymentRequest);
         ApplicationLogger.logInfo("Card Payment Confirm Response Body After Transformation :" + apiResponse.getBody(), this.getClass());
       }
       return new ResponseEntity<>(response, HttpStatus.valueOf(apiResponse.getStatus()));

@@ -12,7 +12,6 @@
 	<modules>
 		<module>banking-integration-domain</module>
 		<module>banking-integration-common</module>
-		<module>banking-integration-data</module>
 		<module>banking-integration-api</module>
 		<module>banking-integration-deployment</module>
 	</modules>
@@ -149,7 +148,7 @@
 	</build>
 
 	<scm>
-		<developerConnection>scm:git:https://bitbucket.org/morfeus-product/banking-integration.git</developerConnection>
+		<developerConnection>scm:git:https://github.com/OneActive/custom-integration.git</developerConnection>
 	</scm>
 	<distributionManagement>
 		<snapshotRepository>
