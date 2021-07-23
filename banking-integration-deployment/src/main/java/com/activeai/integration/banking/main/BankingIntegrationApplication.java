@@ -8,7 +8,6 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 
 @SpringBootApplication
 @ComponentScan("com.activeai.integration")
-@EnableRedisRepositories(basePackages = {"com.activeai.integration.data"})
 public class BankingIntegrationApplication extends SpringBootServletInitializer {
 
   public static void main(String[] args) {

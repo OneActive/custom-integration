@@ -5,18 +5,10 @@
     <parent>
         <artifactId>banking-integration</artifactId>
         <groupId>com.activeai</groupId>
-        <version>1.1.0</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>banking-integration-api</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.activeai</groupId>
-            <artifactId>banking-integration-common</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-    </dependencies>
+    <artifactId>banking-integration-domain</artifactId>
 
 </project>
