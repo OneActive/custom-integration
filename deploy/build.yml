@@ -23,6 +23,7 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_REGION)
       - GIT_SHA=$(git rev-parse --short HEAD)
       - echo $GIT_SHA
+      - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
       - apt-get update && apt-get -y install gettext-base
   build:
     commands:

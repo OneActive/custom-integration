@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="integration">integration</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console-Appender" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>
+                    [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>
+            </PatternLayout>
+        </Console>
+        <RollingRandomAccessFile name="appender-all"
+                                 fileName="${sys:LOG_PATH:-/tmp}/${integration}.log" append="true"
+                                 filePattern="${sys:LOG_PATH:-/tmp}/%d{MM-dd-yyyy}/${integration}-%d{MM-dd-yyyy}-%i.log.gz"
+                                 immediateFlush="false">
+            <PatternLayout
+                    pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <Root>
+            <AppenderRef ref="appender-all" level="${sys:INTEGRATION_LOG_LEVEL:-DEBUG}"/>
+        </Root>
+        <logger name="com.activeai.integration" level="ALL"/>
+    </Loggers>
+
+</Configuration>
